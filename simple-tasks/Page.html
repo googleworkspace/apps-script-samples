@@ -1,0 +1,28 @@
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<h1>Simple Tasks</h1>
+<p>
+  This application allows you to view your <a href="https://mail.google.com/tasks/canvas" target="_blank">Google Tasks</a>,
+  mark them as complete or incomplete, and add new tasks.
+</p>
+
+<label for="tasklist">Select a task list: </label>
+<select id="tasklist">
+  <option>Loading...</option>
+</select>
+
+<fieldset id="tasks-panel">
+  <legend>Tasks</legend>
+
+  <form name="new-task" id="new-task">
+    <label for="task-title">Add a new task:</label>
+    <input type="text" name="task-title" id="task-title" />
+    <input type="submit" name="add" id="add-button" value="Add" />
+  </form>
+
+  <ul id="tasks">
+    Loading...
+  </ul>
+</fieldset>
+
+<?!= HtmlService.createHtmlOutputFromFile('JavaScript').getContent(); ?>

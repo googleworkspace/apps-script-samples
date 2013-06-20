@@ -1,0 +1,127 @@
+<!-- Load the jQuery and jQuery UI libraries. -->
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+
+<!-- Custom client-side JavaScript code. -->
+<script>
+  // When the page loads.
+  $(function() {
+    $('#tasklist').bind('change', loadTasks);
+    $('#new-task').bind('submit', onNewTaskFormSubmit);
+    loadTaskLists();
+  });
+
+  /**
+   * Load the available task lists.
+   */
+  function loadTaskLists() {
+    google.script.run.withSuccessHandler(showTaskLists)
+        .withFailureHandler(showError)
+        .getTaskLists();
+  }
+
+  /**
+   * Show the returned task lists in the dropdown box.
+   * @param {Array.<Object>} taskLists The task lists to show.
+   */
+  function showTaskLists(taskLists) {
+    var select = $('#tasklist');
+    select.empty();
+    taskLists.forEach(function(taskList) {
+      var option = $('<option>')
+          .attr('value', taskList.id)
+          .text(taskList.name);
+      select.append(option);
+    });
+    loadTasks();
+  }
+
+  /**
+   * Load the tasks in the currently selected task list.
+   */
+  function loadTasks() {
+    $('#tasks').text('Loading...');
+    var taskListId = $('#tasklist').val();
+    google.script.run.withSuccessHandler(showTasks)
+        .withFailureHandler(showError)
+        .getTasks(taskListId);
+  }
+
+  /**
+   * Show the returned tasks on the page.
+   * @param {Array.<Object>} tasks The tasks to show.
+   */
+  function showTasks(tasks) {
+    var list = $('#tasks').empty();
+    if (tasks.length > 0) {
+      tasks.forEach(function(task) {
+        var item = $('<li>');
+        var checkbox = $('<input type="checkbox">')
+            .data('taskId', task.id)
+            .bind('change', onCheckBoxChange);
+        item.append(checkbox);
+
+        var title = $('<span>')
+            .text(task.title);
+        item.append(title);
+
+        if (task.completed) {
+          checkbox.prop('checked', true);
+          title.css('text-decoration', 'line-through')
+        }
+
+        list.append(item);
+      });
+    } else {
+      list.text('No tasks');
+    }
+  }
+
+  /**
+   * A callback function that runs when a task is checked or unchecked.
+   */
+  function onCheckBoxChange() {
+    var checkbox = $(this);
+    var title = checkbox.siblings('span');
+    var isChecked = checkbox.prop('checked');
+    var taskListId = $('#tasklist').val();
+    var taskId = checkbox.data('taskId');
+    if (isChecked) {
+      title.css('text-decoration', 'line-through');
+    } else {
+      title.css('text-decoration', 'none');
+    }
+    google.script.run.withSuccessHandler(function() {
+      title.effect("highlight", {
+        duration: 1500
+      });
+    }).withFailureHandler(showError)
+      .setCompleted(taskListId, taskId, isChecked);
+  }
+
+  /**
+   * A callback function that runs when the new task form is submitted.
+   */
+  function onNewTaskFormSubmit() {
+    var taskListId = $('#tasklist').val();
+    var titleTextBox = $('#task-title');
+    var title = titleTextBox.val();
+    google.script.run.withSuccessHandler(function() {
+      titleTextBox.val('');
+      titleTextBox.effect("highlight", {
+        duration: 1500
+      });
+      loadTasks();
+    }).withFailureHandler(showError)
+      .addTask(taskListId, title);
+    return false;
+  }
+
+  /**
+   * Logs an error message and shows an alert to the user.
+   */
+  function showError(error) {
+    console.log(error);
+    window.alert('An error has occurred, please try again.');
+  }
+</script>
