@@ -10,7 +10,7 @@ experiment with the custom bibliography features exposed via the “Bibstro”
 menu. You can also view and edit Bibstro’s source code via the “Tools > Script
 editor” menu item.
 
-![][screenshot]
+![Bibstro screenshot][screenshot]
 
 For an overview of the Google Docs integration we used to build Bibstro, please
 see our Google I/O 2013 talk “[Extend Google Docs with Apps Script][io_video]”.
@@ -23,4 +23,4 @@ as Apps Script's [API reference][api_reference].
 [io_video]: https://www.youtube.com/watch?v=KIiCSdRCqXc
 [quickstart]: https://developers.google.com/apps-script/guides/docs
 [sample_doc]: https://docs.google.com/document/d/1H46MqH7MX2BDOj2l-sV0wQuYXoHrSEepoSgVvHtZfbM/view
-[screenshot]: https://googledrive.com/host/0B86sei6ZHtsdVF9iaFd5cTdiNVk/bibstro-readme-screenshot.png
+[screenshot]: https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/bibstro.png

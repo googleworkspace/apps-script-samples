@@ -7,6 +7,8 @@ read and write access to your data in
 and demonstrates some common patterns and best practices to use when developing
 user interfaces.
 
+![Simple tasks screenshot](https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/simple_tasks.png)
+
 ## Try it out
 
 For your convience we have a
