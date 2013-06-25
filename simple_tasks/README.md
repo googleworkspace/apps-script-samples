@@ -32,7 +32,7 @@ scratch, follow the steps below.
    file named Code.gs in your project, and you can replace it's contents with
    the new code. For the remaining files, ensure you select
    **File > New > Html file** when creating the files, and when entering the
-   file name omit the `.html` suffix as it will be added automatically.
+   file name omit the .html suffix as it will be added automatically.
 
 2. Enabled the Google Tasks API on the script
    ([instructions available here](https://developers.google.com/apps-script/built_in_services#advanced_google_services)).
