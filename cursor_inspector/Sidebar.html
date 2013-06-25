@@ -1,0 +1,52 @@
+<?!= include('Sidebar.css') ?>
+
+<div id="loading">
+  <div id="loading-content">Loading ...</div>
+</div>
+
+<div id="error"></div>
+
+<div id="results">
+  <fieldset id="cursor">
+    <legend>Cursor</legend>
+    <table>
+      <tr>
+        <td><label>Element Type:</label></td>
+        <td><input id="element-type" type="text" /></td>
+      </tr>
+      <tr>
+        <td><label>Offset:</label></td>
+        <td><input id="offset" type="text" /></td>
+      </tr>
+      <tr>
+        <td><label>Surrounding Text:</label></td>
+        <td><input id="surrounding-text" type="text" /></td>
+      </tr>
+      <tr>
+        <td><label>Surrounding Text Offset:</label></td>
+        <td><input id="surrounding-text-offset" type="text" /></td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <fieldset id="selection">
+    <legend>Selection</legend>
+    <table>
+      <tr>
+        <th>Element</th>
+        <th>Partial</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      <tbody></tbody>
+    </table>
+  </fieldset>
+
+  <p>
+    Automatically refreshed every few seconds.<br/>
+    Last updated <strong id="lastupdated"></strong>.
+  </p>
+  <button id="toggle" onclick="toggleRefresh();" data-stoptext="◾ Stop" data-resumetext="▶ Resume">◾ Stop</button>
+</div>
+
+<?!= include('Sidebar.js') ?>
