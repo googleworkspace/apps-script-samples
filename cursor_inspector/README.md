@@ -9,6 +9,8 @@ and
 [`Selection`](https://developers.google.com/apps-script/reference/document/selection)
 classes of the API.
 
+![Cursor Inspector screenshot](https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/cursor_inspector.png)
+
 ## Try it out
 
 For your convience we have deployed the script into a Google Docs
