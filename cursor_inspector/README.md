@@ -14,6 +14,6 @@ classes of the API.
 ## Try it out
 
 For your convience we have deployed the script into a Google Docs
-[document](https://docs.google.com/document/d/1v6S7IkDL_YIaVn1rBcVbqFr3rbNUX9_kLfFc00WTtx8/edit)
+[document](https://docs.google.com/document/d/1v6S7IkDL_YIaVn1rBcVbqFr3rbNUX9_kLfFc00WTtx8/view)
 that you can copy and use. Follow the instructions in the document to get
 started.

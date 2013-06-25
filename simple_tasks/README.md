@@ -23,10 +23,7 @@ to do this is to
 of the deployed instance of the script. If you wish to create your project from
 scratch, follow the steps below.
 
-1. [Make a copy](https://script.google.com/d/1HCsbqH8WNEKFwRZCw8KEhykCGEzfXi-1k5eN-7t8lZoEAAvfqzOOsKtu/edit?newcopy=true)
-   of the deployed script.
-
-   If instead you wish to start from scratch, create a new standalone script in your Google Drive
+1. Create a new standalone script in your Google Drive
    ([instructions available here](https://developers.google.com/apps-script/managing_projects#creatingDrive))
    and add in each of the files in this directory. You should already  have a
    file named Code.gs in your project, and you can replace it's contents with

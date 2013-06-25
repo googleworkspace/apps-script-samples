@@ -22,5 +22,5 @@ as Apps Script's [API reference][api_reference].
 [docs]: https://support.google.com/drive/answer/143206?ref_topic=21008&rd=1
 [io_video]: https://www.youtube.com/watch?v=KIiCSdRCqXc
 [quickstart]: https://developers.google.com/apps-script/guides/docs
-[sample_doc]: https://docs.google.com/document/d/1akzFJ9_5pABrk4NFxLDZX7DymObYfIfGZ3CTZ2CgHSY/view
+[sample_doc]: https://docs.google.com/document/d/1H46MqH7MX2BDOj2l-sV0wQuYXoHrSEepoSgVvHtZfbM/view
 [screenshot]: https://googledrive.com/host/0B86sei6ZHtsdVF9iaFd5cTdiNVk/bibstro-readme-screenshot.png
