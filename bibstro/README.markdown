@@ -1,3 +1,5 @@
+# Bibstro
+
 Bibstro is a sample bibliography app for [Google Docs][docs] built upon the
 [Google Apps Script][apps_script] platform. Bibstro shows how you can extend
 Google Docs by adding custom menus, dialogs, and sidebars. Manipulating the
@@ -16,6 +18,8 @@ For an overview of the Google Docs integration we used to build Bibstro, please
 see our Google I/O 2013 talk “[Extend Google Docs with Apps Script][io_video]”.
 You may also wish to consult our [guide to extending Docs][quickstart], as well
 as Apps Script's [API reference][api_reference].
+
+![GA Tracking Pixel](http://www.google-analytics.com/__utm.gif?utmac=UA-42085206-1&utmhn=github.com&utmdt=Bibstro&utmp=/google/google-apps-script-samples/tree/master/bibstro)
 
 [api_reference]: https://developers.google.com/apps-script/reference/document/
 [apps_script]: https://developers.google.com/apps-script/

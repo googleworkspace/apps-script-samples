@@ -17,3 +17,5 @@ For your convience we have deployed the script into a Google Docs
 [document](https://docs.google.com/document/d/1v6S7IkDL_YIaVn1rBcVbqFr3rbNUX9_kLfFc00WTtx8/view)
 that you can copy and use. Follow the instructions in the document to get
 started.
+
+![GA Tracking Pixel](http://www.google-analytics.com/__utm.gif?utmac=UA-42085206-1&utmhn=github.com&utmdt=Cursor%20Inspector&utmp=/google/google-apps-script-samples/tree/master/cursor_inspector)

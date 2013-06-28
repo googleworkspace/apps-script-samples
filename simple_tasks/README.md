@@ -39,3 +39,4 @@ scratch, follow the steps below.
    the **User acessing the web app**.
    ([instructions available here](https://developers.google.com/apps-script/execution_web_apps)).
 
+![GA Tracking Pixel](http://www.google-analytics.com/__utm.gif?utmac=UA-42085206-1&utmhn=github.com&utmdt=Simple%20Tasks&utmp=/google/google-apps-script-samples/tree/master/simple_tasks)
