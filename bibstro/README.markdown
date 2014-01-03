@@ -27,4 +27,4 @@ as Apps Script's [API reference][api_reference].
 [sample_doc]: https://docs.google.com/document/d/1H46MqH7MX2BDOj2l-sV0wQuYXoHrSEepoSgVvHtZfbM/view
 [screenshot]: https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/bibstro.png
 
-[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/simple_tasks)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/bibstro)](https://github.com/igrigorik/ga-beacon)
