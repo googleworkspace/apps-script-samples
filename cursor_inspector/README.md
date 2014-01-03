@@ -17,3 +17,5 @@ For your convience we have deployed the script into a Google Docs
 [document](https://docs.google.com/document/d/1v6S7IkDL_YIaVn1rBcVbqFr3rbNUX9_kLfFc00WTtx8/view)
 that you can copy and use. Follow the instructions in the document to get
 started.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/simple_tasks)](https://github.com/igrigorik/ga-beacon)
