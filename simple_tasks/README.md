@@ -37,4 +37,6 @@ scratch, follow the steps below.
    ([instructions available here](https://developers.google.com/apps-script/built_in_services#advanced_google_services)).
 3. Save a new version of your script and publish it as a web app that runs as
    the **User acessing the web app**.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/simple_tasks)](https://github.com/igrigorik/ga-beacon)
    ([instructions available here](https://developers.google.com/apps-script/execution_web_apps)).
