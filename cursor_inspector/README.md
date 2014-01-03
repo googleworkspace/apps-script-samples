@@ -18,4 +18,4 @@ For your convience we have deployed the script into a Google Docs
 that you can copy and use. Follow the instructions in the document to get
 started.
 
-[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/simple_tasks)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/cursor_inspector)](https://github.com/igrigorik/ga-beacon)
