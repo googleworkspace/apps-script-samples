@@ -44,12 +44,16 @@ function refreshState() {
  * @param {Object} cursor The cursor information.
  */
 function updateCursor(cursor) {
+  var i;
   if (cursor) {
     $('#cursor input').removeAttr('disabled');
     updateElement('element-type', cursor.element.type);
     updateElement('offset', cursor.offset);
     updateElement('surrounding-text', cursor.surroundingText);
     updateElement('surrounding-text-offset', cursor.surroundingTextOffset);
+    for (i in cursor.format) {
+      updateElement(i.toLowerCase().replace(/_/g, '-'), cursor.format[i]);
+    }
   } else {
     $('#cursor input').val('').attr('disabled', 'true');
   }

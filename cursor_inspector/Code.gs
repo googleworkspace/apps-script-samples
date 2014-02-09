@@ -55,7 +55,8 @@ function getDocumentInfo() {
       element: getElementInfo(cursor.getElement()),
       offset: cursor.getOffset(),
       surroundingText: cursor.getSurroundingText().getText(),
-      surroundingTextOffset: cursor.getSurroundingTextOffset()
+      surroundingTextOffset: cursor.getSurroundingTextOffset(),
+	  format: cursor.getElement().getAttributes(),
     };
   }
   if (selection) {
