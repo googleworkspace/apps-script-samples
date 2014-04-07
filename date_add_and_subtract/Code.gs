@@ -30,16 +30,6 @@ var VALID_UNITS = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second',
     'millisecond'];
 
 /**
- * The epoch date used by Google Sheets.
- */
-var SHEETS_EPOCH = '12/30/1899 0:00:00';
-
-/**
- * The number of seconds in a day.
- */
-var SECONDS_PER_DAY = 86400;
-
-/**
  * Runs when the add-on is installed.
  */
 function onInstall() {
@@ -65,7 +55,7 @@ function use() {
   var title = 'Date Custom Functions';
   var message = 'The functions DATEADD and DATESUBTRACT are now available in ' +
       'this spreadsheet. More information is available in the function help ' +
-      'box that appears when you start using them in a forumula.';
+      'box that appears when you start using them in a formula.';
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
@@ -82,7 +72,6 @@ function use() {
  * @customFunction
  */
 function DATEADD(date, unit, amount) {
-  date = normalizeDate(date);
   validateParameters(date, unit, amount);
   return moment(date).add(unit, amount).toDate();
 }
@@ -99,30 +88,13 @@ function DATEADD(date, unit, amount) {
  * @customFunction
  */
 function DATESUBTRACT(date, unit, amount) {
-  date = normalizeDate(date);
   validateParameters(date, unit, amount);
   return moment(date).subtract(unit, amount).toDate();
 }
 
 /**
- * Normalizes a date value from Google Sheets, as they can sometimes be passed
- * as number values.
- * @param {?} date The date value.
- * @return {Date} The normalized date value.
- */
-function normalizeDate(date) {
-  if (typeof date == 'number') {
-    var days = Math.floor(date);
-    var seconds = (date - days) * SECONDS_PER_DAY;
-    date = moment(SHEETS_EPOCH).add(days, 'days')
-        .add(seconds, 'seconds').toDate();
-  }
-  return date;
-}
-
-/**
  * Validates that the date, unit, and amount supplied are compatible with
- * Momnent, throwing an exception if any of the parameters are invalid.
+ * Moment, throwing an exception if any of the parameters are invalid.
  * @param {Date} date The date to add to or subtract from.
  * @param {string} unit The unit of time to add/subtract.
  * @param {number} amount The amount of the specified unit to add/subtract.
