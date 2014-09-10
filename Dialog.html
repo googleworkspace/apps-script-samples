@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/add-ons2.css">
+
+<form onSubmit="submit(); return false;">
+  <p>Content goes here...</p>
+  <section class="button-bar">
+    <input type="submit" id="type" class="action" value="Submit" />
+    <button onclick="cancel(); return false;">Cancel</button>
+  </section>
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+  /**
+   * The ID of this dialog. This is set once when the template is rendered.
+   */
+  var DIALOG_ID = '<?= dialogId ?>';
+
+  /**
+   * How often to check-in with the server, in seconds.
+   */
+  var CHECKIN_INTERVAL_SECONDS = 3;
+
+  // Sets up an interval to check-in with the server every few seconds, so we can tell
+  // if it's been X-ed out.
+  window.setInterval(function() {
+    google.script.run.checkIn(DIALOG_ID);
+  }, CHECKIN_INTERVAL_SECONDS * 1000);
+
+  /**
+   * Runs when the form is submitted.
+   */
+  function submit() {
+    // Here is where you would add custom logic specific to your form.
+    // You may need to make additional google.script.run calls to store various information
+    // collected in the dialog.
+    google.script.run.withSuccessHandler(close).setDialogState(DIALOG_ID, 'done');
+  }
+
+  /**
+   * Runs when the cancel button is clicked.
+   */
+  function cancel() {
+    google.script.run.withSuccessHandler(close).setDialogState(DIALOG_ID, 'aborted');
+  }
+
+  /**
+   * Closes the dialog.
+   */
+  function close() {
+    google.script.host.close();
+  }
+</script>

@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/add-ons2.css">
+
+<div class="sidebar">
+  <button id="open" class="action" onclick="showDialog();">Open Dialog</button>
+  <pre id="output"></pre>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+  /**
+   * How often the sidebar should check the state of the dialog, in seconds.
+   */
+  var CHECK_DIALOG_INTERVAL_SECONDS = 1;
+
+  /**
+   * Holds a mapping from dialog ID to the ID of the interval that is used to
+   * check its status. This is needed so we can cancel the interval when the
+   * dialog is closed.
+   */
+  var intervalIds = {};
+
+  /**
+   * Shows the dialog and creates an interval to regularly check its state.
+   */
+  function showDialog() {
+    google.script.run.withSuccessHandler(function(dialogId) {
+      var intervalId = window.setInterval(function() {
+        checkDialog(dialogId);
+      }, CHECK_DIALOG_INTERVAL_SECONDS * 1000);
+      intervalIds[dialogId] = intervalId;
+      $('#output').append('Dialog opened\n');
+    }).showDialog();
+  }
+
+  /**
+   * Checks the state of a dialog. Once it's closed the state is shown on the sidebar
+   * and the interval is cancelled.
+   * @param {string} dialogId The ID of the dialog.
+   */
+  function checkDialog(dialogId) {
+    google.script.run.withSuccessHandler(function(state) {
+      console.log(dialogId + ' = ' + state);
+      if (state != 'open') {
+        window.clearInterval(intervalIds[dialogId]);
+        $('#output').append('Dialog changed to ' + state + '\n');
+      }
+    }).getDialogState(dialogId);
+  }
+</script>
