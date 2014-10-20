@@ -11,7 +11,7 @@ applications which extend and support Google Docs, Google Sheets,
 and now Google Forms.
 
 This sample shows how to construct a Google Forms add-on called
-[Form Notifications](https://chrome.google.com/webstore/detail/form-notifications/XXXX).
+[Form Notifications](https://chrome.google.com/webstore/detail/form-notifications/bbpdeojefjfhaelgljjcadpcckdfcdod).
 This add-on allows Form creators to automatically
 send email notifications when a form is submitted. In addition, the
 add-on allows form creators to be notified when they have received
@@ -30,7 +30,7 @@ This sample makes use of the following Apps Script concepts:
 Getting Started
 ---------------
 
-You can install the [Form Notifications](https://chrome.google.com/webstore/detail/form-notifications/XXXX) add-on from the add-on
+You can install the [Form Notifications](https://chrome.google.com/webstore/detail/form-notifications/bbpdeojefjfhaelgljjcadpcckdfcdod) add-on from the add-on
 store.
 
 If you would like to try re-building it yourself, you can follow the
