@@ -34,7 +34,7 @@ You can install the [Form Notifications](https://chrome.google.com/webstore/deta
 store.
 
 If you would like to try re-building it yourself, you can follow the
-directions provided in the [Add-on for Google Forms Quickstart](https://developers.google.com/apps-script/quickstart/forms-addon) documentation.
+directions provided in the [Add-on for Google Forms Quickstart](https://developers.google.com/apps-script/quickstart/forms-add-on) documentation.
 
 
 
