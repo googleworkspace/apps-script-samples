@@ -1,0 +1,24 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<!-- Below is the HTML code that defines the dialog element structure. -->
+<div>
+  <div class="block" id="dialog-elements">
+    <p>
+    This dialog is used to turn on or off a form submit trigger that will
+    send an email to the form owner whenever a form is responded to.
+    </p>
+    <div class="bottom-spacer" id="dialog-trigger-checkbox">
+      <input type="checkbox" id="dialog-trigger-check">
+      <label for="dialog-trigger-check">Enable form submit trigger</label>
+    </div>
+    <div class="block bottom-spacer" id="dialog-button-bar">
+      <button class="action" id="dialog-save-button">Save</button>
+      <button id="dialog-cancel-button" onclick="google.script.host.close()">Cancel</button>
+    </div>
+    <div id="dialog-status"></div>
+  </div>
+</div>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript -->
+<?!= HtmlService.createHtmlOutputFromFile('DialogJavaScript').getContent(); ?>

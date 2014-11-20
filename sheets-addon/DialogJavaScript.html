@@ -1,0 +1,59 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on dialog load.
+   */
+  $(function() {
+    // Assign handler functions to dialog elements here, if needed.
+    $('#dialog-execute-button').click(onExecuteClick);
+
+    // Call the server here to retrieve any information needed to build
+    // the dialog, if necessary.
+  });
+
+  /**
+   * Calls the server to modify the sheet.
+   * Determines the user-specified action (create a sheet, copy the active
+   * sheet, clear the active sheet) and asks the server to execute it. The
+   * dialog is then closed.
+   */
+  function onExecuteClick() {
+    this.disabled = true;
+
+    // Gather any information that needs to be sent to the server here.
+    var action = $('#dialog-action-select').val();
+    showStatus('Working...');
+
+    // Send the value to the server and handle the response.
+    google.script.run
+        .withSuccessHandler(
+          function(msg, element) {
+            // Respond to success conditions here.
+            showStatus('Execution successful.');
+            element.disabled = false;
+          })
+        .withFailureHandler(
+          function(msg, element) {
+            // Respond to failure conditions here.
+            showStatus('Execution failed: ' + msg, 'error');
+            element.disabled = false;
+          })
+        .withUserObject(this)
+        .modifySheets(action);
+  }
+
+  /**
+   * Displays the given status message in the dialog.
+   *
+   * @param {String} msg The status message to display.
+   * @param {String} classId The message type (class id) that the message
+   *   should be displayed as.
+   */
+  function showStatus(msg, classId) {
+    $('#dialog-status').removeClass().html(msg);
+    if (classId) {
+      $('#dialog-status').addClass(classId);
+    }
+  }
+
+</script>

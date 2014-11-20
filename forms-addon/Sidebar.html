@@ -1,0 +1,33 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<!-- Below is the HTML code that defines the sidebar element structure. -->
+<div class="sidebar branding-below">
+  <div class="block" id="sidebar-elements">
+    <p>
+    This sidebar allows you to set up and add form items. Choose the type of
+    the item and click 'Add item'. The resulting item will be added to the Form.
+    </p>
+    <label for="sidebar-item-type">
+      Choose item type:
+    </label>
+    <select class="width-100" id="sidebar-item-type">
+      <option value="Date">Date</option>
+      <option value="Scale">Scale</option>
+      <option value="Text">Text</option>
+    </select>
+  </div>
+  <div class="block bottom-spacer" id="sidebar-button-bar">
+      <button class="action" id="sidebar-add-button">Add item</button>
+  </div>
+  <div id="sidebar-status"></div>
+</div>
+
+<div class="sidebar bottom">
+  <img alt="Add-on logo" class="logo" width="25"
+      src="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/apps-script_2x.png">
+  <span class="gray branding-text">Forms Add-on Template by Google</span>
+</div>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript -->
+<?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
