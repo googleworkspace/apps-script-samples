@@ -1,5 +1,9 @@
 # Bibstro
 
+**Deprecated**: The sample relies on ScriptDb to store it's data, which is now 
+deprecated. Please refer to the [migration guide][scriptdb_migration_guide] for 
+further information.
+
 Bibstro is a sample bibliography app for [Google Docs][docs] built upon the
 [Google Apps Script][apps_script] platform. Bibstro shows how you can extend
 Google Docs by adding custom menus, dialogs, and sidebars. Manipulating the
@@ -19,6 +23,7 @@ see our Google I/O 2013 talk â€œ[Extend Google Docs with Apps Script][io_video]â
 You may also wish to consult our [guide to extending Docs][quickstart], as well
 as Apps Script's [API reference][api_reference].
 
+[scriptdb_migration_guide]: https://developers.google.com/apps-script/migration/script-db
 [api_reference]: https://developers.google.com/apps-script/reference/document/
 [apps_script]: https://developers.google.com/apps-script/
 [docs]: https://support.google.com/drive/answer/143206?ref_topic=21008&rd=1
