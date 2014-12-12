@@ -27,13 +27,13 @@ the same form will be able to adjust the notification settings, but will not be 
 able to disable the notification triggers set by other collaborators.";
 
 
- /**
-  * Adds a custom menu to the active form to show the add-on sidebar.
-  *
-  * @param {object} e The event parameter for a simple onOpen trigger. To
-  *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
-  *     running in, inspect e.authMode.
-  */
+/**
+ * Adds a custom menu to the active form to show the add-on sidebar.
+ *
+ * @param {object} e The event parameter for a simple onOpen trigger. To
+ *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
+ *     running in, inspect e.authMode.
+ */
 function onOpen(e) {
   FormApp.getUi()
       .createAddonMenu()
@@ -264,7 +264,7 @@ function sendCreatorNotification() {
  * @param {FormResponse} response FormResponse object of the event
  *      that triggered this notification
  */
-function sendRespondentNotification(response, aboutText) {
+function sendRespondentNotification(response) {
   var form = FormApp.getActiveForm();
   var settings = PropertiesService.getDocumentProperties();
   var emailId = settings.getProperty('respondentEmailItemId');
@@ -278,7 +278,7 @@ function sendRespondentNotification(response, aboutText) {
     template.notice = NOTICE;
     var message = template.evaluate();
     MailApp.sendEmail(respondentEmail,
-        'Thank you for filling out form ' + form.getTitle() + '!',
+        settings.getProperty('responseSubject'),
         message.getContent(), {
           name: form.getTitle(),
             htmlBody: message.getContent()

@@ -39,7 +39,8 @@ label {
 
 #creator-email,
 #respondent-email,
-#button-bar {
+#button-bar,
+#submit-subject {
   margin-bottom: 10px;
 }
 
@@ -59,7 +60,7 @@ label {
       <label for="creator-email">
         My email addresses (comma-separated)
       </label>
-      <input class="width-100" id="creator-email">
+      <input type="text" class="width-100" id="creator-email">
       <label for="response-step">Send notifications after every</label>
       <input type="number" id="response-step" value="10"
           min="1" max="99999"> responses (default 10)
@@ -74,7 +75,11 @@ label {
         Which question asks for their email?
       </label>
       <select class="width-100" id="respondent-email"></select>
-      <label for="submit-notice">Notification text body</label>
+      <label for="submit-subject">
+        Notification email subject:
+      </label>
+      <input type="text" class="width-100" id="submit-subject">
+      <label for="submit-notice">Notification email body:</label>
       <textarea rows="8" cols="40" id="submit-notice"
           class="width-100"></textarea>
     </div>
@@ -120,6 +125,9 @@ label {
     $('#creator-email').val(settings.creatorEmail);
     $('#response-step').val(!settings.responseStep ?
        10 : settings.responseStep);
+    $('#submit-subject').val(!settings.responseSubject ?
+       'Thank you for filling out our form!' :
+       settings.responseSubject);
     $('#submit-notice').val(!settings.responseText ?
        'Thank you for responding to our form!' :
        settings.responseText);
@@ -215,6 +223,7 @@ label {
     // Only save respondent options if notify is turned on
     if (respondentNotify) {
       settings.respondentEmailItemId = $('#respondent-email').val();
+      settings.responseSubject = $('#submit-subject').val();
       settings.responseText = $('#submit-notice').val();
     }
 
