@@ -1,0 +1,36 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on web app load.
+   */
+  $(function() {
+    // Call the server here to retrieve any information needed to build the page.
+    google.script.run
+       .withSuccessHandler(function(contents) {
+            // Respond to success conditions here.
+            updateDisplay(contents);
+          })
+       .withFailureHandler(function(msg) {
+            // Respond to failure conditions here.
+            $('#main-heading').text(msg);
+            $('#main-heading').addClass("error");
+            $('#error-message').show();
+          })
+       .getFolderContents(folderId);
+  });
+
+  /**
+   * Updates display of folder contents.
+   *
+   * @param {Object} contents list of content filenames, along with
+   *     the root folder name.
+   */
+  function updateDisplay(contents) {
+    var headingText = "Displaying contents for " + contents.rootName + " folder:";
+    $('#main-heading').text(headingText);
+    for (var i = 0; i < contents.children.length; i++) {
+      var name = contents.children[i];
+      $('#results').append('<div>' + name + '</div>');
+    }
+  }
+</script>

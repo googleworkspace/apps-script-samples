@@ -1,0 +1,26 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet. -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+<html>
+  <body>
+    <h1>
+    To read a specific folder's contents, include that folder's ID as
+    a URL parameter: ?folderId=&lt;folder id&gt;. Otherwise the root folder
+    will be read. Up to 20 files may be displayed here, in no particular order.
+    </h1>
+    <h1 id="main-heading">Loading...</h1>
+    <div class="block result-display" id="results">
+      <div class="hidden" id="error-message">
+        Verify that you have permission to access this folder and that the specified folder ID (if any) is correct.
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- Store data passed to template here, so it is available to the
+     imported JavaScript. -->
+<script>
+  var folderId = <?= folderId ?>;
+</script>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+<?!= HtmlService.createHtmlOutputFromFile('JavaScript').getContent(); ?>
