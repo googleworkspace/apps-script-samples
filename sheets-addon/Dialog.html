@@ -1,0 +1,25 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet. -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<!-- Below is the HTML code that defines the dialog element structure. -->
+<div>
+  <p>This allows you to create, copy and clear sheets.</p>
+  <div class="block" id="dialog-elements">
+    <label for="dialog-action-select">
+      Select an action to perfom:
+    </label>
+    <select class="width-100" id="dialog-action-select">
+      <option value="create">Create a new Sheet</option>
+      <option value="copy">Copy the current Sheet</option>
+      <option value="clear">Clear the current Sheet</option>
+    </select>
+  </div>
+  <div class="block" id="dialog-button-bar">
+      <button class="action" id="dialog-execute-button">Execute</button>
+      <button id="dialog-cancel-button" onclick="google.script.host.close()">Cancel</button>
+  </div>
+  <div id="dialog-status"></div>
+</div>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+<?!= HtmlService.createHtmlOutputFromFile('DialogJavaScript').getContent(); ?>

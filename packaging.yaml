@@ -1,0 +1,15 @@
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:           DRAFT
+technologies:     [Google Apps]
+categories:       [Web Services]
+languages:        [Google Apps Script]
+solutions:        [Web Developer]
+github:           googlesamples/apps-script-templates
+difficulty:       NOVICE
+api_refs:         []
+dev_console_apis: []
+license:          apache2
