@@ -61,6 +61,7 @@ function onInstall(e) {
  */
 function showSidebar() {
   var ui = HtmlService.createHtmlOutputFromFile('Sidebar')
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle('Form Notifications');
   FormApp.getUi().showSidebar(ui);
 }
@@ -71,6 +72,7 @@ function showSidebar() {
  */
 function showAbout() {
   var ui = HtmlService.createHtmlOutputFromFile('About')
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setWidth(420)
       .setHeight(270);
   FormApp.getUi().showModalDialog(ui, 'About Form Notifications');
