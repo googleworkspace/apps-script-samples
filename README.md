@@ -2,24 +2,24 @@
 
 This script demonstrates a method of setting up a communication channel between
 a dialog and a sidebar in Apps Script. This helps solve the common problem
-of having your sidebar know when a dialog it spawned is complete, closed, etc.
+of having your sidebar know when a dialog is opened, is submitted, closed, etc.
 
-Unfortunately Apps Script doesn't support a direct communication channel
-across client-side code, nor does it support an eventing framework that allows
-the server to notify the client of the change. Therefore this solution relies on
-both the sidebar and dialog regularly polling the backend.
+With the introduction of the IFRAME sandbox mode, HtmlService UIs can take
+advantage of the
+[HTML5 localStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+The open source library [intercom.js](https://github.com/diy/intercom.js/)
+builds a messaging system on top of this API, allowing for dialogs and sidebars
+in the same browser to communicate with each other.
 
-An overview is the process is as follows:
+An overview of the process is as follows:
 
-* The sidebar requests a new dialog to be spawned.
+* The sidebar requests a new dialog to be opened.
 * The backend generates a new ID for the dialog, opens the dialog (passing in
   that ID as a template parameter), and sends the ID back to the sidebar.
-* The sidebar regularly polls the backend using the dialog's ID to check for a
-  state change.
-* The dialog regularly "checks in" with the backend, so that the backend knows
-  it's still open.
+* The sidebar listens for events on the dialog's intercom.js channel.
+* The dialog regularly "checks in" with the sidebar, resetting a
+  [timer](https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Timers).
 * When the user completes the dialog (by clicking either the "OK" or "Cancel"
-  button) it sends this status change to the backend.
-* If the backend notices that the dialog hasn't checked in for some time, it
-  changes it's status to "lost".
-* When the dialog notices a change in the dialog's status it stops polling.
+  button) it sends this status change to the sidebar.
+* If the sidebar's timer actually fires, that means the dialog hasn't checked in
+  recently, and it is considered "lost".
