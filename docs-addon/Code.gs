@@ -51,7 +51,8 @@ function onInstall(e) {
 function showSidebar() {
   var ui = HtmlService.createTemplateFromFile('Sidebar')
       .evaluate()
-      .setTitle(SIDEBAR_TITLE);
+      .setTitle(SIDEBAR_TITLE)
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
   DocumentApp.getUi().showSidebar(ui);
 }
 
@@ -63,7 +64,8 @@ function showDialog() {
   var ui = HtmlService.createTemplateFromFile('Dialog')
       .evaluate()
       .setWidth(400)
-      .setHeight(130);
+      .setHeight(150)
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
   DocumentApp.getUi().showModalDialog(ui, DIALOG_TITLE);
 }
 

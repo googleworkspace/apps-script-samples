@@ -14,11 +14,15 @@
  * limitations under the License.
  -->
 
-<!-- Use a templated HTML printing scriptlet to import common stylesheet. -->
-<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+<!DOCTYPE html>
 <html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
   <body>
-    <h1>
+    <cursor></cursor><h1>
     To read a specific folder's contents, include that folder's ID as
     a URL parameter: ?folderId=&lt;folder id&gt;. Otherwise the root folder
     will be read. Up to 20 files may be displayed here, in no particular order.
@@ -29,14 +33,13 @@
         Verify that you have permission to access this folder and that the specified folder ID (if any) is correct.
       </div>
     </div>
+    <!-- Store data passed to template here, so it is available to the
+     imported JavaScript. -->
+    <script>
+      var folderId = <?= folderId ?>;
+    </script>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+    <?!= HtmlService.createHtmlOutputFromFile('JavaScript').getContent(); ?>
   </body>
 </html>
-
-<!-- Store data passed to template here, so it is available to the
-     imported JavaScript. -->
-<script>
-  var folderId = <?= folderId ?>;
-</script>
-
-<!-- Use a templated HTML printing scriptlet to import JavaScript. -->
-<?!= HtmlService.createHtmlOutputFromFile('JavaScript').getContent(); ?>
