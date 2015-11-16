@@ -1,0 +1,170 @@
+<!-- Libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+// Constants.
+var REFRESH_WAIT_SECONDS = 1;
+var INACTIVITY_TIMEOUT_MINUTES = 2;
+
+// Global variables.
+var lastResult;
+var refreshOn = true;
+var lastChangedTime;
+var timeoutId;
+
+// On page load.
+$(function() {
+  $('#loading').hide();
+  refreshState();
+});
+
+/**
+ * Refreshes the state information in the sidebar.
+ */
+function refreshState() {
+  google.script.run.withFailureHandler(function(error) {
+    showError(error);
+    tick(null);
+  }).withSuccessHandler(function(result) {
+    hideError();
+    if (!lastResult || !jsonEquals(result.cursor, lastResult.cursor)) {
+      updateCursor(result.cursor);
+    }
+    if (!lastResult || !jsonEquals(result.selection, lastResult.selection)) {
+      updateSelection(result.selection);
+    }
+    tick(result);
+  }).getDocumentInfo();
+}
+
+/**
+ * Updates the cursor information in the sidebar.
+ * @param {Object} cursor The cursor information.
+ */
+function updateCursor(cursor) {
+  if (cursor) {
+    $('#cursor input').removeAttr('disabled');
+    updateElement('element-type', cursor.element.type);
+    updateElement('offset', cursor.offset);
+    updateElement('surrounding-text', cursor.surroundingText);
+    updateElement('surrounding-text-offset', cursor.surroundingTextOffset);
+  } else {
+    $('#cursor input').val('').attr('disabled', 'true');
+  }
+}
+
+/**
+ * Updates the selection information in the sidebar.
+ * @param {Object} selection The selection information.
+ */
+function updateSelection(selection) {
+  var tableBody = $('#selection table tbody');
+  tableBody.children().remove();
+  if (selection) {
+    selection.selectedElements.forEach(function(selectedElement) {
+      var row  = $('<tr>');
+      var data = [
+        selectedElement.element.type,
+        selectedElement.partial,
+        selectedElement.startOffset,
+        selectedElement.endOffsetInclusive
+      ];
+      data.forEach(function(value) {
+        row.append($('<td>').text(value));
+      });
+      tableBody.append(row);
+    });
+    tableBody.effect("highlight", { duration: 1500 });
+  } else {
+    tableBody.append($('<tr><td class="na" colspan="4">None</td></tr>'));
+  }
+}
+
+/**
+ * Shows an error message in the sidebar.
+ * @param {string} error The error returned by the server.
+ */
+function showError(error) {
+  $('#error').text(error).show();
+  $('#results').css('color', 'gray');
+}
+
+/**
+ * Hides any error message in the sidebar.
+ */
+function hideError() {
+  $('#error').hide();
+  $('#results').css('color', 'inherit');
+}
+
+/**
+ * Updates the state of the document and sets up the next refresh.
+ * @param {Object} result The last result, if any.
+ */
+function tick(result) {
+  if (result) {
+    if (!jsonEquals(result, lastResult)) {
+      lastChangedTime = new Date();
+    }
+    lastResult = result;
+  }
+  $('#lastupdated').text(new Date().toLocaleTimeString());
+  if (isInactive()) {
+    toggleRefresh();
+    lastResult = null;
+    lastChangedTime = null;
+  }
+  if (refreshOn) {
+    timeoutId = window.setTimeout(refreshState, REFRESH_WAIT_SECONDS * 1000);
+  }
+}
+
+/**
+ * Determines if the document is inactive.
+ * @return {Boolean} True if the document is inactive, false otherwise.
+ */
+function isInactive() {
+  var now = new Date();
+  return lastChangedTime && now.getTime() - lastChangedTime.getTime() > INACTIVITY_TIMEOUT_MINUTES * 60 * 1000;
+}
+
+/**
+ * Toggles whether or not automatic refreshing is on, and updated the button.
+ */
+function toggleRefresh() {
+  var toggle = $('#toggle');
+  if (refreshOn) {
+    refreshOn = false;
+    window.clearTimeout(timeoutId);
+    toggle.text(toggle.data('resumetext'));
+  } else {
+    refreshOn = true;
+    refreshState();
+    toggle.text(toggle.data('stoptext'));
+  }
+}
+
+/**
+ * Updates an element with a new value and highlights it if there is a change.
+ * @param {string} elementId The ID of the element to update.
+ * @param {string} value The new value of the element.
+ */
+function updateElement(elementId, value) {
+  var element = $(document.getElementById(elementId));
+  if (String(element.val()) != String(value)) {
+    element.val(value).effect("highlight", { duration: 1500 });
+  }
+}
+
+/**
+ * Determines if two Objects have the JSON structure.
+ * @param {Object} a The first object.
+ * @param {Object} b The second object.
+ * @return {Boolean} True if both objects have the same JSON structure, false otherwise.
+ */
+function jsonEquals(a, b) {
+  return JSON.stringify(a) == JSON.stringify(b);
+}
+</script>

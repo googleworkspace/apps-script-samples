@@ -1,0 +1,62 @@
+<!-- Replace these import links with links to files hosted on your own server -->
+<script src="//polymerstaticfilesfortesting.appspot.com/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/polymer/polymer.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/font-roboto/roboto.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-input/paper-input.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-button/paper-button.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="//polymerstaticfilesfortesting.appspot.com/bower_components/paper-input/paper-input-decorator.html">
+
+<?!= include('Sidebar.css.html'); ?>
+
+<div class="sidebar branding-below">
+  <div class="col-contain">
+    <div class="col">
+      <h3>Selected text</h3>
+      <paper-radio-group id="origin" selected="auto">
+        <paper-radio-button name="auto" id="radio-origin-auto" label="Auto-detect"></paper-radio-button>
+        <paper-radio-button name="en" id="radio-origin-en" label="English"></paper-radio-button>
+        <paper-radio-button name="fr" id="radio-origin-fr" label="French"></paper-radio-button>
+        <paper-radio-button name="de" id="radio-origin-de" label="German"></paper-radio-button>
+        <paper-radio-button name="ja" id="radio-origin-ja" label="Japanese"></paper-radio-button>
+        <paper-radio-button name="es" id="radio-origin-es" label="Spanish"></paper-radio-button>
+      </paper-radio-group>
+    </div>
+    <div class="col">
+      <h3>Translate into</h3>
+      <paper-radio-group id="dest" selected="ja">
+        <paper-radio-button name="en" id="radio-dest-en" label="English"></paper-radio-button>
+        <paper-radio-button name="fr" id="radio-dest-fr" label="French"></paper-radio-button>
+        <paper-radio-button name="de" id="radio-dest-de" label="German"></paper-radio-button>
+        <paper-radio-button name="ja" id="radio-dest-ja" label="Japanese"></paper-radio-button>
+        <paper-radio-button name="es" id="radio-dest-es" label="Spanish"></paper-radio-button>
+      </paper-radio-group>
+    </div>
+  </div>
+
+  <paper-input-decorator floatingLabel label="Translation">
+    <textarea class="width-100" id="translated-text" rows="8"></textarea>
+  </paper-input-decorator>
+
+
+  <paper-checkbox id="save-prefs" label="Use these languages by default"></paper-checkbox>
+
+
+  <div id="button-bar">
+    <paper-button class="colored" id="run-translation">Translate</paper-button>
+    <paper-button id="insert-text">Insert</paper-button>
+  </div>
+
+</div>
+
+<div class="sidebar bottom">
+  <img alt="Add-on logo" class="logo" width="27" height="27"
+      src="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/translate-logo-small.png">
+  <span class="gray branding-text">Translate sample by Google</span>
+</div>
+
+<?!= include('Sidebar.js.html'); ?>
+
