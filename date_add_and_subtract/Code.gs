@@ -155,7 +155,7 @@ function multimap(args, func) {
   // that should apply to each row/column in the other sets.
   lengths.forEach(function(length) {
     if (length != max && length > 1) {
-      throw 'All input ranges must be the same size: ' + length;
+      throw 'All input ranges must be the same size: ' + max;
     }
   });
 
