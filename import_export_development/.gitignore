@@ -1,0 +1,22 @@
+# blog sample files and dirs #
+##############################
+#This is an example of a file pattern for your personal dev files for a /dev deployment
+#Commented here so that a sample file can be included in the blog post repository
+#TODO: (sample user) Uncomment to prevent your personal override/test files from being added to git.
+#/**/debug.local.*
+#TODO: (sample user) Uncomment to prevent the upload tool's staging folders from being added to git.
+#build
+
+# npm files and dirs #
+######################
+node_modules
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
