@@ -18,6 +18,7 @@ To get the initial setup working for you, perform the following steps. In a real
 3. Create a new standalone [Google Apps Script](https://script.google.com) project, and copy the ID of the script. The file ID is found in the URL to the script project:
 	script.google.com/a/macros/google.com/d/***DRIVE_FILE_ID***/edit
 4. Perform the following commands:
+
     ```
     mkdir build
     cd build
@@ -27,6 +28,7 @@ To get the initial setup working for you, perform the following steps. In a real
     cd ../..
     gulp upload-latest --env dev
     ```
+
 5. Refresh your Apps Script project. You should now see a copy of some of the files from the local source location.
 
 You can run the code either by publishing it as a web app, or testing it as an addon (It just counts the number of sheets in your spreadsheet). Because the code finds a valid Spreadsheet ID in the configuration, it uses that instead of `SpreadsheetApp.getActiveSpreadsheet`.
