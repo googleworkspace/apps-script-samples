@@ -19,8 +19,8 @@ var jshint = require('gulp-jshint');
 var shell = require('gulp-shell');
 var minimist = require('minimist');
 var rename = require('gulp-rename');
-var clean = require('gulp-clean');
 var debug = require('gulp-debug');
+var del = require('del');
 
 // minimist structure and defaults for this task configuration
 var knownOptions = {
@@ -104,15 +104,17 @@ function copyEnvironmentSpecific() {
 
 // Utility tasks
 gulp.task('clean-deployment', function(cb) {
-  return gulp.src(dstRoot + '/*.*', {read: false})
-      .pipe(clean());
+  return del([
+    dstRoot + '/*.*'
+  ]);
 });
 
 gulp.task('clean-deployments', function(cb) {
-  return gulp.src(['build/dev/src/*.*',
-                   'build/tst/src/*.*' ,
-                   'build/prd/src/*.*'], {read: false})
-      .pipe(clean());
+  return del([
+    'build/dev/src/*.*',
+    'build/tst/src/*.*' ,
+    'build/prd/src/*.*'
+  ]);
 });
 
 gulp.task('lint', function() {
