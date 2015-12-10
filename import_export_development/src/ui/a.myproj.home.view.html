@@ -1,0 +1,20 @@
+<html>
+  <head>
+  <link rel="stylesheet"
+      href="https://ssl.gstatic.com/docs/script/css/add-ons1.css" />
+  <style>
+    <?!= include('a.myproj.styles.css'); ?>
+    </style>
+  </head>
+
+  <body>
+    <div class="sample-container">
+      <button class="action" id="runServer" onclick="runServer_onclick();">Server</button>
+      <button id="runClient" onclick="runClient_onclick();">Client</button>
+    </div>
+  </body>
+  <script>
+    var mode = '<?!= mode ?>';
+    <?!= include('a.myproj.home.controller.client.js'); ?>
+  </script>
+</html>

@@ -1,0 +1,29 @@
+{
+  "author": "mhessinger@google.com",
+  "dependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-jshint": "^1.12.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-shell": "^0.5.1",
+    "jshint-stylish": "^2.0.1",
+    "minimist": "^1.2.0",
+    "node-google-apps-script": "^1.1.3",
+    "vinyl-paths": "^2.1.0"
+  },
+  "description": "A sample showing command line tool techniques that can be used when developing for Google Apps Script projects.",
+  "keywords": [
+    "google",
+    "apps-script"
+  ],
+  "license": "SEE LICENSE IN FILE license.txt",
+  "main": "gulpfile.js",
+  "name": "dev-with-apps-script",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tbd"
+  },
+  "scripts": {},
+  "version": "1.0.0"
+}
