@@ -65,7 +65,7 @@ function assertNotNull_(value, opt_message) {
  * @param {string=} opt_message The message to include in the error
  */
 function assertNotNullOrEmpty_(value, opt_message) {
-  assertNotNull(value, message);
+  assertNotNull(value, opt_message);
   if (value === '') {
     var message = opt_message || 'The value is empty.';
     throw new Error(message);
