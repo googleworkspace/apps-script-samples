@@ -1,0 +1,26 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+    <style name="LangSpinners" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/spinner_left_pad</item>
+        <item name="android:paddingLeft">@dimen/spinner_left_pad</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_margin</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="TextViews">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/text_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/text_vertical_margin</item>
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+</resources>
