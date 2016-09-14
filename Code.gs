@@ -166,7 +166,7 @@ function adjustFormSubmitTrigger() {
 }
 
 /**
- * Responds to a form submission event if a onFormSubmit trigger has been
+ * Responds to a form submission event if an onFormSubmit trigger has been
  * enabled.
  *
  * @param {Object} e The event parameter created by a form
@@ -185,12 +185,12 @@ function respondToFormSubmit(e) {
       ScriptApp.AuthorizationStatus.REQUIRED) {
     // Re-authorization is required. In this case, the user needs to be alerted
     // that they need to reauthorize; the normal trigger action is not
-    // conducted, since it authorization needs to be provided first. Send at
+    // conducted, since authorization needs to be provided first. Send at
     // most one 'Authorization Required' email a day, to avoid spamming users
     // of the add-on.
     sendReauthorizationRequest();
   } else {
-    // All required authorizations has been granted, so continue to respond to
+    // All required authorizations have been granted, so continue to respond to
     // the trigger event.
 
     // Check if the form creator needs to be notified; if so, construct and
@@ -279,7 +279,7 @@ function sendCreatorNotification() {
 }
 
 /**
- * Sends out respondent notificiation emails.
+ * Sends out respondent notification emails.
  *
  * @param {FormResponse} response FormResponse object of the event
  *      that triggered this notification
