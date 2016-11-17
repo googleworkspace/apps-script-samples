@@ -6,7 +6,7 @@ that provides custom functions for date manipulation. The script uses the
 [Moment.js](http://momentjs.com/) JavaScript library, which is included directly
 in the Apps Script project.
 
-![Date Add and Subtract screenshot](https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/date_add_and_subtract.png)
+![Date Add and Subtract screenshot](screenshot.png)
 
 ## Try it out
 
