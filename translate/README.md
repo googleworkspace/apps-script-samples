@@ -9,4 +9,4 @@ for Google Docs Add-ons, and has since been updated to use
 [Material design](http://www.google.com/design/spec/material-design/introduction.html)
 as implemented by [Polymer](https://www.polymer-project.org/).
 
-![Translate screenshot](https://googledrive.com/host/0B4YSkkItiZaHXzdFQ1RWbWZidWM/translate_screenshot.png)
+![Translate screenshot](screenshot.png)
