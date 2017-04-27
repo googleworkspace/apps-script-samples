@@ -49,6 +49,7 @@ function SheetsUtilitiesLibrary(config) {
 SheetsUtilitiesLibrary.prototype.getCurrentActiveSpreadsheet = function() {
   var loadLocal = ((typeof this.config.sheets !== 'undefined') &&
       (typeof this.config.sheets.debugSpreadsheetId !== 'undefined') &&
+      (this.config.sheets.debugSpreadsheetId !== null) &&
       (this.config.sheets.debugSpreadsheetId !== ''));
   if (loadLocal) {
     return SpreadsheetApp.openById(this.config.sheets.debugSpreadsheetId);
