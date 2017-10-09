@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+      .logo { vertical-align: middle; }
+      ul { list-style-type: none; padding: 0; }
+      h4 { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <form class="sidebar branding-below">
+      <h4>Translate selected slides into:</h4>
+      <ul id="languages"></ul>
+      <div class="block" id="button-bar">
+        <button class="blue" id="run-translation">Translate</button>
+      </div>
+      <h5 class="error" id="error"></h5>
+    </form>
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo"
+        src="https://www.gstatic.com/images/branding/product/1x/translate_48dp.png" width="27" height="27">
+      <span class="gray branding-text">Translate sample by Google</span>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+      $(function() {
+        // Add an input radio button for every language.
+        var languages = {
+          ar: 'Arabic',
+          zh: 'Chinese',
+          en: 'English',
+          fr: 'French',
+          de: 'German',
+          hi: 'Hindi',
+          ja: 'Japanese',
+          pt: 'Portuguese',
+          es: 'Spanish'
+        };
+        var languageList = Object.keys(languages).map(function(id) {
+          return $('<li>').html([
+            $('<input>')
+                .attr('type', 'radio')
+                .attr('name', 'dest')
+                .attr('id', 'radio-dest-' + id)
+                .attr('value', id),
+            $('<label>')
+                .attr('for', 'radio-dest-' + id)
+                .html(languages[id])
+          ]);
+        });
+
+        $('#run-translation').click(runTranslation);
+        $('#languages').html(languageList);
+      });
+
+      /**
+       * Runs a server-side function to translate the text on all slides.
+       */
+      function runTranslation() {
+        this.disabled = true;
+        $('#error').text('');
+        google.script.run
+            .withSuccessHandler(function(numTranslatedElements, element) {
+              element.disabled = false;
+              if (numTranslatedElements === 0) {
+                $('#error').empty()
+                    .append('Did you select elements to translate?')
+                    .append('<br/>')
+                    .append('Please select slides or individual elements.');
+              }
+              return false;
+             })
+            .withFailureHandler(function(msg, element) {
+              element.disabled = false;
+              $('#error').text('Something went wrong. Please check the add-on logs.');
+              return false;
+            })
+            .withUserObject(this)
+            .translateSelectedElements($('input[name=dest]:checked').val());
+      }
+    </script>
+  </body>
+</html>
