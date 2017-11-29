@@ -9,7 +9,7 @@ and
 [`Selection`](https://developers.google.com/apps-script/reference/document/selection)
 classes of the API.
 
-![Cursor Inspector screenshot](https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/cursor_inspector.png)
+![Cursor Inspector screenshot](screenshot.png)
 
 ## Try it out
 
@@ -17,5 +17,3 @@ For your convience we have deployed the script into a Google Docs
 [document](https://docs.google.com/document/d/1v6S7IkDL_YIaVn1rBcVbqFr3rbNUX9_kLfFc00WTtx8/view)
 that you can copy and use. Follow the instructions in the document to get
 started.
-
-[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/cursor_inspector)](https://github.com/igrigorik/ga-beacon)

@@ -7,7 +7,7 @@ read and write access to your data in
 and demonstrates some common patterns and best practices to use when developing
 user interfaces.
 
-![Simple tasks screenshot](https://googledrive.com/host/0BwzA1Orbvy5WV0tUQl9WX0FhRTA/simple_tasks.png)
+![Simple tasks screenshot](screenshot.png)
 
 ## Try it out
 
@@ -38,5 +38,3 @@ scratch, follow the steps below.
 3. Save a new version of your script and publish it as a web app that runs as
    the **User acessing the web app**.
    ([instructions available here](https://developers.google.com/apps-script/execution_web_apps)).
-
-[![Analytics](https://ga-beacon.appspot.com/UA-42085206-1/google-apps-script-samples/simple_tasks)](https://github.com/igrigorik/ga-beacon)
