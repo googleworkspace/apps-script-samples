@@ -44,7 +44,7 @@ function getSelectedText() {
   var selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
     var text = [];
-    var elements = selection.getSelectedElements();
+    var elements = selection.getRangeElements();
     for (var i = 0; i < elements.length; i++) {
       if (elements[i].isPartial()) {
         var element = elements[i].getElement().asText();
@@ -138,7 +138,7 @@ function insertText(newText) {
   var selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
     var replaced = false;
-    var elements = selection.getSelectedElements();
+    var elements = selection.getRangeElements();
     if (elements.length == 1 &&
         elements[0].getElement().getType() ==
         DocumentApp.ElementType.INLINE_IMAGE) {

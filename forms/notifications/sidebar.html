@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <style>
+    .branding-below {
+      bottom: 54px;
+      top: 0;
+    }
+    .branding-text {
+      left: 7px;
+      position: relative;
+      top: 3px;
+    }
+    .logo {
+      vertical-align: middle;
+    }
+    .width-100 {
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-box-sizing : border-box;‌
+      -moz-box-sizing : border-box;
+    }
+    label {
+      font-weight: bold;
+    }
+    #creator-options,
+    #respondent-options {
+      background-color: #eee;
+      border-color: #eee;
+      border-width: 5px;
+      border-style: solid;
+      display: none;
+    }
+    #creator-email,
+    #respondent-email,
+    #button-bar,
+    #submit-subject {
+      margin-bottom: 10px;
+    }
+
+    #response-step {
+      display: inline;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar branding-below">
+      <form>
+        <div class="block">
+          <input type="checkbox" id="creator-notify">
+          <label for="creator-notify">Notify me</label>
+        </div>
+        <div class="block form-group" id="creator-options">
+          <label for="creator-email">
+            My email addresses (comma-separated)
+          </label>
+          <input type="text" class="width-100" id="creator-email">
+          <label for="response-step">Send notifications after every</label>
+          <input type="number" id="response-step" value="10"
+              min="1" max="99999"> responses (default 10)
+        </div>
+
+        <div class="block">
+          <input type="checkbox" id="respondent-notify">
+          <label for="respondent-notify">Notify respondents</label>
+        </div>
+        <div class="block form-group" id="respondent-options">
+          <label for="respondent-email">
+            Which question asks for their email?
+          </label>
+          <select class="width-100" id="respondent-email"></select>
+          <label for="submit-subject">
+            Notification email subject:
+          </label>
+          <input type="text" class="width-100" id="submit-subject">
+          <label for="submit-notice">Notification email body:</label>
+          <textarea rows="8" cols="40" id="submit-notice"
+              class="width-100"></textarea>
+        </div>
+
+        <div class="block" id="button-bar">
+          <button class="action" id="save-settings">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo" width="25"
+          src="https://g-suite-documentation-images.firebaseapp.com/images/newFormNotificationsicon.png">
+      <span class="gray branding-text">Form Notifications by Google</span>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    </script>
+    <script>
+      /**
+       * On document load, assign required handlers to each element,
+       * and attempt to load any saved settings.
+       */
+      $(function() {
+        $('#save-settings').click(saveSettingsToServer);
+        $('#creator-notify').click(toggleCreatorNotify);
+        $('#respondent-notify').click(toggleRespondentNotify);
+        $('#response-step').change(validateNumber);
+        google.script.run
+           .withSuccessHandler(loadSettings)
+           .withFailureHandler(showStatus)
+           .withUserObject($('#button-bar').get())
+           .getSettings();
+      });
+
+      /**
+       * Callback function that populates the notification options using
+       * previously saved values.
+       *
+       * @param {Object} settings The saved settings from the client.
+       */
+      function loadSettings(settings) {
+        $('#creator-email').val(settings.creatorEmail);
+        $('#response-step').val(!settings.responseStep ?
+           10 : settings.responseStep);
+        $('#submit-subject').val(!settings.responseSubject ?
+           'Thank you for filling out our form!' :
+           settings.responseSubject);
+        $('#submit-notice').val(!settings.responseText ?
+           'Thank you for responding to our form!' :
+           settings.responseText);
+
+        if (settings.creatorNotify === 'true') {
+          $('#creator-notify').prop('checked', true);
+          $('#creator-options').show();
+        }
+
+        if (settings.respondentNotify === 'true') {
+          $('#respondent-notify').prop('checked', true);
+          $('#respondent-options').show();
+        }
+
+        // Fill the respondent email select box with the
+        // titles given to the form's text Items. Also include
+        // the form Item IDs as values so that they can be
+        // easily recovered during the Save operation.
+        for (var i = 0; i < settings.textItems.length; i++) {
+          var option = $('<option>').attr('value', settings.textItems[i]['id'])
+              .text(settings.textItems[i]['title']);
+          $('#respondent-email').append(option);
+        }
+        $('#respondent-email').val(settings.respondentEmailItemId);
+      }
+
+      /**
+       * Toggles the visibility of the form creator notification options.
+       */
+      function toggleCreatorNotify() {
+        $('#status').remove();
+        if ($('#creator-notify').is(':checked')) {
+          $('#creator-options').show();
+        } else {
+          $('#creator-options').hide();
+        }
+      }
+
+      /**
+       * Toggles the visibility of the form sumbitter notification options.
+       */
+      function toggleRespondentNotify() {
+        $('#status').remove();
+        if($('#respondent-notify').is(':checked')) {
+          $('#respondent-options').show();
+        } else {
+          $('#respondent-options').hide();
+        }
+      }
+
+      /**
+       * Ensures that the entered step is a number between 1
+       * and 99999, inclusive.
+       */
+      function validateNumber() {
+        var value = $('#response-step').val();
+        if (!value) {
+          $('#response-step').val(10);
+        } else if (value < 1) {
+          $('#response-step').val(1);
+        } else if (value > 99999) {
+          $('#response-step').val(99999);
+        }
+      }
+
+      /**
+       * Collects the options specified in the add-on sidebar and sends them to
+       * be saved as Properties on the server.
+       */
+      function saveSettingsToServer() {
+        this.disabled = true;
+        $('#status').remove();
+        var creatorNotify = $('#creator-notify').is(':checked');
+        var respondentNotify = $('#respondent-notify').is(':checked');
+        var settings = {
+          'creatorNotify': creatorNotify,
+          'respondentNotify': respondentNotify
+        };
+
+        // Only save creator options if notify is turned on
+        if (creatorNotify) {
+          settings.responseStep = $('#response-step').val();
+          settings.creatorEmail = $('#creator-email').val().trim();
+
+          // Abort save if entered email is blank
+          if (!settings.creatorEmail) {
+            showStatus('Enter an owner email', $('#button-bar'));
+            this.disabled = false;
+            return;
+          }
+        }
+
+        // Only save respondent options if notify is turned on
+        if (respondentNotify) {
+          settings.respondentEmailItemId = $('#respondent-email').val();
+          settings.responseSubject = $('#submit-subject').val();
+          settings.responseText = $('#submit-notice').val();
+        }
+
+        // Save the settings on the server
+        google.script.run
+            .withSuccessHandler(
+              function(msg, element) {
+                showStatus('Saved settings', $('#button-bar'));
+                element.disabled = false;
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showStatus(msg, $('#button-bar'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .saveSettings(settings);
+      }
+
+      /**
+       * Inserts a div that contains an status message after a given element.
+       *
+       * @param {String} msg The status message to display.
+       * @param {Object} element The element after which to display the Status.
+       */
+      function showStatus(msg, element) {
+         var div = $('<div>')
+             .attr('id', 'status')
+             .attr('class','error')
+             .text(msg);
+        $(element).after(div);
+      }
+    </script>
+  </body>
+</html>
