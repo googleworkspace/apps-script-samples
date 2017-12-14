@@ -52,12 +52,22 @@ function listActiveCampaigns() {
 // [START createAdvertiserAndCampaign]
 function createAdvertiserAndCampaign() {
   var profileId = '1234567'; // Replace with your profile ID.
+
   var advertiser = {
     name: 'Example Advertiser',
     status: 'APPROVED'
   };
   var advertiserId = DoubleClickCampaigns.Advertisers
       .insert(advertiser, profileId).id;
+  
+  var landingPage = {
+    advertiserId: advertiserId,
+    archived: false,
+    name: 'Example landing page',
+    url: 'https://www.google.com'
+  }
+  var landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
+      .insert(landingPage, profileId).id;
 
   var campaignStart = new Date();
   // End campaign after 1 month.
@@ -65,12 +75,12 @@ function createAdvertiserAndCampaign() {
   campaignEnd.setMonth(campaignEnd.getMonth() + 1);
 
   var campaign = {
-    name: 'Example campaign',
     advertiserId: advertiserId,
+    defaultLandingPageId: landingPageId,
+    name: 'Example campaign',
     startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
     endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
   };
-  DoubleClickCampaigns.Campaigns.insert(campaign, profileId,
-      'Example Landing Page Name', 'http://www.example.com');
+  DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
 }
 // [END createAdvertiserAndCampaign]
