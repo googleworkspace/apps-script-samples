@@ -11,3 +11,8 @@ Various sample code and projects for the Google Apps Script platform. Learn more
 * Forms: Forms notification add-on
 * Sheets: Sheets add-ons and custom functions
 * Slides: Sidebar and translate add-ons
+
+## Clone using the `clasp` command line tool
+
+Learn how to clone, pull, and push Apps Script projects on the command line
+using [clasp](https://developers.google.com/apps-script/guides/clasp).
