@@ -23,7 +23,7 @@ function onInstall(event) {
  */
 function showSidebar() {
   var ui = HtmlService
-      .createHtmlOutputFromFile('Sidebar')
+      .createHtmlOutputFromFile('sidebar')
       .setTitle('Translate');
   SlidesApp.getUi().showSidebar(ui);
 }
