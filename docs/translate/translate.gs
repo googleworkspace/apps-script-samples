@@ -28,7 +28,7 @@ function onInstall(e) {
  * Opens a sidebar in the document containing the add-on's user interface.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile('Sidebar').evaluate()
+  var ui = HtmlService.createTemplateFromFile('sidebar').evaluate()
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle('Translate');
   DocumentApp.getUi().showSidebar(ui);
