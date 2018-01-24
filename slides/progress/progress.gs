@@ -1,5 +1,5 @@
-
-c Adds progress bars to a presentation.
+/**
+ * @OnlyCurrentDoc Adds progress bars to a presentation.
  */
 var BAR_ID = 'PROGRESS_BAR_ID';
 var BAR_HEIGHT = 10; // px
