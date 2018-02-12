@@ -1,5 +1,17 @@
 /**
+ * @OnlyCurrentDoc
+ *
+ * The above comment directs Apps Script to limit the scope of file
+ * access for this add-on. It specifies that this add-on will only
+ * attempt to read or modify the files in which the add-on is used,
+ * and not all of the user's files. The authorization request message
+ * presented to users will reflect this limited scope.
+ */
+
+/**
  * Creates a menu entry in the Google Docs UI when the document is opened.
+ * This method is only used by the regular add-on, and is never called by
+ * the mobile add-on version.
  *
  * @param {object} e The event parameter for a simple onOpen trigger. To
  *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
@@ -13,6 +25,8 @@ function onOpen(e) {
 
 /**
  * Runs when the add-on is installed.
+ * This method is only used by the regular add-on, and is never called by
+ * the mobile add-on version.
  *
  * @param {object} e The event parameter for a simple onInstall trigger. To
  *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
@@ -26,10 +40,11 @@ function onInstall(e) {
 
 /**
  * Opens a sidebar in the document containing the add-on's user interface.
+ * This method is only used by the regular add-on, and is never called by
+ * the mobile add-on version.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile('sidebar').evaluate()
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+  var ui = HtmlService.createHtmlOutputFromFile('sidebar')
       .setTitle('Translate');
   DocumentApp.getUi().showSidebar(ui);
 }
@@ -44,8 +59,8 @@ function getSelectedText() {
   var selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
     var text = [];
-    var elements = selection.getRangeElements();
-    for (var i = 0; i < elements.length; i++) {
+    var elements = selection.getSelectedElements();
+    for (var i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
         var element = elements[i].getElement().asText();
         var startIndex = elements[i].getStartOffset();
@@ -60,13 +75,13 @@ function getSelectedText() {
           var elementText = element.asText().getText();
           // This check is necessary to exclude images, which return a blank
           // text element.
-          if (elementText != '') {
+          if (elementText) {
             text.push(elementText);
           }
         }
       }
     }
-    if (text.length == 0) {
+    if (!text.length) {
       throw 'Please select some text.';
     }
     return text;
@@ -78,51 +93,45 @@ function getSelectedText() {
 /**
  * Gets the stored user preferences for the origin and destination languages,
  * if they exist.
+ * This method is only used by the regular add-on, and is never called by
+ * the mobile add-on version.
  *
  * @return {Object} The user's origin and destination language preferences, if
  *     they exist.
  */
 function getPreferences() {
   var userProperties = PropertiesService.getUserProperties();
-  var languagePrefs = {
+  return {
     originLang: userProperties.getProperty('originLang'),
     destLang: userProperties.getProperty('destLang')
   };
-  return languagePrefs;
 }
 
 /**
  * Gets the user-selected text and translates it from the origin language to the
  * destination language. The languages are notated by their two-letter short
- * form. For example, English is "en", and Spanish is "es". The origin language
- * may be specified as "auto" to indicate that Google Translate should
+ * form. For example, English is 'en', and Spanish is 'es'. The origin language
+ * may be specified as an empty string to indicate that Google Translate should
  * auto-detect the language.
  *
  * @param {string} origin The two-letter short form for the origin language.
  * @param {string} dest The two-letter short form for the destination language.
  * @param {boolean} savePrefs Whether to save the origin and destination
  *     language preferences.
- * @return {string} The result of the translation.
+ * @return {Object} Object containing the original text and the result of the
+ *     translation.
  */
-function runTranslation(origin, dest, savePrefs) {
-  var text = getSelectedText();
-  if (savePrefs == true) {
-    var userProperties = PropertiesService.getUserProperties();
-    userProperties.setProperty('originLang', origin);
-    userProperties.setProperty('destLang', dest);
+function getTextAndTranslation(origin, dest, savePrefs) {
+  if (savePrefs) {
+    PropertiesService.getUserProperties()
+        .setProperty('originLang', origin)
+        .setProperty('destLang', dest);
   }
-
-  // The Translate service expects an empty string to signify auto-detect.
-  if (origin == "auto") {
-    origin = "";
-  }
-
-  var translated = [];
-  for (var i = 0; i < text.length; i++) {
-    translated.push(LanguageApp.translate(text[i], origin, dest));
-  }
-
-  return translated.join('\n');
+  var text = getSelectedText().join('\n');
+  return {
+    text: text,
+    translation: translateText(text, origin, dest)
+  };
 }
 
 /**
@@ -138,19 +147,16 @@ function insertText(newText) {
   var selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
     var replaced = false;
-    var elements = selection.getRangeElements();
-    if (elements.length == 1 &&
-        elements[0].getElement().getType() ==
+    var elements = selection.getSelectedElements();
+    if (elements.length === 1 && elements[0].getElement().getType() ===
         DocumentApp.ElementType.INLINE_IMAGE) {
       throw "Can't insert text into an image.";
     }
-    for (var i = 0; i < elements.length; i++) {
+    for (var i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
         var element = elements[i].getElement().asText();
         var startIndex = elements[i].getStartOffset();
         var endIndex = elements[i].getEndOffsetInclusive();
-
-        var remainingText = element.getText().substring(endIndex + 1);
         element.deleteText(startIndex, endIndex);
         if (!replaced) {
           element.insertText(startIndex, newText);
@@ -160,6 +166,7 @@ function insertText(newText) {
           // want to copy this partial text to the previous element so we don't
           // have a line-break before the last partial.
           var parent = element.getParent();
+          var remainingText = element.getText().substring(endIndex + 1);
           parent.getPreviousSibling().asText().appendText(remainingText);
           // We cannot remove the last paragraph of a doc. If this is the case,
           // just remove the text within the last paragraph instead.
@@ -210,8 +217,20 @@ function insertText(newText) {
   }
 }
 
-// Helper function that puts external JS / CSS into the HTML file.
-function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename)
-      .getContent();
+/**
+ * Given text, translate it from the origin language to the destination
+ * language. The languages are notated by their two-letter short form. For
+ * example, English is 'en', and Spanish is 'es'. The origin language may be
+ * specified as an empty string to indicate that Google Translate should
+ * auto-detect the language.
+ *
+ * @param {string} text text to translate.
+ * @param {string} origin The two-letter short form for the origin language.
+ * @param {string} dest The two-letter short form for the destination language.
+ * @return {string} The result of the translation, or the original text if
+ *     origin and dest languages are the same.
+ */
+function translateText(text, origin, dest) {
+  if (origin === dest) return text;
+  return LanguageApp.translate(text, origin, dest);
 }
