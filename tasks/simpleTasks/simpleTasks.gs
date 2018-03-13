@@ -17,7 +17,7 @@
  * @return {HtmlOutput} The HTML page to be served.
  */
 function doGet() {
-  return HtmlService.createTemplateFromFile('Page').evaluate()
+  return HtmlService.createTemplateFromFile('page').evaluate()
       .setTitle('Simple Tasks')
       .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 }
