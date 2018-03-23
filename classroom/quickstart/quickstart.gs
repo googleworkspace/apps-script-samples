@@ -1,6 +1,7 @@
 /**
  * Lists 10 course names and ids.
  */
+// [START classroom_quickstart]
 function listCourses() {
   var optionalArgs = {
     pageSize: 10
@@ -16,3 +17,4 @@ function listCourses() {
     Logger.log('No courses found.');
   }
 }
+// [END classroom_quickstart]
