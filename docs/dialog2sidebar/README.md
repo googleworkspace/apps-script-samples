@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-# Google Apps Script Samples
-
-Various sample code and projects for the Google Apps Script platform. Learn more at
-[https://developers.google.com/apps-script](https://developers.google.com/apps-script).
-
-* Advanced: Apps Script's advanced services
-* Android: Android add-ons
-* Calendar: Create a vacation calendar
-* Docs: Cursor inspector and translate add-ons
-* Gmail: Sending mail and mailmerge
-* Forms: Forms notification add-on
-* Sheets: Sheets add-ons and custom functions
-* Slides: Sidebar and translate add-ons
-
-## Clone using the `clasp` command line tool
-
-Learn how to clone, pull, and push Apps Script projects on the command line
-using [clasp](https://developers.google.com/apps-script/guides/clasp).
-=======
 # Dialog to Sidebar Communication in Apps Script
 
 This script demonstrates a method of setting up a communication channel between
@@ -43,4 +23,3 @@ An overview of the process is as follows:
   button) it sends this status change to the sidebar.
 * If the sidebar's timer actually fires, that means the dialog hasn't checked in
   recently, and it is considered "lost".
->>>>>>> af25ecfdf4549e99795f3e867c9b890024bba66c

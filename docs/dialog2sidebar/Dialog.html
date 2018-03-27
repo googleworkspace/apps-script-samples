@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html>
+  <head>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+  </head>
+  <body>
+    <form onSubmit="onSubmit(); return false;">
+      <p>Content goes here...</p>
+      <section class="button-bar">
+        <input type="submit" id="type" class="action" value="Submit" />
+        <button onclick="cancel(); return false;">Cancel</button>
+      </section>
+    </form>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <?!= include('Intercom.js'); ?>
+    <script>
+      /**
+       * The ID of this dialog. This is set once when the template is rendered.
+       */
+      var DIALOG_ID = '<?= dialogId ?>';
+
+      /**
+       * How often to check-in with the server, in milliseconds.
+       */
+      var CHECKIN_INTERVAL_MS = 500;
+
+      /**
+       * Instance of the Intercom.js library.
+       */
+      var intercom = Intercom.getInstance();
+
+      // Sets up an interval to check-in with the server every few seconds, so we can tell
+      // if it's been X-ed out.
+      window.setInterval(function() {
+        intercom.emit(DIALOG_ID, 'checkIn');
+      }, CHECKIN_INTERVAL_MS);
+
+      /**
+       * Runs when the form is submitted.
+       */
+      function onSubmit() {
+        // Here is where you would add custom logic specific to your form.
+        // You may need to make additional google.script.run calls to store various information
+        // collected in the dialog.
+        intercom.emit(DIALOG_ID, 'done');
+        close();
+      }
+
+      /**
+       * Runs when the cancel button is clicked.
+       */
+      function cancel() {
+        intercom.emit(DIALOG_ID, 'aborted');
+        close();
+      }
+
+      /**
+       * Closes the dialog.
+       */
+      function close() {
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html>

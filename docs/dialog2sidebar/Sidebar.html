@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html>
+  <head>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+  </head>
+  <body>
+    <div class="sidebar">
+      <button id="open" class="action" onclick="openDialog();">Open Dialog</button>
+      <pre id="output"></pre>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <?!= include('Intercom.js'); ?>
+    <script>
+      /**
+       * How long to wait for the dialog to check-in before assuming it's been
+       * closed, in milliseconds.
+       */
+      var DIALOG_TIMEOUT_MS = 2000;
+
+      /**
+       * Holds a mapping from dialog ID to the ID of the timeout that is used to
+       * check if it was lost. This is needed so we can cancel the timeout when
+       * the dialog is closed.
+       */
+      var timeoutIds = {};
+
+      /**
+       * Instance of the Intercom.js library.
+       */
+      var intercom = Intercom.getInstance();
+
+      /**
+       * Open the dialog.
+       */
+      function openDialog() {
+        google.script.run.withSuccessHandler(onDialogOpened)
+            .withFailureHandler(onError)
+            .openDialog();
+      }
+
+      /**
+       * Callback to run after the dialog has been opened.
+       * @param {string} dialogId The ID of the dialog.
+       */
+      function onDialogOpened(dialogId) {
+        $('#output').append('Dialog opened\n');
+        // Setup event listeners.
+        intercom.on(dialogId, function(state) {
+          switch(state) {
+            case 'done':
+              $('#output').append('Dialog submitted.\n');
+              forget(dialogId);
+              break;
+            case 'aborted':
+              $('#output').append('Dialog cancelled.\n');
+              forget(dialogId);
+              break;
+            case 'checkIn':
+              forget(dialogId);
+              watch(dialogId);
+              break;
+            case 'lost':
+              $('#output').append('Dialog lost.\n');
+              break;
+            default:
+              throw 'Unknown dialog state: ' + state;
+          }
+        });
+      }
+
+      function onError(exception) {
+        $('#output').append('Error: ' + exception + '\n');
+      }
+
+      /**
+       * Watch the given dialog, to detect when it's been X-ed out.
+       * @param {string} dialogId The ID of the dialog to watch.
+       */
+      function watch(dialogId) {
+        timeoutIds[dialogId] = window.setTimeout(function() {
+          intercom.emit(dialogId, 'lost');
+        }, DIALOG_TIMEOUT_MS);
+      }
+
+      /**
+       * Stop watching the given dialog.
+       * @param {string} dialogId The ID of the dialog to watch.
+       */
+      function forget(dialogId) {
+        if (timeoutIds[dialogId]) {
+          window.clearTimeout(timeoutIds[dialogId]);
+        }
+      }
+    </script>
+  </body>
+</html>
