@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.google.samples.mobiledoctranslate"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/AppTheme" >
+
+    <!-- The following meta-data line allows the add-on to be called from
+         text selection context menu. -->
+    <meta-data
+        android:name="com.google.android.apps.docs.editors.docs.TEXT_SELECTION"
+        android:value="com.google.samples.mobiledoctranslate.MainActivity" />
+
+    <activity
+        android:name="com.google.samples.mobiledoctranslate.MainActivity"
+        android:label="@string/app_name"
+        android:screenOrientation="locked">
+        <intent-filter
+            android:icon="@mipmap/ic_launcher">
+            <!-- This intent filter is what allows the app to be called as
+                 an add-on from the Docs editor. -->
+            <action android:name="com.google.android.apps.docs.editors.docs.ADDON" />
+        </intent-filter>
+    </activity>
+
+    <activity
+        android:name="com.google.samples.mobiledoctranslate.DefaultLaunchActivity"
+        android:label="@string/app_name">
+        <intent-filter>
+            <!-- This intent filter sets DefaultLaunchActivity as the entry
+                 point when the add-on is launched directly (and erroneously).
+                 -->
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+</application>
+</manifest>

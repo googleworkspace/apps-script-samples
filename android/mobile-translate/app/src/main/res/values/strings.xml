@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Mobile Doc Translate</string>
+
+    <!-- Execution API status strings -->
+    <string name="retrieve_status">Retrieving selected text…</string>
+    <string name="translate_status">Translating…</string>
+    <string name="replace_status">Replacing text with translation…</string>
+
+    <!-- Layout strings -->
+    <string name="replace_button">Replace</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="exit_button">Exit</string>
+    <string name="selected_text_hint">Original selected text</string>
+    <string name="translation_text_hint">Select languages to acquire and edit
+        translated text.</string>
+    <string name="translate_from">Selected language</string>
+    <string name="translate_to">Translate into</string>
+    <string-array name="origin_lang_spinner">
+        <item>Auto-detect</item>
+        <item>Arabic</item>
+        <item>Chinese</item>
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hindi</item>
+        <item>Japanese</item>
+        <item>Portuguese</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="dest_lang_spinner">
+        <item>Arabic</item>
+        <item>Chinese</item>
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hindi</item>
+        <item>Japanese</item>
+        <item>Portuguese</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <string name="default_launch">Mobile Doc Translate is a mobile add-on. It
+        is not meant to be launched directly. Rather, it should be called from
+        the Google Docs editor app by highlighting text and selecting
+        \"Mobile Doc Translate\" from the context menu.</string>
+
+    <!-- General status strings -->
+    <string name="unexpected_app">Called from unexpected app: </string>
+    <string name="gps_required">Google Play Services required.
+            After installing, close and relaunch this app.</string>
+    <string name="get_accounts_rationale">This app needs to access your
+            Google account (via Contacts).</string>
+    <string name="get_accounts_denied_message">Missing required
+            permissions!</string>
+    <string name="no_auth_provided">Authorization not provided.</string>
+    <string name="no_network">No network connection available.</string>
+    <string name="error_occurred">Unrecoverable error occurred</string>
+    <string name="script_error">\nScript error!\n</string>
+    <string name="script_error_trace">\nScript error stacktrace:</string>
+</resources>
+

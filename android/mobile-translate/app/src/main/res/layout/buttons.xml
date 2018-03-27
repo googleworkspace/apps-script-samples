@@ -1,0 +1,28 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/replace_button"
+        android:onClick="replace"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_size"
+        android:minWidth="@dimen/button_min_width"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/button_top_margin"
+        android:layout_marginEnd="@dimen/button_right_margin"
+        android:text="@string/replace_button"
+        style="?android:attr/buttonBarButtonStyle"/>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:onClick="cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_size"
+        android:minWidth="@dimen/button_min_width"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/replace_button"
+        android:layout_marginTop="@dimen/button_top_margin"
+        android:layout_marginEnd="@dimen/button_right_margin"
+        android:text="@string/cancel_button"
+        style="?android:attr/buttonBarButtonStyle"/>
+
+</merge>

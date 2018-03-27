@@ -1,0 +1,22 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <Spinner
+        android:id="@+id/dest_lang"
+        style="@style/LangSpinners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/dest_lang_spinner"
+        android:contentDescription="@string/translate_to"/>
+
+    <EditText
+        android:id="@+id/translated_text"
+        style="@style/TextViews"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/text_size"
+
+        android:hint="@string/translation_text_hint"
+        android:freezesText="true"
+        />
+</merge>
