@@ -1,0 +1,95 @@
+<!--
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on dialog load.
+   */
+  $(function() {
+    // Assign handler functions to sidebar elements here, if needed.
+    $('#dialog-save-button').click(onSaveTriggerClick);
+
+    showStatus('Please wait...');
+    // Call the server here to retrieve any information needed to build
+    // the sidebar, if necessary.
+    google.script.run
+       .withSuccessHandler(getTriggerStateCallback)
+       .getTriggerState();
+  });
+
+  /**
+   * Calls the server to modify the form's trigger.
+   * Enables or disables the form submit trigger based on the status of
+   * the dialog checkbox.
+   */
+  function onSaveTriggerClick() {
+    this.disabled = true;
+
+    // Gather any information that needs to be sent to the server here.
+    var triggerEnabled = $('#dialog-trigger-check').is(':checked');
+    showStatus('Saving...');
+
+    // Send the value to the server and listen for a response.
+    google.script.run
+        .withSuccessHandler(
+          function(msg, element) {
+            // Respond to success conditions here.
+            showStatus('Saved trigger setting.');
+            element.disabled = false;
+          })
+        .withFailureHandler(
+          function(msg, element) {
+            // Respond to failure conditions here.
+            showStatus('Error saving: ' + msg, 'error');
+            element.disabled = false;
+          })
+        .withUserObject(this)
+        .adjustFormSubmitTrigger(triggerEnabled);
+  }
+
+  /**
+   * Responds to information coming from the server to adjust the dialog.
+   * Sets the checkbox state based on the server property.
+   *
+   * @param {Boolean} triggerEnabled indicates if a formResponse trigger has
+   *     been enabled or not.
+   */
+  function getTriggerStateCallback(triggerEnabled) {
+    // Use the information retrieved from the server to adjust the dialog.
+    if (triggerEnabled) {
+      $('#dialog-trigger-check').prop('checked', true);
+    } else {
+      $('#dialog-trigger-check').prop('checked', false);
+    }
+    showStatus('Ready.');
+  }
+
+  /**
+   * Displays the given status message in the dialog.
+   *
+   * @param {String} msg The status message to display.
+   * @param {String} classId The message type (class id) that the message
+   *   should be displayed as.
+   */
+  function showStatus(msg, classId) {
+    $('#dialog-status').removeClass().html(msg);
+    if (classId) {
+      $('#dialog-status').addClass(classId);
+    }
+  }
+
+</script>

@@ -1,0 +1,418 @@
+<!--
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<script>
+  /**
+   * Error code enum; should be identical to codes defined in
+   * Server.gs.
+   */
+  var ERROR_CODES = {
+    AUTO_UPDATE_LIMIT: 1,
+    ILLEGAL_EDIT: 2,
+    ILLEGAL_DELETE: 3,
+    IMPORT_FAILED: 4
+  }
+
+  /**
+   * UI state enum used to determine how to reset sidebar elements after
+   * user actions.
+   */
+  var UI_STATE = {
+    NEW_REPORT: 1,
+    CONFIG_LOADED: 2,
+    AFTER_SAVE: 3,
+    AFTER_DELETE: 4,
+    TOGGLE_ALL: 5
+  };
+
+  $(function() {
+    // Pull in template parameters and set the initial sidebar view.
+    toggleUiView(isAuthorized);
+
+    // Add UI interaction handlers.
+    $('#authorize').bind('click', onAuthorizeClick);
+    $('#signout').bind('click', onSignoutClick);
+    $('#column-options').click(addSelectedColumnOption);
+    $('#columns-selected').click(removeSelectedColumnOption);
+    $('#report-name').keyup(verifyAndEnableSave);
+    $('#report-select').change(onReportSelect);
+    $('#save-report').click(onSaveClick);
+    $('#run-report').click(onRunClick);
+    $('#delete-report').click(onDeleteClick);
+
+    // Listen for auth complete intercom signal & toggle UI when received.
+    var intercom = Intercom.getInstance();
+    intercom.on('oauthComplete', function(data) {
+      if (data.user === user) {
+        toggleUiView(data.isAuthorized);
+      }
+    });
+
+    // Get existing reports & load them into the report select box.
+    refreshReportAndColumnLists();
+  });
+
+  /**
+   * Switch sidebar UI according to whether auth has
+   * occurred yet.
+   * @param {Boolean} true if auth has finished; false otherwise.
+   */
+  function toggleUiView(isAuthorized) {
+    if (!isAuthorized) {
+      $('#main').hide();
+      $('#authorization').show();
+    } else {
+      $('#main').show();
+      $('#authorization').hide();
+    }
+  }
+
+  /**
+   * Set the state of the UI elements.
+   * @param {Number} state Enum UI_STATE.
+   * @param {Object} opt_config potential parameters to load into
+   *   the sidebar.
+   */
+  function setUiState(state, opt_config) {
+    switch (state) {
+      case UI_STATE.NEW_REPORT:
+        // Refresh to collect any changes other editors have made.
+        refreshReportAndColumnLists();
+
+        // Disable buttons and clear sidebar data.
+        $('#delete-report').prop("disabled", true);
+        $('#run-report').prop("disabled", true);
+        $('#save-report').prop("disabled", true);
+        $('#report-select').val("new-report");
+        $("#columns-selected").find('option').remove();
+        $("#report-name").val('');
+        $('#scheduling-checkbox').prop('checked', false);
+        $('#last-run').html('?');
+        $('#sheet-name').html('?');
+        $('#owner-name').html('?');
+      break;
+    case UI_STATE.CONFIG_LOADED:
+      // Refresh to collect any changes other editors have made.
+      refreshReportAndColumnLists();
+
+      // Switch to existing report data and enable buttons.
+      $('#delete-report').prop("disabled", false);
+      $('#run-report').prop("disabled", false);
+      $('#save-report').prop("disabled", false);
+      if (opt_config) {
+        $('#report-name').val(opt_config.name);
+        $('#scheduling-checkbox').prop('checked', opt_config.scheduled);
+        $('#owner-name').html(opt_config.owner);
+        if (! opt_config.lastRun) {
+          $('#last-run').html('?');
+        } else {
+          $('#last-run').html(opt_config.lastRun);
+        }
+        if (! opt_config.sheetName) {
+          $('#sheet-name').html('?');
+        } else {
+          $('#sheet-name').html(opt_config.sheetName);
+        }
+        $("#columns-selected").find('option').remove();
+        opt_config.columns.forEach(function(col) {
+          addToSelectBox('#columns-selected', col.label, col.column);
+        });
+      }
+      break;
+    case UI_STATE.AFTER_SAVE:
+      // Update some UI elements and enable buttons.
+      if (opt_config) {
+        updateReportNameInList(opt_config.reportId, opt_config.name);
+        $('#report-select').val(opt_config.reportId);
+      }
+      setUiState(UI_STATE.CONFIG_LOADED, opt_config);
+      break;
+    case UI_STATE.AFTER_DELETE:
+      // Remove report from list and clear UI.
+      $("#report-select option[value='" + opt_config.reportId + "']").remove();
+      setUiState(UI_STATE.NEW_REPORT);
+      break;
+    case UI_STATE.TOGGLE_ALL:
+      $('#delete-report').prop("disabled", opt_config.disable);
+      $('#run-report').prop("disabled", opt_config.disable);
+      $('#save-report').prop("disabled", opt_config.disable);
+      $('#report-name').prop("disabled", opt_config.disable);
+      $('#column-options').prop("disabled", opt_config.disable);
+      $('#columns-selected').prop("disabled", opt_config.disable);
+      $('#scheduling-checkbox').prop("disabled", opt_config.disable);
+      $('#report-select').prop("disabled", opt_config.disable);
+      break;
+    }
+  }
+
+  /**
+   * Collect the report configuration data currently entered into
+   * the sidebar into an object.
+   * @return {Object} report configuration data.
+   */
+  function collectSidebarData() {
+    var config = {
+      'name': $('#report-name').val().trim(),
+      'reportId': $('#report-select').val(),
+      'scheduled': $('#scheduling-checkbox').is(':checked'),
+      'columns': []
+    };
+    $('#columns-selected option').each(function(i, selected) {
+      config.columns.push({
+        'column': $(selected).val(),
+        'label': $(selected).text()
+      });
+    });
+    return config;
+  }
+
+  /**
+   * Respond to a change in the report select. Calls the server
+   * to retrieve the selected report's configuration information.
+   */
+  function onReportSelect() {
+    var reportId = $('#report-select').val();
+    if (reportId == 'new-report') {
+      setUiState(UI_STATE.NEW_REPORT);
+    } else {
+      setUiState(UI_STATE.TOGGLE_ALL, {disable: true});
+      google.script.run
+        .withSuccessHandler(function(config) {
+          setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+          setUiState(UI_STATE.CONFIG_LOADED, config);
+        })
+        .withFailureHandler(function(error) {
+          setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+          setUiState(UI_STATE.NEW_REPORT);
+          reportError('Unknown error during report retrieval.');
+        })
+        .switchToReport(reportId);
+    }
+  }
+
+  /**
+   * Run the currently selected report import.
+   */
+  function onRunClick() {
+    this.disabled = true;
+    var config = collectSidebarData();
+    if (config.columns.length > 0) {
+      setUiState(UI_STATE.TOGGLE_ALL, {disable: true});
+      google.script.run
+        .withSuccessHandler(function(config) {
+          setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+          setUiState(UI_STATE.CONFIG_LOADED, config);
+        })
+        .withFailureHandler(function(error) {
+          setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+          setUiState(UI_STATE.CONFIG_LOADED);
+          if (error == ERROR_CODES.IMPORT_FAILED) {
+            reportError('Error: data import failed.');
+          } else {
+            reportError('Unknown error during data import.');
+          }
+        })
+        .runImport(config.reportId);
+    } else {
+      this.disabled = false;
+    }
+  }
+
+  /**
+   * Save the current sidebar configuration using the given report name.
+   */
+  function onSaveClick() {
+    this.disabled = true;
+    var config = collectSidebarData();
+    setUiState(UI_STATE.TOGGLE_ALL, {disable: true});
+    google.script.run
+      .withSuccessHandler(function(config) {
+        setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+        setUiState(UI_STATE.AFTER_SAVE, config);
+      })
+      .withFailureHandler(function(error) {
+        setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+        if (error == ERROR_CODES.AUTO_UPDATE_LIMIT) {
+          setUiState(UI_STATE.NEW_REPORT);
+          reportError(
+            'Error: too many auto-updated reports! Configuration not saved.');
+        } else if (error == ERROR_CODES.ILLEGAL_EDIT) {
+          setUiState(UI_STATE.AFTER_SAVE);
+          reportError(
+            'Error: cannot save edits to auto-updated report of another user.');
+          onReportSelect();
+        } else {
+          setUiState(UI_STATE.AFTER_SAVE);
+          reportError('Unknown error during save.');
+        }
+      })
+      .saveReport(config);
+  }
+
+  /**
+   * Delete the currently selected report configuration.
+   */
+  function onDeleteClick() {
+    this.disabled = true;
+    var reportId = $('#report-select').find(":selected").val();
+    setUiState(UI_STATE.TOGGLE_ALL, {disable: true});
+    google.script.run
+      .withSuccessHandler(function(id) {
+        setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+        setUiState(UI_STATE.AFTER_DELETE, {'reportId': id});
+      })
+      .withFailureHandler(function(error) {
+        setUiState(UI_STATE.TOGGLE_ALL, {disable: false});
+        if (error == ERROR_CODES.ILLEGAL_DELETE) {
+          reportError(
+          'Error: cannot delete auto-updated report of another user.');
+        } else {
+          reportError('Unknown error during deletion.');
+        }
+      })
+      .removeReport(reportId);
+  }
+
+  /**
+   * Start the authorization flow.
+   */
+  function onAuthorizeClick() {
+    google.script.run
+      .withSuccessHandler(openUrlWindow)
+      .withFailureHandler(reportError)
+      .getAuthorizationUrl();
+  }
+
+  /**
+   * Sign off; further interaction will require re-authorization.
+   */
+  function onSignoutClick() {
+    toggleUiView(false);
+    google.script.run
+      .withFailureHandler(reportError)
+      .signout();
+  }
+
+  /**
+   * Open a new window with the given URL.
+   * @param {String} url the URL to open.
+   */
+  function openUrlWindow(url) {
+    window.open(url);
+  }
+
+  /**
+   * Add a clicked option to the selected column list.
+   */
+  function addSelectedColumnOption() {
+    var value = $('#column-options').val();
+    var text = $('#column-options').find(":selected").text();
+    addToSelectBox('#columns-selected', text, value);
+  }
+
+  /**
+   * Remove a clicked option to the selected column list.
+   */
+  function removeSelectedColumnOption() {
+    $("#columns-selected").find('option:selected').remove();
+  }
+
+  /**
+   * Disables the Save button if the report name is blank,
+   * otherwise enables the Save button.
+   */
+  function verifyAndEnableSave() {
+    if ($('#report-name').val().trim() != '') {
+      $('#save-report').prop("disabled",false);
+    } else {
+      $('#save-report').prop("disabled",true);
+    }
+  }
+
+  /**
+   * Call for the currently saved report list and column options
+   * and load them into the sidebar.
+   */
+  function refreshReportAndColumnLists() {
+    google.script.run
+      .withSuccessHandler(loadInitialSidebarLists)
+      .withFailureHandler(reportError)
+      .getInitialDataForSidebar();
+  }
+
+  /**
+   * Load saved report data and column options into the sidebar
+   * select boxes.
+   * @param {Object} savedData a collection of saved report data
+   *   and column options.
+   */
+  function loadInitialSidebarLists(savedData) {
+    // Clear the existing report list, but save the current selection
+    // so that it can be reset after repopulating the list.
+    var currentReport = $('#report-select').val();
+    $("#report-select").find('option').remove();
+    updateReportNameInList('new-report');
+    savedData.reports.forEach(function(report) {
+      updateReportNameInList(report.reportId, report.name);
+    });
+    $('#report-select').val(currentReport);
+    $("#column-options").find('option').remove();
+    savedData.columns.forEach(function(col) {
+      addToSelectBox('#column-options', col.label, col.id);
+    });
+  }
+
+  /**
+   * If the given report exists in the select box list, change its
+   * name. Otherwise create a new option in that list with this name
+   * and report ID.
+   * @param {String} reportId report ID to adjust or add.
+   * @param {String} name new report name.
+   */
+  function updateReportNameInList(reportId, name) {
+    var label = 'Report ' + name;
+    if (reportId == 'new-report') {
+      label = 'Create a new report';
+    }
+    if ($("#report-select option[value='" + reportId + "']").length > 0) {
+      $('#report-select').find(":selected").text(label);
+    } else {
+      addToSelectBox('#report-select', label, reportId);
+    }
+  }
+
+  /**
+   * Add the given report name and id as a select box option.
+   * @param {String} box reference string indicating which box
+   *   to append the option to.
+   * @param {String} label the label for the option.
+   * @param {String} value the value for the option.
+   */
+  function addToSelectBox(box, label, value) {
+    $(box).append(
+        $("<option></option>").attr("value", value).text(label)
+    );
+  }
+
+  /**
+   * Report error to user.
+   * @param {String} error the error message.
+   */
+  function reportError(error) {
+    window.alert(error);
+  }
+
+</script>

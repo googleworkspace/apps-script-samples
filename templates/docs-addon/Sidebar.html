@@ -1,0 +1,50 @@
+<!--
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the sidebar element structure. -->
+    <cursor></cursor><div class="sidebar branding-below">
+      <p>
+        This sidebar allows you to retrieve and edit the document footer text. This
+        does not allow for complex formatting or styles, just plain text.
+      </p>
+      <div class="block form-group">
+        <label for="sidebar-footer-text">Footer Text:</label>
+        <textarea class="width-100" id="sidebar-footer-text" rows="10"></textarea>
+      </div>
+      <div class="block" id="sidebar-button-bar">
+        <button class="action" id="sidebar-save-button">Save</button>
+      </div>
+      <div id="sidebar-status"></div>
+    </div>
+
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo" width="25"
+          src="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/apps-script_2x.png">
+      <span class="gray branding-text">Docs Add-on Template by Google</span>
+    </div>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript -->
+    <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+  </body>
+</html>

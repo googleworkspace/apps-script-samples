@@ -1,0 +1,52 @@
+<!--
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the sidebar element structure. -->
+    <cursor></cursor><div class="sidebar branding-below">
+      <p>
+        This sidebar allows you to pull a value from a cell into the sidebar
+        and place a value from the sidebar into a cell.
+      </p>
+      <div class="block form-group" id="sidebar-value-block">
+        <label for="sidebar-value">Sidebar value:</label>
+        <input id="sidebar-value" value="1">
+      </div>
+      <div class="block" id="sidebar-button-bar">
+        <button id="sidebar-pull-button">Pull</button>
+        <button id="sidebar-put-button">Put</button>
+      </div>
+      <div id="sidebar-status"></div>
+    </div>
+
+    <!-- Enter sidebar bottom-branding below. -->
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo" width="25"
+          src="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/apps-script_2x.png">
+      <span class="gray branding-text">Spreadsheet Add-on Template by Google</span>
+    </div>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+    <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+  </body>
+</html>

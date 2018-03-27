@@ -1,0 +1,85 @@
+<!--
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on sidebar load.
+   */
+  $(function() {
+    // Assign handler functions to sidebar elements here, if needed.
+    $('#sidebar-save-button').click(onSaveFooterClick);
+
+    // Call the server here to retrieve any information needed to build
+    // the sidebar, if necessary.
+    google.script.run
+       .withSuccessHandler(function(footerText) {
+            // Respond to success conditions here.
+            $('#sidebar-footer-text').val(footerText);
+            showStatus('Ready.');
+          })
+       .withFailureHandler(function(msg) {
+            // Respond to failure conditions here.
+            showStatus(msg, 'error');
+          })
+       .getFooterText();
+  });
+
+  /**
+   * Calls the server to modify the document.
+   * Replaces the document footer text; formatting and styles will
+   * not be preserved.
+   */
+  function onSaveFooterClick() {
+    this.disabled = true;
+
+    // Gather any information that needs to be sent to the server here.
+    var sidebarText = $('#sidebar-footer-text').val();
+    showStatus('Saving...');
+
+    // Send the value to the server and listen for a response.
+    google.script.run
+        .withSuccessHandler(
+          function(msg, element) {
+            // Respond to success conditions here.
+            showStatus('Saved.');
+            element.disabled = false;
+          })
+        .withFailureHandler(
+          function(msg, element) {
+            // Respond to failure conditions here.
+            showStatus(msg, 'error');
+            element.disabled = false;
+          })
+        .withUserObject(this)
+        .setFooterText(sidebarText);
+  }
+
+  /**
+   * Displays the given status message in the sidebar.
+   *
+   * @param {String} msg The status message to display.
+   * @param {String} classId The message type (class id) that the message
+   *   should be displayed as.
+   */
+  function showStatus(msg, classId) {
+    $('#sidebar-status').removeClass().html(msg);
+    if (classId) {
+      $('#sidebar-status').addClass(classId);
+    }
+  }
+
+</script>

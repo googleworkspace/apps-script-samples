@@ -1,0 +1,56 @@
+<!--
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the sidebar element structure. -->
+    <cursor></cursor><div class="sidebar branding-below">
+      <div class="block" id="sidebar-elements">
+        <p>
+          This sidebar allows you to set up and add form items. Choose the type of
+          the item and click 'Add item'. The resulting item will be added to the Form.
+        </p>
+        <label for="sidebar-item-type">
+          Choose item type:
+        </label>
+        <select class="width-100" id="sidebar-item-type">
+          <option value="Date">Date</option>
+          <option value="Scale">Scale</option>
+          <option value="Text">Text</option>
+        </select>
+      </div>
+      <div class="block bottom-spacer" id="sidebar-button-bar">
+          <button class="action" id="sidebar-add-button">Add item</button>
+      </div>
+      <div id="sidebar-status"></div>
+    </div>
+
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo" width="25"
+          src="https://googledrive.com/host/0B0G1UdyJGrY6XzdjQWF4a1JYY1k/apps-script_2x.png">
+      <span class="gray branding-text">Forms Add-on Template by Google</span>
+    </div>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript -->
+    <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+  </body>
+</html>
