@@ -18,7 +18,6 @@ This collection hosts the following templates:
 * Google Forms Add-on
 * Script as Web App
 
-
 Within these templates the following Google Apps Script concepts are
 illustrated:
 
