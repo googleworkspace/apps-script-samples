@@ -12,11 +12,11 @@ Create a Google Form based on data in a spreadsheet that emails Google Calendar 
 
 ![Quickstart Forms](https://developers.google.com/apps-script/images/quickstart-forms.png)
 
-## [Macros, Menus, and Custom Functions](https://developers.google.com/apps-script/quickstart/macros)
+## [Menus and Custom Functions](https://developers.google.com/apps-script/quickstart/custom-functions)
 
-Create a spreadsheet with custom functions, menu items, and automated procedures (similar to macros).
+Create a spreadsheet with custom functions, menu items, and automated procedures.
 
-![Quickstart Macros](https://developers.google.com/apps-script/images/quickstart-macros.png)
+![Quickstart Custom Functions](https://developers.google.com/apps-script/images/quickstart-custom-functions.png)
 
 ## [Bracket Maker](https://developers.google.com/apps-script/articles/bracket_maker)
 
