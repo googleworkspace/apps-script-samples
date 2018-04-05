@@ -1,4 +1,21 @@
 /**
+ * @OnlyCurrentDoc Limits the script to only accessing the current sheet.
+ */
+
+/**
+ * A special function that runs when the spreadsheet is open, used to add a
+ * custom menu to the spreadsheet.
+ */
+function onOpen() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  var menuItems = [
+    {name: 'Prepare sheet...', functionName: 'prepareSheet_'},
+    {name: 'Generate step-by-step...', functionName: 'generateStepByStep_'}
+  ];
+  spreadsheet.addMenu('Directions', menuItems);
+}
+
+/**
  * A custom function that converts meters to miles.
  *
  * @param {Number} meters The distance in meters.
@@ -24,15 +41,22 @@ function drivingDistance(origin, destination) {
 }
 
 /**
- * A special function that runs when the spreadsheet is open, used to add a
- * custom menu to the spreadsheet.
+ * A function that adds headers and some initial data to the spreadsheet.
  */
-function onOpen() {
-  var spreadsheet = SpreadsheetApp.getActive();
-  var menuItems = [
-    {name: 'Generate step-by-step...', functionName: 'generateStepByStep_'}
-  ];
-  spreadsheet.addMenu('Directions', menuItems);
+function prepareSheet_() {
+  var sheet = SpreadsheetApp.getActiveSheet().setName('Settings');
+  var headers = [
+    'Start Address',
+    'End Address',
+    'Driving Distance (meters)',
+    'Driving Distance (miles)'];
+  var initialData = [
+    '350 5th Ave, New York, NY 10118',
+    '405 Lexington Ave, New York, NY 10174'];
+  sheet.getRange('A1:D1').setValues([headers]).setFontWeight('bold');
+  sheet.getRange('A2:B2').setValues([initialData]);
+  sheet.setFrozenRows(1);
+  sheet.autoResizeColumns(1, 4);
 }
 
 /**
@@ -158,8 +182,8 @@ function getDirections_(origin, destination) {
   directionFinder.setOrigin(origin);
   directionFinder.setDestination(destination);
   var directions = directionFinder.getDirections();
-  if (directions.routes.length == 0) {
-    throw 'Unable to calculate directions between these addresses.';
+  if (directions.status !== 'OK') {
+    throw directions.error_message;
   }
   return directions;
 }
