@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START calendar_quickstart]
 /**
  * Lists 10 upcoming events in the user's calendar.
  */
@@ -40,3 +41,4 @@ function listUpcomingEvents() {
     Logger.log('No upcoming events found.');
   }
 }
+// [END calendar_quickstart]

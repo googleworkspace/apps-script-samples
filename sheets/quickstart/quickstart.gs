@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START sheets_quickstart]
 /**
  * Creates a Sheets API service object and prints the names and majors of
  * students in a sample spreadsheet:
@@ -33,3 +33,4 @@ function logNamesAndMajors() {
     }
   }
 }
+// [END sheets_quickstart]

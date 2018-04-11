@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START gmail_quickstart]
 /**
  * Lists the labels in the user's account.
  */
@@ -29,3 +29,4 @@ function listLabels() {
     }
   }
 }
+// [END gmail_quickstart]

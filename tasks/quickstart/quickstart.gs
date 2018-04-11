@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START tasks_quickstart]
 /**
  * Lists the user's tasks.
  */
@@ -33,3 +33,4 @@ function listTaskLists() {
     Logger.log('No task lists found.');
   }
 }
+// [END tasks_quickstart]

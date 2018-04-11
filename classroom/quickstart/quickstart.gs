@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START classroom_quickstart]
 /**
  * Lists 10 course names and ids.
  */
-// [START classroom_quickstart]
 function listCourses() {
   var optionalArgs = {
     pageSize: 10

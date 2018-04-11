@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START drive_quickstart]
 /**
  * Lists the names and IDs of up to 10 files.
  */
@@ -26,3 +27,4 @@ function listFiles() {
     Logger.log('%s (%s)', file.name, file.id);
   }
 }
+// [END drive_quickstart]
