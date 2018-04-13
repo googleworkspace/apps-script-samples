@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START listTables]
 /**
  * This sample lists Fusion Tables that the user has access to.
  */
-// [START listTables]
 function listTables() {
   var tables = FusionTables.Table.list();
   if (tables.items) {
@@ -31,15 +31,16 @@ function listTables() {
 }
 // [END listTables]
 
+// [START runQuery]
 /**
  * This sample queries for the first 100 rows in the given Fusion Table and
  * saves the results to a new spreadsheet.
+ * @param {string} tableId The table ID.
  */
-// [START runQuery]
 function runQuery(tableId) {
   var sql = 'SELECT * FROM ' + tableId + ' LIMIT 100';
   var result = FusionTables.Query.sqlGet(sql, {
-    hdrs: false
+    hdrs: false,
   });
   if (result.rows) {
     var spreadsheet = SpreadsheetApp.create('Fusion Table Query Results');

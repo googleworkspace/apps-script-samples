@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START listAccounts]
+/**
+ * Lists Analytics accounts.
+ */
 function listAccounts() {
   var accounts = Analytics.Management.Accounts.list();
   if (accounts.items && accounts.items.length) {
@@ -29,6 +32,10 @@ function listAccounts() {
   }
 }
 
+/**
+ * Lists web properites for an Analytics account.
+ * @param  {string} accountId The account ID.
+ */
 function listWebProperties(accountId) {
   var webProperties = Analytics.Management.Webproperties.list(accountId);
   if (webProperties.items && webProperties.items.length) {
@@ -45,6 +52,11 @@ function listWebProperties(accountId) {
   }
 }
 
+/**
+ * Logs a list of Analytics accounts profiles.
+ * @param  {string} accountId     The Analytics account ID
+ * @param  {string} webPropertyId The web property ID
+ */
 function listProfiles(accountId, webPropertyId) {
   // Note: If you experience "Quota Error: User Rate Limit Exceeded" errors
   // due to the number of accounts or profiles you have, you may be able to
@@ -65,6 +77,10 @@ function listProfiles(accountId, webPropertyId) {
 // [END listAccounts]
 
 // [START runReport]
+/**
+ * Runs a report of an Analytics profile ID. Creates a sheet with the report.
+ * @param  {string} profileId The profile ID.
+ */
 function runReport(profileId) {
   var today = new Date();
   var oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -74,13 +90,13 @@ function runReport(profileId) {
   var endDate = Utilities.formatDate(today, Session.getTimeZone(),
       'yyyy-MM-dd');
 
-  var tableId  = 'ga:' + profileId;
+  var tableId = 'ga:' + profileId;
   var metric = 'ga:visits';
   var options = {
     'dimensions': 'ga:source,ga:keyword',
     'sort': '-ga:visits,ga:source',
     'filters': 'ga:medium==organic',
-    'max-results': 25
+    'max-results': 25,
   };
   var report = Analytics.Data.Ga.get(tableId, startDate, endDate, metric,
       options);

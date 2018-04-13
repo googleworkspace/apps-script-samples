@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START listCalendars]
 /**
  * Lists the calendars shown in the user's calendar list.
  */
-// [START listCalendars]
 function listCalendars() {
-  var calendars, pageToken;
+  var calendars;
+  var pageToken;
   do {
     calendars = Calendar.CalendarList.list({
       maxResults: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (calendars.items && calendars.items.length > 0) {
       for (var i = 0; i < calendars.items.length; i++) {
@@ -37,10 +38,10 @@ function listCalendars() {
 }
 // [END listCalendars]
 
+// [START createEvent]
 /**
  * Creates an event in the user's default calendar.
  */
-// [START createEvent]
 function createEvent() {
   var calendarId = 'primary';
   var start = getRelativeDate(1, 12);
@@ -50,17 +51,17 @@ function createEvent() {
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
     start: {
-      dateTime: start.toISOString()
+      dateTime: start.toISOString(),
     },
     end: {
-      dateTime: end.toISOString()
+      dateTime: end.toISOString(),
     },
     attendees: [
       {email: 'alice@example.com'},
-      {email: 'bob@example.com'}
+      {email: 'bob@example.com'},
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11
+    colorId: 11,
   };
   event = Calendar.Events.insert(event, calendarId);
   Logger.log('Event ID: ' + event.getId());
@@ -84,10 +85,10 @@ function getRelativeDate(daysOffset, hour) {
 }
 // [END createEvent]
 
+// [START listNext10Events]
 /**
  * Lists the next 10 upcoming events in the user's default calendar.
  */
-// [START listNext10Events]
 function listNext10Events() {
   var calendarId = 'primary';
   var now = new Date();
@@ -95,7 +96,7 @@ function listNext10Events() {
     timeMin: now.toISOString(),
     singleEvents: true,
     orderBy: 'startTime',
-    maxResults: 10
+    maxResults: 10,
   });
   if (events.items && events.items.length > 0) {
     for (var i = 0; i < events.items.length; i++) {

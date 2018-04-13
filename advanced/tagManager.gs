@@ -15,8 +15,9 @@
  */
 // [START createContainerVersion]
 /**
- * Creates a container version for a particular account with the input
- * accountPath.
+ * Creates a container version for a particular account with the input accountPath.
+ * @param {string} accountPath The account path.
+ * @return {string} The tag manager container version.
  */
 function createContainerVersion(accountPath) {
   var date = new Date();
@@ -25,7 +26,7 @@ function createContainerVersion(accountPath) {
   var container = TagManager.Accounts.Containers.create(
       {
         'name': 'appscript tagmanager container ' + date.getTime(),
-        'usageContext': ['WEB']
+        'usageContext': ['WEB'],
       },
       accountPath);
   var containerPath = container.path;
@@ -52,11 +53,11 @@ function createContainerVersion(accountPath) {
           {'type': 'boolean', 'key': 'useCacheBuster', 'value': 'true'}, {
             'type': 'template',
             'key': 'cacheBusterQueryParam',
-            'value': 'gtmcb'
+            'value': 'gtmcb',
           },
-          {'type': 'template', 'key': 'url', 'value': '//example.com'}
+          {'type': 'template', 'key': 'url', 'value': '//example.com'},
         ],
-        'firingTriggerId': [trigger.triggerId]
+        'firingTriggerId': [trigger.triggerId],
       },
       workspacePath);
   // Creates a container version with the variabe, trigger, and tag.
@@ -70,15 +71,20 @@ function createContainerVersion(accountPath) {
 // [END createContainerVersion]
 
 // [START publishVersionAndQuickPreviewDraft]
-/** Retrieves the container path from a container version path. */
+/**
+ * Retrieves the container path from a container version path.
+ * @param  {string} versionPath The version path.
+ * @return {string}             The container path.
+ */
 function grabContainerPath(versionPath) {
-  var pathParts = versionPath.split('/')
+  var pathParts = versionPath.split('/');
   return pathParts.slice(0, 4).join('/');
 }
 
 /**
  * Publishes a container version publically to the world and creates a quick
  * preview of the current container draft.
+ * @param {object} version The container version.
  */
 function publishVersionAndQuickPreviewDraft(version) {
   var containerPath = grabContainerPath(version.path);
@@ -96,25 +102,30 @@ function publishVersionAndQuickPreviewDraft(version) {
 // [END publishVersionAndQuickPreviewDraft]
 
 // [START createAndReauthorizeUserEnvironment]
-/** Retrieves the container path from a container version path. */
+/**
+ * Retrieves the container path from a container version path.
+ * @param  {string} versionPath The version path.
+ * @return {string}             The container path.
+ */
 function grabContainerPath(versionPath) {
-  var pathParts = versionPath.split('/')
+  var pathParts = versionPath.split('/');
   return pathParts.slice(0, 4).join('/');
 }
 
 /**
  * Creates and reauthorizes a user environment in a container that points
  * to a container version passed in as an argument.
+ * @param {object} version The container version object.
  */
 function createAndReauthorizeUserEnvironment(version) {
   // Creates a container version.
-  var containerPath = grabContainerPath(version.path)
+  var containerPath = grabContainerPath(version.path);
   // Creates a user environment that points to a container version.
   var environment = TagManager.Accounts.Containers.Environments.create(
       {
         'name': 'test_environment',
         'type': 'user',
-        'containerVersionId': version.containerVersionId
+        'containerVersionId': version.containerVersionId,
       },
       containerPath);
   Logger.log('Original user environment: ' + environment);
@@ -127,6 +138,7 @@ function createAndReauthorizeUserEnvironment(version) {
 // [START logAllAccountUserPermissionsWithContainerAccess]
 /**
  * Logs all emails and container access permission within an account.
+ * @param {string} accountPath The account path.
  */
 function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
   var userPermissions =

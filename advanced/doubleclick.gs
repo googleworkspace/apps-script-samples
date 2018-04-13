@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START listUserProfiles]
 /**
  * Logs all of the user profiles available in the account.
  */
-// [START listUserProfiles]
 function listUserProfiles() {
   // Retrieve the list of available user profiles
   var profiles = DoubleClickCampaigns.UserProfiles.list();
@@ -32,21 +32,21 @@ function listUserProfiles() {
 }
 // [END listUserProfiles]
 
+// [START listActiveCampaigns]
 /**
  * Logs names and ID's of all active campaigns.
  * Note the use of paging tokens to retrieve the whole list.
  */
-// [START listActiveCampaigns]
 function listActiveCampaigns() {
   var profileId = '1234567'; // Replace with your profile ID.
   var fields = 'nextPageToken,campaigns(id,name)';
-
-  var result, pageToken;
+  var result;
+  var pageToken;
   do {
     result = DoubleClickCampaigns.Campaigns.list(profileId, {
       'archived': false,
       'fields': fields,
-      'pageToken': pageToken
+      'pageToken': pageToken,
     });
     if (result.campaigns) {
       for (var i = 0; i < result.campaigns.length; i++) {
@@ -60,17 +60,17 @@ function listActiveCampaigns() {
 }
 // [END listActiveCampaigns]
 
+// [START createAdvertiserAndCampaign]
 /**
  * Creates a new advertiser, and creates a new campaign with that advertiser.
  * The campaign is set to last for one month.
  */
-// [START createAdvertiserAndCampaign]
 function createAdvertiserAndCampaign() {
   var profileId = '1234567'; // Replace with your profile ID.
 
   var advertiser = {
     name: 'Example Advertiser',
-    status: 'APPROVED'
+    status: 'APPROVED',
   };
   var advertiserId = DoubleClickCampaigns.Advertisers
       .insert(advertiser, profileId).id;
@@ -79,8 +79,8 @@ function createAdvertiserAndCampaign() {
     advertiserId: advertiserId,
     archived: false,
     name: 'Example landing page',
-    url: 'https://www.google.com'
-  }
+    url: 'https://www.google.com',
+  };
   var landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
       .insert(landingPage, profileId).id;
 
@@ -94,7 +94,7 @@ function createAdvertiserAndCampaign() {
     defaultLandingPageId: landingPageId,
     name: 'Example campaign',
     startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
-    endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
+    endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd'),
   };
   DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
 }

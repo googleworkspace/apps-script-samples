@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START getPeople]
 /**
  * The following example demonstrates how to retrieve a list of the people
  * in the user's Google+ circles.
  */
-// [START getPeople]
 function getPeople() {
   var userId = 'me';
-  var people, pageToken;
+  var people;
+  var pageToken;
   do {
     people = Plus.People.list(userId, 'visible', {
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (people.items) {
       for (var i = 0; i < people.items.length; i++) {
@@ -38,19 +39,20 @@ function getPeople() {
 }
 // [END getPeople]
 
+ // [START getPosts]
 /**
  * The following example demonstrates how to list a user's posts. The returned
  * results contain a brief summary of the posts, including a list of comments
  * made on the post.
  */
- // [START getPosts]
 function getPosts() {
   var userId = 'me';
-  var posts, pageToken;
+  var posts;
+  var pageToken;
   do {
     posts = Plus.Activities.list(userId, 'public', {
       maxResults: 10,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (posts.items) {
       for (var i = 0; i < posts.items.length; i++) {

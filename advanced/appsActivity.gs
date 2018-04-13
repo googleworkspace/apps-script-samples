@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START getUsersActivity]
 /**
  * Gets a file's activity and logs the list of
  * unique users that performed the activity.
  */
-// [START getUsersActivity]
 function getUsersActivity() {
   var fileId = 'YOUR_FILE_ID_HERE';
 
@@ -27,7 +27,7 @@ function getUsersActivity() {
     var result = AppsActivity.Activities.list({
       'drive.fileId': fileId,
       'source': 'drive.google.com',
-      'pageToken': pageToken
+      'pageToken': pageToken,
     });
     var activities = result.activities;
     for (var i = 0; i < activities.length; i++) {

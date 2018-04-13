@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 // [START listAdClients]
+/**
+ * Logs a lists Ad clients.
+ */
 function listAdClients() {
   // Retrieve ad client list in pages and log data as we receive it.
-  var pageToken, adClients;
+  var pageToken;
+  var adClients;
   do {
     adClients = AdSense.Adclients.list({
       maxResults: 50,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (adClients.items) {
       for (var i = 0; i < adClients.items.length; i++) {
@@ -39,12 +43,17 @@ function listAdClients() {
 // [END listAdClients]
 
 // [START listAdUnits]
+/**
+ * Lists ad units.
+ * @param  {string} adClientId The ad client ID.
+ */
 function listAdUnits(adClientId) {
-  var pageToken, adUnits;
+  var pageToken;
+  var adUnits;
   do {
     adUnits = AdSense.Adunits.list(adClientId, {
       maxResults: 50,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (adUnits.items) {
       for (var i = 0; i < adUnits.items.length; i++) {
@@ -62,6 +71,10 @@ function listAdUnits(adClientId) {
 // [END listAdUnits]
 
 // [START generateReport]
+/**
+ * Generates a spreadsheet report for an ad client.
+ * @param {string} adClientId The ad client ID
+ */
 function generateReport(adClientId) {
   // Prepare report.
   var today = new Date();
@@ -79,7 +92,7 @@ function generateReport(adClientId) {
              'EARNINGS'],
     dimension: ['DATE'],
     // Sort by ascending date.
-    sort: ['+DATE']
+    sort: ['+DATE'],
   });
 
   if (report.rows) {
@@ -105,8 +118,8 @@ function generateReport(adClientId) {
 
 /**
  * Escape special characters for a parameter being used in a filter.
- * @param parameter the parameter to be escaped.
- * @return the escaped parameter.
+ * @param {string} parameter The parameter to be escaped.
+ * @return {string} The escaped parameter.
  */
 function escapeFilterParameter(parameter) {
   return parameter.replace('\\', '\\\\').replace(',', '\\,');

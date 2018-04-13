@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START listTaskLists]
+/**
+ * Lists tasks titles and IDs.
+ */
 function listTaskLists() {
   var taskLists = Tasks.Tasklists.list();
   if (taskLists.items) {
@@ -29,6 +32,10 @@ function listTaskLists() {
 // [END listTaskLists]
 
 // [START listTasks]
+/**
+ * Lists task items for a provided tasklist ID.
+ * @param  {string} taskListId The tasklist ID.
+ */
 function listTasks(taskListId) {
   var tasks = Tasks.Tasks.list(taskListId);
   if (tasks.items) {
@@ -44,10 +51,14 @@ function listTasks(taskListId) {
 // [END listTasks]
 
 // [START addTask]
+/**
+ * Adds a task to a tasklist.
+ * @param {string} taskListId The tasklist to add to.
+ */
 function addTask(taskListId) {
   var task = {
     title: 'Pick up dry cleaning',
-    notes: 'Remember to get this done!'
+    notes: 'Remember to get this done!',
   };
   task = Tasks.Tasks.insert(task, taskListId);
   Logger.log('Task with ID "%s" was created.', task.id);

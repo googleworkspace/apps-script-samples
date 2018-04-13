@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START insertTimelineItem]
 /**
  * This sample inserts a new item into the timeline.
  */
-// [START insertTimelineItem]
 function insertTimelineItem() {
   var timelineItem = Mirror.newTimelineItem();
   timelineItem.text = 'Hello world!';
@@ -34,15 +34,15 @@ function insertTimelineItem() {
 }
 // [END insertTimelineItem]
 
+// [START insertContact]
 /**
  * This sample inserts a new contact.
  */
-// [START insertContact]
 function insertContact() {
   var contact = {
     id: 'harold',
     displayName: 'Harold Penguin',
-    imageUrls: ['https://developers.google.com/glass/images/harold.jpg']
+    imageUrls: ['https://developers.google.com/glass/images/harold.jpg'],
   };
 
   Mirror.Contacts.insert(contact);

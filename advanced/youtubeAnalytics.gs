@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ // [START createReport]
 /**
  * Creates a spreadsheet containing daily view counts, watch-time metrics,
  * and new-subscriber counts for a channel's videos.
  */
- // [START createReport]
 function createReport() {
   // Retrieve info about the user's YouTube channel.
   var channels = YouTube.Channels.list('id,contentDetails', {
-    mine: true
+    mine: true,
   });
   var channelId = channels.items[0].id;
 
@@ -35,11 +35,11 @@ function createReport() {
     'estimatedMinutesWatched',
     'averageViewDuration',
     'averageViewPercentage',
-    'subscribersGained'
+    'subscribersGained',
   ];
   var options = {
     dimensions: 'day',
-    sort: 'day'
+    sort: 'day',
   };
   var result = YouTubeAnalytics.Reports.query('channel==' + channelId,
       formatDateString(lastMonth),
@@ -68,16 +68,20 @@ function createReport() {
   }
 }
 
-/*
+/**
  * Converts a Date object into a YYYY-MM-DD string.
+ * @param {Date} date The date to convert to a string.
+ * @return {string} The formatted date.
  */
 function formatDateString(date) {
   return Utilities.formatDate(date, Session.getTimeZone(), 'yyyy-MM-dd');
 }
 
-/*
- * Formats a column name into a more human-friendly name. For example
- * "averageViewPercentage" becomes "Average View Percentage".
+/**
+ * Formats a column name into a more human-friendly name.
+ * @param {string} columnName The unprocessed name of the column.
+ * @return {string} The formatted column name.
+ * @example "averageViewPercentage" becomes "Average View Percentage".
  */
 function formatColumnName(columnName) {
   var name = columnName.replace(/([a-z])([A-Z])/g, '$1 $2');

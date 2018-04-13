@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START listLabelInfo]
 /**
  * Lists the user's labels, including name, type,
  * ID and visibility information.
  */
-// [START listLabelInfo]
 function listLabelInfo() {
   var response =
     Gmail.Users.Labels.list('me');
@@ -28,17 +28,17 @@ function listLabelInfo() {
 }
 // [END listLabelInfo]
 
+// [START listInboxSnippets]
 /**
  * Lists, for each thread in the user's Inbox, a
  * snippet associated with that thread.
  */
-// [START listInboxSnippets]
 function listInboxSnippets() {
   var pageToken;
   do {
     var threadList = Gmail.Users.Threads.list('me', {
       q: 'label:inbox',
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (threadList.threads && threadList.threads.length > 0) {
       threadList.threads.forEach(function(thread) {
@@ -51,18 +51,18 @@ function listInboxSnippets() {
 // [END listInboxSnippets]
 
 
+// [START logRecentHistory]
 /**
  * Gets a history record ID associated with the most
  * recently sent message, then logs all the message IDs
  * that have changed since that message was sent.
  */
-// [START logRecentHistory]
 function logRecentHistory() {
   // Get the history ID associated with the most recent
   // sent message.
   var sent = Gmail.Users.Threads.list('me', {
       q: 'label:sent',
-      maxResults: 1
+      maxResults: 1,
   });
   if (!sent.threads || !sent.threads[0]) {
     Logger.log('No sent threads found.');
@@ -77,7 +77,7 @@ function logRecentHistory() {
   do {
     var recordList = Gmail.Users.History.list('me', {
       startHistoryId: historyId,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     var history = recordList.history;
     if (history && history.length > 0) {

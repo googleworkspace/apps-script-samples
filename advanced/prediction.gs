@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 // [START queryHostedModel]
+/**
+ * Runs sentiment analysis across a sentence.
+ * Prints the sentiment label.
+ */
 function queryHostedModel() {
   // When querying hosted models you must always use this
   // specific project number.
@@ -25,8 +29,8 @@ function queryHostedModel() {
   var prediction = Prediction.Hostedmodels.predict(
       {
         input: {
-          csvInstance: [predictionString]
-        }
+          csvInstance: [predictionString],
+        },
       },
       projectNumber,
       hostedModelName);
@@ -38,8 +42,8 @@ function queryHostedModel() {
   prediction = Prediction.Hostedmodels.predict(
       {
         input: {
-          csvInstance: [predictionString]
-        }
+          csvInstance: [predictionString],
+        },
       },
       projectNumber,
       hostedModelName);
@@ -49,6 +53,9 @@ function queryHostedModel() {
 // [END queryHostedModel]
 
 // [START createNewModel]
+/**
+ * Creates a new prediction model.
+ */
 function createNewModel() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
@@ -60,7 +67,7 @@ function createNewModel() {
   var result = Prediction.Trainedmodels.insert(
       {
         id: id,
-        storageDataLocation: storageDataLocation
+        storageDataLocation: storageDataLocation,
       },
       projectNumber);
   Logger.log(result);
@@ -68,6 +75,10 @@ function createNewModel() {
 // [END createNewModel]
 
 // [START queryTrainingStatus]
+/**
+ * Gets the training status from a prediction model.
+ * Logs the status.
+ */
 function queryTrainingStatus() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
@@ -80,6 +91,10 @@ function queryTrainingStatus() {
 // [END queryTrainingStatus]
 
 // [START queryTrainedModel]
+/**
+ * Gets the language from a trained language model.
+ * Logs the language of the sentence.
+ */
 function queryTrainedModel() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
@@ -91,8 +106,8 @@ function queryTrainedModel() {
       {
         input:
           {
-            csvInstance: [query]
-          }
+            csvInstance: [query],
+          },
       },
       projectNumber,
       id);

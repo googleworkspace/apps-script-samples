@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START productInsert]
+/**
+ * Inserts a product into the products list. Logs the API response.
+ */
 function productInsert() {
   var merchantId = 123456; // Replace this with your Merchant Center ID.
   // Create a product resource and insert it
@@ -33,20 +36,20 @@ function productInsert() {
     'gtin': '9780007350896',
     'price': {
       'value': '2.50',
-      'currency': 'USD'
+      'currency': 'USD',
     },
     'shipping': [{
       'country': 'US',
       'service': 'Standard shipping',
       'price': {
         'value': '0.99',
-        'currency': 'USD'
-      }
+        'currency': 'USD',
+      },
     }],
     'shippingWeight': {
       'value': '2',
-      'unit': 'pounds'
-    }
+      'unit': 'pounds',
+    },
   };
 
   response = ShoppingContent.Products.insert(productResource, merchantId);
@@ -55,17 +58,18 @@ function productInsert() {
 // [END productInsert]
 
 // [START productList]
+/**
+ * Lists the products for a given merchant.
+ */
 function productList() {
   var merchantId = 123456; // Replace this with your Merchant Center ID.
   var pageToken;
   var pageNum = 1;
   var maxResults = 10;
-
-  // List all the products for a given merchant.
   do {
     var products = ShoppingContent.Products.list(merchantId, {
       pageToken: pageToken,
-      maxResults: maxResults
+      maxResults: maxResults,
     });
     Logger.log('Page ' + pageNum);
     if (products.resources) {
@@ -83,6 +87,12 @@ function productList() {
 
 
 // [START productCustombatch]
+/**
+ * Batch updates products. Logs the response.
+ * @param  {object} productResource1 The first product resource.
+ * @param  {object} productResource2 The second product resource.
+ * @param  {object} productResource3 The third product resource.
+ */
 function custombatch(productResource1, productResource2, productResource3) {
   var merchantId = 123456; // Replace this with your Merchant Center ID.
   custombatchResource = {
@@ -92,23 +102,23 @@ function custombatch(productResource1, productResource2, productResource3) {
         'merchantId': merchantId,
         'method': 'insert',
         'productId': 'book124',
-        'product': productResource1
+        'product': productResource1,
       },
       {
         'batchId': 2,
         'merchantId': merchantId,
         'method': 'insert',
         'productId': 'book125',
-        'product': productResource2
+        'product': productResource2,
       },
       {
         'batchId': 3,
         'merchantId': merchantId,
         'method': 'insert',
         'productId': 'book126',
-        'product': productResource3
-      }
-    ]
+        'product': productResource3,
+      },
+    ],
   };
   var response = ShoppingContent.Products.custombatch(custombatchResource);
   Logger.log(response);
@@ -117,7 +127,10 @@ function custombatch(productResource1, productResource2, productResource3) {
 
 
 // [START accountInfo]
-// Use Accounttax to update account-level taxes.
+/**
+ * Updates content account tax information.
+ * Logs the API response.
+ */
 function updateAccountTax() {
   // Replace this with your Merchant Center ID.
   var merchantId = 123456;
@@ -135,20 +148,20 @@ function updateAccountTax() {
         'useGlobalRate': true,
         'locationId': 21135,
         'shippingTaxed': true,
-        'country': 'US'
+        'country': 'US',
       },
       {
         'ratePercent': 3,
         'locationId': 21136,
-        'country': 'US'
+        'country': 'US',
       },
       {
         'ratePercent': 2,
         'locationId': 21160,
         'shippingTaxed': true,
-        'country': 'US'
-      }
-    ]
+        'country': 'US',
+      },
+    ],
   };
 
   Logger.log(ShoppingContent.Accounttax.update(taxInfo, merchantId, accountId));

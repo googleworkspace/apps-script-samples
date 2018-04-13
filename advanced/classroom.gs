@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 // [START listCourses]
+/**
+ * Lists 10 course names and IDs.
+ */
 function listCourses() {
   var optionalArgs = {
-    pageSize: 10
+    pageSize: 10,
   };
   var response = Classroom.Courses.list(optionalArgs);
   var courses = response.courses;

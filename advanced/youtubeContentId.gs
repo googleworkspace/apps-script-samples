@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START claimYourVideoWithMonetizePolicy]
 /**
  * This function creates a partner-uploaded claim on a video with the specified
  * asset and policy rules.
  */
-// [START claimYourVideoWithMonetizePolicy]
 function claimYourVideoWithMonetizePolicy() {
   // The ID of the content owner that you are acting on behalf of.
   var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
@@ -47,11 +47,11 @@ function claimYourVideoWithMonetizePolicy() {
 }
 // [END claimYourVideoWithMonetizePolicy]
 
+// [START updateAssetOwnership]
 /**
  * This function updates your onBehalfOfContentOwner's ownership on an existing
  * asset.
  */
-// [START updateAssetOwnership]
 function updateAssetOwnership() {
   var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
   var assetId = 'replaceWithYourAssetID';
@@ -64,10 +64,10 @@ function updateAssetOwnership() {
         'type': 'include',
         'territories': [
           'US',
-          'CA'
-        ]
-      }
-    ]
+          'CA',
+        ],
+      },
+    ],
   };
   try {
     var updatedOwnership = YoutubeContentId.Ownership.update(myAssetOwnership,
@@ -80,18 +80,18 @@ function updateAssetOwnership() {
 }
 // [END updateAssetOwnership]
 
+// [START releaseClaim]
 /**
  * This function releases an existing claim your onBehalfOfContentOwner has
  * on a video.
  */
-// [START releaseClaim]
 function releaseClaim() {
   var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
   // The ID of the claim to be released.
   var claimId = 'replaceWithYourClaimID';
   // To release the claim, change the resource's status to inactive.
   var claimToBeReleased = {
-    'status': 'inactive'
+    'status': 'inactive',
   };
   try {
     var claimReleased = YoutubeContentId.Claims.patch(claimToBeReleased,

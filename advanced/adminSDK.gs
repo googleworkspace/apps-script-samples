@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START listAllUsers]
 /**
  * Lists all the users in a domain sorted by first name.
  */
-// [START listAllUsers]
 function listAllUsers() {
-  var pageToken, page;
+  var pageToken;
+  var page;
   do {
     page = AdminDirectory.Users.list({
       domain: 'example.com',
       orderBy: 'givenName',
       maxResults: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     var users = page.users;
     if (users) {
@@ -40,10 +41,10 @@ function listAllUsers() {
 }
 // [END listAllUsers]
 
+// [START getUser]
 /**
 * Get a user by their email address and logs all of their data as a JSON string.
 */
-// [START getUser]
 function getUser() {
   var userEmail = 'liz@example.com';
   var user = AdminDirectory.Users.get(userEmail);
@@ -51,52 +52,53 @@ function getUser() {
 }
 // [END getUser]
 
+// [START addUser]
 /**
  * Adds a new user to the domain, including only the required information. For
  * the full list of user fields, see the API's reference documentation:
- * https://developers.google.com/admin-sdk/directory/v1/reference/users/insert
+ * @see https://developers.google.com/admin-sdk/directory/v1/reference/users/insert
  */
-// [START addUser]
 function addUser() {
   var user = {
     primaryEmail: 'liz@example.com',
     name: {
       givenName: 'Elizabeth',
-      familyName: 'Smith'
+      familyName: 'Smith',
     },
     // Generate a random password string.
-    password: Math.random().toString(36)
+    password: Math.random().toString(36),
   };
   user = AdminDirectory.Users.insert(user);
   Logger.log('User %s created with ID %s.', user.primaryEmail, user.id);
 }
 // [END addUser]
 
+// [START createAlias]
 /**
  * Creates an alias (nickname) for a user.
  */
-// [START createAlias]
 function createAlias() {
   var userEmail = 'liz@example.com';
   var alias = {
-    alias: 'chica@example.com'
+    alias: 'chica@example.com',
   };
   alias = AdminDirectory.Users.Aliases.insert(alias, userEmail);
   Logger.log('Created alias %s for user %s.', alias.alias, userEmail);
 }
 // [END createAlias]
 
+// [START listAllGroups]
 /**
  * Lists all the groups in the domain.
  */
-// [START listAllGroups]
 function listAllGroups() {
-  var pageToken, page;
+  var pageToken;
+  var page;
   do {
     page = AdminDirectory.Groups.list({
       domain: 'example.com',
       maxResults: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     var groups = page.groups;
     if (groups) {
@@ -112,28 +114,28 @@ function listAllGroups() {
 }
 // [END listAllGroups]
 
+// [START addGroupMember]
 /**
  * Adds a user to an existing group in the domain.
  */
-// [START addGroupMember]
 function addGroupMember() {
   var userEmail = 'liz@example.com';
   var groupEmail = 'bookclub@example.com';
   var member = {
     email: userEmail,
-    role: 'MEMBER'
+    role: 'MEMBER',
   };
   member = AdminDirectory.Members.insert(member, groupEmail);
   Logger.log('User %s added as a member of group %s.', userEmail, groupEmail);
 }
 // [END addGroupMember]
 
+// [START migrate]
 /**
  * Gets three RFC822 formatted messages from the each of the latest three
  * threads in the user's Gmail inbox, creates a blob from the email content
  * (including attachments), and inserts it in a Google Group in the domain.
  */
-// [START migrate]
 function migrateMessages() {
   var groupId = 'exampleGroup@example.com';
   var messagesToMigrate = getRecentMessagesContent();
@@ -168,10 +170,10 @@ function getRecentMessagesContent() {
 }
 // [END migrate]
 
+// [START getGroupSettings]
 /**
  * Gets a group's settings and logs them to the console.
  */
-// [START getGroupSettings]
 function getGroupSettings() {
   var groupId = 'exampleGroup@example.com';
   var group = AdminGroupsSettings.Groups.get(groupId);
@@ -179,11 +181,11 @@ function getGroupSettings() {
 }
 // [END getGroupSettings]
 
+// [START updateGroupSettings]
 /**
  * Updates group's settings. Here, the description is modified, but various
  * other settings can be changed in the same way.
  */
-// [START updateGroupSettings]
 function updateGroupSettings() {
   var groupId = 'exampleGroup@example.com';
   var group = AdminGroupsSettings.newGroups();
@@ -192,21 +194,22 @@ function updateGroupSettings() {
 }
 // [END updateGroupSettings]
 
+// [START getLicenseAssignments]
 /**
  * Logs the license assignments, including the product ID and the sku ID, for
  * the users in the domain. Notice the use of page tokens to access the full
  * list of results.
  */
-// [START getLicenseAssignments]
 function getLicenseAssignments() {
   var productId = 'Google-Apps';
   var customerId = 'example.com';
-  var assignments, pageToken;
+  var assignments;
+  var pageToken;
   do {
     assignments = AdminLicenseManager.LicenseAssignments
         .listForProduct(productId, customerId, {
       maxResults: 500,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
   } while (pageToken);
   for (var i = 0; i < assignments.items.length; i++) {
@@ -217,26 +220,26 @@ function getLicenseAssignments() {
 }
 // [END getLicenseAssignments]
 
+// [START insertLicenseAssignment]
 /**
  * Insert a license assignment for a user, for a given product ID and sku ID
  * combination.
  */
-// [START insertLicenseAssignment]
 function insertLicenseAssignment() {
   var productId = 'Google-Apps';
   var skuId = 'Google-Vault';
   var userId = 'marty@hoverboard.net';
   var results = AdminLicenseManager.LicenseAssignments
-      .insert({ userId: userId }, productId, skuId);
+      .insert({userId: userId}, productId, skuId);
   Logger.log(results);
 }
 // [END insertLicenseAssignment]
 
+// [START generateLoginActivityReport]
 /**
  * Generates a login activity report for the last week as a spreadsheet. The
  * report includes the time, user, and login result.
  */
-// [START generateLoginActivityReport]
 function generateLoginActivityReport() {
   var now = new Date();
   var oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -244,13 +247,14 @@ function generateLoginActivityReport() {
   var endTime = now.toISOString();
 
   var rows = [];
-  var pageToken, page;
+  var pageToken;
+  var page;
   do {
     page = AdminReports.Activities.list('all', 'login', {
       startTime: startTime,
       endTime: endTime,
       maxResults: 500,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     var items = page.items;
     if (items) {
@@ -259,7 +263,7 @@ function generateLoginActivityReport() {
         var row = [
           new Date(item.id.time),
           item.actor.email,
-          item.events[0].name
+          item.events[0].name,
         ];
         rows.push(row);
       }
@@ -285,12 +289,12 @@ function generateLoginActivityReport() {
 }
 // [END generateLoginActivityReport]
 
+// [START generateUserUsageReport]
 /**
  * Generates a user usage report for this day last week as a spreadsheet. The
  * report includes the date, user, last login time, number of emails received,
  * and number of docs owned.
  */
-// [START generateUserUsageReport]
 function generateUserUsageReport() {
   var today = new Date();
   var oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -300,15 +304,16 @@ function generateUserUsageReport() {
   var parameters = [
     'accounts:last_login_time',
     'gmail:num_emails_received',
-    'docs:num_docs'
+    'docs:num_docs',
   ];
   var rows = [];
-  var pageToken, page;
+  var pageToken;
+  var page;
   do {
     page = AdminReports.UserUsageReport.get('all', date, {
       parameters: parameters.join(','),
       maxResults: 500,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     var reports = page.usageReports;
     if (reports) {
@@ -320,7 +325,7 @@ function generateUserUsageReport() {
           report.entity.userEmail,
           parameterValues['accounts:last_login_time'],
           parameterValues['gmail:num_emails_received'],
-          parameterValues['docs:num_docs']
+          parameterValues['docs:num_docs'],
         ];
         rows.push(row);
       }
@@ -370,14 +375,16 @@ function getParameterValues(parameters) {
 }
 // [END generateUserUsageReport]
 
+// [START getSubscriptions]
 /**
  * Logs the list of subscriptions, including the customer ID, date created, plan
  * name, and the sku ID. Notice the use of page tokens to access the full list
  * of results.
  */
-// [START getSubscriptions]
 function getSubscriptions() {
-  var result, subscriptions, pageToken;
+  var result;
+  var subscriptions;
+  var pageToken;
   do {
     result = AdminReseller.Subscriptions.list({
       pageToken: pageToken,

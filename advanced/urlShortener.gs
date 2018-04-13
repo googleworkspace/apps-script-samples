@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 // [START shortenUrl]
+/**
+ * Shortens a long URL. Logs this URL.
+ */
 function shortenUrl() {
   var url = UrlShortener.Url.insert({
-    longUrl: 'http://www.example.com'
+    longUrl: 'http://www.example.com',
   });
   Logger.log('Shortened URL is "%s".', url.id);
 }
 // [END shortenUrl]
 
 // [START getClicks]
+/**
+ * Logs the number of clicks to a short URL over the last week.
+ * @param  {string} shortUrl The short URL.
+ */
 function getClicks(shortUrl) {
   var url = UrlShortener.Url.get(shortUrl, {
-    projection: 'ANALYTICS_CLICKS'
+    projection: 'ANALYTICS_CLICKS',
   });
   Logger.log('The URL received %s clicks this week.', url.analytics.week.shortUrlClicks);
 }
