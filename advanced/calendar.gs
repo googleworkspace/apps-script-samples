@@ -142,28 +142,28 @@ function parseDate(string) {
  */
 function logSyncedEvents(calendarId, fullSync) {
   var properties = PropertiesService.getUserProperties();
-  var pageToken;
   var options = {
     maxResults: 100
   };
   var syncToken = properties.getProperty('syncToken');
   if (syncToken && !fullSync) {
-    options['syncToken'] = syncToken;
+    options.syncToken = syncToken;
   } else {
     // Sync events up to thirty days in the past.
-    options['timeMin'] = getRelativeDate(-30, 0).toISOString();
+    options.timeMin = getRelativeDate(-30, 0).toISOString();
   }
 
-  // Retrieve events, one page at a time.
+  // Retrieve events one page at a time.
   var events;
+  var pageToken;
   do {
     try {
-      options['pageToken'] = pageToken;
+      options.pageToken = pageToken;
       events = Calendar.Events.list(calendarId, options);
     } catch (e) {
       // Check to see if the sync token was invalidated by the server;
       // if so, perform a full sync instead.
-      if (e.message === "Sync token is no longer valid, a full sync is required." ) {
+      if (e.message === "Sync token is no longer valid, a full sync is required.") {
         properties.deleteProperty('syncToken');
         logSyncedEvents(calendarId, true);
         return;
@@ -173,7 +173,7 @@ function logSyncedEvents(calendarId, fullSync) {
     }
     
     if (events.items && events.items.length > 0) {
-      for(var i = 0; i < events.items.length; i++) {
+      for (var i = 0; i < events.items.length; i++) {
          var event = events.items[i];
          if (event.status === 'cancelled') {
            console.log('Event id %s was cancelled.', event.id);
@@ -182,6 +182,7 @@ function logSyncedEvents(calendarId, fullSync) {
            var start = parseDate(event.start.date);
            console.log('%s (%s)', event.summary, start.toLocaleDateString());
          } else {
+	   // Events that don't last all day; they have defined start times.
            var start = parseDate(event.start.dateTime);
            console.log('%s (%s)', event.summary, start.toLocaleString());
          }
