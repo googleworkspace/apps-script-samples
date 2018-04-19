@@ -131,7 +131,6 @@ function parseDate(string) {
 // [END listNext10Events]
 
 // [START logSyncedEvents]
-
 /**
  * Retrieve and log events from the given calendar that have been modified
  * since the last sync. If the sync token is missing or invalid, log all
@@ -196,5 +195,4 @@ function logSyncedEvents(calendarId, fullSync) {
   
   properties.setProperty('syncToken', events.nextSyncToken);
 }
-
 // [END logSyncedEvents]
