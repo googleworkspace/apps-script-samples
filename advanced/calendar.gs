@@ -152,7 +152,7 @@ function logSyncedEvents(calendarId, fullSync) {
     options['syncToken'] = syncToken;
   } else {
     // Sync events up to thirty days in the past.
-    options['timeMin'] = getRelativeDate(-30,0).toISOString();
+    options['timeMin'] = getRelativeDate(-30, 0).toISOString();
   }
 
   // Retrieve events, one page at a time.
@@ -169,7 +169,7 @@ function logSyncedEvents(calendarId, fullSync) {
         logSyncedEvents(calendarId, true);
         return;
       } else {
-        throw e.message;
+        throw new Error(e.message);
       }
     }
     
