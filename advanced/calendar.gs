@@ -137,9 +137,9 @@ function parseDate(string) {
  * since the last sync. If the sync token is missing or invalid, log all
  * events from up to a month ago (a full sync).
  *
- * @param calendarId The ID of the calender to retrieve events from.
- * @param fullSync If true, throw out any existing sync token and perform a full sync;
- *        if false, use the existing sync token if possible.
+ * @param {string} calendarId The ID of the calender to retrieve events from.
+ * @param {boolean} fullSync If true, throw out any existing sync token and
+ *        perform a full sync; if false, use the existing sync token if possible.
  */
 function logSyncedEvents(calendarId, fullSync) {
   var properties = PropertiesService.getUserProperties();
