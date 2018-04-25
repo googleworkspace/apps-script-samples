@@ -182,7 +182,7 @@ function logSyncedEvents(calendarId, fullSync) {
            var start = parseDate(event.start.date);
            console.log('%s (%s)', event.summary, start.toLocaleDateString());
          } else {
-	   // Events that don't last all day; they have defined start times.
+           // Events that don't last all day; they have defined start times.
            var start = parseDate(event.start.dateTime);
            console.log('%s (%s)', event.summary, start.toLocaleString());
          }
