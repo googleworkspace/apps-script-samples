@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START activity_quickstart]
+// [START drive_activity_quickstart]
 function listActivity() {
   var optionalArgs = {
     source: 'drive.google.com',
@@ -41,4 +41,4 @@ function listActivity() {
     Logger.log('No recent activity');
   }
 }
-// [END activity_quickstart]
+// [END drive_activity_quickstart]
