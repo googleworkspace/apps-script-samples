@@ -9,7 +9,7 @@ Various sample code and projects for the Google Apps Script platform. Learn more
 * Calendar: Create a vacation calendar
 * Classroom: Manage Google Classroom
 * Docs: Cursor inspector and translate add-ons
-* Drive: Mangage Google Drive files and folders
+* Drive: Manage Google Drive files and folders
 * Gmail: Sending mail and mailmerge
 * Forms: Forms notification add-on
 * Sheets: Sheets add-ons and custom functions
