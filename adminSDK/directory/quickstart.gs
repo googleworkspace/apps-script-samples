@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START admin_sdk_directory_quickstart]
 function listUsers() {
   var optionalArgs = {
     customer: 'my_customer',
@@ -31,3 +32,4 @@ function listUsers() {
     Logger.log('No users found.');
   }
 }
+// [END admin_sdk_directory_quickstart]

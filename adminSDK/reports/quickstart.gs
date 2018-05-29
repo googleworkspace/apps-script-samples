@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START admin_sdk_reports_quickstart]
 function listLogins() {
   var userKey = 'all';
   var applicationName = 'login';
@@ -32,3 +33,4 @@ function listLogins() {
     Logger.log('No logins found.');
   }
 }
+// [END admin_sdk_reports_quickstart]

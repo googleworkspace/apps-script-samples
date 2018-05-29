@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START admin_sdk_reseller_quickstart]
 function listSubscriptions() {
   var optionalArgs = {
     maxResults: 10
@@ -30,3 +31,4 @@ function listSubscriptions() {
     Logger.log('No subscriptions found.');
   }
 }
+// [END admin_sdk_reseller_quickstart]
