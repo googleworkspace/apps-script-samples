@@ -103,30 +103,16 @@ function listNext10Events() {
       var event = events.items[i];
       if (event.start.date) {
         // All-day event.
-        var start = parseDate(event.start.date);
+        var start = new Date(event.start.date);
         Logger.log('%s (%s)', event.summary, start.toLocaleDateString());
       } else {
-        var start = parseDate(event.start.dateTime);
+        var start = new Date(event.start.dateTime);
         Logger.log('%s (%s)', event.summary, start.toLocaleString());
       }
     }
   } else {
     Logger.log('No events found.');
   }
-}
-
-/**
- * Parses an RFC 3339 date or datetime string and returns a corresponding Date
- * object. This function is provided as a workaround until Apps Script properly
- * supports RFC 3339 dates. For more information, see
- * https://code.google.com/p/google-apps-script-issues/issues/detail?id=3860
- * @param {string} string The RFC 3339 string to parse.
- * @return {Date} The parsed date.
- */
-function parseDate(string) {
-  var parts = string.split('T');
-  parts[0] = parts[0].replace(/-/g, '/');
-  return new Date(parts.join(' '));
 }
 // [END listNext10Events]
 
@@ -171,7 +157,7 @@ function logSyncedEvents(calendarId, fullSync) {
         throw new Error(e.message);
       }
     }
-    
+
     if (events.items && events.items.length > 0) {
       for (var i = 0; i < events.items.length; i++) {
          var event = events.items[i];
@@ -179,11 +165,11 @@ function logSyncedEvents(calendarId, fullSync) {
            console.log('Event id %s was cancelled.', event.id);
          } else if (event.start.date) {
            // All-day event.
-           var start = parseDate(event.start.date);
+           var start = new Date(event.start.date);
            console.log('%s (%s)', event.summary, start.toLocaleDateString());
          } else {
            // Events that don't last all day; they have defined start times.
-           var start = parseDate(event.start.dateTime);
+           var start = new Date(event.start.dateTime);
            console.log('%s (%s)', event.summary, start.toLocaleString());
          }
       }
@@ -193,7 +179,7 @@ function logSyncedEvents(calendarId, fullSync) {
 
     pageToken = events.nextPageToken;
   } while (pageToken);
-  
+
   properties.setProperty('syncToken', events.nextSyncToken);
 }
 // [END logSyncedEvents]
