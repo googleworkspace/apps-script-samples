@@ -183,3 +183,102 @@ function logSyncedEvents(calendarId, fullSync) {
   properties.setProperty('syncToken', events.nextSyncToken);
 }
 // [END logSyncedEvents]
+
+// [START conditionalUpdate]
+/**
+ * Creates an event in the user's default calendar, waits 30 seconds, then
+ * attempts to update the event's location, on the condition that the event
+ * has not been changed since it was created.  If the event is changed during
+ * the 30-second wait, then the subsequent update will throw a 'Precondition
+ * Failed' error.
+ *
+ * The conditional update is accomplished by setting the 'If-Match' header
+ * to the etag of the new event when it was created.
+ */
+function conditionalUpdate() {
+  var calendarId = 'primary';
+  var start = getRelativeDate(1, 12);
+  var end = getRelativeDate(1, 13);
+  var event = {
+    summary: 'Lunch Meeting',
+    location: 'The Deli',
+    description: 'To discuss our plans for the presentation next week.',
+    start: {
+      dateTime: start.toISOString(),
+    },
+    end: {
+      dateTime: end.toISOString(),
+    },
+    attendees: [
+      {email: 'alice@example.com'},
+      {email: 'bob@example.com'},
+    ],
+    // Red background. Use Calendar.Colors.get() for the full list.
+    colorId: 11,
+  };
+  event = Calendar.Events.insert(event, calendarId);
+  Logger.log('Event ID: ' + event.getId());
+  // Wait 30 seconds to see if the event has been updated outside this script.
+  Utilities.sleep(30 * 1000);
+  // Try to update the event, on the condition that the event state has not
+  // changed since the event was created.
+  event.location = 'The Coffee Shop';
+  try {
+    event = Calendar.Events.update(
+      event,
+      calendarId,
+      event.id,
+      {},
+      {'If-Match': event.etag}
+    );
+    Logger.log('Successfully updated event: ' + event.id);
+  } catch (e) {
+    Logger.log('Fetch threw an exception: ' + e);
+  }
+}
+// [END conditionalUpdate]
+
+// [START conditionalFetch]
+/**
+ * Creates an event in the user's default calendar, then re-fetches the event
+ * every second, on the condition that the event has changed since the last
+ * fetch.
+ *
+ * The conditional fetch is accomplished by setting the 'If-None-Match' header
+ * to the etag of the last known state of the event.
+ */
+function conditionalFetch() {
+  var calendarId = 'primary';
+  var start = getRelativeDate(1, 12);
+  var end = getRelativeDate(1, 13);
+  var event = {
+    summary: 'Lunch Meeting',
+    location: 'The Deli',
+    description: 'To discuss our plans for the presentation next week.',
+    start: {
+      dateTime: start.toISOString(),
+    },
+    end: {
+      dateTime: end.toISOString(),
+    },
+    attendees: [
+      {email: 'alice@example.com'},
+      {email: 'bob@example.com'},
+    ],
+    // Red background. Use Calendar.Colors.get() for the full list.
+    colorId: 11,
+  };
+  event = Calendar.Events.insert(event, calendarId);
+  Logger.log('Event ID: ' + event.getId());
+  // Re-fetch the event each second, but only get a result if it has changed.
+  for (var i = 0; i < 30; i++) {
+    Utilities.sleep(1000);
+    try {
+      event = Calendar.Events.get(calendarId, event.id, {}, {'If-None-Match': event.etag});
+      Logger.log('New event description: ' + event.description);
+    } catch (e) {
+      Logger.log('Fetch threw an exception: ' + e);
+    }
+  }
+}
+// [END conditionalFetch]
