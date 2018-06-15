@@ -129,7 +129,7 @@ function listNext10Events() {
 function logSyncedEvents(calendarId, fullSync) {
   var properties = PropertiesService.getUserProperties();
   var options = {
-    maxResults: 100
+    maxResults: 100,
   };
   var syncToken = properties.getProperty('syncToken');
   if (syncToken && !fullSync) {
@@ -149,7 +149,7 @@ function logSyncedEvents(calendarId, fullSync) {
     } catch (e) {
       // Check to see if the sync token was invalidated by the server;
       // if so, perform a full sync instead.
-      if (e.message === "Sync token is no longer valid, a full sync is required.") {
+      if (e.message === 'Sync token is no longer valid, a full sync is required.') {
         properties.deleteProperty('syncToken');
         logSyncedEvents(calendarId, true);
         return;
