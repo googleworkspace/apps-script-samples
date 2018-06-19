@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 // [START admin_sdk_reseller_quickstart]
+/**
+ * List Admin SDK reseller subscriptions.
+ */
 function listSubscriptions() {
   var optionalArgs = {
-    maxResults: 10
+    maxResults: 10,
   };
   var response = AdminReseller.Subscriptions.list(optionalArgs);
   var subscriptions = response.subscriptions;

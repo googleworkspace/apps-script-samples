@@ -36,6 +36,7 @@ function showSidebar() {
 
 /**
  * Open a dialog in the document.
+ * @return {string} The dialog ID.
  */
 function openDialog() {
   var dialogId = Utilities.base64Encode(Math.random());
@@ -50,6 +51,8 @@ function openDialog() {
 
 /**
  * Include the contents of the given file into the HTML content.
+ * @param {string} filename The filename
+ * @return {string} The content of the rendered file.
  */
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();

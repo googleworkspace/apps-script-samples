@@ -54,7 +54,7 @@ function syncTeamVacationCalendar() {
       events.forEach(function(event) {
         event.summary = '[' + username + '] ' + event.summary;
         event.organizer = {
-          id: TEAM_CALENDAR_ID
+          id: TEAM_CALENDAR_ID,
         };
         event.attendees = [];
         Logger.log('Importing: %s', event.summary);
@@ -74,26 +74,26 @@ function syncTeamVacationCalendar() {
     Logger.log('Execution time about to hit quota limit; execution stopped.');
   }
   var executionTime = ((new Date()).getTime() - today.getTime()) / 1000.0;
-  Logger.log('Total execution time (s) : ' + executionTime);;
+  Logger.log('Total execution time (s) : ' + executionTime); ;
 }
 
 /**
  * In a given user's calendar, look for occurrences of the given keyword
  * in events within the specified date range and return any such events
  * found.
- * @param user the user's primary email String.
- * @param keyword the keyword String to look for.
- * @param start the starting Date of the range to examine.
- * @param end the ending Date of the range to examine.
- * @param opt_since a Date indicating the last time this script was run.
- * @return an array of calendar event Objects.
+ * @param {string} user the user's primary email String.
+ * @param {string} keyword the keyword String to look for.
+ * @param {Date} start the starting Date of the range to examine.
+ * @param {Date} end the ending Date of the range to examine.
+ * @param {Date} opt_since a Date indicating the last time this script was run.
+ * @return {object[]} an array of calendar event Objects.
  */
 function findEvents(user, keyword, start, end, opt_since) {
   var params = {
     q: keyword,
     timeMin: formatDate(start),
     timeMax: formatDate(end),
-    showDeleted: true
+    showDeleted: true,
   };
   if (opt_since) {
     // This prevents the script from examining events that have not been
@@ -134,10 +134,11 @@ function findEvents(user, keyword, start, end, opt_since) {
 
 /**
  * Return a list of the primary emails of users in this domain.
- * @return array of user email Strings.
+ * @return {string[]} An array of user email strings.
  */
 function getDomainUsers() {
-  var pageToken, page;
+  var pageToken;
+  var page;
   var userEmails = [];
   do {
     page = AdminDirectory.Users.list({
@@ -145,7 +146,7 @@ function getDomainUsers() {
       orderBy: 'givenName',
       maxResults: 100,
       pageToken: pageToken,
-      viewType: 'domain_public'
+      viewType: 'domain_public',
     });
     var users = page.users;
     if (users) {
@@ -163,8 +164,8 @@ function getDomainUsers() {
 /**
  * Return an RFC3339 formated date String corresponding to the given
  * Date object.
- * @param date a Date.
- * @return a formatted date string.
+ * @param {Date} date a Date.
+ * @return {string} a formatted date string.
  */
 function formatDate(date) {
   return Utilities.formatDate(date, 'UTC', 'yyyy-MM-dd\'T\'HH:mm:ssZ');
@@ -174,9 +175,9 @@ function formatDate(date) {
  * Compares two Date objects and returns true if the difference
  * between them is more than the maximum specified run time.
  *
- * @param start the first Date object.
- * @param now the (later) Date object.
- * @returns true if the time difference is greater than
+ * @param {Date} start the first Date object.
+ * @param {Date} now the (later) Date object.
+ * @return {boolean} true if the time difference is greater than
  *     MAX_PROP_RUNTIME_MS (in milliseconds).
  */
 function isTimeUp(start, now) {

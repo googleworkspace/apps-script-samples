@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START hello_world]
+/**
+ * Creates a Google Doc and sends an email to the current user with a link to the doc.
+ */
 function createAndSendDocument() {
   // Create a new Google Doc named 'Hello, world!'
   var doc = DocumentApp.create('Hello, world!');

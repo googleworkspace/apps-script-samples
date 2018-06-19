@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START sheets_custom_form_responses_quickstart]
 /**
  * A special function that inserts a custom menu when the spreadsheet opens.
  */
@@ -45,8 +45,7 @@ function setUpConference_() {
 /**
  * Creates a Google Calendar with events for each conference session in the
  * spreadsheet, then writes the event IDs to the spreadsheet for future use.
- *
- * @param {String[][]} values Cell values for the spreadsheet range.
+ * @param {Array<string[]>} values Cell values for the spreadsheet range.
  * @param {Range} range A spreadsheet range that contains conference data.
  */
 function setUpCalendar_(values, range) {
@@ -86,7 +85,7 @@ function joinDateAndTime_(date, time) {
  * sessions they would like to attend, grouped by date and start time.
  *
  * @param {Spreadsheet} ss The spreadsheet that contains the conference data.
- * @param {String[][]} values Cell values for the spreadsheet range.
+ * @param {Array<String[]>} values Cell values for the spreadsheet range.
  */
 function setUpForm_(ss, values) {
   // Group the sessions by date and time so that they can be passed to the form.
@@ -151,9 +150,8 @@ function onFormSubmit(e) {
 
 /**
  * Add the user as a guest for every session he or she selected.
- *
- * @param {Object} user An object that contains the user's name and email.
- * @param {String[][]} response An array of data for the user's session choices.
+ * @param {object} user An object that contains the user's name and email.
+ * @param {Array<String[]>} response An array of data for the user's session choices.
  */
 function sendInvites_(user, response) {
   var id = ScriptProperties.getProperty('calId');
@@ -165,9 +163,8 @@ function sendInvites_(user, response) {
 
 /**
  * Create and share a personalized Google Doc that shows the user's itinerary.
- *
- * @param {Object} user An object that contains the user's name and email.
- * @param {String[][]} response An array of data for the user's session choices.
+ * @param {object} user An object that contains the user's name and email.
+ * @param {Array<string[]>} response An array of data for the user's session choices.
  */
 function sendDoc_(user, response) {
   var doc = DocumentApp.create('Conference Itinerary for ' + user.name)
@@ -192,3 +189,4 @@ function sendDoc_(user, response) {
     attachments: doc.getAs(MimeType.PDF),
   });
 }
+// [END sheets_custom_form_responses_quickstart]

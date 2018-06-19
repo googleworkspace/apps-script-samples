@@ -77,6 +77,6 @@ textRange.getListStyle().applyListPreset(SlidesApp.ListPreset.DIGIT_ALPHA_ROMAN)
 var paragraphs = textRange.getParagraphs();
 for (var i = 0; i < paragraphs.length; i++) {
   var listStyle = paragraphs[i].getRange().getListStyle();
-  Logger.log('Paragraph ' + (i + 1) + ''s nesting level: ' + listStyle.getNestingLevel());';
+  Logger.log('Paragraph ' + (i + 1) + '\'s nesting level: ' + listStyle.getNestingLevel());
 }
 // [END listStyling]

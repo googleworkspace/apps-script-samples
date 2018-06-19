@@ -22,7 +22,7 @@ var SCHEDULE_TRIGGER_ID = 'Import.scheduled.triggerId';
  */
 var UPDATE_TYPE = {
   ADD: 1,
-  REMOVE: 2
+  REMOVE: 2,
 };
 
 /**
@@ -47,8 +47,9 @@ function getReportConfig(reportId) {
 
 /**
  * Given a report configuration, save it.
- * @param {Object} config the report configuration.
- * @param {Object} the updated report configuration.
+ * @param {object} config the report configuration.
+ * @param {object} the updated report configuration.
+ * @return {object} The saved configuration.
  */
 function saveReportConfig(config) {
   var previous = getReportConfig(config.reportId);
@@ -76,9 +77,9 @@ function deleteReportConfig(reportId) {
 
 /**
  * Returns true if the current user is allowed to edit the
- * report associated with the given config; returns
- * false otherwise.
+ * report associated with the given config.
  * @param {Object} config a report configuration.
+ * @return {boolean} True if the user can edit the report.
  */
 function canEditReport(config) {
   if (!config) {
@@ -89,10 +90,11 @@ function canEditReport(config) {
 }
 
 /**
- * Given a new report configuration, return true if it saving
- * this report would mean the limit on scheduled reports would
- * be exceeded; return false otherwise.
+ * Given a new report configuration, return true if it saving this report would mean the limit on
+ * scheduled reports would be exceeded.
  * @param {Object} config a report configuration to be saved.
+ * @return {boolean} If it saving this report would mean the limit on scheduled reports
+ * would be exceeded.
  */
 function isOverScheduleLimit(config) {
   var previous = getReportConfig(config.reportId);
@@ -171,7 +173,7 @@ function updateReportSet(updateType, reportId, reportName) {
 function updateOnImport(config, sheet, lastRun) {
   var update = {
     sheetId: sheet.getSheetId().toString(),
-    lastRun: lastRun
+    lastRun: lastRun,
   };
   saveObjectToProperties(config.reportId, update);
   update.sheetName = sheet.getName();
@@ -191,9 +193,8 @@ function getColumnIds(config) {
 }
 
 /**
- * Return the saved trigger ID of the scheduling trigger for this
- * user. Returns null if the trigger is not set.
- @ @return {String} the trigger ID.
+ * Return the saved trigger ID of the scheduling trigger for this user.
+ * @return {string|null} the trigger ID or null if the trigger is not set.
  */
 function getTriggerId() {
   var properties = PropertiesService.getUserProperties();

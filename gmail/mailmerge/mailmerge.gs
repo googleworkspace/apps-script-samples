@@ -15,6 +15,9 @@
  */
 
 // [START mail_merge]
+/**
+ * Sends emails from spreadsheet rows.
+ */
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var dataSheet = ss.getSheets()[0];
@@ -24,7 +27,7 @@ function sendEmails() {
 
   // [START template]
   var templateSheet = ss.getSheets()[1];
-  var emailTemplate = templateSheet.getRange("A1").getValue();
+  var emailTemplate = templateSheet.getRange('A1').getValue();
   // [END template]
 
   // [START objects]
@@ -44,7 +47,7 @@ function sendEmails() {
     // the corresponding value in a row object (for instance rowData.firstName).
     var emailText = fillInTemplateFromObject(emailTemplate, rowData);
     // [END emailText]
-    var emailSubject = "Tutorial: Simple Mail Merge";
+    var emailSubject = 'Tutorial: Simple Mail Merge';
 
     // [START sendEmail]
     MailApp.sendEmail(rowData.emailAddress, emailSubject, emailText);
@@ -52,13 +55,14 @@ function sendEmails() {
   }
 }
 
-// Replaces markers in a template string with values define in a JavaScript data object.
-// Arguments:
-//   - template: string containing markers, for instance ${"Column name"}
-//   - data: JavaScript object with values to that will replace markers. For instance
-//           data.columnName will replace marker ${"Column name"}
-// Returns a string without markers. If no data is found to replace a marker, it is
-// simply removed.
+/**
+ * Replaces markers in a template string with values define in a JavaScript data object.
+ * @param {string} template Contains markers, for instance ${"Column name"}
+ * @param {object} data values to that will replace markers.
+ *   For instance data.columnName will replace marker ${"Column name"}
+ * @return {string} A string without markers. If no data is found to replace a marker,
+ *   it is simply removed.
+ */
 function fillInTemplateFromObject(template, data) {
   var email = template;
   // [START templateVars]
@@ -74,7 +78,7 @@ function fillInTemplateFromObject(template, data) {
     var variableData = data[normalizeHeader(templateVars[i])];
     // [END variableData]
     // [START replace]
-    email = email.replace(templateVars[i], variableData || "");
+    email = email.replace(templateVars[i], variableData || '');
     // [END replace]
   }
 

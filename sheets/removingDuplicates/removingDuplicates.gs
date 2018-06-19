@@ -15,24 +15,27 @@
  */
 
 // [START removeDuplicates]
+/**
+ * Removes duplicate rows from the current sheet.
+ */
 function removeDuplicates() {
   // [START sheet]
   var sheet = SpreadsheetApp.getActiveSheet();
   var data = sheet.getDataRange().getValues();
   // [END sheet]
   // [START newData]
-  var newData = new Array();
+  var newData = [];
   // [END newData]
-  for(i in data){
+  for (i in data) {
     var row = data[i];
     var duplicate = false;
-    for(j in newData){
-      if(row.join() == newData[j].join()){
+    for (j in newData) {
+      if (row.join() == newData[j].join()) {
         duplicate = true;
       }
     }
     // [START duplicate]
-    if(!duplicate){
+    if (!duplicate) {
       newData.push(row);
     }
     // [END duplicate]

@@ -25,7 +25,7 @@ var _ = Underscore.load();
  * from and the name of the add-on you are building, respectively.
  */
 var DATA_ALIAS = 'MyDataSource';
-var ADDON_NAME = "YOUR_ADDON_NAME_HERE";
+var ADDON_NAME = 'YOUR_ADDON_NAME_HERE';
 var SIDEBAR_TITLE = 'Import Control Center';
 var MAX_SCHEDULED_REPORTS = 24;
 var IMPORT_PAGE_SIZE = 30;
@@ -37,8 +37,8 @@ var ERROR_CODES = {
   AUTO_UPDATE_LIMIT: 1,
   ILLEGAL_EDIT: 2,
   ILLEGAL_DELETE: 3,
-  IMPORT_FAILED: 4
-}
+  IMPORT_FAILED: 4,
+};
 
 /**
  * Adds a custom menu with items to show the sidebar.
@@ -92,9 +92,13 @@ function getInitialDataForSidebar() {
   _.each(reportSet, function(val, key) {
     reportList.push({'name': val, 'reportId': key});
   });
-  reportList.sort(function (a, b) {
-    if (a.name > b.name) { return 1; }
-    if (a.name < b.name) { return -1; }
+  reportList.sort(function(a, b) {
+    if (a.name > b.name) {
+ return 1;
+}
+    if (a.name < b.name) {
+ return -1;
+}
     return 0;
   });
   return {reports: reportList, columns: getColumnOptions()};
@@ -104,6 +108,7 @@ function getInitialDataForSidebar() {
  * Get the report configuration for the given report and, if a sheet
  * exists for it, activate that sheet.
  * @param {String} reportId a report ID.
+ * @return {object} The report config.
  */
 function switchToReport(reportId) {
   var config = getReportConfig(reportId);
@@ -114,8 +119,8 @@ function switchToReport(reportId) {
 /**
  * Import data to the spreadsheet according to the given report
  * configuration.
- * @param {String} reportId the report identifier.
- * @return {Object} the (possibly updated) report configuration.
+ * @param {string} reportId the report identifier.
+ * @return {object} the (possibly updated) report configuration.
  */
 function runImport(reportId) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -176,7 +181,7 @@ function saveReport(config) {
   if (isOverScheduleLimit(config)) {
     throw ERROR_CODES.AUTO_UPDATE_LIMIT;
   }
-  
+
   var result = saveReportConfig(config);
   adjustScheduleTrigger();
   return result;
@@ -283,7 +288,7 @@ function sendReauthorizationRequest() {
         'Add-on Authorization Required',
         message.getContent(), {
           name: ADDON_NAME,
-          htmlBody: message.getContent()
+          htmlBody: message.getContent(),
       });
     }
     properties.setProperty(LAST_AUTH_EMAIL_KEY, today);

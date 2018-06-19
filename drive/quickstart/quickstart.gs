@@ -19,8 +19,8 @@
  */
 function listFiles() {
   var files = Drive.Files.list({
-    fields: "nextPageToken, files(id, name)",
-    pageSize: 10
+    fields: 'nextPageToken, files(id, name)',
+    pageSize: 10,
   }).files;
   for (var i = 0; i < files.length; i++) {
     var file = files[i];

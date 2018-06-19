@@ -17,7 +17,8 @@
 /**
  * Includes the given project HTML file in the current HTML project file.
  * Also used to include JavaScript.
- * @param {String} filename Project file name.
+ * @param {string} filename Project file name.
+ * @return {string} The content of the rendered HTML.
  */
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();

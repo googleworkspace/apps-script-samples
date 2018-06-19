@@ -96,12 +96,12 @@ function getSelectedText() {
         }
       }
     }
-    if (text.length == 0) {
-      throw 'Please select some text.';
+    if (text.length) {
+      throw new Error('Please select some text.');
     }
     return text;
   } else {
-    throw 'Please select some text.';
+    throw new Error('Please select some text.');
   }
 }
 
@@ -118,7 +118,7 @@ function getPreferences() {
   var userProperties = PropertiesService.getUserProperties();
   var languagePrefs = {
     originLang: userProperties.getProperty('originLang'),
-    destLang: userProperties.getProperty('destLang')
+    destLang: userProperties.getProperty('destLang'),
   };
   return languagePrefs;
 }
@@ -170,7 +170,7 @@ function insertText(newText) {
     if (elements.length == 1 &&
         elements[0].getElement().getType() ==
         DocumentApp.ElementType.INLINE_IMAGE) {
-      throw "Can't insert text into an image.";
+      throw new Error('Can\'t insert text into an image.');
     }
     for (var i = 0; i < elements.length; i++) {
       if (elements[i].isPartial()) {

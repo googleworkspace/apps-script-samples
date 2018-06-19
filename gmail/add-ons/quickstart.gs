@@ -7,7 +7,7 @@ var MAX_THREADS = 5;
  * runs every time the add-on is started.
  *
  * @param {Object} e data provided by the Gmail UI.
- * @returns {Card[]}
+ * @return {Card[]}
  */
 function buildAddOn(e) {
   // Activate temporary Gmail add-on scopes.
@@ -50,20 +50,20 @@ function extractSenderData(messageId) {
   var recents = [];
 
   // Retrieve information about up to 5 recent threads from the same sender.
-  recentThreads.slice(0,MAX_THREADS).forEach(function(thread) {
+  recentThreads.slice(0, MAX_THREADS).forEach(function(thread) {
     if (thread.getId() != threadId && ! thread.isInChats()) {
       recents.push({
         'subject': thread.getFirstMessageSubject(),
         'count': thread.getMessageCount(),
         'link': 'https://mail.google.com/mail/u/0/#inbox/' + thread.getId(),
-        'lastDate': thread.getLastMessageDate().toDateString()
+        'lastDate': thread.getLastMessageDate().toDateString(),
       });
     }
   });
 
   var senderData = {
-    "email": senderEmail,
-    'recents': recents
+    email: senderEmail,
+    recents: recents,
   };
 
   return senderData;
@@ -79,7 +79,7 @@ function extractSenderData(messageId) {
  */
 function extractEmailAddress(sender) {
   var regex = /\<([^\@]+\@[^\>]+)\>/;
-  var email = sender;  // Default to using the whole string.
+  var email = sender; // Default to using the whole string.
   var match = regex.exec(sender);
   if (match) {
     email = match[1];
@@ -98,7 +98,7 @@ function buildRecentThreadCard(senderEmail, threadData) {
   var card = CardService.newCardBuilder();
   card.setHeader(CardService.newCardHeader().setTitle(threadData.subject));
   var section = CardService.newCardSection()
-    .setHeader("<font color=\"#1257e0\">Recent thread</font>");
+    .setHeader('<font color=\"#1257e0\">Recent thread</font>');
   section.addWidget(CardService.newTextParagraph().setText(threadData.subject));
   section.addWidget(CardService.newKeyValue()
     .setTopLabel('Sender')

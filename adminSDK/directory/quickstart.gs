@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 // [START admin_sdk_directory_quickstart]
+/**
+ * Lists users in a G Suite domain.
+ */
 function listUsers() {
   var optionalArgs = {
     customer: 'my_customer',
     maxResults: 10,
-    orderBy: 'email'
+    orderBy: 'email',
   };
   var response = AdminDirectory.Users.list(optionalArgs);
   var users = response.users;

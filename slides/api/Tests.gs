@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var snippets = new Snippets(){};
-var helpers = new Helpers(){};
+var snippets = new Snippets();
+var helpers = new Helpers();
 
 // Constants
 var TEMPLATE_PRESENTATION_ID = '1wJUN1B5CQ2wQOBzmz2apky48QNK1OsE2oNKHPMLpKDc';
@@ -22,18 +22,30 @@ var DATA_SPREADSHEET_ID = '14KaZMq2aCAGt5acV77zaA_Ps8aDt04G7T0ei4KiXLX8';
 var CHART_ID = 1107320627;
 var CUSTOMER_NAME = 'Fake Customer';
 
+/**
+ * A simple existance assertion. Logs if the value is falsy.
+ * @param {object} value The value we expect to exist.
+ */
 function expectToExist(value) {
   if (!value) {
     console.log('DNE');
   }
 }
 
+/**
+ * A simple equality assertion. Logs if there is a mismatch.
+ * @param {object} expected The expected value.
+ * @param {object} actual The actual value.
+ */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
     console.log('actual: %s expected: %s', actual, expected);
   }
 }
 
+/**
+ * Runs all tests.
+ */
 function RUN_ALL_TESTS() {
   itShouldCreateAPresentation();
   itShouldCopyAPresentation();
@@ -49,6 +61,9 @@ function RUN_ALL_TESTS() {
   itShouldRefreshSheetsChart();
 }
 
+/**
+ * Creates a presentation.
+ */
 function itShouldCreateAPresentation() {
   console.log('> itShouldCreateAPresentation');
   var presentation = snippets.createPresentation();
@@ -56,6 +71,9 @@ function itShouldCreateAPresentation() {
   helpers.deleteFileOnCleanup(presentation.presentationId);
 }
 
+/**
+ * Copies a presentation.
+ */
 function itShouldCopyAPresentation() {
   console.log('> itShouldCopyAPresentation');
   var presentationId = helpers.createTestPresentation();
@@ -64,6 +82,9 @@ function itShouldCopyAPresentation() {
   helpers.deleteFileOnCleanup(copyId);
 }
 
+/**
+ * Creates a new slide.
+ */
 function itShouldCreateASlide() {
   console.log('> itShouldCreateASlide');
   var presentationId = helpers.createTestPresentation();
@@ -73,6 +94,9 @@ function itShouldCreateASlide() {
   expectToExist(response.replies[0].createSlide.objectId);
 }
 
+/**
+ * Creates a slide with text.
+ */
 function itShouldCreateATextboxWithText() {
   console.log('> itShouldCreateATextboxWithText');
   var presentationId = helpers.createTestPresentation();
@@ -84,6 +108,9 @@ function itShouldCreateATextboxWithText() {
   expectToExist(boxId);
 }
 
+/**
+ * Adds an image to a slide.
+ */
 function itShouldCreateAnImage() {
   console.log('> itShouldCreateAnImage');
   var presentationId = helpers.createTestPresentation();
@@ -95,6 +122,9 @@ function itShouldCreateAnImage() {
   expectToExist(imageId);
 }
 
+/**
+ * Merges presentation text from a spreadsheet.
+ */
 function itShouldMergeText() {
   console.log('> itShouldMergeText');
   var responses = snippets.textMerging(TEMPLATE_PRESENTATION_ID, DATA_SPREADSHEET_ID);
@@ -108,6 +138,9 @@ function itShouldMergeText() {
   });
 }
 
+/**
+ * Merges images into a spreadsheet.
+ */
 function itShouldImageMerge() {
   console.log('> itShouldImageMerge');
   var response = snippets.imageMerging(TEMPLATE_PRESENTATION_ID, IMAGE_URL, CUSTOMER_NAME);
@@ -119,6 +152,9 @@ function itShouldImageMerge() {
   expectToEqual(2, numReplacements);
 }
 
+/**
+ * Replaces a text box with some text.
+ */
 function itShouldSimpleTextReplace() {
   console.log('> itShouldSimpleTextReplace');
   var presentationId = helpers.createTestPresentation();
@@ -129,6 +165,9 @@ function itShouldSimpleTextReplace() {
   expectToEqual(2, response.replies.length);
 }
 
+/**
+ * Updates style for text.
+ */
 function itShouldTextStyleUpdate() {
   console.log('> itShouldTextStyleUpdate');
   var presentationId = helpers.createTestPresentation();
@@ -139,6 +178,9 @@ function itShouldTextStyleUpdate() {
   expectToEqual(3, response.replies.length);
 }
 
+/**
+ * Creates bulleted text.
+ */
 function itShouldCreateBulletedText() {
   console.log('> itShouldCreateBulletedText');
   var presentationId = helpers.createTestPresentation();
@@ -149,6 +191,9 @@ function itShouldCreateBulletedText() {
   expectToEqual(1, response.replies.length);
 }
 
+/**
+ * Adds a sheets chart in a presentation.
+ */
 function itShouldCreateSheetsChart() {
   console.log('> itShouldCreateSheetsChart');
   var presentationId = helpers.createTestPresentation();
@@ -160,12 +205,16 @@ function itShouldCreateSheetsChart() {
   expectToExist(chartId);
 }
 
+/**
+ * Refreshes a sheets chart in a presentation.
+ */
 function itShouldRefreshSheetsChart() {
   console.log('> itShouldRefreshSheetsChart');
   var presentationId = helpers.createTestPresentation();
   var pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
   var pageId = pageIds[0];
-  var sheetChartId = helpers.createTestSheetsChart(presentationId, pageId, DATA_SPREADSHEET_ID, CHART_ID);
+  var sheetChartId = helpers.createTestSheetsChart(presentationId, pageId, DATA_SPREADSHEET_ID,
+      CHART_ID);
   var response = snippets.refreshSheetsChart(presentationId, sheetChartId);
   expectToEqual(1, response.replies.length);
 }

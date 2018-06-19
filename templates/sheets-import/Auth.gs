@@ -47,6 +47,7 @@ function getService() {
  * OAuth2 Apps Script library:
  *   https://github.com/googlesamples/apps-script-oauth2
  * @param {Object} request results of API auth request.
+ * @return {HTML} A auth callback HTML page.
  */
 function authCallback(request) {
   var template = HtmlService.createTemplateFromFile('AuthCallbackView');

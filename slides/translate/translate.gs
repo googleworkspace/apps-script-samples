@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START slides_translate_quickstart]
 /**
  * @OnlyCurrentDoc Limits the script to only accessing the current presentation.
  */
 
 /**
  * Create a open translate menu item.
+ * @param {Event} event The open event.
  */
 function onOpen(event) {
   SlidesApp.getUi().createAddonMenu()
@@ -29,6 +30,7 @@ function onOpen(event) {
 
 /**
  * Open the Add-on upon install.
+ * @param {Event} event The install event.
  */
 function onInstall(event) {
   onOpen(event);
@@ -110,7 +112,8 @@ function translateSelectedElements(targetLanguage) {
   // Translate all elements in-place.
   texts.forEach(function(text) {
     text.setText(LanguageApp.translate(text.asRenderedString(), '', targetLanguage));
-  })
+  });
 
   return texts.length;
 }
+// [END slides_translate_quickstart]

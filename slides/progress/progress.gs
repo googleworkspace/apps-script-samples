@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START slides_progress_quickstart]
 /**
  * @OnlyCurrentDoc Adds progress bars to a presentation.
  */
@@ -81,4 +81,4 @@ function deleteBars() {
     }
   }
 }
-
+// [END slides_progress_quickstart]

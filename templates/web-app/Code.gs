@@ -22,6 +22,7 @@
  *
  * @param {Object} e event parameter that can contain information
  *     about any URL parameters provided.
+ * @return {HTML} The web app's HTML.
  */
 function doGet(e) {
   var template = HtmlService.createTemplateFromFile('Index');
@@ -52,7 +53,7 @@ function doGet(e) {
 function getFolderContents(folderId) {
   var topFolder;
   var contents = {
-      children: []
+    children: [],
   };
 
   if (folderId == 'root') {
@@ -67,9 +68,9 @@ function getFolderContents(folderId) {
   var files = topFolder.getFiles();
   var numFiles = 0;
   while (files.hasNext() && numFiles < 20) {
-   var file = files.next();
-   contents.children.push(file.getName());
-   numFiles++;
+    var file = files.next();
+    contents.children.push(file.getName());
+    numFiles++;
   }
 
   return contents;

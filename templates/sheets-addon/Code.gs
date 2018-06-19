@@ -101,11 +101,11 @@ function modifySheets(action) {
   // Use data collected from dialog to manipulate the spreadsheet.
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var currentSheet = ss.getActiveSheet();
-  if (action == "create") {
+  if (action == 'create') {
     ss.insertSheet();
-  } else if (action == "copy") {
+  } else if (action == 'copy') {
     currentSheet.copyTo(ss);
-  } else if (action == "clear") {
+  } else if (action == 'clear') {
     currentSheet.clear();
   }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START docs_translate_quickstart]
 /**
  * @OnlyCurrentDoc
  *
@@ -98,11 +98,11 @@ function getSelectedText() {
       }
     }
     if (!text.length) {
-      throw 'Please select some text.';
+      throw new Error('Please select some text.');
     }
     return text;
   } else {
-    throw 'Please select some text.';
+    throw new Error('Please select some text.');
   }
 }
 
@@ -119,7 +119,7 @@ function getPreferences() {
   var userProperties = PropertiesService.getUserProperties();
   return {
     originLang: userProperties.getProperty('originLang'),
-    destLang: userProperties.getProperty('destLang')
+    destLang: userProperties.getProperty('destLang'),
   };
 }
 
@@ -146,7 +146,7 @@ function getTextAndTranslation(origin, dest, savePrefs) {
   var text = getSelectedText().join('\n');
   return {
     text: text,
-    translation: translateText(text, origin, dest)
+    translation: translateText(text, origin, dest),
   };
 }
 
@@ -166,7 +166,7 @@ function insertText(newText) {
     var elements = selection.getSelectedElements();
     if (elements.length === 1 && elements[0].getElement().getType() ===
         DocumentApp.ElementType.INLINE_IMAGE) {
-      throw "Can't insert text into an image.";
+      throw new Error('Can\'t insert text into an image.');
     }
     for (var i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
@@ -250,3 +250,4 @@ function translateText(text, origin, dest) {
   if (origin === dest) return text;
   return LanguageApp.translate(text, origin, dest);
 }
+// [END docs_translate_quickstart]

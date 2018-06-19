@@ -55,7 +55,7 @@ function getDocumentInfo() {
       element: getElementInfo(cursor.getElement()),
       offset: cursor.getOffset(),
       surroundingText: cursor.getSurroundingText().getText(),
-      surroundingTextOffset: cursor.getSurroundingTextOffset()
+      surroundingTextOffset: cursor.getSurroundingTextOffset(),
     };
   }
   if (selection) {
@@ -65,10 +65,10 @@ function getDocumentInfo() {
           element: getElementInfo(selectedElement.getElement()),
           partial: selectedElement.isPartial(),
           startOffset: selectedElement.getStartOffset(),
-          endOffsetInclusive: selectedElement.getEndOffsetInclusive()
-        }
-      })
-    }
+          endOffsetInclusive: selectedElement.getEndOffsetInclusive(),
+        };
+      }),
+    };
   }
   return result;
 }

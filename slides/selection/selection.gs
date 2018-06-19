@@ -1,14 +1,14 @@
 /**
  * Copyright Google LLC
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -61,7 +61,7 @@ switch (selectionType) {
     break;
   case SlidesApp.SelectionType.PAGE:
     var pages = selection.getPageRange().getPages();
-    Logger.log('There are ' + pages.length +  ' pages selected.');
+    Logger.log('There are ' + pages.length + ' pages selected.');
     break;
   default:
     break;
@@ -99,7 +99,7 @@ var slide = SlidesApp.getActivePresentation().getSlides()[0];
 slide.selectAsCurrentPage();
 // Then select all the page elements in the selected slide page.
 var pageElements = slide.getPageElements();
-for (var i = 0; i &lt; pageElements.length; i++) {
+for (var i = 0; i < pageElements.length; i++) {
    pageElements[i].select(false);
 }
 // State of selection
@@ -136,8 +136,8 @@ shape2.remove();
 // [START rangeSelection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
-shape.getText().setText("Hello");
-// Range selection: Select the text range "He".
+shape.getText().setText('Hello');
+// Range selection: Select the text range 'He'.
 shape.getText().getRange(0, 2).select();
 // State of selection
 //
@@ -152,8 +152,8 @@ shape.getText().getRange(0, 2).select();
 // [START cursorSelection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
-shape.getText().setText("Hello");
-// Cursor selection: Place the cursor after "H" like "H|ello".
+shape.getText().setText('Hello');
+// Cursor selection: Place the cursor after 'H' like 'H|ello'.
 shape.getText().getRange(1, 1).select();
 // State of selection
 //
@@ -169,8 +169,8 @@ shape.getText().getRange(1, 1).select();
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var table = slide.getPageElements()[0].asTable();
 var tableCell = table.getCell(0, 1);
-tableCell.getText().setText("Hello");
-// Range selection: Select the text range "He".
+tableCell.getText().setText('Hello');
+// Range selection: Select the text range 'He'.
 tableCell.getText().getRange(0, 2).select();
 // State of selection
 //
@@ -187,8 +187,8 @@ tableCell.getText().getRange(0, 2).select();
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var table = slide.getPageElements()[0].asTable();
 var tableCell = table.getCell(0, 1);
-tableCell.getText().setText("Hello");
-// Cursor selection: Place the cursor after "H" like "H|ello".
+tableCell.getText().setText('Hello');
+// Cursor selection: Place the cursor after 'H' like 'H|ello'.
 tableCell.getText().getRange(1, 1).select();
 // State of selection
 //
@@ -205,8 +205,8 @@ tableCell.getText().getRange(1, 1).select();
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
 var textRange = shape.getText();
-textRange.setText("World");
-// Select all the text "World".
+textRange.setText('World');
+// Select all the text 'World'.
 textRange.select();
 // State of selection
 //

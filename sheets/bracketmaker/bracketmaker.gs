@@ -22,14 +22,18 @@ var SHEET_PLAYERS = 'Players';
 var SHEET_BRACKET = 'Bracket';
 var CONNECTOR_WIDTH = 15;
 
-// This method adds a custom menu item to run the script
+/**
+ * This method adds a custom menu item to run the script
+ */
 function onOpen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  ss.addMenu("Bracket Maker",
-             [{ name: "Create Bracket", functionName: "createBracket" }]);
+  ss.addMenu('Bracket Maker',
+             [{name: 'Create Bracket', functionName: 'createBracket'}]);
 }
 
-// This method creates the brackets based on the data provided on the players
+/**
+ * This method creates the brackets based on the data provided on the players
+ */
 function createBracket() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var rangePlayers = ss.getRangeByName(RANGE_PLAYER1);
@@ -53,12 +57,12 @@ function createBracket() {
 
   // Provide some error checking in case there are too many or too few players/teams.
   if (numPlayers > 64) {
-    Browser.msgBox("Sorry, currently this script can only create brackets for 64 or fewer players.");
+    Browser.msgBox('Sorry, this script can only create brackets for 64 or fewer players.');
     return; // Early exit
   }
 
   if (numPlayers < 3) {
-    Browser.msgBox("Sorry, you must have at least 3 players.");
+    Browser.msgBox('Sorry, you must have at least 3 players.');
     return; // Early exit
   }
 
@@ -105,7 +109,11 @@ function createBracket() {
   }
 }
 
-// Sets the value of an item in the bracket and the color.
+/**
+ * Sets the value of an item in the bracket and the color.
+ * @param {Range} rng The Spreadsheet Range.
+ * @param {string[]} players The list of players.
+ */
 function setBracketItem_(rng, players) {
   if (players) {
     var rand = Math.ceil(Math.random() * players.length);
@@ -114,7 +122,11 @@ function setBracketItem_(rng, players) {
   rng.setBackgroundColor('yellow');
 }
 
-// Sets the color and width for connector cells.
+/**
+ * Sets the color and width for connector cells.
+ * @param {Sheet} sheet The spreadsheet to setup.
+ * @param {Range} rng The spreadsheet range.
+ */
 function setConnector_(sheet, rng) {
   sheet.setColumnWidth(rng.getColumnIndex(), CONNECTOR_WIDTH);
   rng.setBackgroundColor('green');

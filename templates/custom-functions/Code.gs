@@ -43,8 +43,8 @@ function INCREMENT(input) {
   if (input instanceof Array) {
     // Recurse to process an array.
     return input.map(INCREMENT);
-  } else if (!(typeof input == 'number')) {
-    throw 'Input contains a cell value that is not a number';
+  } else if (!(typeof input === 'number')) {
+    throw new Error('Input contains a cell value that is not a number');
   }
   // Otherwise process as a single value.
   return input + 1;
@@ -62,7 +62,7 @@ function INCREMENT(input) {
 function CORNER_SUM(input) {
   if (!(input instanceof Array)) {
     // Handle non-range inputs by putting them in an array.
-    return CORNER_SUM([[input]]);
+    return CORNER_SUM([[input]]); // eslint-disable-line new-cap
   }
   // Range processing here.
   var maxRowIndex = input.length - 1;
@@ -83,7 +83,7 @@ function CORNER_SUM(input) {
  */
 function POWERS_AND_ROOTS(input) {
   if (input instanceof Array) {
-    throw 'Invalid: Range input not permitted';
+    throw new Error('Invalid: Range input not permitted');
   }
   // Value processing and range generation here.
   var headers = ['x', input + '^x', input + '^(1/x)'];
@@ -104,7 +104,7 @@ function POWERS_AND_ROOTS(input) {
  */
 function GET_DAY_OF_YEAR(date) {
   if (!(date instanceof Date)) {
-    throw 'Invalid: Date input required';
+    throw new Error('Invalid: Date input required');
   }
   // Date processing here.
   var firstOfYear = new Date(date.getFullYear(), 0, 0);
@@ -123,7 +123,7 @@ function GET_DAY_OF_YEAR(date) {
  */
 function CONVERT_DURATION_TO_SECONDS(duration) {
   if (!(duration instanceof Date)) {
-    throw 'Invalid: Duration input required';
+    throw new Error('Invalid: Duration input required');
   }
 
   // Getting elapsed times from duration-formatted cells in Sheets requires

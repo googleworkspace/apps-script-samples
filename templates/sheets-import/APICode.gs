@@ -45,6 +45,7 @@ function getColumnOptions() {
  *   rows to return per call.
  * @param {Object} opt_settings optional object containing any additional
  *   information needed to retrieve data from the data source.
+ * @return {object[]|null} Pages of data.
  */
 function getDataPage(columns, pageNumber, pageSize, opt_settings) {
   var data = null;

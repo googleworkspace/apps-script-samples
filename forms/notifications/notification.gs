@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START forms_notifications_quickstart]
 /**
  * @OnlyCurrentDoc
  *
@@ -34,14 +34,13 @@ var ADDON_TITLE = 'Form Notifications';
  * A global constant 'notice' text to include with each email
  * notification.
  */
-var NOTICE = "Form Notifications was created as an sample add-on, and is meant for \
-demonstration purposes only. It should not be used for complex or important \
-workflows. The number of notifications this add-on produces are limited by the \
-owner's available email quota; it will not send email notifications if the \
-owner's daily email quota has been exceeded. Collaborators using this add-on on \
-the same form will be able to adjust the notification settings, but will not be \
-able to disable the notification triggers set by other collaborators.";
-
+var NOTICE = 'Form Notifications was created as an sample add-on, and is meant for' +
+'demonstration purposes only. It should not be used for complex or important' +
+'workflows. The number of notifications this add-on produces are limited by the' +
+'owner\'s available email quota; it will not send email notifications if the' +
+'owner\'s daily email quota has been exceeded. Collaborators using this add-on on' +
+'the same form will be able to adjust the notification settings, but will not be' +
+'able to disable the notification triggers set by other collaborators.';
 
 /**
  * Adds a custom menu to the active form to show the add-on sidebar.
@@ -129,7 +128,7 @@ function getSettings() {
   for (var i = 0; i < textItems.length; i++) {
     settings.textItems.push({
       title: textItems[i].getTitle(),
-      id: textItems[i].getId()
+      id: textItems[i].getId(),
     });
   }
   return settings;
@@ -231,7 +230,7 @@ function sendReauthorizationRequest() {
           'Authorization Required',
           message.getContent(), {
             name: ADDON_TITLE,
-            htmlBody: message.getContent()
+            htmlBody: message.getContent(),
           });
     }
     settings.setProperty('lastAuthEmailDate', today);
@@ -272,7 +271,7 @@ function sendCreatorNotification() {
           form.getTitle() + ': Form submissions detected',
           message.getContent(), {
             name: ADDON_TITLE,
-            htmlBody: message.getContent()
+            htmlBody: message.getContent(),
           });
     }
   }
@@ -301,7 +300,8 @@ function sendRespondentNotification(response) {
         settings.getProperty('responseSubject'),
         message.getContent(), {
           name: form.getTitle(),
-            htmlBody: message.getContent()
+            htmlBody: message.getContent(),
         });
   }
 }
+// [END forms_notifications_quickstart]

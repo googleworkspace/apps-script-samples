@@ -24,7 +24,7 @@ function listUpcomingEvents() {
     showDeleted: false,
     singleEvents: true,
     maxResults: 10,
-    orderBy: 'startTime'
+    orderBy: 'startTime',
   };
   var response = Calendar.Events.list(calendarId, optionalArgs);
   var events = response.items;

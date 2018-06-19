@@ -71,7 +71,7 @@ function use() {
  * @customFunction
  */
 function DATEADD(date, unit, amount) {
-  var args = toArray(arguments);
+  var args = toArray(arguments); // eslint-disable-line prefer-rest-params
   return multimap(args, function(date, unit, amount) {
     validateParameters(date, unit, amount);
     return moment(date).add(unit, amount).toDate();
@@ -80,9 +80,14 @@ function DATEADD(date, unit, amount) {
 
 /**
  * @customFunction
+ * A test function for DATEADD
+ * @param {string|Range} date The date to add to.
+ * @param {string|Range} unit The unit of time to add.
+ * @param {number|Range} amount The amount of the specified unit to add.
+ * @return {string} The date in a string.
  */
 function DATETEST(date, unit, amount) {
-  return JSON.stringify(DATEADD(date, unit, amount));
+  return JSON.stringify(DATEADD(date, unit, amount)); // eslint-disable-line new-cap
 }
 
 /**
@@ -99,7 +104,7 @@ function DATETEST(date, unit, amount) {
  * @customFunction
  */
 function DATESUBTRACT(date, unit, amount) {
-  var args = toArray(arguments);
+  var args = toArray(arguments); // eslint-disable-line prefer-rest-params
   return multimap(args, function(date, unit, amount) {
     validateParameters(date, unit, amount);
     return moment(date).subtract(unit, amount).toDate();
@@ -149,7 +154,7 @@ function multimap(args, func) {
 
   // If there aren't any arrays, just call the function.
   if (max == 0) {
-    return func.apply(null, args);
+    return func(...args);
   }
 
   // Ensure all the arrays are the same length.
@@ -157,12 +162,12 @@ function multimap(args, func) {
   // that should apply to each row/column in the other sets.
   lengths.forEach(function(length) {
     if (length != max && length > 1) {
-      throw 'All input ranges must be the same size: ' + max;
+      throw new Error('All input ranges must be the same size: ' + max);
     }
   });
 
   // Recursively apply the map function to each element in the arrays.
-  var result = []
+  var result = [];
   for (var i = 0; i < max; i++) {
     var params = args.map(function(arg) {
       if (arg instanceof Array) {

@@ -15,6 +15,9 @@
  */
 
 // [START restaurantLocationsMap]
+/**
+ * Returns re
+ */
 function restaurantLocationsMap() {
   // Get the sheet named 'restaurants'
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('restaurants');
@@ -73,6 +76,10 @@ function restaurantLocationsMap() {
 // [END restaurantLocationsMap]
 
 // [START getDrivingDirections]
+/**
+ * Gets driving directions from Mountain View to San Francisco.
+ * Displays a map inside Google Spreadsheets.
+ */
 function getDrivingDirections() {
   // Set starting and ending addresses
   var start = '1600 Amphitheatre Pkwy, Mountain View, CA 94043';
@@ -133,9 +140,9 @@ function getDrivingDirections() {
 
   // be conservative and only sample 100 times to create our polyline path
   var lpoints=[];
-  if (points.length < 200)
+  if (points.length < 200) {
     lpoints = points;
-  else {
+  } else {
     var pCount = (points.length / 2);
     var step = parseInt(pCount / 100);
     for (var i = 0; i < 100; ++i) {
@@ -175,7 +182,10 @@ function getDrivingDirections() {
 }
 // [END getDrivingDirections]
 
-// [START foo]
+// [START analyzeLocations]
+/**
+ * Analyzes locations of Google offices.
+ */
 function analyzeLocations() {
   // Select the sheet named 'geocoder and elevation'
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('geocoder and elevation');
@@ -201,7 +211,8 @@ function analyzeLocations() {
 
   // lat and lng will temporarily hold the latitude and longitude of each
   // address
-  var lat, lng;
+  var lat;
+  var lng;
 
   for (var i = 0; i < locationInfo.length; i++) {
     // Get the latitude and longitude for an address. For more details on
@@ -237,7 +248,9 @@ function analyzeLocations() {
 
   // User Browser.msgBox as a simple way to display the info about highest
   // elevation and northernmost office.
-  Browser.msgBox('The US Google office with the highest elevation is: ' + locationInfo[indexOfMaxElevation] +
-                 '. The northernmost US Google office is: ' + locationInfo[indexOfMaxLatitude]);
+  Browser.msgBox('The US Google office with the highest elevation is: ' +
+    locationInfo[indexOfMaxElevation] +
+    '. The northernmost US Google office is: ' +
+    locationInfo[indexOfMaxLatitude]);
 }
-// [END foo]
+// [END analyzeLocations]
