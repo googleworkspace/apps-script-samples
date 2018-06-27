@@ -54,8 +54,8 @@ function main() {
 /**
  * Creates a single slide using the image from the given link;
  * used directly by foreach(), hence the parameters are fixed.
- * @param {Date} imageUrl A String object representing an image URL
- * @param {Date} index The index into the array; unused (req'd by forEach)
+ * @param {string} imageUrl A String object representing an image URL
+ * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
     var slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
@@ -78,8 +78,8 @@ var presentation = SlidesApp.create(NAME);
 /**
  * Creates a single slide using the image from the given link;
  * used directly by foreach(), hence the parameters are fixed.
- * @param {Date} imageUrl A String object representing an image URL
- * @param {Date} index The index into the array; unused (req'd by forEach)
+ * @param {string} imageUrl A String object representing an image URL
+ * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
     var slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);

@@ -1,3 +1,4 @@
+// [START api_target]
 /**
  * Return the set of folder names contained in the user's root folder as an
  * object (with folder IDs as keys).
@@ -13,3 +14,4 @@ function getFoldersUnderRoot() {
   }
   return folderSet;
 }
+// [END api_target]
