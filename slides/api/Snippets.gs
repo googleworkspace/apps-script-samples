@@ -21,19 +21,19 @@ var title = 'my title';
 function Snippets() {}
 
 Snippets.prototype.createPresentation = function() {
-  // [START create_presentation]
+  // [START slides_create_presentation]
   var presentation = Slides.Presentations.create({
     title: title,
   });
   console.log('Created presentation with ID: %s', presentation.presentationId);
-  // [END create_presentation]
+  // [END slides_create_presentation]
   return presentation;
 };
 
 Snippets.prototype.copyPresentation = function() {
   var presentationId = this.createPresentation().presentationId;
   var copyTitle = 'Copy Title';
-  // [START copy_presentation]
+  // [START slides_copy_presentation]
   var request = {
     name: copyTitle,
   };
@@ -41,12 +41,12 @@ Snippets.prototype.copyPresentation = function() {
     resource: request,
   }, presentationId);
   var presentationCopyId = driveResponse.id;
-  // [END copy_presentation]
+  // [END slides_copy_presentation]
   return presentationCopyId;
 };
 
 Snippets.prototype.createSlide = function(presentationId, pageId) {
-  // [START create_slide]
+  // [START slides_create_slide]
   var requests = [{
     createSlide: {
       objectId: pageId,
@@ -65,12 +65,12 @@ Snippets.prototype.createSlide = function(presentationId, pageId) {
     requests: requests,
   }, presentationId);
   console.log('Created slide with ID: %s', createSlideResponse.replies[0].createSlide.objectId);
-  // [END create_slide]
+  // [END slides_create_slide]
   return createSlideResponse;
 };
 
 Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
-  // [START create_textbox_with_text]
+  // [START slides_create_textbox_with_text]
   // Create a new square textbox, using the supplied element ID.
   var elementId = 'MyTextBox_01';
   var pt350 = {
@@ -113,13 +113,13 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
   }, presentationId);
   var createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
   console.log('Created textbox with ID: %s', createShapeResponse.objectId);
-  // [END create_textbox_with_text]
+  // [END slides_create_textbox_with_text]
   return createTextboxWithTextResponse;
 };
 
 Snippets.prototype.createImage = function(presentationId, pageId) {
   var imageFileId = '0B2P_aO_vjnJ4aERnX2ZzbUtMZXc';
-  // [START create_image]
+  // [START slides_create_image]
   // Add a new image to the presentation page. The image is assumed to exist in
   // the user's Drive, and have 'imageFileId' as its file ID.
   var requests = [];
@@ -158,13 +158,13 @@ Snippets.prototype.createImage = function(presentationId, pageId) {
 
   var createImageResponse = response.replies;
   console.log('Created image with ID: %s', createImageResponse[0].createImage.objectId);
-  // [END create_image]
+  // [END slides_create_image]
   return createImageResponse;
 };
 
 Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadsheetId) {
   var responses = [];
-  // [START text_merging]
+  // [START slides_text_merging]
   // Use the Sheets API to load data, one record per row.
   var dataRangeNotation = 'Customers!A2:M6';
   var values = SpreadsheetApp.openById(dataSpreadsheetId).getRange(dataRangeNotation).getValues();
@@ -231,14 +231,14 @@ Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadshee
     }
     // [END_EXCLUDE]
   }
-  // [END text_merging]
+  // [END slides_text_merging]
 };
 
 Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, customerName) {
   var logoUrl = imageUrl;
   var customerGraphicUrl = imageUrl;
 
-  // [START image_merging]
+  // [START slides_image_merging]
   // Duplicate the template presentation using the Drive API.
   var copyTitle = customerName + ' presentation';
   var driveResponse = Drive.Files.copy({
@@ -279,7 +279,7 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
   });
   console.log('Created merged presentation with ID: %s', presentationCopyId);
   console.log('Replaced %s shapes with images.', numReplacements);
-  // [END image_merging]
+  // [END slides_image_merging]
   return batchUpdateResponse;
 };
 
@@ -310,7 +310,7 @@ Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replace
 };
 
 Snippets.prototype.textStyleUpdate = function(presentationId, shapeId) {
-  // [START text_style_update]
+  // [START slides_text_style_update]
   // Update the text style so that the first 5 characters are bolded
   // and italicized, the next 5 are displayed in blue 14 pt Times
   // New Roman font, and the next 5 are hyperlinked.
@@ -376,12 +376,12 @@ Snippets.prototype.textStyleUpdate = function(presentationId, shapeId) {
     requests: requests,
   }, presentationId);
   console.log('Updated the text style for shape with ID: %s', shapeId);
-  // [END text_style_update]
+  // [END slides_text_style_update]
   return batchUpdateResponse;
 };
 
 Snippets.prototype.createBulletedText = function(presentationId, shapeId) {
-  // [START create_bulleted_text]
+  // [START slides_create_bulleted_text]
   // Add arrow-diamond-disc bullets to all text in the shape.
   var requests = [{
     createParagraphBullets: {
@@ -398,12 +398,12 @@ Snippets.prototype.createBulletedText = function(presentationId, shapeId) {
     requests: requests,
   }, presentationId);
   console.log('Added bullets to text in shape with ID: %s', shapeId);
-  // [END create_bulleted_text]
+  // [END slides_create_bulleted_text]
   return batchUpdateResponse;
 };
 
 Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId, sheetChartId) {
-  // [START create_sheets_chart]
+  // [START slides_create_sheets_chart]
   // Embed a Sheets chart (indicated by the spreadsheetId and sheetChartId) onto
   // a page in the presentation. Setting the linking mode as 'LINKED' allows the
   // chart to be refreshed if the Sheets version is updated.
@@ -440,12 +440,12 @@ Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId,
     requests: requests,
   }, presentationId);
   console.log('Added a linked Sheets chart with ID: %s', presentationChartId);
-  // [END create_sheets_chart]
+  // [END slides_create_sheets_chart]
   return batchUpdateResponse;
 };
 
 Snippets.prototype.refreshSheetsChart = function(presentationId, presentationChartId) {
-  // [START refresh_sheets_chart]
+  // [START slides_refresh_sheets_chart]
   var requests = [{
     refreshSheetsChart: {
       objectId: presentationChartId,
@@ -457,6 +457,6 @@ Snippets.prototype.refreshSheetsChart = function(presentationId, presentationCha
     requests: requests,
   }, presentationId);
   console.log('Refreshed a linked Sheets chart with ID: %s', presentationChartId);
-  // [END refresh_sheets_chart]
+  // [END slides_refresh_sheets_chart]
   return batchUpdateResponse;
 };
