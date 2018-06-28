@@ -47,6 +47,8 @@ Snippets.prototype.copyPresentation = function() {
 
 Snippets.prototype.createSlide = function(presentationId, pageId) {
   // [START slides_create_slide]
+  // See Presentation.insertSlide(...) to learn how to add a slide to a presentation using SlidesApp.
+  // http://developers.google.com/apps-script/reference/slides/presentation#appendslidelayout
   var requests = [{
     createSlide: {
       objectId: pageId,
