@@ -47,6 +47,8 @@ Snippets.prototype.copyPresentation = function() {
 
 Snippets.prototype.createSlide = function(presentationId, pageId) {
   // [START slides_create_slide]
+  // See Presentation.insertSlide(...) to learn how to add a slide to a presentation using SlidesApp.
+  // http://developers.google.com/apps-script/reference/slides/presentation#appendslidelayout
   var requests = [{
     createSlide: {
       objectId: pageId,
@@ -284,7 +286,7 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
 };
 
 Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replacementText) {
-  // [START simple_text_replace]
+  // [START slides_simple_text_replace]
   // Remove existing text in the shape, then insert new text.
   var requests = [{
     deleteText: {
@@ -305,7 +307,7 @@ Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replace
     requests: requests,
   }, presentationId);
   console.log('Replaced text in shape with ID: %s', shapeId);
-  // [END simple_text_replace]
+  // [END slides_simple_text_replace]
   return batchUpdateResponse;
 };
 
