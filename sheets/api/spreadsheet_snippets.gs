@@ -154,7 +154,7 @@ Snippets.prototype.appendValues = function(spreadsheetId, range,
 
 Snippets.prototype.pivotTable = function(spreadsheetId) {
   var spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  // [START sheets_pivot_table]
+  // [START sheets_pivot_tables]
   // Create two sheets for our pivot table, assume we have one.
   var sheet = spreadsheet.getSheets()[0];
   sheet.copyTo(spreadsheet);
@@ -213,7 +213,7 @@ Snippets.prototype.pivotTable = function(spreadsheetId) {
   updateCellsRawRequest.updateCells = updateCellsRequest;
   batchUpdate.requests = [updateCellsRawRequest];
   var response = Sheets.Spreadsheets.batchUpdate(batchUpdate, spreadsheetId);
-  // [END sheets_pivot_table]
+  // [END sheets_pivot_tables]
   return response;
 };
 
