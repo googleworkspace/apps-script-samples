@@ -98,3 +98,13 @@ width="96px"/>
 
 Learn how to clone, pull, and push Apps Script projects on the command line
 using [clasp](https://developers.google.com/apps-script/guides/clasp).
+
+## Lint
+
+Run ESLint over this whole repo with:
+
+```
+npm run lint
+```
+
+This command will fix simple errors.

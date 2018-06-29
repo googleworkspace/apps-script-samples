@@ -26,7 +26,7 @@ function onOpen() {
   var spreadsheet = SpreadsheetApp.getActive();
   var menuItems = [
     {name: 'Prepare sheet...', functionName: 'prepareSheet_'},
-    {name: 'Generate step-by-step...', functionName: 'generateStepByStep_'},
+    {name: 'Generate step-by-step...', functionName: 'generateStepByStep_'}
   ];
   spreadsheet.addMenu('Directions', menuItems);
 }
@@ -129,7 +129,7 @@ function generateStepByStep_() {
       origin, destination);
   var headers = [
     [sheetTitle, '', ''],
-    ['Step', 'Distance (Meters)', 'Distance (Miles)'],
+    ['Step', 'Distance (Meters)', 'Distance (Miles)']
   ];
   var newRows = [];
   for (var i = 0; i < directions.routes[0].legs[0].steps.length; i++) {
@@ -139,7 +139,7 @@ function generateStepByStep_() {
         .replace(/<.*?>/g, '');
     newRows.push([
       instructions,
-      step.distance.value,
+      step.distance.value
     ]);
   }
   directionsSheet.getRange(1, 1, headers.length, 3).setValues(headers);

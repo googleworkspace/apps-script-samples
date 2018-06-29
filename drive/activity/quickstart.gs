@@ -21,7 +21,7 @@ function listActivity() {
   var optionalArgs = {
     'source': 'drive.google.com',
     'drive.ancestorId': 'root',
-    'pageSize': 10,
+    'pageSize': 10
   };
   var response = AppsActivity.Activities.list(optionalArgs);
   var activities = response.activities;

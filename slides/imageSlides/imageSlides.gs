@@ -41,7 +41,7 @@ function main() {
     'http://www.google.com/services/images/phone-animation-results_2x.png',
     'http://www.google.com/services/images/section-work-card-img_2x.jpg',
     'http://gsuite.google.com/img/icons/product-lockup.png',
-    'http://gsuite.google.com/img/home-hero_2x.jpg',
+    'http://gsuite.google.com/img/home-hero_2x.jpg'
   ];
   var [title, subtitle] = deck.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);
@@ -103,7 +103,7 @@ function main() {
     'http://www.google.com/services/images/phone-animation-results_2x.png',
     'http://www.google.com/services/images/section-work-card-img_2x.jpg',
     'http://gsuite.google.com/img/icons/product-lockup.png',
-    'http://gsuite.google.com/img/home-hero_2x.jpg',
+    'http://gsuite.google.com/img/home-hero_2x.jpg'
   ];
   var [title, subtitle] = presentation.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);

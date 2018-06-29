@@ -53,7 +53,7 @@ function doGet(e) {
 function getFolderContents(folderId) {
   var topFolder;
   var contents = {
-    children: [],
+    children: []
   };
 
   if (folderId == 'root') {

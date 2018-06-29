@@ -21,7 +21,7 @@ function listUsers() {
   var optionalArgs = {
     customer: 'my_customer',
     maxResults: 10,
-    orderBy: 'email',
+    orderBy: 'email'
   };
   var response = AdminDirectory.Users.list(optionalArgs);
   var users = response.users;

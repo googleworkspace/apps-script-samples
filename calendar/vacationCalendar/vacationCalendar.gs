@@ -54,7 +54,7 @@ function syncTeamVacationCalendar() {
       events.forEach(function(event) {
         event.summary = '[' + username + '] ' + event.summary;
         event.organizer = {
-          id: TEAM_CALENDAR_ID,
+          id: TEAM_CALENDAR_ID
         };
         event.attendees = [];
         Logger.log('Importing: %s', event.summary);
@@ -93,7 +93,7 @@ function findEvents(user, keyword, start, end, opt_since) {
     q: keyword,
     timeMin: formatDate(start),
     timeMax: formatDate(end),
-    showDeleted: true,
+    showDeleted: true
   };
   if (opt_since) {
     // This prevents the script from examining events that have not been
@@ -146,7 +146,7 @@ function getDomainUsers() {
       orderBy: 'givenName',
       maxResults: 100,
       pageToken: pageToken,
-      viewType: 'domain_public',
+      viewType: 'domain_public'
     });
     var users = page.users;
     if (users) {

@@ -186,7 +186,7 @@ function sendDoc_(user, response) {
     to: user.email,
     subject: doc.getName(),
     body: 'Thanks for registering! Here\'s your itinerary: ' + doc.getUrl(),
-    attachments: doc.getAs(MimeType.PDF),
+    attachments: doc.getAs(MimeType.PDF)
   });
 }
 // [END sheets_custom_form_responses_quickstart]

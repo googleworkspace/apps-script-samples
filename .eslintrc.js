@@ -7,6 +7,7 @@ module.exports = {
         "node": true,
     },
     "rules": {
+        "comma-dangle": ["error", "never"],
         "max-len": ["error", {"code": 100}],
         "camelcase": "off", // Off for destructuring
         "async-await/space-after-async": 2,

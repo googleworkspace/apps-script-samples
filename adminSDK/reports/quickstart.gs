@@ -21,7 +21,7 @@ function listLogins() {
   var userKey = 'all';
   var applicationName = 'login';
   var optionalArgs = {
-    maxResults: 10,
+    maxResults: 10
   };
   var response = AdminReports.Activities.list(userKey, applicationName, optionalArgs);
   var activities = response.items;

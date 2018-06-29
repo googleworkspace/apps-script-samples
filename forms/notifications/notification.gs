@@ -128,7 +128,7 @@ function getSettings() {
   for (var i = 0; i < textItems.length; i++) {
     settings.textItems.push({
       title: textItems[i].getTitle(),
-      id: textItems[i].getId(),
+      id: textItems[i].getId()
     });
   }
   return settings;
@@ -230,7 +230,7 @@ function sendReauthorizationRequest() {
           'Authorization Required',
           message.getContent(), {
             name: ADDON_TITLE,
-            htmlBody: message.getContent(),
+            htmlBody: message.getContent()
           });
     }
     settings.setProperty('lastAuthEmailDate', today);
@@ -271,7 +271,7 @@ function sendCreatorNotification() {
           form.getTitle() + ': Form submissions detected',
           message.getContent(), {
             name: ADDON_TITLE,
-            htmlBody: message.getContent(),
+            htmlBody: message.getContent()
           });
     }
   }
@@ -300,7 +300,7 @@ function sendRespondentNotification(response) {
         settings.getProperty('responseSubject'),
         message.getContent(), {
           name: form.getTitle(),
-            htmlBody: message.getContent(),
+            htmlBody: message.getContent()
         });
   }
 }

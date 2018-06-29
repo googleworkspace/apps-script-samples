@@ -23,7 +23,7 @@ function Snippets() {}
 Snippets.prototype.createPresentation = function() {
   // [START slides_create_presentation]
   var presentation = Slides.Presentations.create({
-    title: title,
+    title: title
   });
   console.log('Created presentation with ID: %s', presentation.presentationId);
   // [END slides_create_presentation]
@@ -35,10 +35,10 @@ Snippets.prototype.copyPresentation = function() {
   var copyTitle = 'Copy Title';
   // [START slides_copy_presentation]
   var request = {
-    name: copyTitle,
+    name: copyTitle
   };
   var driveResponse = Drive.Files.copy({
-    resource: request,
+    resource: request
   }, presentationId);
   var presentationCopyId = driveResponse.id;
   // [END slides_copy_presentation]
@@ -47,16 +47,16 @@ Snippets.prototype.copyPresentation = function() {
 
 Snippets.prototype.createSlide = function(presentationId, pageId) {
   // [START slides_create_slide]
-  // See Presentation.insertSlide(...) to learn how to add a slide to a presentation using SlidesApp.
+  // See Presentation.insertSlide(...) to learn how to add a slide using SlidesApp.
   // http://developers.google.com/apps-script/reference/slides/presentation#appendslidelayout
   var requests = [{
     createSlide: {
       objectId: pageId,
       insertionIndex: '1',
       slideLayoutReference: {
-        predefinedLayout: 'TITLE_AND_TWO_COLUMNS',
-      },
-    },
+        predefinedLayout: 'TITLE_AND_TWO_COLUMNS'
+      }
+    }
   }];
 
   // If you wish to populate the slide with elements, add element create requests here,
@@ -64,7 +64,7 @@ Snippets.prototype.createSlide = function(presentationId, pageId) {
 
   // Execute the request.
   var createSlideResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Created slide with ID: %s', createSlideResponse.replies[0].createSlide.objectId);
   // [END slides_create_slide]
@@ -77,7 +77,7 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
   var elementId = 'MyTextBox_01';
   var pt350 = {
     magnitude: 350,
-    unit: 'PT',
+    unit: 'PT'
   };
   var requests = [{
     createShape: {
@@ -87,17 +87,17 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
         pageObjectId: pageId,
         size: {
           height: pt350,
-          width: pt350,
+          width: pt350
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 350,
           translateY: 100,
-          unit: 'PT',
-        },
-      },
-    },
+          unit: 'PT'
+        }
+      }
+    }
   },
 
   // Insert text into the box, using the supplied element ID.
@@ -105,13 +105,13 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
     insertText: {
       objectId: elementId,
       insertionIndex: 0,
-      text: 'New Box Text Inserted!',
-    },
+      text: 'New Box Text Inserted!'
+    }
   }];
 
   // Execute the request.
   var createTextboxWithTextResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   var createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
   console.log('Created textbox with ID: %s', createShapeResponse.objectId);
@@ -130,7 +130,7 @@ Snippets.prototype.createImage = function(presentationId, pageId) {
       ScriptApp.getOAuthToken();
   var emu4M = {
     magnitude: 4000000,
-    unit: 'EMU',
+    unit: 'EMU'
   };
   requests.push({
     createImage: {
@@ -140,22 +140,22 @@ Snippets.prototype.createImage = function(presentationId, pageId) {
         pageObjectId: pageId,
         size: {
           height: emu4M,
-          width: emu4M,
+          width: emu4M
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 100000,
           translateY: 100000,
-          unit: 'EMU',
-        },
-      },
-    },
+          unit: 'EMU'
+        }
+      }
+    }
   });
 
   // Execute the request.
   var response = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
 
   var createImageResponse = response.replies;
@@ -181,10 +181,10 @@ Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadshee
     // Duplicate the template presentation using the Drive API.
     var copyTitle = customerName + ' presentation';
     var requests = {
-      name: copyTitle,
+      name: copyTitle
     };
     var driveResponse = Drive.Files.copy({
-      resource: requests,
+      resource: requests
     }, templatePresentationId);
     var presentationCopyId = driveResponse.id;
 
@@ -193,31 +193,31 @@ Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadshee
       replaceAllText: {
         containsText: {
           text: '{{customer-name}}',
-          matchCase: true,
+          matchCase: true
         },
-        replaceText: customerName,
-      },
+        replaceText: customerName
+      }
     }, {
       replaceAllText: {
         containsText: {
           text: '{{case-description}}',
-          matchCase: true,
+          matchCase: true
         },
-        replaceText: caseDescription,
-      },
+        replaceText: caseDescription
+      }
     }, {
       replaceAllText: {
         containsText: {
           text: '{{total-portfolio}}',
-          matchCase: true,
+          matchCase: true
         },
-        replaceText: totalPortfolio + '',
-      },
+        replaceText: totalPortfolio + ''
+      }
     }];
 
     // Execute the requests for this presentation.
     var result = Slides.Presentations.batchUpdate({
-      requests: requests,
+      requests: requests
     }, presentationCopyId);
     // Count the total number of replacements made.
     var numReplacements = 0;
@@ -245,8 +245,8 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
   var copyTitle = customerName + ' presentation';
   var driveResponse = Drive.Files.copy({
     resource: {
-      name: copyTitle,
-    },
+      name: copyTitle
+    }
   }, templatePresentationId);
   var presentationCopyId = driveResponse.id;
 
@@ -257,23 +257,23 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
       replaceMethod: 'CENTER_INSIDE',
       containsText: {
         text: '{{company-logo}}',
-        matchCase: true,
-      },
-    },
+        matchCase: true
+      }
+    }
   }, {
     replaceAllShapesWithImage: {
       imageUrl: customerGraphicUrl,
       replaceMethod: 'CENTER_INSIDE',
       containsText: {
         text: '{{customer-graphic}}',
-        matchCase: true,
-      },
-    },
+        matchCase: true
+      }
+    }
   }];
 
   // Execute the requests for this presentation.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationCopyId);
   var numReplacements = 0;
   batchUpdateResponse.replies.forEach(function(reply) {
@@ -292,19 +292,19 @@ Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replace
     deleteText: {
       objectId: shapeId,
       textRange: {
-        type: 'ALL',
-      },
-    },
+        type: 'ALL'
+      }
+    }
   }, {
     insertText: {
       objectId: shapeId,
       insertionIndex: 0,
-      text: replacementText,
-    },
+      text: replacementText
+    }
   }];
   // Execute the requests.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Replaced text in shape with ID: %s', shapeId);
   // [END slides_simple_text_replace]
@@ -322,60 +322,60 @@ Snippets.prototype.textStyleUpdate = function(presentationId, shapeId) {
       textRange: {
         type: 'FIXED_RANGE',
         startIndex: 0,
-        endIndex: 5,
+        endIndex: 5
       },
       style: {
         bold: true,
-        italic: true,
+        italic: true
       },
-      fields: 'bold,italic',
-    },
+      fields: 'bold,italic'
+    }
   }, {
     updateTextStyle: {
       objectId: shapeId,
       textRange: {
         type: 'FIXED_RANGE',
         startIndex: 5,
-        endIndex: 10,
+        endIndex: 10
       },
       style: {
         fontFamily: 'Times New Roman',
         fontSize: {
           magnitude: 14,
-          unit: 'PT',
+          unit: 'PT'
         },
         foregroundColor: {
           opaqueColor: {
             rgbColor: {
               blue: 1.0,
               green: 0.0,
-              red: 0.0,
-            },
-          },
-        },
+              red: 0.0
+            }
+          }
+        }
       },
-      fields: 'foregroundColor,fontFamily,fontSize',
-    },
+      fields: 'foregroundColor,fontFamily,fontSize'
+    }
   }, {
     updateTextStyle: {
       objectId: shapeId,
       textRange: {
         type: 'FIXED_RANGE',
         startIndex: 10,
-        endIndex: 15,
+        endIndex: 15
       },
       style: {
         link: {
-          url: 'www.example.com',
-        },
+          url: 'www.example.com'
+        }
       },
-      fields: 'link',
-    },
+      fields: 'link'
+    }
   }];
 
   // Execute the requests.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Updated the text style for shape with ID: %s', shapeId);
   // [END slides_text_style_update]
@@ -389,15 +389,15 @@ Snippets.prototype.createBulletedText = function(presentationId, shapeId) {
     createParagraphBullets: {
       objectId: shapeId,
       textRange: {
-        type: 'ALL',
+        type: 'ALL'
       },
-      bulletPreset: 'BULLET_ARROW_DIAMOND_DISC',
-    },
+      bulletPreset: 'BULLET_ARROW_DIAMOND_DISC'
+    }
   }];
 
   // Execute the requests.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Added bullets to text in shape with ID: %s', shapeId);
   // [END slides_create_bulleted_text]
@@ -411,7 +411,7 @@ Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId,
   // chart to be refreshed if the Sheets version is updated.
   var emu4M = {
     magnitude: 4000000,
-    unit: 'EMU',
+    unit: 'EMU'
   };
   var presentationChartId = 'MyEmbeddedChart';
   var requests = [{
@@ -424,22 +424,22 @@ Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId,
         pageObjectId: pageId,
         size: {
           height: emu4M,
-          width: emu4M,
+          width: emu4M
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 100000,
           translateY: 100000,
-          unit: 'EMU',
-        },
-      },
-    },
+          unit: 'EMU'
+        }
+      }
+    }
   }];
 
   // Execute the request.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Added a linked Sheets chart with ID: %s', presentationChartId);
   // [END slides_create_sheets_chart]
@@ -450,13 +450,13 @@ Snippets.prototype.refreshSheetsChart = function(presentationId, presentationCha
   // [START slides_refresh_sheets_chart]
   var requests = [{
     refreshSheetsChart: {
-      objectId: presentationChartId,
-    },
+      objectId: presentationChartId
+    }
   }];
 
   // Execute the request.
   var batchUpdateResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   console.log('Refreshed a linked Sheets chart with ID: %s', presentationChartId);
   // [END slides_refresh_sheets_chart]

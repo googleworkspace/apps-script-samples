@@ -56,14 +56,14 @@ function extractSenderData(messageId) {
         'subject': thread.getFirstMessageSubject(),
         'count': thread.getMessageCount(),
         'link': 'https://mail.google.com/mail/u/0/#inbox/' + thread.getId(),
-        'lastDate': thread.getLastMessageDate().toDateString(),
+        'lastDate': thread.getLastMessageDate().toDateString()
       });
     }
   });
 
   var senderData = {
     email: senderEmail,
-    recents: recents,
+    recents: recents
   };
 
   return senderData;

@@ -22,7 +22,7 @@ var SCHEDULE_TRIGGER_ID = 'Import.scheduled.triggerId';
  */
 var UPDATE_TYPE = {
   ADD: 1,
-  REMOVE: 2,
+  REMOVE: 2
 };
 
 /**
@@ -173,7 +173,7 @@ function updateReportSet(updateType, reportId, reportName) {
 function updateOnImport(config, sheet, lastRun) {
   var update = {
     sheetId: sheet.getSheetId().toString(),
-    lastRun: lastRun,
+    lastRun: lastRun
   };
   saveObjectToProperties(config.reportId, update);
   update.sheetName = sheet.getName();

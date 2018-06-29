@@ -119,7 +119,7 @@ function getPreferences() {
   var userProperties = PropertiesService.getUserProperties();
   return {
     originLang: userProperties.getProperty('originLang'),
-    destLang: userProperties.getProperty('destLang'),
+    destLang: userProperties.getProperty('destLang')
   };
 }
 
@@ -146,7 +146,7 @@ function getTextAndTranslation(origin, dest, savePrefs) {
   var text = getSelectedText().join('\n');
   return {
     text: text,
-    translation: translateText(text, origin, dest),
+    translation: translateText(text, origin, dest)
   };
 }
 

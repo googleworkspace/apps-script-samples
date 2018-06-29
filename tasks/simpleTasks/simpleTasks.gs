@@ -36,7 +36,7 @@ function getTaskLists() {
   return taskLists.map(function(taskList) {
     return {
       id: taskList.getId(),
-      name: taskList.getTitle(),
+      name: taskList.getTitle()
     };
   });
 }
@@ -56,7 +56,7 @@ function getTasks(taskListId) {
       id: task.getId(),
       title: task.getTitle(),
       notes: task.getNotes(),
-      completed: Boolean(task.getCompleted()),
+      completed: Boolean(task.getCompleted())
     };
   }).filter(function(task) {
     return task.title;

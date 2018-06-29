@@ -118,7 +118,7 @@ function getPreferences() {
   var userProperties = PropertiesService.getUserProperties();
   var languagePrefs = {
     originLang: userProperties.getProperty('originLang'),
-    destLang: userProperties.getProperty('destLang'),
+    destLang: userProperties.getProperty('destLang')
   };
   return languagePrefs;
 }

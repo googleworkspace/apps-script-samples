@@ -19,7 +19,7 @@
  */
 function listSubscriptions() {
   var optionalArgs = {
-    maxResults: 10,
+    maxResults: 10
   };
   var response = AdminReseller.Subscriptions.list(optionalArgs);
   var subscriptions = response.subscriptions;

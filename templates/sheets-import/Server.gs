@@ -37,7 +37,7 @@ var ERROR_CODES = {
   AUTO_UPDATE_LIMIT: 1,
   ILLEGAL_EDIT: 2,
   ILLEGAL_DELETE: 3,
-  IMPORT_FAILED: 4,
+  IMPORT_FAILED: 4
 };
 
 /**
@@ -288,7 +288,7 @@ function sendReauthorizationRequest() {
         'Add-on Authorization Required',
         message.getContent(), {
           name: ADDON_NAME,
-          htmlBody: message.getContent(),
+          htmlBody: message.getContent()
       });
     }
     properties.setProperty(LAST_AUTH_EMAIL_KEY, today);

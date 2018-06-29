@@ -19,7 +19,7 @@
  */
 function listTaskLists() {
   var optionalArgs = {
-    maxResults: 10,
+    maxResults: 10
   };
   var response = Tasks.Tasklists.list(optionalArgs);
   var taskLists = response.items;

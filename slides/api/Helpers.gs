@@ -36,7 +36,7 @@ Helpers.prototype.cleanup = function() {
 
 Helpers.prototype.createTestPresentation = function() {
   var presentation = Slides.Presentations.create({
-    title: 'Test Preso',
+    title: 'Test Preso'
   });
   this.deleteFileOnCleanup(presentation.presentationId);
   return presentation.presentationId;
@@ -51,9 +51,9 @@ Helpers.prototype.addSlides = function(presentationId, num, layout) {
       createSlide: {
         objectId: slideIds[i],
         slideLayoutReference: {
-          predefinedLayout: layout,
-        },
-      },
+          predefinedLayout: layout
+        }
+      }
     });
   }
   Slides.Presentations.batchUpdate({requests: requests}, presentationId);
@@ -64,7 +64,7 @@ Helpers.prototype.createTestTextbox = function(presentationId, pageId, callback)
   var boxId = 'MyTextBox_01';
   var pt350 = {
     magnitude: 350,
-    unit: 'PT',
+    unit: 'PT'
   };
   var requests = [{
     createShape: {
@@ -74,26 +74,26 @@ Helpers.prototype.createTestTextbox = function(presentationId, pageId, callback)
         pageObjectId: pageId,
         size: {
           height: pt350,
-          width: pt350,
+          width: pt350
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 350,
           translateY: 100,
-          unit: 'PT',
-        },
-      },
-    },
+          unit: 'PT'
+        }
+      }
+    }
   }, {
     insertText: {
         objectId: boxId,
         insertionIndex: 0,
-        text: 'New Box Text Inserted',
-    },
+        text: 'New Box Text Inserted'
+    }
   }];
   var createTextboxResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   return createTextboxResponse.replies[0].createShape.objectId;
 };
@@ -103,7 +103,7 @@ Helpers.prototype.createTestSheetsChart = function(presentationId, pageId,
   var chartId = 'MyChart_01';
   var emu4M = {
     magnitude: 4000000,
-    unit: 'EMU',
+    unit: 'EMU'
   };
   var requests = [{
     createSheetsChart: {
@@ -115,20 +115,20 @@ Helpers.prototype.createTestSheetsChart = function(presentationId, pageId,
         pageObjectId: pageId,
         size: {
           height: emu4M,
-          width: emu4M,
+          width: emu4M
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 100000,
           translateY: 100000,
-          unit: 'EMU',
-        },
-      },
-    },
+          unit: 'EMU'
+        }
+      }
+    }
   }];
   var createSheetsChartResponse = Slides.Presentations.batchUpdate({
-    requests: requests,
+    requests: requests
   }, presentationId);
   return createSheetsChartResponse.replies[0].createSheetsChart.objectId;
 };
