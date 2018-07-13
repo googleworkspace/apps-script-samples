@@ -107,7 +107,7 @@ src="https://www.gstatic.com/images/icons/material/system/2x/alarm_grey600_48dp.
 align="left"
 width="96px"/>
 ### Triggers
-- Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` for an add-on or Sheet, Doc or Form
+- Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` in an add-on
 - Create a [time-driven trigger](https://developers.google.com/apps-script/guides/triggers/installable#time_driven_triggers)
 
 ## Clone using the `clasp` command line tool
