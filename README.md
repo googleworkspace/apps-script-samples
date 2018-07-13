@@ -15,6 +15,14 @@ width="96px"/>
 <br><br>
 
 <img
+src="https://www.gstatic.com/images/branding/product/2x/google_cloud_96dp.png"
+align="left"
+width="96px"/>
+### Advanced Services
+- [Access Google APIs via Advanced Google services](advanced/)
+<br><br>
+
+<img
 src="https://www.gstatic.com/images/branding/product/2x/calendar_96dp.png"
 align="left"
 width="96px"/>
@@ -47,20 +55,20 @@ width="96px"/>
 - [View Google Drive activity](drive/activity)
 
 <img
-src="https://www.gstatic.com/images/branding/product/2x/gmail_96dp.png"
-align="left"
-width="96px"/>
-### Gmail
-- [Sending email](gmail/sendingEmails)
-- [Mailmerge: Merge a template email with content](gmail/mailmerge)
-
-<img
 src="https://www.gstatic.com/images/branding/product/2x/forms_96dp.png"
 align="left"
 width="96px"/>
 ### Forms
 - [Notification add-on](forms)
 <br><br>
+
+<img
+src="https://www.gstatic.com/images/branding/product/2x/gmail_96dp.png"
+align="left"
+width="96px"/>
+### Gmail
+- [Sending email](gmail/sendingEmails)
+- [Mailmerge: Merge a template email with content](gmail/mailmerge)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/sheets_96dp.png"
@@ -93,6 +101,14 @@ width="96px"/>
 ### Templates
 - Build off a working framework for new Apps Script projects.
 <br><br>
+
+<img
+src="https://www.gstatic.com/images/icons/material/system/2x/alarm_grey600_48dp.png"
+align="left"
+width="96px"/>
+### Triggers
+- Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` for an add-on or Sheet, Doc or Form
+- Create a [time-driven trigger](https://developers.google.com/apps-script/guides/triggers/installable#time_driven_triggers)
 
 ## Clone using the `clasp` command line tool
 
