@@ -39,8 +39,9 @@ function generateInvoices() {
  * Generates a single invoice in Google Docs for a given Salesforce account and
  * an owed amount.
  *
- * @param accountId The Salesforce account Id to invoice
- * @param amount The owed amount to invoice
+ * @param {string} accountId The Salesforce account Id to invoice
+ * @param {string} amount The owed amount to invoice
+ * @return {string} the url of the created invoice
  */
 function generateInvoice(accountId, amount) {
   var folder = DriveApp.getFolderById(INVOICES_FOLDER);
@@ -57,7 +58,7 @@ function generateInvoice(accountId, amount) {
   invoice.getBody().replaceText(
       '{{account address}}', account['BillingAddress']['street']);
   invoice.getBody().replaceText(
-      '{{date}}', Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd"));
+      '{{date}}', Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd'));
   invoice.getBody().replaceText('{{amount}}', amount);
   invoice.saveAndClose();
   return invoice.getUrl();

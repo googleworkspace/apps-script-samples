@@ -50,9 +50,9 @@ function login() {
 /**
  * Displays a modal dialog with a simple HTML link that opens in a new tab.
  *
- * @param url the URL to link to
- * @param message the message to display to the user as a link
- * @param title the title of the dialog
+ * @param {string} url the URL to link to
+ * @param {string} message the message to display to the user as a link
+ * @param {string} title the title of the dialog
  */
 function showLinkDialog(url, message, title) {
   var template = HtmlService.createTemplateFromFile('LinkDialog');
@@ -64,6 +64,8 @@ function showLinkDialog(url, message, title) {
 /**
  * Creates a Salesforce OAuth2 service, using the Apps Script OAuth2 library:
  * https://github.com/gsuitedevs/apps-script-oauth2
+ *
+ * @return {Object} a Salesforce OAuth2 service
  */
 function getSalesforceService() {
   return OAuth2.createService('salesforce')
@@ -73,12 +75,15 @@ function getSalesforceService() {
     .setClientId(SALESFORCE_CLIENT_ID)
     .setClientSecret(SALESFORCE_CLIENT_SECRET)
     .setCallbackFunction('authCallback')
-    .setPropertyStore(PropertiesService.getUserProperties())
+    .setPropertyStore(PropertiesService.getUserProperties());
 }
 
 /**
  * Authentication callback for OAuth2: called when Salesforce redirects back to
  * Apps Script after sign-in.
+ *
+ * @param {Object} request the HTTP request, provided by Apps Script
+ * @return {Object} HTMLOutput to render the callback as a web page
  */
 function authCallback(request) {
   var salesforce = getSalesforceService();
@@ -109,7 +114,7 @@ function promptQuery() {
 /**
  * Executes the given SOQL query and copies its results to a new sheet.
  *
- * @param query the SOQL to execute
+ * @param {string} query the SOQL to execute
  */
 function executeQuery(query) {
   var response = fetchSoqlResults(query);
@@ -139,8 +144,8 @@ function executeQuery(query) {
 /**
  * Makes an API call to Salesforce to execute a given SOQL query.
  *
- * @param query the SOQL query to execute
- * @return the API response from Salesforce, as a parsed JSON object.
+ * @param {string} query the SOQL query to execute
+ * @return {Object} the API response from Salesforce, as a parsed JSON object.
  */
 function fetchSoqlResults(query) {
   var salesforce = getSalesforceService();
@@ -151,8 +156,8 @@ function fetchSoqlResults(query) {
       'headers': {
         'Authorization': 'Bearer ' + salesforce.getAccessToken(),
         'Content-Type': 'application/json'
-      },
-    }
+      }
+    };
     var url = 'https://' + SALESFORCE_INSTANCE +
         '.salesforce.com/services/data/v30.0/query';
     var response = UrlFetchApp.fetch(url +
@@ -165,8 +170,8 @@ function fetchSoqlResults(query) {
  * Parses the Salesforce response and extracts the list of field names in the
  * result set.
  *
- * @param record a single Salesforce response record
- * @return an array of string keys of that record
+ * @param {Object} record a single Salesforce response record
+ * @return {Array<string>} an array of string keys of that record
  */
 function getFields(record) {
   var fields = [];
@@ -180,6 +185,5 @@ function getFields(record) {
 
 /** Resets the Salesforce service, removing any saved OAuth tokens. */
 function logout() {
-  var salesforce = getSalesforceService();
-  salesforce.reset();
+  getSalesforceService().reset();
 }
