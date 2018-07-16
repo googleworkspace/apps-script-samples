@@ -11,6 +11,9 @@ Google Sheets add-on that:
 * Creates invoices in Google Docs and a sample presentation in Google Slides
   using the imported data.
 
+[[https://github.com/mcodik/apps-script-samples/blob/master/sheets/next18/demo.gif|alt=demo]]
+
+
 ## Getting started
 
 * Install [clasp](https://github.com/google/clasp)
