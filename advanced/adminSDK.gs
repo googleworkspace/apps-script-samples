@@ -52,7 +52,7 @@ function getUser() {
 }
 // [END apps_script_admin_sdk_get_users]
 
-// [START apps_script_admin_sdk_get_users]
+// [START apps_script_admin_sdk_add_user]
 /**
  * Adds a new user to the domain, including only the required information. For
  * the full list of user fields, see the API's reference documentation:
@@ -71,7 +71,7 @@ function addUser() {
   user = AdminDirectory.Users.insert(user);
   Logger.log('User %s created with ID %s.', user.primaryEmail, user.id);
 }
-// [END apps_script_admin_sdk_get_users]
+// [END apps_script_admin_sdk_add_user]
 
 // [START apps_script_admin_sdk_create_alias]
 /**
@@ -181,7 +181,7 @@ function getGroupSettings() {
 }
 // [END apps_script_admin_sdk_get_group_setting]
 
-// [START updateGroupSettings]
+// [START apps_script_admin_sdk_update_group_setting]
 /**
  * Updates group's settings. Here, the description is modified, but various
  * other settings can be changed in the same way.
@@ -192,7 +192,7 @@ function updateGroupSettings() {
   group.description = 'Newly changed group description';
   AdminGroupsSettings.Groups.patch(group, groupId);
 }
-// [END updateGroupSettings]
+// [END apps_script_admin_sdk_update_group_setting]
 
 // [START apps_script_admin_sdk_get_license_assignments]
 /**
@@ -220,7 +220,7 @@ function getLicenseAssignments() {
 }
 // [END apps_script_admin_sdk_get_license_assignments]
 
-// [START insertLicenseAssignment]
+// [START apps_script_admin_sdk_insert_license_assignment]
 /**
  * Insert a license assignment for a user, for a given product ID and sku ID
  * combination.
@@ -233,7 +233,7 @@ function insertLicenseAssignment() {
       .insert({userId: userId}, productId, skuId);
   Logger.log(results);
 }
-// [END insertLicenseAssignment]
+// [END apps_script_admin_sdk_insert_license_assignment]
 
 // [START apps_script_admin_sdk_generate_login_activity_report]
 /**
