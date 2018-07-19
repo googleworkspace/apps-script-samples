@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START getProfile]
+// [START apps_script_plus_domains_profile]
 /**
  * The following example demonstrates how to retrieve details from a user's
  * Google+ profile.
@@ -27,9 +27,9 @@ function getProfile() {
   Logger.log('Image URL: %s', profile.image.url);
   Logger.log('Profile URL: %s', profile.url);
 }
-// [END getProfile]
+// [END apps_script_plus_domains_profile]
 
- // [START createCircle]
+ // [START apps_script_plus_domains_circle]
 /**
  * The following example demonstrates how to create an empty circle for a user
  * within your G Suite domain.
@@ -42,9 +42,9 @@ function createCircle() {
   circle = PlusDomains.Circles.insert(circle, userId);
   Logger.log('Created "Tech support" circle with id: ' + circle.id);
 }
-// [END createCircle]
+// [END apps_script_plus_domains_circle]
 
- // [START getPosts]
+ // [START apps_script_plus_domains_get_posts]
 /**
  * The following example demonstrates how to list a user's posts. The returned
  * results contain a brief summary of the posts, including a title. Use the
@@ -68,9 +68,9 @@ function getPosts() {
     pageToken = posts.nextPageToken;
   } while (pageToken);
 }
-// [END getPosts]
+// [END apps_script_plus_domains_get_posts]
 
-// [START createPost]
+// [START apps_script_plus_domains_create_post]
 /**
  * The following example demonstrates how to create a post that is available
  * to all users within your G Suite domain.
@@ -92,4 +92,4 @@ function createPost() {
   post = PlusDomains.Activities.insert(post, userId);
   Logger.log('Post created with URL: %s', post.url);
 }
-// [END createPost]
+// [END apps_script_plus_domains_create_post]

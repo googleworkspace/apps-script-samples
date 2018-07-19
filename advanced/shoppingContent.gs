@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START productInsert]
+// [START apps_script_shopping_product_insert]
 /**
  * Inserts a product into the products list. Logs the API response.
  */
@@ -55,9 +55,9 @@ function productInsert() {
   response = ShoppingContent.Products.insert(productResource, merchantId);
   Logger.log(response); // RESTful insert returns the JSON object as a response.
 }
-// [END productInsert]
+// [END apps_script_shopping_product_insert]
 
-// [START productList]
+// [START apps_script_shopping_product_list]
 /**
  * Lists the products for a given merchant.
  */
@@ -83,10 +83,9 @@ function productList() {
     pageNum++;
   } while (pageToken);
 }
-// [END productList]
+// [END apps_script_shopping_product_list]
 
-
-// [START productCustombatch]
+// [START apps_script_shopping_product_batch_insert]
 /**
  * Batch updates products. Logs the response.
  * @param  {object} productResource1 The first product resource.
@@ -123,10 +122,9 @@ function custombatch(productResource1, productResource2, productResource3) {
   var response = ShoppingContent.Products.custombatch(custombatchResource);
   Logger.log(response);
 }
-// [END productCustombatch]
+// [END apps_script_shopping_product_batch_insert]
 
-
-// [START accountInfo]
+// [START apps_script_shopping_account_info]
 /**
  * Updates content account tax information.
  * Logs the API response.
@@ -166,4 +164,4 @@ function updateAccountTax() {
 
   Logger.log(ShoppingContent.Accounttax.update(taxInfo, merchantId, accountId));
 }
-// [END accountInfo]
+// [END apps_script_shopping_account_info]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START runQuery]
+// [START apps_script_bigquery_run_query]
 /**
  * Runs a BigQuery query and logs the results in a spreadsheet.
  */
@@ -73,9 +73,9 @@ function runQuery() {
     Logger.log('No rows returned.');
   }
 }
-// [END runQuery]
+// [END apps_script_bigquery_run_query]
 
-// [START loadCsv]
+// [START apps_script_bigquery_load_csv]
 /**
  * Loads a CSV into BigQuery
  */
@@ -131,4 +131,4 @@ function loadCsv() {
   Logger.log('Load job started. Check on the status of it here: ' +
       'https://bigquery.cloud.google.com/jobs/%s', projectId);
 }
-// [END loadCsv]
+// [END apps_script_bigquery_load_csv]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- // [START createReport]
+ // [START apps_script_youtube_report]
 /**
  * Creates a spreadsheet containing daily view counts, watch-time metrics,
  * and new-subscriber counts for a channel's videos.
@@ -88,4 +88,4 @@ function formatColumnName(columnName) {
   name = name.slice(0, 1).toUpperCase() + name.slice(1);
   return name;
 }
-// [END createReport]
+// [END apps_script_youtube_report]

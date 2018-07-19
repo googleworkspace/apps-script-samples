@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START getPeople]
+// [START apps_script_plus_people]
 /**
  * The following example demonstrates how to retrieve a list of the people
  * in the user's Google+ circles.
@@ -37,9 +37,9 @@ function getPeople() {
     pageToken = people.nextPageToken;
   } while (pageToken);
 }
-// [END getPeople]
+// [END apps_script_plus_people]
 
- // [START getPosts]
+ // [START apps_script_plus_posts]
 /**
  * The following example demonstrates how to list a user's posts. The returned
  * results contain a brief summary of the posts, including a list of comments
@@ -73,4 +73,4 @@ function getPosts() {
     pageToken = posts.pageToken;
   } while (pageToken);
 }
-// [END getPosts]
+// [END apps_script_plus_posts]

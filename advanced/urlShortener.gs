@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START shortenUrl]
+// [START apps_script_url_shortener_shorten]
 /**
  * Shortens a long URL. Logs this URL.
  */
@@ -23,9 +23,9 @@ function shortenUrl() {
   });
   Logger.log('Shortened URL is "%s".', url.id);
 }
-// [END shortenUrl]
+// [END apps_script_url_shortener_shorten]
 
-// [START getClicks]
+// [START apps_script_url_shortener_get_clicks]
 /**
  * Logs the number of clicks to a short URL over the last week.
  * @param  {string} shortUrl The short URL.
@@ -36,4 +36,4 @@ function getClicks(shortUrl) {
   });
   Logger.log('The URL received %s clicks this week.', url.analytics.week.shortUrlClicks);
 }
-// [END getClicks]
+// [END apps_script_url_shortener_get_clicks]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listCalendars]
+// [START apps_script_calendar_list_calendars]
 /**
  * Lists the calendars shown in the user's calendar list.
  */
@@ -36,9 +36,9 @@ function listCalendars() {
     pageToken = calendars.nextPageToken;
   } while (pageToken);
 }
-// [END listCalendars]
+// [END apps_script_calendar_list_calendars]
 
-// [START createEvent]
+// [START apps_script_calendar_create_event]
 /**
  * Creates an event in the user's default calendar.
  */
@@ -83,9 +83,9 @@ function getRelativeDate(daysOffset, hour) {
   date.setMilliseconds(0);
   return date;
 }
-// [END createEvent]
+// [END apps_script_calendar_create_event]
 
-// [START listNext10Events]
+// [START apps_script_calendar_list_events]
 /**
  * Lists the next 10 upcoming events in the user's default calendar.
  */
@@ -114,9 +114,9 @@ function listNext10Events() {
     Logger.log('No events found.');
   }
 }
-// [END listNext10Events]
+// [END apps_script_calendar_list_events]
 
-// [START logSyncedEvents]
+// [START apps_script_calendar_log_synced_events]
 /**
  * Retrieve and log events from the given calendar that have been modified
  * since the last sync. If the sync token is missing or invalid, log all
@@ -182,9 +182,9 @@ function logSyncedEvents(calendarId, fullSync) {
 
   properties.setProperty('syncToken', events.nextSyncToken);
 }
-// [END logSyncedEvents]
+// [END apps_script_calendar_log_synced_events]
 
-// [START conditionalUpdate]
+// [START apps_script_calendar_conditional_update]
 /**
  * Creates an event in the user's default calendar, waits 30 seconds, then
  * attempts to update the event's location, on the condition that the event
@@ -236,9 +236,9 @@ function conditionalUpdate() {
     Logger.log('Fetch threw an exception: ' + e);
   }
 }
-// [END conditionalUpdate]
+// [END apps_script_calendar_conditional_update]
 
-// [START conditionalFetch]
+// [START apps_script_calendar_conditional_fetch]
 /**
  * Creates an event in the user's default calendar, then re-fetches the event
  * every second, on the condition that the event has changed since the last
@@ -281,4 +281,4 @@ function conditionalFetch() {
     }
   }
 }
-// [END conditionalFetch]
+// [END apps_script_calendar_conditional_fetch]

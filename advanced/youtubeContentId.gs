@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START claimYourVideoWithMonetizePolicy]
+// [START apps_script_youtube_claim]
 /**
  * This function creates a partner-uploaded claim on a video with the specified
  * asset and policy rules.
@@ -45,9 +45,9 @@ function claimYourVideoWithMonetizePolicy() {
                videoId, e.message);
   }
 }
-// [END claimYourVideoWithMonetizePolicy]
+// [END apps_script_youtube_claim]
 
-// [START updateAssetOwnership]
+// [START apps_script_youtube_update_asset_ownership]
 /**
  * This function updates your onBehalfOfContentOwner's ownership on an existing
  * asset.
@@ -78,9 +78,9 @@ function updateAssetOwnership() {
                assetId, e.message);
   }
 }
-// [END updateAssetOwnership]
+// [END apps_script_youtube_update_asset_ownership]
 
-// [START releaseClaim]
+// [START apps_script_youtube_release_claim]
 /**
  * This function releases an existing claim your onBehalfOfContentOwner has
  * on a video.
@@ -101,4 +101,4 @@ function releaseClaim() {
     Logger.log('Failed to release claim %s, error: %s', claimId, e.message);
   }
 }
-// [END releaseClaim]
+// [END apps_script_youtube_release_claim]

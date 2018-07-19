@@ -17,7 +17,7 @@ var presentationId = '1K0Wd9BWgfy1doB0da_vRYmaYTUavEYVKJV_EygSiiMY';
 var pageId = 'p';
 var shapeId = 'MyTextBoxId';
 
-// [START createPresentation]
+// [START apps_script_slides_create_presentation]
 /**
  * Create a new presentation.
  */
@@ -26,9 +26,9 @@ function createPresentation() {
       Slides.Presentations.create({'title': 'MyNewPresentation'});
   Logger.log('Created presentation with ID: ' + presentation.presentationId);
 }
-// [END createPresentation]
+// [END apps_script_slides_create_presentation]
 
-// [START createSlide]
+// [START apps_script_slides_create_slide]
 /**
  * Create a new slide.
  * @param {string} presentationId The presentation to add the slide to.
@@ -50,9 +50,9 @@ function createSlide(presentationId) {
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
   Logger.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
 }
-// [END createSlide]
+// [END apps_script_slides_create_slide]
 
-// [START readPageElementIds]
+// [START apps_script_slides_read_page]
 /**
  * Read page element IDs.
  * @param {string} presentationId The presentation to read from.
@@ -65,9 +65,9 @@ function readPageElementIds(presentationId, pageId) {
       presentationId, pageId, {'fields': 'pageElements.objectId'});
   Logger.log(response);
 }
-// [END readPageElementIds]
+// [END apps_script_slides_read_page]
 
-// [START addTextBox]
+// [START apps_script_slides_add_text_box]
 /**
  * Add a new text box with text to a page.
  * @param {string} presentationId The presentation ID.
@@ -115,9 +115,9 @@ function addTextBox(presentationId, pageId) {
   Logger.log('Created Textbox with ID: ' +
       response.replies[0].createShape.objectId);
 }
-// [END addTextBox]
+// [END apps_script_slides_add_text_box]
 
-// [START formatShapeText]
+// [START apps_script_slides_format_shape_text]
 /**
  * Format the text in a shape.
  * @param {string} presentationId The presentation ID.
@@ -151,4 +151,4 @@ function formatShapeText(presentationId, shapeId) {
   var response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
 }
-// [END formatShapeText]
+// [END apps_script_slides_format_shape_text]

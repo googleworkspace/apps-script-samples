@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listAdClients]
+// [START apps_script_adsense_list_ad_clients]
 /**
  * Logs a lists Ad clients.
  */
@@ -40,9 +40,9 @@ function listAdClients() {
     pageToken = adClients.nextPageToken;
   } while (pageToken);
 }
-// [END listAdClients]
+// [END apps_script_adsense_list_ad_clients]
 
-// [START listAdUnits]
+// [START apps_script_adsense_list_ad_units]
 /**
  * Lists ad units.
  * @param  {string} adClientId The ad client ID.
@@ -68,9 +68,9 @@ function listAdUnits(adClientId) {
     pageToken = adUnits.nextPageToken;
   } while (pageToken);
 }
-// [END listAdUnits]
+// [END apps_script_adsense_list_ad_units]
 
-// [START generateReport]
+// [START apps_script_adsense_generate_report]
 /**
  * Generates a spreadsheet report for an ad client.
  * @param {string} adClientId The ad client ID
@@ -124,4 +124,4 @@ function generateReport(adClientId) {
 function escapeFilterParameter(parameter) {
   return parameter.replace('\\', '\\\\').replace(',', '\\,');
 }
-// [END generateReport]
+// [END apps_script_adsense_generate_report]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listTaskLists]
+// [START apps_script_tasks_lists_task_lists]
 /**
  * Lists tasks titles and IDs.
  */
@@ -29,9 +29,9 @@ function listTaskLists() {
     Logger.log('No task lists found.');
   }
 }
-// [END listTaskLists]
+// [END apps_script_tasks_lists_task_lists]
 
-// [START listTasks]
+// [START apps_script_tasks_list_tasks]
 /**
  * Lists task items for a provided tasklist ID.
  * @param  {string} taskListId The tasklist ID.
@@ -48,9 +48,9 @@ function listTasks(taskListId) {
     Logger.log('No tasks found.');
   }
 }
-// [END listTasks]
+// [END apps_script_tasks_list_tasks]
 
-// [START addTask]
+// [START apps_script_tasks_add_task]
 /**
  * Adds a task to a tasklist.
  * @param {string} taskListId The tasklist to add to.
@@ -63,4 +63,4 @@ function addTask(taskListId) {
   task = Tasks.Tasks.insert(task, taskListId);
   Logger.log('Task with ID "%s" was created.', task.id);
 }
-// [END addTask]
+// [END apps_script_tasks_add_task]

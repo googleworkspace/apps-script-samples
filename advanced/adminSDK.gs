@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listAllUsers]
+// [START apps_script_admin_sdk_list_all_users]
 /**
  * Lists all the users in a domain sorted by first name.
  */
@@ -39,9 +39,9 @@ function listAllUsers() {
     pageToken = page.nextPageToken;
   } while (pageToken);
 }
-// [END listAllUsers]
+// [END apps_script_admin_sdk_list_all_users]
 
-// [START getUser]
+// [START apps_script_admin_sdk_get_users]
 /**
 * Get a user by their email address and logs all of their data as a JSON string.
 */
@@ -50,9 +50,9 @@ function getUser() {
   var user = AdminDirectory.Users.get(userEmail);
   Logger.log('User data:\n %s', JSON.stringify(user, null, 2));
 }
-// [END getUser]
+// [END apps_script_admin_sdk_get_users]
 
-// [START addUser]
+// [START apps_script_admin_sdk_get_users]
 /**
  * Adds a new user to the domain, including only the required information. For
  * the full list of user fields, see the API's reference documentation:
@@ -71,9 +71,9 @@ function addUser() {
   user = AdminDirectory.Users.insert(user);
   Logger.log('User %s created with ID %s.', user.primaryEmail, user.id);
 }
-// [END addUser]
+// [END apps_script_admin_sdk_get_users]
 
-// [START createAlias]
+// [START apps_script_admin_sdk_create_alias]
 /**
  * Creates an alias (nickname) for a user.
  */
@@ -85,9 +85,9 @@ function createAlias() {
   alias = AdminDirectory.Users.Aliases.insert(alias, userEmail);
   Logger.log('Created alias %s for user %s.', alias.alias, userEmail);
 }
-// [END createAlias]
+// [END apps_script_admin_sdk_create_alias]
 
-// [START listAllGroups]
+// [START apps_script_admin_sdk_list_all_groups]
 /**
  * Lists all the groups in the domain.
  */
@@ -112,9 +112,9 @@ function listAllGroups() {
     pageToken = page.nextPageToken;
   } while (pageToken);
 }
-// [END listAllGroups]
+// [END apps_script_admin_sdk_list_all_groups]
 
-// [START addGroupMember]
+// [START apps_script_admin_sdk_add_group_member]
 /**
  * Adds a user to an existing group in the domain.
  */
@@ -128,9 +128,9 @@ function addGroupMember() {
   member = AdminDirectory.Members.insert(member, groupEmail);
   Logger.log('User %s added as a member of group %s.', userEmail, groupEmail);
 }
-// [END addGroupMember]
+// [END apps_script_admin_sdk_add_group_member]
 
-// [START migrate]
+// [START apps_script_admin_sdk_migrate]
 /**
  * Gets three RFC822 formatted messages from the each of the latest three
  * threads in the user's Gmail inbox, creates a blob from the email content
@@ -168,9 +168,9 @@ function getRecentMessagesContent() {
   }
   return messagesContent;
 }
-// [END migrate]
+// [END apps_script_admin_sdk_migrate]
 
-// [START getGroupSettings]
+// [START apps_script_admin_sdk_get_group_setting]
 /**
  * Gets a group's settings and logs them to the console.
  */
@@ -179,7 +179,7 @@ function getGroupSettings() {
   var group = AdminGroupsSettings.Groups.get(groupId);
   Logger.log(JSON.stringify(group, null, 2));
 }
-// [END getGroupSettings]
+// [END apps_script_admin_sdk_get_group_setting]
 
 // [START updateGroupSettings]
 /**
@@ -194,7 +194,7 @@ function updateGroupSettings() {
 }
 // [END updateGroupSettings]
 
-// [START getLicenseAssignments]
+// [START apps_script_admin_sdk_get_license_assignments]
 /**
  * Logs the license assignments, including the product ID and the sku ID, for
  * the users in the domain. Notice the use of page tokens to access the full
@@ -218,7 +218,7 @@ function getLicenseAssignments() {
         assignment.userId, assignment.productId, assignment.skuId);
   }
 }
-// [END getLicenseAssignments]
+// [END apps_script_admin_sdk_get_license_assignments]
 
 // [START insertLicenseAssignment]
 /**
@@ -235,7 +235,7 @@ function insertLicenseAssignment() {
 }
 // [END insertLicenseAssignment]
 
-// [START generateLoginActivityReport]
+// [START apps_script_admin_sdk_generate_login_activity_report]
 /**
  * Generates a login activity report for the last week as a spreadsheet. The
  * report includes the time, user, and login result.
@@ -287,9 +287,9 @@ function generateLoginActivityReport() {
     Logger.log('No results returned.');
   }
 }
-// [END generateLoginActivityReport]
+// [END apps_script_admin_sdk_generate_login_activity_report]
 
-// [START generateUserUsageReport]
+// [START apps_script_admin_sdk_generate_user_usage_report]
 /**
  * Generates a user usage report for this day last week as a spreadsheet. The
  * report includes the date, user, last login time, number of emails received,
@@ -373,9 +373,9 @@ function getParameterValues(parameters) {
     return result;
   }, {});
 }
-// [END generateUserUsageReport]
+// [END apps_script_admin_sdk_generate_user_usage_report]
 
-// [START getSubscriptions]
+// [START apps_script_admin_sdk_get_subscriptions]
 /**
  * Logs the list of subscriptions, including the customer ID, date created, plan
  * name, and the sku ID. Notice the use of page tokens to access the full list
@@ -400,4 +400,4 @@ function getSubscriptions() {
     pageToken = result.nextPageToken;
   } while (pageToken);
 }
-// [END getSubscriptions]
+// [END apps_script_admin_sdk_get_subscriptions]

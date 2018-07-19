@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START createContainerVersion]
+// [START apps_script_tag_manager_create_version]
 /**
  * Creates a container version for a particular account with the input accountPath.
  * @param {string} accountPath The account path.
@@ -68,9 +68,9 @@ function createContainerVersion(accountPath) {
   Logger.log(version);
   return version;
 }
-// [END createContainerVersion]
+// [END apps_script_tag_manager_create_version]
 
-// [START publishVersionAndQuickPreviewDraft]
+// [START apps_script_tag_manager_publish_version]
 /**
  * Retrieves the container path from a container version path.
  * @param  {string} versionPath The version path.
@@ -99,9 +99,9 @@ function publishVersionAndQuickPreviewDraft(version) {
       workspace.path);
   Logger.log(quickPreview);
 }
-// [END publishVersionAndQuickPreviewDraft]
+// [END apps_script_tag_manager_publish_version]
 
-// [START createAndReauthorizeUserEnvironment]
+// [START apps_script_tag_manager_create_user_environment]
 /**
  * Retrieves the container path from a container version path.
  * @param  {string} versionPath The version path.
@@ -133,9 +133,9 @@ function createAndReauthorizeUserEnvironment(version) {
   TagManager.Accounts.Containers.Environments.reauthorize({}, environment.path);
   Logger.log('Reauthorized user environment: ' + environment);
 }
-// [END createAndReauthorizeUserEnvironment]
+// [END apps_script_tag_manager_create_user_environment]
 
-// [START logAllAccountUserPermissionsWithContainerAccess]
+// [START apps_script_tag_manager_log]
 /**
  * Logs all emails and container access permission within an account.
  * @param {string} accountPath The account path.
@@ -157,4 +157,4 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
     }
   }
 }
-// [END logAllAccountUserPermissionsWithContainerAccess]
+// [END apps_script_tag_manager_log]

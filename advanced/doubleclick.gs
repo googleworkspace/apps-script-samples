@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listUserProfiles]
+// [START apps_script_doubleclick_list_user_profiles]
 /**
  * Logs all of the user profiles available in the account.
  */
@@ -30,9 +30,9 @@ function listUserProfiles() {
     }
   }
 }
-// [END listUserProfiles]
+// [END apps_script_doubleclick_list_user_profiles]
 
-// [START listActiveCampaigns]
+// [START apps_script_doubleclick_list_active_campaigns]
 /**
  * Logs names and ID's of all active campaigns.
  * Note the use of paging tokens to retrieve the whole list.
@@ -58,9 +58,9 @@ function listActiveCampaigns() {
     pageToken = result.nextPageToken;
   } while (pageToken);
 }
-// [END listActiveCampaigns]
+// [END apps_script_doubleclick_list_active_campaigns]
 
-// [START createAdvertiserAndCampaign]
+// [START apps_script_doubleclick_create_advertiser_and_campaign]
 /**
  * Creates a new advertiser, and creates a new campaign with that advertiser.
  * The campaign is set to last for one month.
@@ -98,4 +98,4 @@ function createAdvertiserAndCampaign() {
   };
   DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
 }
-// [END createAdvertiserAndCampaign]
+// [END apps_script_doubleclick_create_advertiser_and_campaign]

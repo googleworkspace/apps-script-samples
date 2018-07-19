@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START uploadFile]
+// [START apps_script_drive_upload_file]
 /**
  * Uploads a new file to the user's Drive.
  */
@@ -26,9 +26,9 @@ function uploadFile() {
   file = Drive.Files.insert(file, image);
   Logger.log('ID: %s, File size (bytes): %s', file.id, file.fileSize);
 }
-// [END uploadFile]
+// [END apps_script_drive_upload_file]
 
-// [START listRootFolders]
+// [START apps_script_drive_list_root_folders]
 /**
  * Lists the top-level folders in the user's Drive.
  */
@@ -54,9 +54,9 @@ function listRootFolders() {
     pageToken = folders.nextPageToken;
   } while (pageToken);
 }
-// [END listRootFolders]
+// [END apps_script_drive_list_root_folders]
 
-// [START addCustomProperty]
+// [START apps_script_drive_add_custom_property]
 /**
  * Adds a custom property to a file. Unlike Apps Script's DocumentProperties,
  * Drive's custom file properties can be accessed outside of Apps Script and by
@@ -71,9 +71,9 @@ function addCustomProperty(fileId) {
   };
   Drive.Properties.insert(property, fileId);
 }
-// [END addCustomProperty]
+// [END apps_script_drive_add_custom_property]
 
-// [START listRevisions]
+// [START apps_script_drive_list_revisions]
 /**
  * Lists the revisions of a given file. Note that some properties of revisions
  * are only available for certain file types. For example, G Suite application
@@ -93,4 +93,4 @@ function listRevisions(fileId) {
     Logger.log('No revisions found.');
   }
 }
-// [END listRevisions]
+// [END apps_script_drive_list_revisions]

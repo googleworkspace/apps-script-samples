@@ -18,7 +18,7 @@ var sheetId = 371977894;
 var pivotSourceDataSheetId = 371977894;
 var destinationSheetId = 1428299768;
 
-// [START readRange]
+// [START apps_script_sheets_read_range]
 /**
  * Read a range (A1:D5) of data values. Logs the values.
  * @param {string} spreadsheetId The spreadsheet ID to read from.
@@ -27,9 +27,9 @@ function readRange(spreadsheetId) {
   var response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
   Logger.log(response.values);
 }
-// [END readRange]
+// [END apps_script_sheets_read_range]
 
-// [START writeToMultipleRanges]
+// [START apps_script_sheets_write_range]
 /**
  * Write to multiple, disjoint data ranges.
  * @param {string} spreadsheetId The spreadsheet ID to write to.
@@ -63,9 +63,9 @@ function writeToMultipleRanges(spreadsheetId) {
   var response = Sheets.Spreadsheets.Values.batchUpdate(request, spreadsheetId);
   Logger.log(response);
 }
-// [END writeToMultipleRanges]
+// [END apps_script_sheets_write_range]
 
-// [START addSheet]
+// [START apps_script_sheets_new_sheet]
 /**
  * Add a new sheet with some properties.
  * @param {string} spreadsheetId The spreadsheet ID.
@@ -93,9 +93,9 @@ function addSheet(spreadsheetId) {
   Logger.log('Created sheet with ID: ' +
       response.replies[0].addSheet.properties.sheetId);
 }
-// [END addSheet]
+// [END apps_script_sheets_new_sheet]
 
-// [START addPivotTable]
+// [START apps_script_sheets_add_pivot_table]
 /**
  * Add a pivot table.
  * @param {string} spreadsheetId The spreadsheet ID to add the pivot table to.
@@ -169,4 +169,4 @@ function addPivotTable(
       Sheets.Spreadsheets.batchUpdate({'requests': requests}, spreadsheetId);
   // The Pivot table will appear anchored to cell A50 of the destination sheet.
 }
-// [END addPivotTable]
+// [END apps_script_sheets_add_pivot_table]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START queryHostedModel]
+// [START apps_script_prediction_query_hosted_model]
 /**
  * Runs sentiment analysis across a sentence.
  * Prints the sentiment label.
@@ -50,9 +50,9 @@ function queryHostedModel() {
   // Logs Sentiment: negative.
   Logger.log('Sentiment: ' + prediction.outputLabel);
 }
-// [END queryHostedModel]
+// [END apps_script_prediction_query_hosted_model]
 
-// [START createNewModel]
+// [START apps_script_prediction_create_new_model]
 /**
  * Creates a new prediction model.
  */
@@ -72,9 +72,9 @@ function createNewModel() {
       projectNumber);
   Logger.log(result);
 }
-// [END createNewModel]
+// [END apps_script_prediction_create_new_model]
 
-// [START queryTrainingStatus]
+// [START apps_script_prediction_query_training_status]
 /**
  * Gets the training status from a prediction model.
  * Logs the status.
@@ -88,9 +88,9 @@ function queryTrainingStatus() {
   var result = Prediction.Trainedmodels.get(projectNumber, id);
   Logger.log(result.trainingStatus);
 }
-// [END queryTrainingStatus]
+// [END apps_script_prediction_query_training_status]
 
-// [START queryTrainedModel]
+// [START apps_script_prediction_query_trailed_model]
 /**
  * Gets the language from a trained language model.
  * Logs the language of the sentence.
@@ -114,4 +114,4 @@ function queryTrainedModel() {
   // Logs Language: Spanish.
   Logger.log('Language: ' + prediction.outputLabel);
 }
-// [END queryTrainedModel]
+// [END apps_script_prediction_query_trailed_model]

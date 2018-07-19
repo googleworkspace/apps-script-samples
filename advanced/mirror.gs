@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START insertTimelineItem]
+// [START apps_script_mirror_timeline]
 /**
  * This sample inserts a new item into the timeline.
  */
@@ -32,9 +32,9 @@ function insertTimelineItem() {
 
   Mirror.Timeline.insert(timelineItem);
 }
-// [END insertTimelineItem]
+// [END apps_script_mirror_timeline]
 
-// [START insertContact]
+// [START apps_script_mirror_contact]
 /**
  * This sample inserts a new contact.
  */
@@ -47,9 +47,9 @@ function insertContact() {
 
   Mirror.Contacts.insert(contact);
 }
-// [END insertContact]
+// [END apps_script_mirror_contact]
 
-// [START printLatestLocation]
+// [START apps_script_mirror_location]
 /**
  * This sample prints the most recent known location of the user's Glass to the
  * script editor's log.
@@ -62,4 +62,4 @@ function printLatestLocation() {
   Logger.log('  > Longitude: ' + location.longitude);
   Logger.log('  > Accuracy: ' + location.accuracy + ' meters');
 }
-// [END printLatestLocation]
+// [END apps_script_mirror_location]

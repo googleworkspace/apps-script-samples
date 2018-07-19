@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listTables]
+// [START apps_script_fusion_tables_list]
 /**
  * This sample lists Fusion Tables that the user has access to.
  */
@@ -29,9 +29,9 @@ function listTables() {
     Logger.log('No tables found.');
   }
 }
-// [END listTables]
+// [END apps_script_fusion_tables_list]
 
-// [START runQuery]
+// [START apps_script_fusion_tables_run_query]
 /**
  * This sample queries for the first 100 rows in the given Fusion Table and
  * saves the results to a new spreadsheet.
@@ -59,4 +59,4 @@ function runQuery(tableId) {
     Logger.log('No rows returned.');
   }
 }
-// [END runQuery]
+// [END apps_script_fusion_tables_run_query]

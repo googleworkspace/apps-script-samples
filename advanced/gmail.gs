@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listLabelInfo]
+// [START apps_script_gmail_label]
 /**
  * Lists the user's labels, including name, type,
  * ID and visibility information.
@@ -26,9 +26,9 @@ function listLabelInfo() {
     Logger.log(JSON.stringify(label));
   }
 }
-// [END listLabelInfo]
+// [END apps_script_gmail_label]
 
-// [START listInboxSnippets]
+// [START apps_script_gmail_inbox_snippets]
 /**
  * Lists, for each thread in the user's Inbox, a
  * snippet associated with that thread.
@@ -48,10 +48,10 @@ function listInboxSnippets() {
     pageToken = threadList.nextPageToken;
   } while (pageToken);
 }
-// [END listInboxSnippets]
+// [END apps_script_gmail_inbox_snippets]
 
 
-// [START logRecentHistory]
+// [START apps_script_gmail_history]
 /**
  * Gets a history record ID associated with the most
  * recently sent message, then logs all the message IDs
@@ -96,4 +96,4 @@ function logRecentHistory() {
     Logger.log('Message Changed: %s', id);
   });
 }
-// [END logRecentHistory]
+// [END apps_script_gmail_history]

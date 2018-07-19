@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START listAccounts]
+// [START apps_script_analytics_accounts]
 /**
  * Lists Analytics accounts.
  */
@@ -74,9 +74,9 @@ function listProfiles(accountId, webPropertyId) {
     Logger.log('\t\tNo web properties found.');
   }
 }
-// [END listAccounts]
+// [END apps_script_analytics_accounts]
 
-// [START runReport]
+// [START apps_script_analytics_reports]
 /**
  * Runs a report of an Analytics profile ID. Creates a sheet with the report.
  * @param  {string} profileId The profile ID.
@@ -121,4 +121,4 @@ function runReport(profileId) {
     Logger.log('No rows returned.');
   }
 }
-// [END runReport]
+// [END apps_script_analytics_reports]

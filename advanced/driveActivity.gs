@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START getUsersActivity]
+// [START apps_script_drive_activity_get_users_activity]
 /**
  * Gets a file's activity and logs the list of
  * unique users that performed the activity.
@@ -41,4 +41,4 @@ function getUsersActivity() {
   } while (pageToken);
   Logger.log(Object.keys(users));
 }
-// [END getUsersActivity]
+// [END apps_script_drive_activity_get_users_activity]

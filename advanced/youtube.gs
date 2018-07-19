@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START searchByKeyword]
+// [START apps_script_youtube_search]
 /**
  * Searches for videos about dogs, then logs the video IDs and title.
  * Note that this sample limits the results to 25. To return more
@@ -31,9 +31,9 @@ function searchByKeyword() {
     Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
   }
 }
-// [END searchByKeyword]
+// [END apps_script_youtube_search]
 
-// [START retrieveMyUploads]
+// [START apps_script_youtube_uploads]
 /**
  * This function retrieves the user's uploaded videos by:
  * 1. Fetching the user's channel's.
@@ -69,9 +69,9 @@ function retrieveMyUploads() {
     }
   }
 }
-// [END retrieveMyUploads]
+// [END apps_script_youtube_uploads]
 
-// [START addSubscription]
+// [START apps_script_youtube_subscription]
 /**
  * This sample subscribes the user to the Google Developers channel on YouTube.
  */
@@ -99,4 +99,4 @@ function addSubscription() {
     }
   }
 }
-// [END addSubscription]
+// [END apps_script_youtube_subscription]
