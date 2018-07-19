@@ -15,14 +15,15 @@
  */
 
 // [START mail_merge]
-// getRowsData iterates row by row in the input range and returns an array of objects.
-// Each object contains all the data for a given row, indexed by its normalized column name.
-// Arguments:
-//   - sheet: the sheet object that contains the data to be processed
-//   - range: the exact range of cells where the data is stored
-//   - columnHeadersRowIndex: specifies the row number where the column names are stored.
-//       This argument is optional and it defaults to the row immediately above range;
-// Returns an Array of objects.
+/**
+ * Iterates row by row in the input range and returns an array of objects.
+ * Each object contains all the data for a given row, indexed by its normalized column name.
+ * @param {Sheet} sheet The sheet object that contains the data to be processed
+ * @param {Range} range The exact range of cells where the data is stored
+ * @param {number} columnHeadersRowIndex Specifies the row number where the column names are stored.
+ *   This argument is optional and it defaults to the row immediately above range;
+ * @return {object[]} An array of objects.
+ */
 function getRowsData(sheet, range, columnHeadersRowIndex) {
   columnHeadersRowIndex = columnHeadersRowIndex || range.getRowIndex() - 1;
   var numColumns = range.getEndColumn() - range.getColumn() + 1;
@@ -31,11 +32,13 @@ function getRowsData(sheet, range, columnHeadersRowIndex) {
   return getObjects(range.getValues(), normalizeHeaders(headers));
 }
 
-// For every row of data in data, generates an object that contains the data. Names of
-// object fields are defined in keys.
-// Arguments:
-//   - data: JavaScript 2d array
-//   - keys: Array of Strings that define the property names for the objects to create
+/**
+ * For every row of data in data, generates an object that contains the data. Names of
+ * object fields are defined in keys.
+ * @param {object} data JavaScript 2d array
+ * @param {object} keys Array of Strings that define the property names for the objects to create
+ * @return {object[]} A list of objects.
+ */
 function getObjects(data, keys) {
   var objects = [];
   for (var i = 0; i < data.length; ++i) {
@@ -56,9 +59,11 @@ function getObjects(data, keys) {
   return objects;
 }
 
-// Returns an Array of normalized Strings.
-// Arguments:
-//   - headers: Array of Strings to normalize
+/**
+ * Returns an array of normalized Strings.
+ * @param {string[]} headers Array of strings to normalize
+ * @return {string[]} An array of normalized strings.
+ */
 function normalizeHeaders(headers) {
   var keys = [];
   for (var i = 0; i < headers.length; ++i) {
@@ -70,21 +75,22 @@ function normalizeHeaders(headers) {
   return keys;
 }
 
-// Normalizes a string, by removing all alphanumeric characters and using mixed case
-// to separate words. The output will always start with a lower case letter.
-// This function is designed to produce JavaScript object property names.
-// Arguments:
-//   - header: string to normalize
-// Examples:
-//   "First Name" -> "firstName"
-//   "Market Cap (millions) -> "marketCapMillions
-//   "1 number at the beginning is ignored" -> "numberAtTheBeginningIsIgnored"
+/**
+ * Normalizes a string, by removing all alphanumeric characters and using mixed case
+ * to separate words. The output will always start with a lower case letter.
+ * This function is designed to produce JavaScript object property names.
+ * @param {string} header The header to normalize.
+ * @return {string} The normalized header.
+ * @example "First Name" -> "firstName"
+ * @example "Market Cap (millions) -> "marketCapMillions
+ * @example "1 number at the beginning is ignored" -> "numberAtTheBeginningIsIgnored"
+ */
 function normalizeHeader(header) {
-  var key = "";
+  var key = '';
   var upperCase = false;
   for (var i = 0; i < header.length; ++i) {
     var letter = header[i];
-    if (letter == " " && key.length > 0) {
+    if (letter == ' ' && key.length > 0) {
       upperCase = true;
       continue;
     }
@@ -104,21 +110,31 @@ function normalizeHeader(header) {
   return key;
 }
 
-// Returns true if the cell where cellData was read from is empty.
-// Arguments:
-//   - cellData: string
+/**
+ * Returns true if the cell where cellData was read from is empty.
+ * @param {string} cellData Cell data
+ * @return {boolean} True if the cell is empty.
+ */
 function isCellEmpty(cellData) {
-  return typeof(cellData) == "string" && cellData == "";
+  return typeof(cellData) == 'string' && cellData == '';
 }
 
-// Returns true if the character char is alphabetical, false otherwise.
+/**
+ * Returns true if the character char is alphabetical, false otherwise.
+ * @param {string} char The character.
+ * @return {boolean} True if the char is a number.
+ */
 function isAlnum(char) {
   return char >= 'A' && char <= 'Z' ||
     char >= 'a' && char <= 'z' ||
     isDigit(char);
 }
 
-// Returns true if the character char is a digit, false otherwise.
+/**
+ * Returns true if the character char is a digit, false otherwise.
+ * @param {string} char The character.
+ * @return {boolean} True if the char is a digit.
+ */
 function isDigit(char) {
   return char >= '0' && char <= '9';
 }
