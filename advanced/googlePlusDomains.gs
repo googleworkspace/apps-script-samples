@@ -57,7 +57,7 @@ function getPosts() {
   do {
     posts = PlusDomains.Activities.list(userId, 'user', {
       maxResults: 100,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (posts.items) {
       for (var i = 0; i < posts.items.length; i++) {
@@ -79,14 +79,14 @@ function createPost() {
   var userId = 'me';
   var post = {
     object: {
-      originalContent: 'Happy Monday! #caseofthemondays',
+      originalContent: 'Happy Monday! #caseofthemondays'
     },
     access: {
       items: [{
-        type: 'domain',
+        type: 'domain'
       }],
-      domainRestricted: true,
-    },
+      domainRestricted: true
+    }
   };
 
   post = PlusDomains.Activities.insert(post, userId);

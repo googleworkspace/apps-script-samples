@@ -38,7 +38,7 @@ function listInboxSnippets() {
   do {
     var threadList = Gmail.Users.Threads.list('me', {
       q: 'label:inbox',
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (threadList.threads && threadList.threads.length > 0) {
       threadList.threads.forEach(function(thread) {
@@ -62,7 +62,7 @@ function logRecentHistory() {
   // sent message.
   var sent = Gmail.Users.Threads.list('me', {
       q: 'label:sent',
-      maxResults: 1,
+      maxResults: 1
   });
   if (!sent.threads || !sent.threads[0]) {
     Logger.log('No sent threads found.');
@@ -77,7 +77,7 @@ function logRecentHistory() {
   do {
     var recordList = Gmail.Users.History.list('me', {
       startHistoryId: historyId,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     var history = recordList.history;
     if (history && history.length > 0) {

@@ -37,11 +37,11 @@ function readRange(spreadsheetId) {
 function writeToMultipleRanges(spreadsheetId) {
   // Specify some values to write to the sheet.
   var columnAValues = [
-    ['Item', 'Wheel', 'Door', 'Engine'],
+    ['Item', 'Wheel', 'Door', 'Engine']
   ];
   var rowValues = [
     ['Cost', 'Stocked', 'Ship Date'],
-    ['$20.50', '4', '3/1/2016'],
+    ['$20.50', '4', '3/1/2016']
   ];
 
   var request = {
@@ -50,14 +50,14 @@ function writeToMultipleRanges(spreadsheetId) {
       {
         'range': 'Sheet1!A1:A4',
         'majorDimension': 'COLUMNS',
-        'values': columnAValues,
+        'values': columnAValues
       },
       {
         'range': 'Sheet1!B1:D2',
         'majorDimension': 'ROWS',
-        'values': rowValues,
-      },
-    ],
+        'values': rowValues
+      }
+    ]
   };
 
   var response = Sheets.Spreadsheets.Values.batchUpdate(request, spreadsheetId);
@@ -77,15 +77,15 @@ function addSheet(spreadsheetId) {
         'title': 'Deposits',
         'gridProperties': {
           'rowCount': 20,
-          'columnCount': 12,
+          'columnCount': 12
         },
         'tabColor': {
           'red': 1.0,
           'green': 0.3,
-          'blue': 0.4,
-        },
-      },
-    },
+          'blue': 0.4
+        }
+      }
+    }
   }];
 
   var response =
@@ -115,7 +115,7 @@ function addPivotTable(
                 'startRowIndex': 0,
                 'startColumnIndex': 0,
                 'endRowIndex': 20,
-                'endColumnIndex': 7,
+                'endColumnIndex': 7
               },
               'rows': [
                 {
@@ -125,44 +125,44 @@ function addPivotTable(
                   'valueBucket': {
                     'buckets': [
                       {
-                        'stringValue': 'West',
-                      },
-                    ],
-                  },
+                        'stringValue': 'West'
+                      }
+                    ]
+                  }
                 },
                 {
                   'sourceColumnOffset': 1,
                   'showTotals': true,
                   'sortOrder': 'DESCENDING',
-                  'valueBucket': {},
-                },
+                  'valueBucket': {}
+                }
               ],
               'columns': [
                 {
                   'sourceColumnOffset': 4,
                   'sortOrder': 'ASCENDING',
                   'showTotals': true,
-                  'valueBucket': {},
-                },
+                  'valueBucket': {}
+                }
               ],
               'values': [
                 {
                   'summarizeFunction': 'SUM',
-                  'sourceColumnOffset': 3,
-                },
+                  'sourceColumnOffset': 3
+                }
               ],
-              'valueLayout': 'HORIZONTAL',
-            },
-          },
-        ],
+              'valueLayout': 'HORIZONTAL'
+            }
+          }
+        ]
       },
       'start': {
         'sheetId': destinationSheetId,
         'rowIndex': 49,
-        'columnIndex': 0,
+        'columnIndex': 0
       },
-      'fields': 'pivotTable',
-    },
+      'fields': 'pivotTable'
+    }
   }];
 
   var response =

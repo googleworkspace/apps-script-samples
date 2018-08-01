@@ -23,7 +23,7 @@ function listCalendars() {
   do {
     calendars = Calendar.CalendarList.list({
       maxResults: 100,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (calendars.items && calendars.items.length > 0) {
       for (var i = 0; i < calendars.items.length; i++) {
@@ -51,17 +51,17 @@ function createEvent() {
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
     start: {
-      dateTime: start.toISOString(),
+      dateTime: start.toISOString()
     },
     end: {
-      dateTime: end.toISOString(),
+      dateTime: end.toISOString()
     },
     attendees: [
       {email: 'alice@example.com'},
-      {email: 'bob@example.com'},
+      {email: 'bob@example.com'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11,
+    colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
   Logger.log('Event ID: ' + event.getId());
@@ -96,7 +96,7 @@ function listNext10Events() {
     timeMin: now.toISOString(),
     singleEvents: true,
     orderBy: 'startTime',
-    maxResults: 10,
+    maxResults: 10
   });
   if (events.items && events.items.length > 0) {
     for (var i = 0; i < events.items.length; i++) {
@@ -129,7 +129,7 @@ function listNext10Events() {
 function logSyncedEvents(calendarId, fullSync) {
   var properties = PropertiesService.getUserProperties();
   var options = {
-    maxResults: 100,
+    maxResults: 100
   };
   var syncToken = properties.getProperty('syncToken');
   if (syncToken && !fullSync) {
@@ -204,17 +204,17 @@ function conditionalUpdate() {
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
     start: {
-      dateTime: start.toISOString(),
+      dateTime: start.toISOString()
     },
     end: {
-      dateTime: end.toISOString(),
+      dateTime: end.toISOString()
     },
     attendees: [
       {email: 'alice@example.com'},
-      {email: 'bob@example.com'},
+      {email: 'bob@example.com'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11,
+    colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
   Logger.log('Event ID: ' + event.getId());
@@ -256,17 +256,17 @@ function conditionalFetch() {
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
     start: {
-      dateTime: start.toISOString(),
+      dateTime: start.toISOString()
     },
     end: {
-      dateTime: end.toISOString(),
+      dateTime: end.toISOString()
     },
     attendees: [
       {email: 'alice@example.com'},
-      {email: 'bob@example.com'},
+      {email: 'bob@example.com'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11,
+    colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
   Logger.log('Event ID: ' + event.getId());

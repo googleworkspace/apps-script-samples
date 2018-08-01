@@ -23,7 +23,7 @@
 function searchByKeyword() {
   var results = YouTube.Search.list('id,snippet', {
     q: 'dogs',
-    maxResults: 25,
+    maxResults: 25
   });
 
   for (var i = 0; i < results.items.length; i++) {
@@ -43,7 +43,7 @@ function searchByKeyword() {
  */
 function retrieveMyUploads() {
   var results = YouTube.Channels.list('contentDetails', {
-    mine: true,
+    mine: true
   });
 
   for (var i = 0; i < results.items.length; i++) {
@@ -56,7 +56,7 @@ function retrieveMyUploads() {
       var playlistResponse = YouTube.PlaylistItems.list('snippet', {
         playlistId: playlistId,
         maxResults: 25,
-        pageToken: nextPageToken,
+        pageToken: nextPageToken
       });
 
       for (var j = 0; j < playlistResponse.items.length; j++) {
@@ -82,9 +82,9 @@ function addSubscription() {
     snippet: {
       resourceId: {
         kind: 'youtube#channel',
-        channelId: channelId,
-      },
-    },
+        channelId: channelId
+      }
+    }
   };
 
   try {

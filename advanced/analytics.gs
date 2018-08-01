@@ -96,7 +96,7 @@ function runReport(profileId) {
     'dimensions': 'ga:source,ga:keyword',
     'sort': '-ga:visits,ga:source',
     'filters': 'ga:medium==organic',
-    'max-results': 25,
+    'max-results': 25
   };
   var report = Analytics.Data.Ga.get(tableId, startDate, endDate, metric,
       options);

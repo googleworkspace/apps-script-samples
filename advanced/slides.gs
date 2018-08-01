@@ -42,9 +42,9 @@ function createSlide(presentationId) {
       'objectId': pageId,
       'insertionIndex': 1,
       'slideLayoutReference': {
-        'predefinedLayout': 'TITLE_AND_TWO_COLUMNS',
-      },
-    },
+        'predefinedLayout': 'TITLE_AND_TWO_COLUMNS'
+      }
+    }
   }];
   var slide =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
@@ -87,28 +87,28 @@ function addTextBox(presentationId, pageId) {
         'size': {
           'width': {
             'magnitude': 150,
-            'unit': 'PT',
+            'unit': 'PT'
           },
           'height': {
             'magnitude': 50,
-            'unit': 'PT',
-          },
+            'unit': 'PT'
+          }
         },
         'transform': {
           'scaleX': 1,
           'scaleY': 1,
           'translateX': 200,
           'translateY': 100,
-          'unit': 'PT',
-        },
-      },
-    },
+          'unit': 'PT'
+        }
+      }
+    }
   }, {
     'insertText': {
       'objectId': pageElementId,
       'text': 'My Added Text Box',
-      'insertionIndex': 0,
-    },
+      'insertionIndex': 0
+    }
   }];
   var response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
@@ -131,8 +131,8 @@ function formatShapeText(presentationId, shapeId) {
       'style': {
         'foregroundColor': {
           'opaqueColor': {
-            'themeColor': 'ACCENT5',
-          },
+            'themeColor': 'ACCENT5'
+          }
         },
         'bold': true,
         'italic': true,
@@ -140,13 +140,13 @@ function formatShapeText(presentationId, shapeId) {
         'fontFamily': 'Corsiva',
         'fontSize': {
           'magnitude': 18,
-          'unit': 'PT',
-        },
+          'unit': 'PT'
+        }
       },
       'textRange': {
-        'type': 'ALL',
-      },
-    },
+        'type': 'ALL'
+      }
+    }
   }];
   var response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);

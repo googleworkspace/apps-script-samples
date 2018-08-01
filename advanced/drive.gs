@@ -21,7 +21,7 @@ function uploadFile() {
   var image = UrlFetchApp.fetch('http://goo.gl/nd7zjB').getBlob();
   var file = {
     title: 'google_logo.png',
-    mimeType: 'image/png',
+    mimeType: 'image/png'
   };
   file = Drive.Files.insert(file, image);
   Logger.log('ID: %s, File size (bytes): %s', file.id, file.fileSize);
@@ -41,7 +41,7 @@ function listRootFolders() {
     folders = Drive.Files.list({
       q: query,
       maxResults: 100,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (folders.items && folders.items.length > 0) {
       for (var i = 0; i < folders.items.length; i++) {
@@ -67,7 +67,7 @@ function addCustomProperty(fileId) {
   var property = {
     key: 'department',
     value: 'Sales',
-    visibility: 'PUBLIC',
+    visibility: 'PUBLIC'
   };
   Drive.Properties.insert(property, fileId);
 }

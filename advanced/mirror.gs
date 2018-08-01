@@ -42,7 +42,7 @@ function insertContact() {
   var contact = {
     id: 'harold',
     displayName: 'Harold Penguin',
-    imageUrls: ['https://developers.google.com/glass/images/harold.jpg'],
+    imageUrls: ['https://developers.google.com/glass/images/harold.jpg']
   };
 
   Mirror.Contacts.insert(contact);

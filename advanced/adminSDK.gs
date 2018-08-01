@@ -25,7 +25,7 @@ function listAllUsers() {
       domain: 'example.com',
       orderBy: 'givenName',
       maxResults: 100,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     var users = page.users;
     if (users) {
@@ -63,10 +63,10 @@ function addUser() {
     primaryEmail: 'liz@example.com',
     name: {
       givenName: 'Elizabeth',
-      familyName: 'Smith',
+      familyName: 'Smith'
     },
     // Generate a random password string.
-    password: Math.random().toString(36),
+    password: Math.random().toString(36)
   };
   user = AdminDirectory.Users.insert(user);
   Logger.log('User %s created with ID %s.', user.primaryEmail, user.id);
@@ -80,7 +80,7 @@ function addUser() {
 function createAlias() {
   var userEmail = 'liz@example.com';
   var alias = {
-    alias: 'chica@example.com',
+    alias: 'chica@example.com'
   };
   alias = AdminDirectory.Users.Aliases.insert(alias, userEmail);
   Logger.log('Created alias %s for user %s.', alias.alias, userEmail);
@@ -98,7 +98,7 @@ function listAllGroups() {
     page = AdminDirectory.Groups.list({
       domain: 'example.com',
       maxResults: 100,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     var groups = page.groups;
     if (groups) {
@@ -123,7 +123,7 @@ function addGroupMember() {
   var groupEmail = 'bookclub@example.com';
   var member = {
     email: userEmail,
-    role: 'MEMBER',
+    role: 'MEMBER'
   };
   member = AdminDirectory.Members.insert(member, groupEmail);
   Logger.log('User %s added as a member of group %s.', userEmail, groupEmail);
@@ -209,7 +209,7 @@ function getLicenseAssignments() {
     assignments = AdminLicenseManager.LicenseAssignments
         .listForProduct(productId, customerId, {
       maxResults: 500,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
   } while (pageToken);
   for (var i = 0; i < assignments.items.length; i++) {
@@ -254,7 +254,7 @@ function generateLoginActivityReport() {
       startTime: startTime,
       endTime: endTime,
       maxResults: 500,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     var items = page.items;
     if (items) {
@@ -263,7 +263,7 @@ function generateLoginActivityReport() {
         var row = [
           new Date(item.id.time),
           item.actor.email,
-          item.events[0].name,
+          item.events[0].name
         ];
         rows.push(row);
       }
@@ -304,7 +304,7 @@ function generateUserUsageReport() {
   var parameters = [
     'accounts:last_login_time',
     'gmail:num_emails_received',
-    'docs:num_docs',
+    'docs:num_docs'
   ];
   var rows = [];
   var pageToken;
@@ -313,7 +313,7 @@ function generateUserUsageReport() {
     page = AdminReports.UserUsageReport.get('all', date, {
       parameters: parameters.join(','),
       maxResults: 500,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     var reports = page.usageReports;
     if (reports) {
@@ -325,7 +325,7 @@ function generateUserUsageReport() {
           report.entity.userEmail,
           parameterValues['accounts:last_login_time'],
           parameterValues['gmail:num_emails_received'],
-          parameterValues['docs:num_docs'],
+          parameterValues['docs:num_docs']
         ];
         rows.push(row);
       }
@@ -387,7 +387,7 @@ function getSubscriptions() {
   var pageToken;
   do {
     result = AdminReseller.Subscriptions.list({
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     for (var i = 0; i < result.subscriptions.length; i++) {
       var sub = result.subscriptions[i];

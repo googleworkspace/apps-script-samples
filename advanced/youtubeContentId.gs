@@ -34,7 +34,7 @@ function claimYourVideoWithMonetizePolicy() {
     // For details, please refer to the YouTube Content ID API Policies
     // documentation:
     // https://developers.google.com/youtube/partner/docs/v1/policies
-    'policy': {'rules': [{'action': 'monetize'}]},
+    'policy': {'rules': [{'action': 'monetize'}]}
   };
   try {
     var claimInserted = YoutubeContentId.Claims.insert(claimToInsert,
@@ -64,10 +64,10 @@ function updateAssetOwnership() {
         'type': 'include',
         'territories': [
           'US',
-          'CA',
-        ],
-      },
-    ],
+          'CA'
+        ]
+      }
+    ]
   };
   try {
     var updatedOwnership = YoutubeContentId.Ownership.update(myAssetOwnership,
@@ -91,7 +91,7 @@ function releaseClaim() {
   var claimId = 'replaceWithYourClaimID';
   // To release the claim, change the resource's status to inactive.
   var claimToBeReleased = {
-    'status': 'inactive',
+    'status': 'inactive'
   };
   try {
     var claimReleased = YoutubeContentId.Claims.patch(claimToBeReleased,

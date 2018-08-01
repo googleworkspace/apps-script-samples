@@ -24,7 +24,7 @@ function runQuery() {
 
   var request = {
     query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
-      'FROM publicdata:samples.shakespeare WHERE LENGTH(word) > 10;',
+      'FROM publicdata:samples.shakespeare WHERE LENGTH(word) > 10;'
   };
   var queryResults = BigQuery.Jobs.query(request, projectId);
   var jobId = queryResults.jobReference.jobId;
@@ -41,7 +41,7 @@ function runQuery() {
   var rows = queryResults.rows;
   while (queryResults.pageToken) {
     queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId, {
-      pageToken: queryResults.pageToken,
+      pageToken: queryResults.pageToken
     });
     rows = rows.concat(queryResults.rows);
   }
@@ -96,16 +96,16 @@ function loadCsv() {
     tableReference: {
       projectId: projectId,
       datasetId: datasetId,
-      tableId: tableId,
+      tableId: tableId
     },
     schema: {
       fields: [
         {name: 'week', type: 'STRING'},
         {name: 'cat', type: 'INTEGER'},
         {name: 'dog', type: 'INTEGER'},
-        {name: 'bird', type: 'INTEGER'},
-      ],
-    },
+        {name: 'bird', type: 'INTEGER'}
+      ]
+    }
   };
   table = BigQuery.Tables.insert(table, projectId, datasetId);
   Logger.log('Table created: %s', table.id);
@@ -121,11 +121,11 @@ function loadCsv() {
         destinationTable: {
           projectId: projectId,
           datasetId: datasetId,
-          tableId: tableId,
+          tableId: tableId
         },
-        skipLeadingRows: 1,
-      },
-    },
+        skipLeadingRows: 1
+      }
+    }
   };
   job = BigQuery.Jobs.insert(job, projectId, data);
   Logger.log('Load job started. Check on the status of it here: ' +

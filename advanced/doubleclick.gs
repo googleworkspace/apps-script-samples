@@ -46,7 +46,7 @@ function listActiveCampaigns() {
     result = DoubleClickCampaigns.Campaigns.list(profileId, {
       'archived': false,
       'fields': fields,
-      'pageToken': pageToken,
+      'pageToken': pageToken
     });
     if (result.campaigns) {
       for (var i = 0; i < result.campaigns.length; i++) {
@@ -70,7 +70,7 @@ function createAdvertiserAndCampaign() {
 
   var advertiser = {
     name: 'Example Advertiser',
-    status: 'APPROVED',
+    status: 'APPROVED'
   };
   var advertiserId = DoubleClickCampaigns.Advertisers
       .insert(advertiser, profileId).id;
@@ -79,7 +79,7 @@ function createAdvertiserAndCampaign() {
     advertiserId: advertiserId,
     archived: false,
     name: 'Example landing page',
-    url: 'https://www.google.com',
+    url: 'https://www.google.com'
   };
   var landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
       .insert(landingPage, profileId).id;
@@ -94,7 +94,7 @@ function createAdvertiserAndCampaign() {
     defaultLandingPageId: landingPageId,
     name: 'Example campaign',
     startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
-    endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd'),
+    endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
   };
   DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
 }

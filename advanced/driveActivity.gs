@@ -27,7 +27,7 @@ function getUsersActivity() {
     var result = AppsActivity.Activities.list({
       'drive.fileId': fileId,
       'source': 'drive.google.com',
-      'pageToken': pageToken,
+      'pageToken': pageToken
     });
     var activities = result.activities;
     for (var i = 0; i < activities.length; i++) {

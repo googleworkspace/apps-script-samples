@@ -40,7 +40,7 @@ function listTables() {
 function runQuery(tableId) {
   var sql = 'SELECT * FROM ' + tableId + ' LIMIT 100';
   var result = FusionTables.Query.sqlGet(sql, {
-    hdrs: false,
+    hdrs: false
   });
   if (result.rows) {
     var spreadsheet = SpreadsheetApp.create('Fusion Table Query Results');

@@ -24,7 +24,7 @@ function listAdClients() {
   do {
     adClients = AdSense.Adclients.list({
       maxResults: 50,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (adClients.items) {
       for (var i = 0; i < adClients.items.length; i++) {
@@ -53,7 +53,7 @@ function listAdUnits(adClientId) {
   do {
     adUnits = AdSense.Adunits.list(adClientId, {
       maxResults: 50,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (adUnits.items) {
       for (var i = 0; i < adUnits.items.length; i++) {
@@ -92,7 +92,7 @@ function generateReport(adClientId) {
              'EARNINGS'],
     dimension: ['DATE'],
     // Sort by ascending date.
-    sort: ['+DATE'],
+    sort: ['+DATE']
   });
 
   if (report.rows) {

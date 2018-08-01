@@ -29,8 +29,8 @@ function queryHostedModel() {
   var prediction = Prediction.Hostedmodels.predict(
       {
         input: {
-          csvInstance: [predictionString],
-        },
+          csvInstance: [predictionString]
+        }
       },
       projectNumber,
       hostedModelName);
@@ -42,8 +42,8 @@ function queryHostedModel() {
   prediction = Prediction.Hostedmodels.predict(
       {
         input: {
-          csvInstance: [predictionString],
-        },
+          csvInstance: [predictionString]
+        }
       },
       projectNumber,
       hostedModelName);
@@ -67,7 +67,7 @@ function createNewModel() {
   var result = Prediction.Trainedmodels.insert(
       {
         id: id,
-        storageDataLocation: storageDataLocation,
+        storageDataLocation: storageDataLocation
       },
       projectNumber);
   Logger.log(result);
@@ -106,8 +106,8 @@ function queryTrainedModel() {
       {
         input:
           {
-            csvInstance: [query],
-          },
+            csvInstance: [query]
+          }
       },
       projectNumber,
       id);

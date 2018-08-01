@@ -21,7 +21,7 @@
 function createReport() {
   // Retrieve info about the user's YouTube channel.
   var channels = YouTube.Channels.list('id,contentDetails', {
-    mine: true,
+    mine: true
   });
   var channelId = channels.items[0].id;
 
@@ -35,11 +35,11 @@ function createReport() {
     'estimatedMinutesWatched',
     'averageViewDuration',
     'averageViewPercentage',
-    'subscribersGained',
+    'subscribersGained'
   ];
   var options = {
     dimensions: 'day',
-    sort: 'day',
+    sort: 'day'
   };
   var result = YouTubeAnalytics.Reports.query('channel==' + channelId,
       formatDateString(lastMonth),

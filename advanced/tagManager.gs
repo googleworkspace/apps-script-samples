@@ -26,7 +26,7 @@ function createContainerVersion(accountPath) {
   var container = TagManager.Accounts.Containers.create(
       {
         'name': 'appscript tagmanager container ' + date.getTime(),
-        'usageContext': ['WEB'],
+        'usageContext': ['WEB']
       },
       accountPath);
   var containerPath = container.path;
@@ -53,11 +53,11 @@ function createContainerVersion(accountPath) {
           {'type': 'boolean', 'key': 'useCacheBuster', 'value': 'true'}, {
             'type': 'template',
             'key': 'cacheBusterQueryParam',
-            'value': 'gtmcb',
+            'value': 'gtmcb'
           },
-          {'type': 'template', 'key': 'url', 'value': '//example.com'},
+          {'type': 'template', 'key': 'url', 'value': '//example.com'}
         ],
-        'firingTriggerId': [trigger.triggerId],
+        'firingTriggerId': [trigger.triggerId]
       },
       workspacePath);
   // Creates a container version with the variabe, trigger, and tag.
@@ -125,7 +125,7 @@ function createAndReauthorizeUserEnvironment(version) {
       {
         'name': 'test_environment',
         'type': 'user',
-        'containerVersionId': version.containerVersionId,
+        'containerVersionId': version.containerVersionId
       },
       containerPath);
   Logger.log('Original user environment: ' + environment);

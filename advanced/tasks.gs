@@ -58,7 +58,7 @@ function listTasks(taskListId) {
 function addTask(taskListId) {
   var task = {
     title: 'Pick up dry cleaning',
-    notes: 'Remember to get this done!',
+    notes: 'Remember to get this done!'
   };
   task = Tasks.Tasks.insert(task, taskListId);
   Logger.log('Task with ID "%s" was created.', task.id);

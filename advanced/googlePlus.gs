@@ -24,7 +24,7 @@ function getPeople() {
   var pageToken;
   do {
     people = Plus.People.list(userId, 'visible', {
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (people.items) {
       for (var i = 0; i < people.items.length; i++) {
@@ -52,7 +52,7 @@ function getPosts() {
   do {
     posts = Plus.Activities.list(userId, 'public', {
       maxResults: 10,
-      pageToken: pageToken,
+      pageToken: pageToken
     });
     if (posts.items) {
       for (var i = 0; i < posts.items.length; i++) {
