@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-// [START restaurantLocationsMap]
+// [START apps_script_sheets_restaurant_locations_map]
 /**
- * Returns re
+ * Returns restaurant locations on a map.
  */
 function restaurantLocationsMap() {
   // Get the sheet named 'restaurants'
@@ -73,9 +73,9 @@ function restaurantLocationsMap() {
   // Make the UI visible in the spreadsheet.
   SpreadsheetApp.getActiveSpreadsheet().show(ui);
 }
-// [END restaurantLocationsMap]
+// [END apps_script_sheets_restaurant_locations_map]
 
-// [START getDrivingDirections]
+// [START apps_script_sheets_driving_directions]
 /**
  * Gets driving directions from Mountain View to San Francisco.
  * Displays a map inside Google Spreadsheets.
@@ -180,9 +180,9 @@ function getDrivingDirections() {
   // Finally, display the UI within the spreadsheet
   SpreadsheetApp.getActiveSpreadsheet().show(ui);
 }
-// [END getDrivingDirections]
+// [END apps_script_sheets_driving_directions]
 
-// [START analyzeLocations]
+// [START apps_script_sheets_analyze_locations]
 /**
  * Analyzes locations of Google offices.
  */
@@ -253,4 +253,4 @@ function analyzeLocations() {
     '. The northernmost US Google office is: ' +
     locationInfo[indexOfMaxLatitude]);
 }
-// [END analyzeLocations]
+// [END apps_script_sheets_analyze_locations]

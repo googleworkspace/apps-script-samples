@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START hello_world]
+// [START apps_script_hello_world]
 /**
  * Creates a Google Doc and sends an email to the current user with a link to the doc.
  */
@@ -39,4 +39,4 @@ function createAndSendDocument() {
   // Send yourself an email with a link to the document.
   GmailApp.sendEmail(email, subject, body);
 }
-// [END hello_world]
+// [END apps_script_hello_world]

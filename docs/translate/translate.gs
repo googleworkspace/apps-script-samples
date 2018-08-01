@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START docs_translate_quickstart]
+// [START apps_script_docs_translate_quickstart]
 /**
  * @OnlyCurrentDoc
  *
@@ -250,4 +250,4 @@ function translateText(text, origin, dest) {
   if (origin === dest) return text;
   return LanguageApp.translate(text, origin, dest);
 }
-// [END docs_translate_quickstart]
+// [END apps_script_docs_translate_quickstart]

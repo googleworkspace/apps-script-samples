@@ -1,4 +1,4 @@
-// [START create_time_driven_triggers]
+// [START apps_script_triggers_time]
 /**
  * Creates a two time-driven triggers.
  */
@@ -16,9 +16,9 @@ function createTimeDrivenTriggers() {
       .atHour(9)
       .create();
 }
-// [END create_time_driven_triggers]
+// [END apps_script_triggers_time]
 
-// [START create_preadsheet_open_trigger]
+// [START apps_script_triggers_open]
 /**
  * Creates a trigger for when a spreadsheet opens.
  */
@@ -29,9 +29,9 @@ function createSpreadsheetOpenTrigger() {
       .onOpen()
       .create();
 }
-// [END create_preadsheet_open_trigger]
+// [END apps_script_triggers_open]
 
-// [START delete_trigger]
+// [START apps_script_triggers_delete]
 /**
  * Deletes a trigger.
  * @param {string} triggerId The Trigger ID.
@@ -47,5 +47,4 @@ function deleteTrigger(triggerId) {
     }
   }
 }
-// [END delete_trigger]
-
+// [END apps_script_triggers_delete]

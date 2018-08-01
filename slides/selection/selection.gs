@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-// [START getSelection]
+// [START apps_script_slides_get_selection]
 var selection = SlidesApp.getActivePresentation().getSelection();
-// [END getSelection]
+// [END apps_script_slides_get_selection]
 
-// [START getCurrentPage]
+// [START apps_script_slides_get_current_page]
 var currentPage = SlidesApp.getActivePresentation().getSelection().getCurrentPage();
-// [END getCurrentPage]
+// [END apps_script_slides_get_current_page]
 
-// [START selectionType]
+// [START apps_script_slides_selection_type]
 var selection = SlidesApp.getActivePresentation().getSelection();
 var selectionType = selection.getSelectionType();
 var currentPage;
@@ -66,9 +66,9 @@ switch (selectionType) {
   default:
     break;
 }
-// [END selectionType]
+// [END apps_script_slides_selection_type]
 
-// [START select]
+// [START apps_script_slides_select]
 // Select the first slide as the current page selection and remove any previous selection.
 var selection = SlidesApp.getActivePresentation().getSelection();
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
@@ -78,9 +78,9 @@ slide.selectAsCurrentPage();
 // selection.getSelectionType() = SlidesApp.SelectionType.CURRENT_PAGE
 // selection.getCurrentPage() = slide
 //
-// [END select]
+// [END apps_script_slides_select]
 
-// [START selectPageElement]
+// [START apps_script_slides_select_page_element]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var pageElement = slide.getPageElements()[0];
 // Only select this page element and remove any previous selection.
@@ -91,9 +91,9 @@ pageElement.select();
 // selection.getCurrentPage() = slide
 // selection.getPageElementRange().getPageElements()[0] = pageElement
 //
-// [END selectPageElement]
+// [END apps_script_slides_select_page_element]
 
-// [START selectMultiplePageElements]
+// [START apps_script_slides_select_multiple_page_elements]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 // First select the slide page, as the current page selection.
 slide.selectAsCurrentPage();
@@ -108,9 +108,9 @@ for (var i = 0; i < pageElements.length; i++) {
 // selection.getCurrentPage() = slide
 // selection.getPageElementRange().getPageElements() = pageElements
 //
-// [END selectMultiplePageElements]
+// [END apps_script_slides_select_multiple_page_elements]
 
-// [START transformSelection]
+// [START apps_script_slides_transform_selection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape1 = slide.getPageElements()[0].asShape();
 var shape2 = slide.getPageElements()[1].asShape();
@@ -131,9 +131,9 @@ shape2.remove();
 // selection.getCurrentPage() = slide
 // selection.getPageElementRange().getPageElements() = [shape1]
 //
-// [END transformSelection]
+// [END apps_script_slides_transform_selection]
 
-// [START rangeSelection]
+// [START apps_script_slides_range_selection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
 shape.getText().setText('Hello');
@@ -147,9 +147,9 @@ shape.getText().getRange(0, 2).select();
 // selection.getTextRange().getStartIndex() = 0
 // selection.getTextRange().getEndIndex() = 2
 //
-// [END rangeSelection]
+// [END apps_script_slides_range_selection]
 
-// [START cursorSelection]
+// [START apps_script_slides_cursor_selection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
 shape.getText().setText('Hello');
@@ -163,9 +163,9 @@ shape.getText().getRange(1, 1).select();
 // selection.getTextRange().getStartIndex() = 1
 // selection.getTextRange().getEndIndex() = 1
 //
-// [END cursorSelection]
+// [END apps_script_slides_cursor_selection]
 
-// [START rangeSelectionInTable]
+// [START apps_script_slides_range_selection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var table = slide.getPageElements()[0].asTable();
 var tableCell = table.getCell(0, 1);
@@ -181,9 +181,9 @@ tableCell.getText().getRange(0, 2).select();
 // selection.getTextRange().getStartIndex() = 0
 // selection.getTextRange().getEndIndex() = 2
 //
-// [END rangeSelectionInTable]
+// [END apps_script_slides_range_selection]
 
-// [START cursorSelectionInTableCell]
+// [START apps_script_slides_cursor_selection]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var table = slide.getPageElements()[0].asTable();
 var tableCell = table.getCell(0, 1);
@@ -199,9 +199,9 @@ tableCell.getText().getRange(1, 1).select();
 // selection.getTextRange().getStartIndex() = 1
 // selection.getTextRange().getEndIndex() = 1
 //
-// [END cursorSelectionInTableCell]
+// [END apps_script_slides_cursor_selection]
 
-// [START selectionTransformation]
+// [START apps_script_slides_selection_transformation]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.getPageElements()[0].asShape();
 var textRange = shape.getText();
@@ -227,9 +227,9 @@ textRange.insertText(0, 'Hello ');
 // selection.getTextRange().getStartIndex() = 0
 // selection.getTextRange().getEndIndex() = 12
 //
-// [END selectionTransformation]
+// [END apps_script_slides_selection_transformation]
 
-// [START unselecting]
+// [START apps_script_slides_unselecting]
 // Unselect one or more page elements already selected.
 //
 // In case one or more page elements in the first slide are selected, setting the
@@ -237,9 +237,9 @@ textRange.insertText(0, 'Hello ');
 //
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 slide.selectAsCurrentPage();
-// [END unselecting]
+// [END apps_script_slides_unselecting]
 
-// [START selecting]
+// [START apps_script_slides_selecting]
 // Unselect one or more page elements already selected.
 //
 // In case one or more page elements in the first slide are selected,
@@ -248,4 +248,4 @@ slide.selectAsCurrentPage();
 //
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 slide.getPageElements()[0].select();
-// [END selecting]
+// [END apps_script_slides_selecting]

@@ -1,4 +1,4 @@
-// [START respond_to_form_submit]
+// [START apps_script_triggers_form]
 /**
  * Responds to a form when submitted.
  * @param {event} e The Form submit event.
@@ -40,4 +40,4 @@ function respondToFormSubmit(e) {
     // Main trigger logic here.
   }
 }
-// [END respond_to_form_submit]
+// [END apps_script_triggers_form]

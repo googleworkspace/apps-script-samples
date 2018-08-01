@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// [START hello]
+// [START apps_script_slides_hello]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
 var textRange = shape.getText();
@@ -24,9 +24,9 @@ Logger.log('Start: ' + textRange.getStartIndex() + '; End: ' +
 var subRange = textRange.getRange(0, 5);
 Logger.log('Sub-range Start: ' + subRange.getStartIndex() + '; Sub-range End: ' +
     subRange.getEndIndex() + '; Sub-range Content: ' + subRange.asString());
-// [END hello]
+// [END apps_script_slides_hello]
 
-// [START insertText]
+// [START apps_script_slides_insert_text]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
 var textRange = shape.getText();
@@ -35,9 +35,9 @@ textRange.clear(6, 11);
 textRange.insertText(6, 'galaxy');
 Logger.log('Start: ' + textRange.getStartIndex() + '; End: ' +
     textRange.getEndIndex() + '; Content: ' + textRange.asString());
-// [END insertText]
+// [END apps_script_slides_insert_text]
 
-// [START styleText]
+// [START apps_script_slides_style_text]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
 var textRange = shape.getText();
@@ -51,9 +51,9 @@ var helloRange = textRange.getRange(0, 5);
 Logger.log('Text: ' + helloRange.asString() + '; Bold: ' + helloRange.getTextStyle().isBold());
 Logger.log('Text: ' + insertedText.asString() + '; Bold: ' + insertedText.getTextStyle().isBold());
 Logger.log('Text: ' + textRange.asString() + '; Bold: ' + textRange.getTextStyle().isBold());
-// [END styleText]
+// [END apps_script_slides_style_text]
 
-// [START paragraphStyling]
+// [START apps_script_slides_paragraph_styling]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 50, 50, 300, 300);
 var textRange = shape.getText();
@@ -63,9 +63,9 @@ for (var i = 0; i < 3; i++) {
   var paragraphStyle = paragraphs[i].getRange().getParagraphStyle();
   paragraphStyle.setParagraphAlignment(SlidesApp.ParagraphAlignment.CENTER);
 }
-// [END paragraphStyling]
+// [END apps_script_slides_paragraph_styling]
 
-// [START listStyling]
+// [START apps_script_slides_list_styling]
 var slide = SlidesApp.getActivePresentation().getSlides()[0];
 var shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 50, 50, 300, 300);
 var textRange = shape.getText();
@@ -79,4 +79,4 @@ for (var i = 0; i < paragraphs.length; i++) {
   var listStyle = paragraphs[i].getRange().getListStyle();
   Logger.log('Paragraph ' + (i + 1) + '\'s nesting level: ' + listStyle.getNestingLevel());
 }
-// [END listStyling]
+// [END apps_script_slides_list_styling]

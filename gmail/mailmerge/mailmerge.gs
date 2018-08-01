@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// [START mail_merge]
+// [START apps_script_gmail_mail_merge]
 /**
  * Iterates row by row in the input range and returns an array of objects.
  * Each object contains all the data for a given row, indexed by its normalized column name.
@@ -145,19 +145,19 @@ function isDigit(char) {
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var dataSheet = ss.getSheets()[0];
-  // [START dataRange]
+  // [START apps_script_gmail_email_data_range]
   var dataRange = dataSheet.getRange(2, 1, dataSheet.getMaxRows() - 1, 4);
-  // [END dataRange]
+  // [END apps_script_gmail_email_data_range]
 
-  // [START template]
+  // [START apps_script_gmail_email_template]
   var templateSheet = ss.getSheets()[1];
   var emailTemplate = templateSheet.getRange('A1').getValue();
-  // [END template]
+  // [END apps_script_gmail_email_template]
 
-  // [START objects]
+  // [START apps_script_gmail_email_objects]
   // Create one JavaScript object per row of data.
   var objects = getRowsData(dataSheet, dataRange);
-  // [END objects]
+  // [END apps_script_gmail_email_objects]
 
   // For every row object, create a personalized email from a template and send
   // it to the appropriate person.
@@ -165,17 +165,17 @@ function sendEmails() {
     // Get a row object
     var rowData = objects[i];
 
-    // [START emailText]
+    // [START apps_script_gmail_email_text]
     // Generate a personalized email.
     // Given a template string, replace markers (for instance ${"First Name"}) with
     // the corresponding value in a row object (for instance rowData.firstName).
     var emailText = fillInTemplateFromObject(emailTemplate, rowData);
-    // [END emailText]
+    // [END apps_script_gmail_email_text]
     var emailSubject = 'Tutorial: Simple Mail Merge';
 
-    // [START sendEmail]
+    // [START apps_script_gmail_send_email]
     MailApp.sendEmail(rowData.emailAddress, emailSubject, emailText);
-    // [END sendEmail]
+    // [END apps_script_gmail_send_email]
   }
 }
 
@@ -189,23 +189,23 @@ function sendEmails() {
  */
 function fillInTemplateFromObject(template, data) {
   var email = template;
-  // [START templateVars]
+  // [START apps_script_gmail_template_vars]
   // Search for all the variables to be replaced, for instance ${"Column name"}
   var templateVars = template.match(/\$\{\"[^\"]+\"\}/g);
-  // [END templateVars]
+  // [END apps_script_gmail_template_vars]
 
   // Replace variables from the template with the actual values from the data object.
   // If no value is available, replace with the empty string.
   for (var i = 0; i < templateVars.length; ++i) {
     // normalizeHeader ignores ${"} so we can call it directly here.
-    // [START variableData]
+    // [START apps_script_gmail_template_variable_data]
     var variableData = data[normalizeHeader(templateVars[i])];
-    // [END variableData]
-    // [START replace]
+    // [END apps_script_gmail_template_variable_data]
+    // [START apps_script_gmail_template_replace]
     email = email.replace(templateVars[i], variableData || '');
-    // [END replace]
+    // [END apps_script_gmail_template_replace]
   }
 
   return email;
 }
-// [END mail_merge]
+// [END apps_script_gmail_mail_merge]

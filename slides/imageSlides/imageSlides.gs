@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-// [START create]
+// [START apps_script_slides_image_create]
 var NAME = 'My favorite images';
 var deck = SlidesApp.create(NAME);
-// [END create]
+// [END apps_script_slides_image_create]
 
-// [START addImageSlide]
+// [START apps_script_slides_image_add_image]
 /**
  * Adds an image to a presentation at a given slide index.
  * @param {string} imageUrl The image URL
@@ -29,9 +29,9 @@ var deck = SlidesApp.create(NAME);
   var slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   var image = slide.insertImage(imageUrl);
  }
-// [END addImageSlide]
+// [END apps_script_slides_image_add_image]
 
-// [START main]
+// [START apps_script_slides_image_main]
 /**
  * Adds images to a slides presentation.
  */
@@ -48,9 +48,9 @@ function main() {
   subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
   images.forEach(addImageSlide);
 }
-// [END main]
+// [END apps_script_slides_image_main]
 
-// [START addImageSlide]
+// [START apps_script_slides_image_add_image_slide]
 /**
  * Creates a single slide using the image from the given link;
  * used directly by foreach(), hence the parameters are fixed.
@@ -68,10 +68,10 @@ function addImageSlide(imageUrl, index) {
     var newY = pageHeight/2. - imgHeight/2.;
     image.setLeft(newX).setTop(newY);
 }
-// [END addImageSlide]
+// [END apps_script_slides_image_add_image_slide]
 
 
-// [START fullscript]
+// [START apps_script_slides_image_full_script]
 var NAME = 'My favorite images';
 var presentation = SlidesApp.create(NAME);
 
@@ -110,4 +110,4 @@ function main() {
   subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
   images.forEach(addImageSlide);
 }
-// [END fullscript]
+// [END apps_script_slides_image_full_script]

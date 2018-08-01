@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// [START sendEmails]
+// [START apps_script_gmail_send_emails]
 /**
  * Sends emails with data from the current spreadsheet.
  */
@@ -34,9 +34,9 @@ function sendEmails() {
     MailApp.sendEmail(emailAddress, subject, message);
   }
 }
-// [END sendEmails]
+// [END apps_script_gmail_send_emails]
 
-// [START sendEmails2]
+// [START apps_script_gmail_send_emails_2]
 // This constant is written in column C for rows for which an email
 // has been sent successfully.
 var EMAIL_SENT = 'EMAIL_SENT';
@@ -66,4 +66,4 @@ function sendEmails2() {
     }
   }
 }
-// [END sendEmails2]
+// [END apps_script_gmail_send_emails_2]

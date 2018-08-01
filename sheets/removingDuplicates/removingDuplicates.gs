@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-// [START removeDuplicates]
+// [START apps_script_sheets_remove_duplicates]
 /**
  * Removes duplicate rows from the current sheet.
  */
 function removeDuplicates() {
-  // [START sheet]
+  // [START apps_script_sheets_sheet]
   var sheet = SpreadsheetApp.getActiveSheet();
   var data = sheet.getDataRange().getValues();
-  // [END sheet]
-  // [START newData]
+  // [END apps_script_sheets_sheet]
+  // [START apps_script_sheets_new_data]
   var newData = [];
-  // [END newData]
+  // [END apps_script_sheets_new_data]
   for (i in data) {
     var row = data[i];
     var duplicate = false;
@@ -34,15 +34,15 @@ function removeDuplicates() {
         duplicate = true;
       }
     }
-    // [START duplicate]
+    // [START apps_script_sheets_duplicate]
     if (!duplicate) {
       newData.push(row);
     }
-    // [END duplicate]
+    // [END apps_script_sheets_duplicate]
   }
-  // [START clear]
+  // [START apps_script_sheets_clear]
   sheet.clearContents();
   sheet.getRange(1, 1, newData.length, newData[0].length).setValues(newData);
-  // [END clear]
+  // [END apps_script_sheets_clear]
 }
-// [END removeDuplicates]
+// [END apps_script_sheets_remove_duplicates]

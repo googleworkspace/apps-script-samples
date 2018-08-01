@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START slides_translate_quickstart]
+// [START apps_script_slides_translate_quickstart]
 /**
  * @OnlyCurrentDoc Limits the script to only accessing the current presentation.
  */
@@ -116,4 +116,4 @@ function translateSelectedElements(targetLanguage) {
 
   return texts.length;
 }
-// [END slides_translate_quickstart]
+// [END apps_script_slides_translate_quickstart]

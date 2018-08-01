@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START MyAddOnActivity]
+// [START apps_script_android_activity]
 import android.accounts.Account;
 import android.app.Activity;
 
@@ -35,20 +35,20 @@ public class MyAddOnActivity extends Activity {
         "com.google.android.apps.docs.addons.Account");
     // Your activity’s initialization...
   }
-  // [END MyAddOnActivity]
 
-  // [START AndroidExecutionRequest]
+  // [START apps_script_android_execution]
   protected void makeRequest() {
         // Acquire the session state String from the calling Intent.
     sessionState = getIntent().getStringExtra(
         "com.google.android.apps.docs.addons.SessionState");
     // ...
     // Construct the API request.
-    ExecutionRequest request = new ExecutionRequest().
+    ExecutionRequest request = new ExecutionRequest()
             .setFunction(functionName)
             .setSessionState(sessionState)
             .setParameters(params)   // Only needed if the function requires parameters
             .setDevMode(true);       // Optional
   }
-  // [END AndroidExecutionRequest]
+  // [END apps_script_android_execution]
 }
+// [END apps_script_android_activity]

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START calendar]
+// [START apps_script_calendar_vacation]
 var TEAM_CALENDAR_ID = 'ENTER_TEAM_CALENDAR_ID_HERE';
 var KEYWORDS = ['vacation', 'ooo', 'out of office'];
 var MONTHS_IN_ADVANCE = 3;
@@ -183,4 +183,4 @@ function formatDate(date) {
 function isTimeUp(start, now) {
   return now.getTime() - start.getTime() > MAX_PRO_RUNTIME_MS;
 }
-// [END calendar]
+// [END apps_script_calendar_vacation]

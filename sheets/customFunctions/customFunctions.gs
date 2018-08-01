@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START sheets_custom_functions_quickstart]
+// [START apps_script_sheets_custom_functions_quickstart]
 /**
  * @OnlyCurrentDoc Limits the script to only accessing the current sheet.
  */
@@ -203,4 +203,4 @@ function getDirections_(origin, destination) {
   }
   return directions;
 }
-// [END sheets_custom_functions_quickstart]
+// [END apps_script_sheets_custom_functions_quickstart]

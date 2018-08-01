@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START sheets_custom_form_responses_quickstart]
+// [START apps_script_sheets_custom_form_responses_quickstart]
 /**
  * A special function that inserts a custom menu when the spreadsheet opens.
  */
@@ -189,4 +189,4 @@ function sendDoc_(user, response) {
     attachments: doc.getAs(MimeType.PDF)
   });
 }
-// [END sheets_custom_form_responses_quickstart]
+// [END apps_script_sheets_custom_form_responses_quickstart]

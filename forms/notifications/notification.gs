@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START forms_notifications_quickstart]
+// [START apps_script_forms_notifications_quickstart]
 /**
  * @OnlyCurrentDoc
  *
@@ -304,4 +304,4 @@ function sendRespondentNotification(response) {
         });
   }
 }
-// [END forms_notifications_quickstart]
+// [END apps_script_forms_notifications_quickstart]
