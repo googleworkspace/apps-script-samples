@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_slides_quickstart]
+// [START slides_quickstart]
 /**
   * Creates a Slides API service object and logs the number of slides and
   * elements in a sample presentation:
@@ -31,4 +31,4 @@ function logSlidesAndElements() {
       slides[i].pageElements.length);
   }
 }
-// [END apps_script_slides_quickstart]
+// [END slides_quickstart]
