@@ -1,4 +1,4 @@
-// [START apps_script_api_target]
+// [START apps_script_api_execute]
 /**
  * Return the set of folder names contained in the user's root folder as an
  * object (with folder IDs as keys).
@@ -14,4 +14,4 @@ function getFoldersUnderRoot() {
   }
   return folderSet;
 }
-// [END apps_script_api_target]
+// [END apps_script_api_execute]
