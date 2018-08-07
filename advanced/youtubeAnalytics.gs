@@ -74,7 +74,7 @@ function createReport() {
  * @return {string} The formatted date.
  */
 function formatDateString(date) {
-  return Utilities.formatDate(date, Session.getTimeZone(), 'yyyy-MM-dd');
+  return Utilities.formatDate(date, Session.getScriptTimeZone(), 'yyyy-MM-dd');
 }
 
 /**
