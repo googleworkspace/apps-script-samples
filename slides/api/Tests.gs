@@ -17,8 +17,10 @@ var snippets = new Snippets();
 var helpers = new Helpers();
 
 // Constants
-var TEMPLATE_PRESENTATION_ID = '1wJUN1B5CQ2wQOBzmz2apky48QNK1OsE2oNKHPMLpKDc';
-var DATA_SPREADSHEET_ID = '14KaZMq2aCAGt5acV77zaA_Ps8aDt04G7T0ei4KiXLX8';
+var IMAGE_URL =
+    'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png';
+var TEMPLATE_PRESENTATION_ID = '1iwq83aR9SIQbqVY-3ozLkJjKhdXErfS_m3zD8VZhtFA';
+var DATA_SPREADSHEET_ID = '1Y3GVGdJHDzlyMB9aLDWV2o_e2RstzUHK1iLDaBgbMwc';
 var CHART_ID = 1107320627;
 var CUSTOMER_NAME = 'Fake Customer';
 

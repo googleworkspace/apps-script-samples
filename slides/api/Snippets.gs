@@ -34,13 +34,12 @@ Snippets.prototype.copyPresentation = function() {
   var presentationId = this.createPresentation().presentationId;
   var copyTitle = 'Copy Title';
   // [START slides_copy_presentation]
-  var request = {
-    name: copyTitle
+  var copyFile = {
+    title: copyTitle,
+    parents: [{id: 'root'}]
   };
-  var driveResponse = Drive.Files.copy({
-    resource: request
-  }, presentationId);
-  var presentationCopyId = driveResponse.id;
+  copyFile = Drive.Files.copy(copyFile, presentationId);
+  var presentationCopyId = copyFile.id;
   // [END slides_copy_presentation]
   return presentationCopyId;
 };
@@ -180,13 +179,12 @@ Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadshee
 
     // Duplicate the template presentation using the Drive API.
     var copyTitle = customerName + ' presentation';
-    var requests = {
-      name: copyTitle
+    var copyFile = {
+      title: copyTitle,
+      parents: [{id: 'root'}]
     };
-    var driveResponse = Drive.Files.copy({
-      resource: requests
-    }, templatePresentationId);
-    var presentationCopyId = driveResponse.id;
+    copyFile = Drive.Files.copy(copyFile, templatePresentationId);
+    var presentationCopyId = copyFile.id;
 
     // Create the text merge (replaceAllText) requests for this presentation.
     requests = [{
@@ -243,12 +241,12 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
   // [START slides_image_merging]
   // Duplicate the template presentation using the Drive API.
   var copyTitle = customerName + ' presentation';
-  var driveResponse = Drive.Files.copy({
-    resource: {
-      name: copyTitle
-    }
-  }, templatePresentationId);
-  var presentationCopyId = driveResponse.id;
+  var copyFile = {
+    title: copyTitle,
+    parents: [{id: 'root'}]
+  };
+  copyFile = Drive.Files.copy(copyFile, templatePresentationId);
+  var presentationCopyId = copyFile.id;
 
   // Create the image merge (replaceAllShapesWithImage) requests.
   var requests = [{
