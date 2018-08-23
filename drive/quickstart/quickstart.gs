@@ -19,12 +19,12 @@
  */
 function listFiles() {
   var files = Drive.Files.list({
-    fields: 'nextPageToken, files(id, name)',
-    pageSize: 10
-  }).files;
+    fields: 'nextPageToken, items(id, title)',
+    maxResults: 10
+  }).items;
   for (var i = 0; i < files.length; i++) {
     var file = files[i];
-    Logger.log('%s (%s)', file.name, file.id);
+    Logger.log('%s (%s)', file.title, file.id);
   }
 }
 // [END drive_quickstart]
