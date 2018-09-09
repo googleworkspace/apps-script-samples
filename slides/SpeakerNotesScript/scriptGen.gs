@@ -56,11 +56,12 @@ function generateSlideScript() {
   // Iterate through each slide and extract the speaker notes
   // into the document body.
   for (var i = 0; i < slides.length; i++) {
-    var section = docBody.appendParagraph('Slide ' + (i + 1));
-    section.setHeading(DocumentApp.ParagraphHeading.HEADING2);
+    var section = docBody.appendParagraph('Slide ' + (i + 1))
+        .setHeading(DocumentApp.ParagraphHeading.HEADING2);
+
     var notes = slides[i].getNotesPage().getSpeakerNotesShape().getText().asString();
-    docBody.appendParagraph(notes);
-    docBody.appendHorizontalRule();
+    docBody.appendParagraph(notes)
+        .appendHorizontalRule();
   }
 
   SlidesApp.getUi().alert(speakerNotesDoc.getName() + ' has been created in your Drive files.');

@@ -15,6 +15,7 @@ This add-on adds a progress bar to your presentation.
 ![Progress Bars](https://developers.google.com/apps-script/images/quickstart-progress-bar-slides.png)
 
 ## Speaker Notes Script
+
 This add-on extracts all the Speaker Notes from your presentation and creates a Document in your
 Drive directory with a formatted "script".
 
