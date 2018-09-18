@@ -112,7 +112,7 @@ width="96px"/>
 
 ## Codelabs
 
-Codelab tutorials combine explanation, working best-practice example code, and code exercises to help engineers get up to speed with key Google technologies. Here's a list of Apps Script codelabs:
+Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Google technologies. Here's a list of Apps Script codelabs:
 
 - [Apps Script Intro](http://g.co/codelabs/apps-script-intro)
 - [Apps Script CLI – clasp](http://g.co/codelabs/clasp)
