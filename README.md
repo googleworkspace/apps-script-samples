@@ -117,7 +117,7 @@ Codelab tutorials combine explanation, working best-practice example code, and c
 - [Apps Script Intro](http://g.co/codelabs/apps-script-intro)
 - [Apps Script CLI – clasp](http://g.co/codelabs/clasp)
 - [BigQuery + Sheets + Slides](http://g.co/codelabs/bigquery-sheets-slides)
-- [Docs Add-on + GCP NLP API](http://g.co/codelabs/nlp-docs)
+- [Docs Add-on + Cloud Natural Language API](http://g.co/codelabs/nlp-docs)
 - [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
 - [Hangouts Chat Bots](http://g.co/codelabs/chat-apps-script)
 
