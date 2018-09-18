@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// [START apps_script_slides_speaker_notes_script]
 /**
  * Runs when the add-on is installed.
  * @param {object} e The event parameter for a simple onInstall trigger. To
@@ -66,3 +67,4 @@ function generateSlideScript() {
 
   SlidesApp.getUi().alert(speakerNotesDoc.getName() + ' has been created in your Drive files.');
 }
+// [END apps_script_slides_speaker_notes_script]
