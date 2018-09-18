@@ -64,7 +64,7 @@ function createEvent() {
     colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
-  Logger.log('Event ID: ' + event.getId());
+  Logger.log('Event ID: ' + event.id);
 }
 
 /**
