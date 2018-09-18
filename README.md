@@ -110,6 +110,17 @@ width="96px"/>
 - Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` in an add-on
 - Create a [time-driven trigger](https://developers.google.com/apps-script/guides/triggers/installable#time_driven_triggers)
 
+## Codelabs
+
+Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Google technologies. Here's a list of Apps Script codelabs:
+
+- [Apps Script Intro](http://g.co/codelabs/apps-script-intro)
+- [Apps Script CLI – clasp](http://g.co/codelabs/clasp)
+- [BigQuery + Sheets + Slides](http://g.co/codelabs/bigquery-sheets-slides)
+- [Docs Add-on + Cloud Natural Language API](http://g.co/codelabs/nlp-docs)
+- [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
+- [Hangouts Chat Bots](http://g.co/codelabs/chat-apps-script)
+
 ## Clone using the `clasp` command line tool
 
 Learn how to clone, pull, and push Apps Script projects on the command line
