@@ -75,8 +75,7 @@ function showSidebar() {
     template.authorizationUrl = service.getAuthorizationUrl();
   }
   var page = template.evaluate()
-      .setTitle(SIDEBAR_TITLE)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(page);
 }
 

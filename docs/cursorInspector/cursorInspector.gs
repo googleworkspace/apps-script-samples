@@ -27,7 +27,6 @@ function onOpen() {
 function showSidebar() {
   DocumentApp.getUi().showSidebar(
     HtmlService.createTemplateFromFile('Sidebar').evaluate()
-      .setSandboxMode(HtmlService.SandboxMode.NATIVE)
       .setTitle('Cursor Inspector')
       .setWidth(350));
 }

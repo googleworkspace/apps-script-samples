@@ -36,8 +36,7 @@ function doGet(e) {
 
   // Build and return HTML in IFRAME sandbox mode.
   return template.evaluate()
-      .setTitle('Web App Window Title')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle('Web App Window Title');
 }
 
 /**

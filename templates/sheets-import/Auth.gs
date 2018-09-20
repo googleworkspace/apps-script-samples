@@ -66,8 +66,7 @@ function authCallback(request) {
   }
   template.title = title;
   return template.evaluate()
-      .setTitle(title)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle(title);
 }
 
 /**
