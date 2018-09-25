@@ -29,8 +29,7 @@ function onOpen() {
 function showSidebar() {
   var page = HtmlService.createTemplateFromFile('Sidebar')
       .evaluate()
-      .setTitle('Sidebar')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle('Sidebar');
   DocumentApp.getUi().showSidebar(page);
 }
 
@@ -43,8 +42,7 @@ function openDialog() {
   var template = HtmlService.createTemplateFromFile('Dialog');
   template.dialogId = dialogId;
   var page = template.evaluate()
-      .setTitle('Dialog')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle('Dialog');
   DocumentApp.getUi().showDialog(page);
   return dialogId;
 }

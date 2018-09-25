@@ -20,8 +20,7 @@
  */
 function doGet() {
   return HtmlService.createTemplateFromFile('page').evaluate()
-      .setTitle('Simple Tasks')
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      .setTitle('Simple Tasks');
 }
 
 /**
