@@ -58,12 +58,12 @@ function main() {
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
-    var slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+    var slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
     var image = slide.insertImage(imageUrl);
     var imgWidth = image.getWidth();
     var imgHeight = image.getHeight();
-    var pageWidth = presentation.getPageWidth();
-    var pageHeight = presentation.getPageHeight();
+    var pageWidth = deck.getPageWidth();
+    var pageHeight = deck.getPageHeight();
     var newX = pageWidth/2. - imgWidth/2.;
     var newY = pageHeight/2. - imgHeight/2.;
     image.setLeft(newX).setTop(newY);
