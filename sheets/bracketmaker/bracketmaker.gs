@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// [START apps_script_bracketmaker]
 // This script works with the Brackets Test spreadsheet to create a tournament bracket
 // given a list of players or teams.
 
@@ -131,3 +132,5 @@ function setConnector_(sheet, rng) {
   sheet.setColumnWidth(rng.getColumnIndex(), CONNECTOR_WIDTH);
   rng.setBackgroundColor('green');
 }
+// [END apps_script_bracketmaker]
+
