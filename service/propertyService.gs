@@ -26,9 +26,12 @@ var units = userProperties.getProperty('DISPLAY_UNITS');
 // [END apps_script_property_service_read_data_1]
 
 // [START apps_script_property_service_read_data_2]
-// Get the value for the user property 'DISPLAY_UNITS'.
-var userProperties = PropertiesService.getUserProperties();
-var units = userProperties.getProperty('DISPLAY_UNITS');
+// Get multiple script properties in one call, then log them all.
+var scriptProperties = PropertiesService.getScriptProperties();
+var data = scriptProperties.getProperties();
+for (var key in data) {
+  Logger.log('Key: %s, Value: %s', key, data[key]);
+}
 // [END apps_script_property_service_read_data_2]
 
 // [START apps_script_property_service_modify_data]
