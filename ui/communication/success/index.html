@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      function onSuccess(numUnread) {
+        var div = document.getElementById('output');
+        div.innerHTML = 'You have ' + numUnread
+            + ' unread messages in your Gmail inbox.';
+      }
+
+      google.script.run.withSuccessHandler(onSuccess)
+          .getUnreadEmails();
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>

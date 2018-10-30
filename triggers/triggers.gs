@@ -1,3 +1,27 @@
+// [START apps_script_triggers_onopen]
+function onOpen(e) {
+  // Add a custom menu to the spreadsheet.
+  SpreadsheetApp.getUi() // Or DocumentApp, SlidesApp, or FormApp.
+      .createMenu('Custom Menu')
+      .addItem('First item', 'menuItem1')
+      .addToUi();
+}
+// [END apps_script_triggers_onopen]
+
+// [START apps_script_triggers_onedit]
+function onEdit(e){
+  // Set a comment on the edited cell to indicate when it was changed.
+  var range = e.range;
+  range.setNote('Last modified: ' + new Date());
+}
+// [END apps_script_triggers_onedit]
+
+// [START apps_script_triggers_oninstall]
+function onInstall(e) {
+  onOpen(e);
+}
+// [END apps_script_triggers_oninstall]
+
 // [START apps_script_triggers_time]
 /**
  * Creates a two time-driven triggers.
