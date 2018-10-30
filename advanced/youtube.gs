@@ -26,10 +26,9 @@ function searchByKeyword() {
     maxResults: 25
   });
 
-  for (var i = 0; i < results.items.length; i++) {
-    var item = results.items[i];
+  results.items.map(function(item) {
     Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
-  }
+  });
 }
 // [END apps_script_youtube_search]
 
@@ -112,10 +111,11 @@ var YOUTUBE_QUERY = 'San Francisco, CA';
 /**
  * Gets a list of YouTube videos.
  * @param {String} query - The query term to search for.
+ * @return {object[]} A list of objects with YouTube video data.
  * @ref https://developers.google.com/youtube/v3/docs/search/list
  */
 function getYouTubeVideosJSON(query) {
-  var youTubeResults = YouTube.Search.list('id,snippet', { 
+  var youTubeResults = YouTube.Search.list('id,snippet', {
     q: query,
     maxResults: 10
   });
@@ -123,11 +123,13 @@ function getYouTubeVideosJSON(query) {
   var json = [];
   for (var i = 0; i < youTubeResults.items.length; i++) {
     var item = youTubeResults.items[i];
-    json[i] = {
-      url: 'https://youtu.be/' + item.id.videoId,
-      title: item.snippet.title,
-      thumbnailUrl: item.snippet.thumbnails.high.url
-    };
+    if (item.id.videoId) { // Some videos are private and don't have a videoId.
+      json.push({
+        url: 'https://youtu.be/' + item.id.videoId,
+        title: item.snippet.title,
+        thumbnailUrl: item.snippet.thumbnails.high.url
+      });
+    }
   }
   return json;
 }
@@ -139,15 +141,15 @@ function getYouTubeVideosJSON(query) {
 function createSlides() {
   var youTubeVideos = getYouTubeVideosJSON(YOUTUBE_QUERY);
   var presentation = SlidesApp.create(PRESENTATION_TITLE);
-  presentation.getSlides()[0].getPageElements()[0].asShape().getText().setText(PRESENTATION_TITLE);
-  
+  presentation.getSlides()[0].getPageElements()[0].asShape()
+      .getText().setText(PRESENTATION_TITLE);
+
   // Add slides with videos and log the presentation URL to the user.
-  for (var i = 0; i < youTubeVideos.length; ++i) {
-    if (youTubeVideos[i].url.indexOf('undefined') === -1) {
-      var slide = presentation.appendSlide();
-      slide.insertVideo(youTubeVideos[i].url, 0, 0, presentation.getPageWidth(), presentation.getPageHeight());
-    }
-  }
+  youTubeVideos.forEach(function(video) {
+    var slide = presentation.appendSlide();
+    slide.insertVideo(video.url,
+      0, 0, presentation.getPageWidth(), presentation.getPageHeight());
+  });
   Logger.log(presentation.getUrl());
 }
 // [END apps_script_youtube_slides]
