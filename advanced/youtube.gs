@@ -26,7 +26,7 @@ function searchByKeyword() {
     maxResults: 25
   });
 
-  results.items.map(function(item) {
+  results.items.forEach(function(item) {
     Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
   });
 }
@@ -117,21 +117,17 @@ var YOUTUBE_QUERY = 'San Francisco, CA';
 function getYouTubeVideosJSON(query) {
   var youTubeResults = YouTube.Search.list('id,snippet', {
     q: query,
+    type: 'video',
     maxResults: 10
   });
 
-  var json = [];
-  for (var i = 0; i < youTubeResults.items.length; i++) {
-    var item = youTubeResults.items[i];
-    if (item.id.videoId) { // Some videos are private and don't have a videoId.
-      json.push({
-        url: 'https://youtu.be/' + item.id.videoId,
-        title: item.snippet.title,
-        thumbnailUrl: item.snippet.thumbnails.high.url
-      });
-    }
-  }
-  return json;
+  return youTubeResults.items.map(function(item) {
+    return {
+      url: 'https://youtu.be/' + item.id.videoId,
+      title: item.snippet.title,
+      thumbnailUrl: item.snippet.thumbnails.high.url
+    };
+  });
 }
 
 /**
