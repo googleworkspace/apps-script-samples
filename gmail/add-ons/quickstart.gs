@@ -1,12 +1,27 @@
-var MAX_THREADS = 5;
+/**
+ * Copyright Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+// [START apps_script_gmail_quick_start]
 /**
  * Returns the array of cards that should be rendered for the current
  * e-mail thread. The name of this function is specified in the
  * manifest 'onTriggerFunction' field, indicating that this function
  * runs every time the add-on is started.
  *
- * @param {Object} e data provided by the Gmail UI.
+ * @param {Object} e The data provided by the Gmail UI.
  * @return {Card[]}
  */
 function buildAddOn(e) {
@@ -15,109 +30,91 @@ function buildAddOn(e) {
   GmailApp.setCurrentMessageAccessToken(accessToken);
 
   var messageId = e.messageMetadata.messageId;
-  var senderData = extractSenderData(messageId);
-  var cards = [];
-
-  // Build a card for each recent thread from this email's sender.
-  if (senderData.recents.length > 0) {
-    senderData.recents.forEach(function(threadData) {
-      cards.push(buildRecentThreadCard(senderData.email, threadData));
-    });
-  } else {
-    // Present a blank card if there are no recent threads from
-    // this sender.
-    cards.push(CardService.newCardBuilder()
-      .setHeader(CardService.newCardHeader()
-        .setTitle('No recent threads from this sender')).build());
-  }
-  return cards;
-}
-
-/**
- *  This function builds a set of data about this sender's presence in your
- *  inbox.
- *
- *  @param {String} messageId The message ID of the open message.
- *  @return {Object} a collection of sender information to display in cards.
- */
-function extractSenderData(messageId) {
-  // Use the Gmail service to access information about this message.
-  var mail = GmailApp.getMessageById(messageId);
-  var threadId = mail.getThread().getId();
-  var senderEmail = extractEmailAddress(mail.getFrom());
-
-  var recentThreads = GmailApp.search('from:' + senderEmail);
-  var recents = [];
-
-  // Retrieve information about up to 5 recent threads from the same sender.
-  recentThreads.slice(0, MAX_THREADS).forEach(function(thread) {
-    if (thread.getId() != threadId && ! thread.isInChats()) {
-      recents.push({
-        'subject': thread.getFirstMessageSubject(),
-        'count': thread.getMessageCount(),
-        'link': 'https://mail.google.com/mail/u/0/#inbox/' + thread.getId(),
-        'lastDate': thread.getLastMessageDate().toDateString()
-      });
-    }
-  });
-
-  var senderData = {
-    email: senderEmail,
-    recents: recents
-  };
-
-  return senderData;
-}
-
-/**
- *  Given the result of GmailMessage.getFrom(), extract only the email address.
- *  getFrom() can return just the email address or a string in the form
- *  "Name <myemail@domain>".
- *
- *  @param {String} sender The results returned from getFrom().
- *  @return {String} Only the email address.
- */
-function extractEmailAddress(sender) {
-  var regex = /\<([^\@]+\@[^\>]+)\>/;
-  var email = sender; // Default to using the whole string.
-  var match = regex.exec(sender);
-  if (match) {
-    email = match[1];
-  }
-  return email;
-}
-
-/**
- *  Builds a card to display information about a recent thread from this sender.
- *
- *  @param {String} senderEmail The sender email.
- *  @param {Object} threadData Infomation about the thread to display.
- *  @return {Card} a card that displays thread information.
- */
-function buildRecentThreadCard(senderEmail, threadData) {
-  var card = CardService.newCardBuilder();
-  card.setHeader(CardService.newCardHeader().setTitle(threadData.subject));
+  var message = GmailApp.getMessageById(messageId);
+  
+  // Get user and thread labels as arrays to enable quick sorting and indexing.
+  var threadLabels = message.getThread().getLabels();
+  var labels = getLabelArray(GmailApp.getUserLabels());
+  var labelsInUse = getLabelArray(threadLabels);
+  
+  // Create a section for that contains all user Labels.
   var section = CardService.newCardSection()
-    .setHeader('<font color=\"#1257e0\">Recent thread</font>');
-  section.addWidget(CardService.newTextParagraph().setText(threadData.subject));
-  section.addWidget(CardService.newKeyValue()
-    .setTopLabel('Sender')
-    .setContent(senderEmail));
-  section.addWidget(CardService.newKeyValue()
-    .setTopLabel('Number of messages')
-    .setContent(threadData.count.toString()));
-  section.addWidget(CardService.newKeyValue()
-    .setTopLabel('Last updated')
-    .setContent(threadData.lastDate.toString()));
+    .setHeader("<font color=\"#1257e0\"><b>Available User Labels</b></font>");       
 
-  var threadLink = CardService.newOpenLink()
-    .setUrl(threadData.link)
-    .setOpenAs(CardService.OpenAs.FULL_SIZE);
-  var button = CardService.newTextButton()
-    .setText('Open Thread')
-    .setOpenLink(threadLink);
-  section.addWidget(CardService.newButtonSet().addButton(button));
+  // Create a checkbox group for user labels that are added to prior section.
+  var checkboxGroup = CardService.newSelectionInput()
+    .setType(CardService.SelectionInputType.CHECK_BOX)
+    .setFieldName('labels')
+    .setOnChangeAction(CardService.newAction().setFunctionName('toggleLabel'));
+  
+  // Add checkbox with name and selected value for each User Label.
+  for(var i = 0; i < labels.length; i++) {
+    checkboxGroup.addItem(labels[i], labels[i], labelsInUse.indexOf(labels[i])!= -1);
+  }
+  
+  // Add the checkbox group to the section.
+  section.addWidget(checkboxGroup);
+  
+  // Build the main card after adding the section.
+  var card = CardService.newCardBuilder()
+    .setHeader(CardService.newCardHeader()
+    .setTitle('Quick Label')
+    .setImageUrl('https://www.gstatic.com/images/icons/material/system/1x/label_googblue_48dp.png'))
+    .addSection(section) 
+    .build();
+  
+  return [card];
+} 
 
-  card.addSection(section);
-  return card.build();
+/**
+ * Updates the labels on the current thread based on 
+ * user selections. Runs via the OnChangeAction for
+ * each CHECK_BOX created.
+ *
+ * @param {Object} e The data provided by the Gmail UI.
+*/
+function toggleLabel(e){
+  var selected = e.formInputs.labels;
+  
+  // Activate temporary Gmail add-on scopes.
+  var accessToken = e.messageMetadata.accessToken;
+  GmailApp.setCurrentMessageAccessToken(accessToken);
+
+  var messageId = e.messageMetadata.messageId;
+  var message = GmailApp.getMessageById(messageId);
+  var thread = message.getThread();
+  
+  if (selected != null){
+     for each (var label in GmailApp.getUserLabels()) {
+       if(selected.indexOf(label.getName()) != -1){
+          thread.addLabel(label);
+       }
+       else {
+         thread.removeLabel(label);
+       }
+     }
+  }
+  else {
+    for each (var label in GmailApp.getUserLabels()) {
+      thread.removeLabel(label);
+    }
+  }
 }
+
+/**
+ * Converts an GmailLabel object to a array of strings. 
+ * Used for easy sorting and to determine if a value exists.
+ *
+ * @param {labelsObjects} A GmailLabel object array.
+ * @return {lables[]} An array of labels names as strings.
+*/
+function getLabelArray(labelsObjects){
+  var labels = [];
+  for(var i = 0; i < labelsObjects.length; i++) {
+    labels[i] = labelsObjects[i].getName();
+  }
+  labels.sort();
+  return labels;
+}
+
+// [END apps_script_gmail_quick_start]
