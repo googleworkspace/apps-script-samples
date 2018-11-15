@@ -12,13 +12,17 @@ var root = 'root';
 var instanceUrl = 'jdbc:google:mysql://' + connectionName;
 var dbUrl = instanceUrl + '/' + db;
 
-// Create a new database within a Cloud SQL instance.
+/**
+ * Create a new database within a Cloud SQL instance.
+ */
 function createDatabase() {
   var conn = Jdbc.getCloudSqlConnection(instanceUrl, root, rootPwd);
   conn.createStatement().execute('CREATE DATABASE ' + db);
 }
 
-// Create a new user for your database with full privileges.
+/**
+ * Create a new user for your database with full privileges.
+ */
 function createUser() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, root, rootPwd);
 
@@ -30,7 +34,9 @@ function createUser() {
   conn.createStatement().execute('GRANT ALL ON `%`.* TO ' + user);
 }
 
-// Create a new table in the database.
+/**
+ * Create a new table in the database.
+ */
 function createTable() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
   conn.createStatement().execute('CREATE TABLE entries '
@@ -50,7 +56,9 @@ var db = 'database_name';
 
 var dbUrl = 'jdbc:google:mysql://' + connectionName + '/' + db;
 
-// Write one row of data to a table.
+/**
+ * Write one row of data to a table.
+ */
 function writeOneRecord() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
 
@@ -61,7 +69,9 @@ function writeOneRecord() {
   stmt.execute();
 }
 
-// Write 500 rows of data to a table in a single batch.
+/**
+ * Write 500 rows of data to a table in a single batch.
+ */
 function writeManyRecords() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
   conn.setAutoCommit(false);
@@ -85,9 +95,11 @@ function writeManyRecords() {
 // [END apps_script_jdbc_write]
 
 // [START apps_script_jdbc_read]
-// Replace the variables in this block with real values.
-// You can find the "Instance connection name" in the Google Cloud
-//   Platform Console, on the instance Overview page.
+/**
+ * Replace the variables in this block with real values.
+ * You can find the "Instance connection name" in the Google Cloud
+ * Platform Console, on the instance Overview page.
+ */
 var connectionName = 'Instance_connection_name';
 var user = 'user_name';
 var userPwd = 'user_password';
@@ -95,7 +107,9 @@ var db = 'database_name';
 
 var dbUrl = 'jdbc:google:mysql://' + connectionName + '/' + db;
 
-// Read up to 1000 rows of data from the table and log them.
+/**
+ * Read up to 1000 rows of data from the table and log them.
+ */
 function readFromTable() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
 
@@ -110,7 +124,7 @@ function readFromTable() {
     for (var col = 0; col < numCols; col++) {
       rowString += results.getString(col + 1) + '\t';
     }
-    Logger.log(rowString)
+    Logger.log(rowString);
   }
 
   results.close();

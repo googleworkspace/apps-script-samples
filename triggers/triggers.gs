@@ -1,4 +1,8 @@
 // [START apps_script_triggers_onopen]
+/**
+ * The event handler triggered when opening the spreadsheet.
+ * @param {Event} e The onOpen event.
+ */
 function onOpen(e) {
   // Add a custom menu to the spreadsheet.
   SpreadsheetApp.getUi() // Or DocumentApp, SlidesApp, or FormApp.
@@ -9,7 +13,11 @@ function onOpen(e) {
 // [END apps_script_triggers_onopen]
 
 // [START apps_script_triggers_onedit]
-function onEdit(e){
+/**
+ * The event handler triggered when opening the spreadsheet.
+ * @param {Event} e The onOpen event.
+ */
+function onEdit(e) {
   // Set a comment on the edited cell to indicate when it was changed.
   var range = e.range;
   range.setNote('Last modified: ' + new Date());
@@ -17,6 +25,10 @@ function onEdit(e){
 // [END apps_script_triggers_onedit]
 
 // [START apps_script_triggers_oninstall]
+/**
+ * The event handler triggered when installing the add-on.
+ * @param {Event} e The onInstall event.
+ */
 function onInstall(e) {
   onOpen(e);
 }
