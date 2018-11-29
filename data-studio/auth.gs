@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-// [START apps_script_data_studio_reset_auth_oauth2]
-// [END apps_script_data_studio_reset_auth_oauth2]
-
-
-
-
-
 // [START apps_script_data_studio_get_auth_type_oauth2]
 function getAuthType() {
   return {
