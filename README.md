@@ -43,8 +43,8 @@ src="https://www.gstatic.com/images/branding/product/2x/data_studio_96dp.png"
 align="left"
 width="96px"/>
 ### Data Studio
-- [Build a connector](data-studio/build)
-- [Authentication and Authorization](data-studio/auth)
+- [Build a connector](data-studio/build.gs)
+- [Authentication and Authorization](data-studio/auth.gs)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/docs_96dp.png"
