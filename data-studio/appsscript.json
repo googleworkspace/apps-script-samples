@@ -1,0 +1,22 @@
+{
+  "dataStudio": {
+    "name": "Nucleus by Hooli",
+    "company": "Hooli Inc.",
+    "companyUrl": "https://hooli.xyz",
+    "logoUrl": "https://hooli.xyz/middle-out-optimized/nucleus/logo.png",
+    "addonUrl": "https://hooli.xyz/data-studio-connector",
+    "supportUrl": "https://hooli.xyz/data-studio-connector/support",
+    "description": "Nucleus by Hooli connector lets you connect to your data in Data Studio using Nucleus middle out optimization. You will need an account on hooli.xyz to use this connector. Create your account at https://hooli.xyz/signup",
+    "shortDescription": "Connect to your data using Nucleus middle out optimization",
+    "authType": ["NONE"],
+    "feeType": ["PAID"],
+    "sources": ["HOOLI_CHAT_LOG", "ENDFRAME_SERVER_STREAM", "RETINABYTE_USER_ANALYTICS"],
+    "templates": {
+      "default": "872223s89f5fdkjnd983kjf"
+    }
+  },
+  "urlFetchWhitelist": [
+    "https://api.hooli.xyz/",
+    "https://hooli.xyz/"
+  ]
+}
