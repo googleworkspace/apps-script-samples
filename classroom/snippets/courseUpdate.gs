@@ -22,7 +22,7 @@ function courseUpdate() {
   var course = Classroom.Courses.get(courseId);
   course.section = 'Period 3';
   course.room = '302';
-  var course = Classroom.Courses.update(body=course, id=courseId);
+  var course = Classroom.Courses.update(course, courseId);
   Logger.log('Course "%s" updated.', course.name);
 }
 // [END classroom_update_course]
