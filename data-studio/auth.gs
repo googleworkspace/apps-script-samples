@@ -26,6 +26,16 @@ function getAuthType() {
 function getAuthType() {
   return {
     "type": "USER_PASS"
+    "helpUrl": "https://www.example.org/connector-auth-help"
+  };
+}
+// [END apps_script_data_studio_get_auth_type_user_pass]
+
+// [START apps_script_data_studio_get_auth_type_user_token]
+function getAuthType() {
+  return {
+    "type": "USER_TOKEN"
+    "helpUrl": "https://www.example.org/connector-auth-help"
   };
 }
 // [END apps_script_data_studio_get_auth_type_user_pass]
@@ -34,6 +44,7 @@ function getAuthType() {
 function getAuthType() {
   return {
     "type": "KEY"
+    "helpUrl": "https://www.example.org/connector-auth-help"
   };
 }
 // [END apps_script_data_studio_get_auth_type_key]
@@ -60,6 +71,14 @@ function resetAuth() {
 }
 // [END apps_script_data_studio_auth_reset_user]
 
+// [START apps_script_data_studio_auth_reset_user_token]
+function resetAuth() {
+  var user_tokenProperties = PropertiesService.getUserProperties();
+  user_tokenProperties.deleteProperty('dscc.username');
+  user_tokenProperties.deleteProperty('dscc.password');
+}
+// [END apps_script_data_studio_auth_reset_user_token]
+
 // [START apps_script_data_studio_auth_reset_key]
 function resetAuth() {
   var userProperties = PropertiesService.getUserProperties();
@@ -83,6 +102,18 @@ function isAuthValid() {
   return validateCredentials(userName, password);
 }
 // [END apps_script_data_studio_auth_valid_user_pass]
+
+
+// [START apps_script_data_studio_auth_valid_user_token]
+function isAuthValid() {
+  var userProperties = PropertiesService.getUserProperties();
+  var userName = userProperties.getProperty('dscc.username');
+  var token = userProperties.getProperty('dscc.token');
+  // This assumes you have a validateCredentials function that
+  // can validate if the userName and token are correct.
+  return validateCredentials(userName, token);
+}
+// [END apps_script_data_studio_auth_valid_user_token]
 
 // [START apps_script_data_studio_auth_valid_key]
 function isAuthValid() {
@@ -148,6 +179,31 @@ function setCredentials(request) {
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_user_pass]
+
+// [START apps_script_data_studio_auth_set_credentials_user_token]
+function setCredentials(request) {
+  var creds = request.userToken;
+  var username = creds.username;
+  var token = creds.token;
+
+  // Optional
+  // Check if the provided username and token are valid through a
+  // call to your service. You would have to have a `checkForValidCreds`
+  // function defined for this to work.
+  var validCreds = checkForValidCreds(username, token);
+  if (!validCreds) {
+    return {
+      errorCode: "INVALID_CREDENTIALS"
+    };
+  }
+  var userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty('dscc.username', username);
+  userProperties.setProperty('dscc.token', token);
+  return {
+    errorCode: "NONE"
+  };
+}
+// [END apps_script_data_studio_auth_set_credentials_user_token]
 
 // [START apps_script_data_studio_auth_set_credentials_key]
 function setCredentials(request) {
