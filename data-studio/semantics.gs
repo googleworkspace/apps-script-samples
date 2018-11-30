@@ -17,22 +17,22 @@
  // [START apps_script_data_studio_manual]
  var schema = [
   {
-    "name": "Income",
-    "label": "Income (in USD)",
-    "dataType": "NUMBER",
-    "semantics": {
-      "conceptType": "METRIC",
-      "semanticGroup": "CURRENCY",
-      "semanticType": "CURRENCY_USD"
+    'name': 'Income',
+    'label': 'Income (in USD)',
+    'dataType': 'NUMBER',
+    'semantics': {
+      'conceptType': 'METRIC',
+      'semanticGroup': 'CURRENCY',
+      'semanticType': 'CURRENCY_USD'
     }
   }, {
-    "name": "Filing Year",
-    "label": "Year in which you filed the taxes.",
-    "dataType": "STRING",
-    "semantics": {
-      "conceptType": "METRIC",
-      "semanticGroup": "DATE_OR_TIME",
-      "semanticType": "YEAR"
+    'name': 'Filing Year',
+    'label': 'Year in which you filed the taxes.',
+    'dataType': 'STRING',
+    'semantics': {
+      'conceptType': 'METRIC',
+      'semanticGroup': 'DATE_OR_TIME',
+      'semanticType': 'YEAR'
     }
   }
 ];
