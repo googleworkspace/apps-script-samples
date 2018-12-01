@@ -31,7 +31,7 @@ function listCourses() {
        break;
     }
   }
-  if (courses.length == 0) {
+  if (courses.length === 0) {
     Logger.log("No courses found.");
   } else {
     Logger.log("Courses:");
