@@ -15,16 +15,15 @@
  */
 // [START classroom_get_course]
 /**
- * Lists all course names and ids. 
+ * Retrieves course by id. 
  */
-
 function getCourse() {
   var courseId = '123456';
   try {
     var course = Classroom.Courses.get(courseId);
-    Logger.log('Course \"%s\" found. ', course.name);
+    Logger.log('Course "%s" found. ', course.name);
   } catch (err) {
-    Logger.log("Course with id \"%s\" not found", courseId);
+    Logger.log("Course with id "%s" not found", courseId);
   }
 }
 // [END classroom_get_course]

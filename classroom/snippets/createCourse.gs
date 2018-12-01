@@ -19,13 +19,13 @@
  */
 function createCourse() {
   var course = {
-    'name': '10th Grade Biology',
-    'section': 'Period 2',
-    'descriptionHeading': 'Welcome to 10th Grade Biology',
-    'description': "We'll be learning about about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!",
-    'room': '301',
-    'ownerId': 'me',
-    'courseState': 'PROVISIONED'
+    name: '10th Grade Biology',
+    section: 'Period 2',
+    descriptionHeading: 'Welcome to 10th Grade Biology',
+    description: "We'll be learning about about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!",
+    room: '301',
+    ownerId: 'me',
+    courseState: 'PROVISIONED'
   };
   var course = Classroom.Courses.create(course);
   Logger.log('Course created: %s (%s)', course.name, course.id)
