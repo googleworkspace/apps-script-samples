@@ -77,7 +77,7 @@ function deleteTrigger(triggerId) {
   var allTriggers = ScriptApp.getProjectTriggers();
   for (var i = 0; i < allTriggers.length; i++) {
     // If the current trigger is the correct one, delete it.
-    if (allTriggers[i].getUniqueId() == triggerId) {
+    if (allTriggers[i].getUniqueId() === triggerId) {
       ScriptApp.deleteTrigger(allTriggers[i]);
       break;
     }
