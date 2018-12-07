@@ -118,7 +118,7 @@ function createBracket() {
   }
 }
 
-// [START apps_script_bracketmaker_set_bracket_item_]
+// [START apps_script_bracketmaker_set_bracket_item]
 /**
  * Sets the value of an item in the bracket and the color.
  * @param {Range} rng The Spreadsheet Range.
@@ -131,7 +131,7 @@ function setBracketItem_(rng, players) {
   }
   rng.setBackgroundColor('yellow');
 }
-// [END apps_script_bracketmaker_set_bracket_item_]
+// [END apps_script_bracketmaker_set_bracket_item]
 
 /**
  * Sets the color and width for connector cells.
