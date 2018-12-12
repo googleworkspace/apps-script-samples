@@ -27,3 +27,16 @@ function measuringExecutionTime() {
   console.timeEnd(label); // Stops the timer, logs execution duration.
 }
 // [END apps_script_stackdriver]
+
+// [START apps_script_stackdriver_2]
+function emailDataRow(rowNumber, email) {
+  Logger.log('Emailing data row ' + rowNumber + ' to ' + email);
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var rowData = data[rowNumber-1].join(" ");
+  Logger.log('Row ' + rowNumber + ' data: ' + rowData);
+  MailApp.sendEmail(email,
+                    'Data in row ' + rowNumber,
+                    rowData);
+}
+// [END apps_script_stackdriver_2]
