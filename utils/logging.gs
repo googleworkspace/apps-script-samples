@@ -1,4 +1,4 @@
-// [START apps_script_stackdriver]
+// [START apps_script_logging]
 /**
  * Logs the time taken to execute 'myFunction'.
  */
@@ -26,9 +26,9 @@ function measuringExecutionTime() {
   }
   console.timeEnd(label); // Stops the timer, logs execution duration.
 }
-// [END apps_script_stackdriver]
+// [END apps_script_logging]
 
-// [START apps_script_stackdriver_2]
+// [START apps_script_logging_2]
 /**
  * Logs Google Sheet information.
  */
@@ -42,4 +42,4 @@ function emailDataRow(rowNumber, email) {
                     'Data in row ' + rowNumber,
                     rowData);
 }
-// [END apps_script_stackdriver_2]
+// [END apps_script_logging_2]
