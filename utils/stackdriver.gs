@@ -29,6 +29,9 @@ function measuringExecutionTime() {
 // [END apps_script_stackdriver]
 
 // [START apps_script_stackdriver_2]
+/**
+ * Logs Google Sheet information.
+ */
 function emailDataRow(rowNumber, email) {
   Logger.log('Emailing data row ' + rowNumber + ' to ' + email);
   var sheet = SpreadsheetApp.getActiveSheet();
