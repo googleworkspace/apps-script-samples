@@ -107,3 +107,26 @@ function showDialog() {
     .showModalDialog(html, 'My custom dialog');
 }
 // [END apps_script_custom_dialog]
+
+// [START apps_script_custom_sidebar]
+/**
+ * Creates a custom sidebar when a user opens a Spreadsheet.
+ */
+function onOpen() {
+  SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+    .createMenu('Custom Menu')
+    .addItem('Show sidebar', 'showSidebar')
+    .addToUi();
+}
+
+/**
+ * Shows a custom sidebar.
+ */
+function showSidebar() {
+  var html = HtmlService.createHtmlOutputFromFile('Page')
+    .setTitle('My custom sidebar')
+    .setWidth(300);
+  SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+    .showSidebar(html);
+}
+// [END apps_script_custom_sidebar]
