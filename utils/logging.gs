@@ -31,6 +31,8 @@ function measuringExecutionTime() {
 // [START apps_script_logging_2]
 /**
  * Logs Google Sheet information.
+ * @param {number} rowNumber The spreadsheet row number.
+ * @param {string} email The email to send with the row data.
  */
 function emailDataRow(rowNumber, email) {
   Logger.log('Emailing data row ' + rowNumber + ' to ' + email);
