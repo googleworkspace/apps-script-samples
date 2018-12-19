@@ -20,9 +20,10 @@
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  return {
-    type: 'OAUTH2'
-  };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+    .setAuthType(cc.AuthType.OAUTH2)
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_oauth2]
 
@@ -32,10 +33,11 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  return {
-    type: 'USER_PASS',
-    helpUrl: 'https://www.example.org/connector-auth-help'
-  };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_PASS)
+    .setHelpUrl('https://www.example.org/connector-auth-help')
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_pass]
 
@@ -45,10 +47,11 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  return {
-    type: 'USER_TOKEN',
-    helpUrl: 'https://www.example.org/connector-auth-help'
-  };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_TOKEN)
+    .setHelpUrl('https://www.example.org/connector-auth-help')
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_token]
 
@@ -58,10 +61,11 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  return {
-    type: 'KEY',
-    helpUrl: 'https://www.example.org/connector-auth-help'
-  };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+    .setAuthType(cc.AuthType.KEY)
+    .setHelpUrl('https://www.example.org/connector-auth-help')
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_key]
 
@@ -71,9 +75,10 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  return {
-    type: 'NONE'
-  };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+    .setAuthType(cc.AuthType.NONE)
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_none]
 

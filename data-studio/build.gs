@@ -148,7 +148,9 @@ function getData(request) {
  * @return {object} The auth type.
  */
 function getAuthType() {
-  var response = {type: 'NONE'};
-  return response;
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+      .setAuthType(cc.AuthType.NONE)
+      .build();
 }
 // [END apps_script_data_studio_build_get_auth_type]
