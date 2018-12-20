@@ -14,7 +14,8 @@
  * limitations under the License.
  */
  
- var COINBASE_API_TOKEN = ''; // TODO
+// See https://support.coinbase.com/customer/en/portal/articles/1914910-how-can-i-generate-api-keys-within-coinbase-commerce-
+var COINBASE_API_TOKEN = ''; // TODO
 /**
  * Get's the bitcoin price at a date.
  *
