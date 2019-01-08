@@ -14,8 +14,8 @@ function onOpen(e) {
 
 // [START apps_script_triggers_onedit]
 /**
- * The event handler triggered when opening the spreadsheet.
- * @param {Event} e The onOpen event.
+ * The event handler triggered when editing the spreadsheet.
+ * @param {Event} e The onEdit event.
  */
 function onEdit(e) {
   // Set a comment on the edited cell to indicate when it was changed.
