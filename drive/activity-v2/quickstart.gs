@@ -26,7 +26,7 @@ function listDriveActivity() {
     for (var i = 0; i < activities.length; i++) {
       var activity = activities[i];
       var time = getTimeInfo(activity);
-      var action = getActionInfo(activity['primaryActionDetail']);
+      var action = getActionInfo(activity.primaryActionDetail);
       var actors = activity.actors.map(getActorInfo);
       var targets = activity.targets.map(getTargetInfo);
       Logger.log(
@@ -73,9 +73,9 @@ function getActionInfo(actionDetail) {
 /** Returns user information, or the type of user if not a known user. */
 function getUserInfo(user) {
   if ('knownUser' in user) {
-    var knownUser = user['knownUser'];
-    var isMe = knownUser['isCurrentUser'] || false;
-    return isMe ? 'people/me' : knownUser['personName'];
+    var knownUser = user.knownUser;
+    var isMe = knownUser.isCurrentUser || false;
+    return isMe ? 'people/me' : knownUser.personName;
   }
   return getOneOf(user);
 }
@@ -83,7 +83,7 @@ function getUserInfo(user) {
 /** Returns actor information, or the type of actor if not a user. */
 function getActorInfo(actor) {
   if ('user' in actor) {
-    return getUserInfo(actor['user'])
+    return getUserInfo(actor.user)
   }
   return getOneOf(actor);
 }
