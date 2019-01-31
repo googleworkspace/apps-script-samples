@@ -22,10 +22,6 @@ Create a spreadsheet with custom functions, menu items, and automated procedures
 
 This tutorial shows you how to use the Spreadsheets service to create Tournament Brackets similar to College Basketball's March Madness. You can use this tutorial to easily create your own brackets.
 
-## [Maps Tutorial](https://developers.google.com/apps-script/articles/maps_tutorial)
-
-This tutorial shows how use and combine the features of the Maps Service to create static maps, generate driving directions, and use the geocoder and elevation sampler.
-
 ## [Removing Duplicates](https://developers.google.com/apps-script/articles/removing_duplicates)
 
 This tutorial shows how to avoid duplicates when you want to automate the process of copying data in G Suite and specifically how to remove duplicate rows in spreadsheet data.
