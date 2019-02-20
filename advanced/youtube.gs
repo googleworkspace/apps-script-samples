@@ -51,7 +51,7 @@ function retrieveMyUploads() {
     // Channel resource: https://developers.google.com/youtube/v3/docs/channels
     var playlistId = item.contentDetails.relatedPlaylists.uploads;
     var nextPageToken;
-    while (nextPageToken != null) {
+    while (nextPageToken !== null) {
       var playlistResponse = YouTube.PlaylistItems.list('snippet', {
         playlistId: playlistId,
         maxResults: 25,

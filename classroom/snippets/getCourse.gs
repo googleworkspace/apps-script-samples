@@ -13,27 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- // [START apps_script_data_studio_manual]
- var schema = [
-  {
-    'name': 'Income',
-    'label': 'Income (in USD)',
-    'dataType': 'NUMBER',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'CURRENCY',
-      'semanticType': 'CURRENCY_USD'
-    }
-  }, {
-    'name': 'Filing Year',
-    'label': 'Year in which you filed the taxes.',
-    'dataType': 'STRING',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'DATE_OR_TIME',
-      'semanticType': 'YEAR'
-    }
+// [START classroom_get_course]
+/**
+ * Retrieves course by id. 
+ */
+function getCourse() {
+  var courseId = '123456';
+  try {
+    var course = Classroom.Courses.get(courseId);
+    Logger.log('Course "%s" found. ', course.name);
+  } catch (err) {
+    Logger.log("Course with id "%s" not found", courseId);
   }
-];
-// [END apps_script_data_studio_manual]
+}
+// [END classroom_get_course]

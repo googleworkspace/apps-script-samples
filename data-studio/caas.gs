@@ -15,83 +15,103 @@
  */
 
 // [START apps_script_data_studio_caas_example]
-var sqlString = "" +
-    "SELECT " +
-    "  _TABLE_SUFFIX AS yyyymm, " +
-    "  ROUND(SUM(IF(fcp.start < @fast_fcp, fcp.density, 0)), 4) AS fast_fcp, " +
-    "  ROUND(SUM(IF(fcp.start >= 1000 AND fcp.start < 3000, fcp.density, 0)), 4) AS avg_fcp, " +
-    "  ROUND(SUM(IF(fcp.start >= 3000, fcp.density, 0)), 4) AS slow_fcp " +
-    "FROM " +
-    "  `chrome-ux-report.all.*`, " +
-    "  UNNEST(first_contentful_paint.histogram.bin) AS fcp " +
-    "WHERE " +
-    "  origin = @url " +
-    "GROUP BY " +
-    "  yyyymm " +
-    "ORDER BY " +
-    "  yyyymm ";
+var sqlString = '' +
+    'SELECT ' +
+    '  _TABLE_SUFFIX AS yyyymm, ' +
+    '  ROUND(SUM(IF(fcp.start < @fast_fcp, fcp.density, 0)), 4) AS fast_fcp, ' +
+    '  ROUND(SUM(IF(fcp.start >= 1000 AND fcp.start < 3000, fcp.density, 0)), 4) AS avg_fcp, ' +
+    '  ROUND(SUM(IF(fcp.start >= 3000, fcp.density, 0)), 4) AS slow_fcp ' +
+    'FROM ' +
+    '  `chrome-ux-report.all.*`, ' +
+    '  UNNEST(first_contentful_paint.histogram.bin) AS fcp ' +
+    'WHERE ' +
+    '  origin = @url ' +
+    'GROUP BY ' +
+    '  yyyymm ' +
+    'ORDER BY ' +
+    '  yyyymm ';
 
+/**
+ * Gets the config.
+ * @param {object} request The request.
+ * @return {Config} The Community Connector config.
+ */
 function getConfig(request) {
   var cc = DataStudioApp.createCommunityConnector();
   var config = cc.getConfig();
 
   config.newTextInput()
-      .setId("projectId")
-      .setName("BigQuery Billing Project ID")
-      .setPlaceholder("556727765207");
+      .setId('projectId')
+      .setName('BigQuery Billing Project ID')
+      .setPlaceholder('556727765207');
 
   config.newTextInput()
-      .setId("url")
-      .setName("Enter your url")
+      .setId('url')
+      .setName('Enter your url')
       .setAllowOverride(true)
-      .setPlaceholder("www.example.com");
+      .setPlaceholder('www.example.com');
 
   config.setDateRangeRequired(true);
 
   return config.build();
 }
 
+/**
+ * Gets the fields.
+ * @param {object} request The request.
+ * @return {Fields} The Community Connector fields.
+ */
 function getFields() {
   var cc = DataStudioApp.createCommunityConnector();
   var fields = cc.getFields();
   var types = cc.FieldType;
 
   fields.newDimension()
-      .setId("yyyymm")
-      .setName("yyyymm")
+      .setId('yyyymm')
+      .setName('yyyymm')
       .setType(types.YEAR_MONTH);
 
   fields.newMetric()
-      .setId("fast_fcp")
-      .setName("fast_fcp")
+      .setId('fast_fcp')
+      .setName('fast_fcp')
       .setType(types.NUMBER);
 
   fields.newMetric()
-      .setId("avg_fcp")
-      .setName("avg_fcp")
+      .setId('avg_fcp')
+      .setName('avg_fcp')
       .setType(types.NUMBER);
 
   fields.newMetric()
-      .setId("slow_fcp")
-      .setName("slow_fcp")
+      .setId('slow_fcp')
+      .setName('slow_fcp')
       .setType(types.NUMBER);
 
   return fields;
 }
 
+/**
+ * Gets the schema.
+ * @param {object} request
+ * @return {object} The connector's schema.
+ */
 function getSchema(request) {
   return {
     schema: getFields().build()
   };
 }
 
+/**
+ * Gets the connector's data.
+ * @param {object} request The request.
+ * @return {object} The data response.
+ */
 function getData(request) {
   var url = (request.configParams && request.configParams.url);
   var projectId = (request.configParams && request.configParams.projectId);
   var authToken = ScriptApp.getOAuthToken();
   var response = {
     dataConfig: {
-      type: "BIGQUERY",
+      type: 'BIGQUERY',
       bigQueryConnectorConfig: {
         billingProjectId: projectId,
         query: sqlString,
@@ -122,7 +142,14 @@ function getData(request) {
   return response;
 }
 
+/**
+ * Gets the auth type.
+ * @return {object} The auth type.
+ */
 function getAuthType() {
-  return { "type": "NONE" };
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+      .setAuthType(cc.AuthType.NONE)
+      .build();
 }
 // [END apps_script_data_studio_caas_example]

@@ -83,7 +83,7 @@ function logRecentHistory() {
     if (history && history.length > 0) {
       history.forEach(function(record) {
         record.messages.forEach(function(message) {
-          if (changed.indexOf(message.id) == -1) {
+          if (changed.indexOf(message.id) === -1) {
             changed.push(message.id);
           }
         });

@@ -1,4 +1,4 @@
-// [START apps_script_stackdriver]
+// [START apps_script_logging]
 /**
  * Logs the time taken to execute 'myFunction'.
  */
@@ -26,4 +26,22 @@ function measuringExecutionTime() {
   }
   console.timeEnd(label); // Stops the timer, logs execution duration.
 }
-// [END apps_script_stackdriver]
+// [END apps_script_logging]
+
+// [START apps_script_logging_2]
+/**
+ * Logs Google Sheet information.
+ * @param {number} rowNumber The spreadsheet row number.
+ * @param {string} email The email to send with the row data.
+ */
+function emailDataRow(rowNumber, email) {
+  Logger.log('Emailing data row ' + rowNumber + ' to ' + email);
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var rowData = data[rowNumber-1].join(" ");
+  Logger.log('Row ' + rowNumber + ' data: ' + rowData);
+  MailApp.sendEmail(email,
+                    'Data in row ' + rowNumber,
+                    rowData);
+}
+// [END apps_script_logging_2]

@@ -19,14 +19,14 @@
 try {
   // Code that might fail.
 } catch (e) {
-  throw new Error("DS_USER:This will be shown to admin & non-admin.");
+  throw new Error('DS_USER:This will be shown to admin & non-admin.');
 }
 
 // Only admin users will see the following error.
 try {
   // Code that might fail.
 } catch (e) {
-  throw new Error("This message will only be shown to admin users");
+  throw new Error('This message will only be shown to admin users');
 }
 // [END apps_script_data_studio_error_ds_user]
 
@@ -40,7 +40,7 @@ try {
  */
 function throwConnectorError(message, userSafe) {
   userSafe = (typeof userSafe !== 'undefined' &&
-              typeof userSafe === 'boolean') ?  userSafe : false;
+              typeof userSafe === 'boolean') ? userSafe : false;
   if (userSafe) {
     message = 'DS_USER:' + message;
   }
@@ -72,6 +72,6 @@ try {
   // Code that might fail.
 } catch (e) {
   logConnectorError(e, 'quota_hour_exceeded'); // Log to Stackdriver.
-  throwConnectorError("You've exceeded the hourly quota. Try again later.", true);
+  throwConnectorError('You\'ve exceeded the hourly quota. Try again later.', true);
 }
 // [END apps_script_data_studio_error_error]

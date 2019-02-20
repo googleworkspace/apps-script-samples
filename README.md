@@ -79,6 +79,14 @@ width="96px"/>
 - [Mailmerge: Merge a template email with content](gmail/mailmerge)
 
 <img
+src="https://www.gstatic.com/images/icons/material/system/2x/people_black_48dp.png"
+align="left"
+width="96px"/>
+### People
+- [Listing Connections](people/quickstart)
+<br><br>
+
+<img
 src="https://www.gstatic.com/images/branding/product/2x/sheets_96dp.png"
 align="left"
 width="96px"/>

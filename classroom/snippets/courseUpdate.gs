@@ -13,27 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- // [START apps_script_data_studio_manual]
- var schema = [
-  {
-    'name': 'Income',
-    'label': 'Income (in USD)',
-    'dataType': 'NUMBER',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'CURRENCY',
-      'semanticType': 'CURRENCY_USD'
-    }
-  }, {
-    'name': 'Filing Year',
-    'label': 'Year in which you filed the taxes.',
-    'dataType': 'STRING',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'DATE_OR_TIME',
-      'semanticType': 'YEAR'
-    }
-  }
-];
-// [END apps_script_data_studio_manual]
+// [START classroom_update_course]
+/**
+ * Updates the section and room of Google Classroom. 
+ */
+function courseUpdate() {
+  var courseId = '123456';
+  var course = Classroom.Courses.get(courseId);
+  course.section = 'Period 3';
+  course.room = '302';
+  var course = Classroom.Courses.update(course, courseId);
+  Logger.log('Course "%s" updated.', course.name);
+}
+// [END classroom_update_course]

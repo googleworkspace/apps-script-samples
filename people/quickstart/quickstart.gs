@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- // [START apps_script_data_studio_manual]
- var schema = [
-  {
-    'name': 'Income',
-    'label': 'Income (in USD)',
-    'dataType': 'NUMBER',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'CURRENCY',
-      'semanticType': 'CURRENCY_USD'
+// [START people_quickstart]
+/**
+ * Print the display name if available for 10 connections.
+ */
+function listConnectionNames() {
+  var connections = People.People.Connections.list('people/me', {
+    pageSize: 10,
+    personFields: 'names,emailAddresses'
+  });
+  connections.connections.forEach(function(person) {
+    if (person.names && person.names.length > 0) {
+      Logger.log(person.names[0].displayName);
+    } else {
+      Logger.log('No display name found for connection.');
     }
-  }, {
-    'name': 'Filing Year',
-    'label': 'Year in which you filed the taxes.',
-    'dataType': 'STRING',
-    'semantics': {
-      'conceptType': 'METRIC',
-      'semanticGroup': 'DATE_OR_TIME',
-      'semanticType': 'YEAR'
-    }
-  }
-];
-// [END apps_script_data_studio_manual]
+  });
+}
+// [END people_quickstart]

@@ -15,6 +15,11 @@
  */
 
 // [START apps_script_data_studio_build_get_config]
+/**
+ * Builds the Community Connector config.
+ * @return {Config} The Community Connector config.
+ * @see https://developers.google.com/apps-script/reference/data-studio/config
+ */
 function getConfig() {
   var cc = DataStudioApp.createCommunityConnector();
   var config = cc.getConfig();
@@ -37,6 +42,11 @@ function getConfig() {
 // [END apps_script_data_studio_build_get_config]
 
 // [START apps_script_data_studio_build_get_fields]
+/**
+ * Builds the Community Connector fields object.
+ * @return {Fields} The Community Connector fields.
+ * @see https://developers.google.com/apps-script/reference/data-studio/fields
+ */
 function getFields() {
   var cc = DataStudioApp.createCommunityConnector();
   var fields = cc.getFields();
@@ -60,21 +70,32 @@ function getFields() {
       .setAggregation(aggregations.SUM);
 
   return fields;
-
 }
 
+/**
+ * Builds the Community Connector schema.
+ * @param {object} request The request.
+ * @return {object} The schema.
+ */
 function getSchema(request) {
   var fields = getFields().build();
-  return { 'schema': fields };
+  return {'schema': fields};
 }
 // [END apps_script_data_studio_build_get_fields]
 
 // [START apps_script_data_studio_build_get_data]
+/**
+ * Constructs an object with values as rows.
+ * @param {Fields} requestedFields The requested fields.
+ * @param {object[]} response The response.
+ * @param {string} packageName The package name.
+ * @return {object} An object containing rows with values.
+ */
 function responseToRows(requestedFields, response, packageName) {
   // Transform parsed data and filter for requested fields
   return response.map(function(dailyDownload) {
     var row = [];
-    requestedFields.asArray().forEach(function (field) {
+    requestedFields.asArray().forEach(function(field) {
       switch (field.getId()) {
         case 'day':
           return row.push(dailyDownload.day.replace(/-/g, ''));
@@ -86,10 +107,15 @@ function responseToRows(requestedFields, response, packageName) {
           return row.push('');
       }
     });
-    return { values: row };
+    return {values: row};
   });
 }
 
+/**
+ * Gets the data for the community connector
+ * @param {object} request The request.
+ * @return {object} The data.
+ */
 function getData(request) {
   var requestedFieldIds = request.fields.map(function(field) {
     return field.name;
@@ -117,8 +143,14 @@ function getData(request) {
 // [END apps_script_data_studio_build_get_data]
 
 // [START apps_script_data_studio_build_get_auth_type]
+/**
+ * Gets the Auth type.
+ * @return {object} The auth type.
+ */
 function getAuthType() {
-  var response = { type: 'NONE' };
-  return response;
+  var cc = DataStudioApp.createCommunityConnector();
+  return cc.newAuthTypeResponse()
+      .setAuthType(cc.AuthType.NONE)
+      .build();
 }
 // [END apps_script_data_studio_build_get_auth_type]
