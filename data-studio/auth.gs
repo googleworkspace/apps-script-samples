@@ -16,7 +16,7 @@
 
 // [START apps_script_data_studio_get_auth_type_oauth2]
 /**
- * Gets the OAuth2 Auth type.
+ * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
 function getAuthType() {
@@ -29,7 +29,7 @@ function getAuthType() {
 
 // [START apps_script_data_studio_get_auth_type_user_pass]
 /**
- * Gets the OAuth2 Auth type.
+ * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
 function getAuthType() {
@@ -43,7 +43,7 @@ function getAuthType() {
 
 // [START apps_script_data_studio_get_auth_type_user_token]
 /**
- * Gets the OAuth2 Auth type.
+ * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
 function getAuthType() {
@@ -57,7 +57,7 @@ function getAuthType() {
 
 // [START apps_script_data_studio_get_auth_type_key]
 /**
- * Gets the OAuth2 Auth type.
+ * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
 function getAuthType() {
@@ -71,7 +71,7 @@ function getAuthType() {
 
 // [START apps_script_data_studio_get_auth_type_none]
 /**
- * Gets the OAuth2 Auth type.
+ * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
 function getAuthType() {
@@ -179,7 +179,7 @@ function isAuthValid() {
 
 // [START apps_script_data_studio_auth_library]
 /**
- * Returns the OAuth Service
+ * Returns the configured OAuth Service.
  * @return {Service} The OAuth Service
  */
 function getOAuthService() {
@@ -197,8 +197,8 @@ function getOAuthService() {
 // [START apps_script_data_studio_auth_callback]
 /**
  * The OAuth callback.
- * @param {function} request The OAuth service callback handler.
- * @return {HtmlOutput} The HTML output.
+ * @param {object} request The request data received from the OAuth flow.
+ * @return {HtmlOutput} The HTML output to show to the user.
  */
 function authCallback(request) {
   var authorized = getOAuthService().handleCallback(request);
