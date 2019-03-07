@@ -293,18 +293,18 @@ function generateLoginActivityReport() {
 /**
  * Generates a user usage report for this day last week as a spreadsheet. The
  * report includes the date, user, last login time, number of emails received,
- * and number of docs owned.
+ * and number of drive files created.
  */
 function generateUserUsageReport() {
   var today = new Date();
   var oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-  var timezone = Session.getTimeZone();
+  var timezone = Session.getScriptTimeZone();
   var date = Utilities.formatDate(oneWeekAgo, timezone, 'yyyy-MM-dd');
 
   var parameters = [
     'accounts:last_login_time',
     'gmail:num_emails_received',
-    'docs:num_docs'
+    'drive:num_items_created'
   ];
   var rows = [];
   var pageToken;
@@ -315,6 +315,12 @@ function generateUserUsageReport() {
       maxResults: 500,
       pageToken: pageToken
     });
+    if (page.warnings) {
+      for (var i = 0; i < page.warnings.length; i++) {
+        var warning = page.warnings[i];
+        Logger.log(warning.message);
+      }
+    }
     var reports = page.usageReports;
     if (reports) {
       for (var i = 0; i < reports.length; i++) {
@@ -325,7 +331,7 @@ function generateUserUsageReport() {
           report.entity.userEmail,
           parameterValues['accounts:last_login_time'],
           parameterValues['gmail:num_emails_received'],
-          parameterValues['docs:num_docs']
+          parameterValues['drive:num_items_created']
         ];
         rows.push(row);
       }
@@ -339,7 +345,7 @@ function generateUserUsageReport() {
 
     // Append the headers.
     var headers = ['Date', 'User', 'Last Login', 'Num Emails Received',
-        'Num Docs'];
+        'Num Drive Files Created'];
     sheet.appendRow(headers);
 
     // Append the results.
