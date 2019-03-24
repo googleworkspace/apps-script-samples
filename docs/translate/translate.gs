@@ -97,13 +97,11 @@ function getSelectedText() {
         }
       }
     }
-    if (!text.length) {
-      throw new Error('Please select some text.');
-    }
-    return text;
-  } else {
-    throw new Error('Please select some text.');
+
+    if (text.length) return text;
   }
+
+  throw new Error('Please select some text.');
 }
 
 /**
