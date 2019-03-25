@@ -73,8 +73,8 @@ function showSidebar() {
  */
 function getSelectedText() {
   var selection = DocumentApp.getActiveDocument().getSelection();
+  var text = [];
   if (selection) {
-    var text = [];
     var elements = selection.getSelectedElements();
     for (var i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
@@ -97,11 +97,9 @@ function getSelectedText() {
         }
       }
     }
-
-    if (text.length) return text;
   }
-
-  throw new Error('Please select some text.');
+  if (!text.length) throw new Error('Please select some text.');
+  return text;
 }
 
 /**
