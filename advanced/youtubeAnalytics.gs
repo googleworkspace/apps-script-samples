@@ -34,18 +34,16 @@ function createReport() {
     'views',
     'estimatedMinutesWatched',
     'averageViewDuration',
-    'averageViewPercentage',
     'subscribersGained'
   ];
-  var options = {
+  var result = YouTubeAnalytics.Reports.query({
+    ids: 'channel==' + channelId,
+    startDate: formatDateString(lastMonth),
+    endDate: formatDateString(today),
+    metrics: metrics.join(','),
     dimensions: 'day',
     sort: 'day'
-  };
-  var result = YouTubeAnalytics.Reports.query('channel==' + channelId,
-      formatDateString(lastMonth),
-      formatDateString(today),
-      metrics.join(','),
-      options);
+  });
 
   if (result.rows) {
     var spreadsheet = SpreadsheetApp.create('YouTube Analytics Report');
