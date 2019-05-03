@@ -94,9 +94,9 @@ function getTargetInfo(target) {
     var title = target.driveItem.title || 'unknown';
     return 'driveItem:"' + title + '"';
   }
-  if ('teamDrive' in target) {
-    var title = target.teamDrive.title || 'unknown';
-    return 'teamDrive:"' + title + '"';
+  if ('drive' in target) {
+    var title = target.drive.title || 'unknown';
+    return 'drive:"' + title + '"';
   }
   if ('fileComment' in target) {
     var parent = target.fileComment.parent || {};
