@@ -25,7 +25,6 @@ function listRegistries() {
 }
 // [END iot_list_registries]
 
-
 // [START iot_create_registry]
 // Creates a registry
 function createRegistry() {
@@ -48,7 +47,6 @@ function createRegistry() {
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
   var response = CloudIoT.Projects.Locations.Registries.create(registry, parent)
-
   Logger.log(response);
 }
 // [END iot_create_registry]
@@ -99,7 +97,6 @@ function listDevicesForRegistry() {
   var registryName = parent + '/registries/' + registryName;
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
-
   Logger.log(response);
 }
 // [END iot_list_devices]
