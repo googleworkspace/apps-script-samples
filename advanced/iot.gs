@@ -60,7 +60,7 @@ function createRegistry() {
 /**
  * Describes a registry.
  */
-function getRegistry(name) {
+function getRegistry() {
   Logger.log('Getting registry: ' + name);
   var projectId = 'your-project-id';
   var cloudRegion = 'us-central1';
