@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START iot_list_registries]
+/**
+ * Lists the registries for the configured project and region.
+ */
 function listRegistries() {
   Logger.log('Cloud IoT Core Apps Script sample');
   var projectId = 'your-project-id';
@@ -26,7 +29,9 @@ function listRegistries() {
 // [END iot_list_registries]
 
 // [START iot_create_registry]
-// Creates a registry
+/**
+ * Creates a registry.
+ */
 function createRegistry() {
   var cloudRegion = 'us-central1';
   var name = 'your-registry-name';
@@ -69,7 +74,9 @@ function getRegistry(name) {
 // [END iot_get_registry]
 
 // [START iot_delete_registry]
-// Deletes a registry
+/**
+ * Deletes a registry.
+ */
 function deleteRegistry() {
   var cloudRegion = 'us-central1';
   var name = 'your-registry-name';
@@ -86,6 +93,9 @@ function deleteRegistry() {
 // [END iot_delete_registry]
 
 // [START iot_list_devices]
+/**
+ * Lists the devices in the given registry.
+ */
 function listDevicesForRegistry() {
   Logger.log('Listing devices for registry: ' + registryName);
 
@@ -102,7 +112,9 @@ function listDevicesForRegistry() {
 // [END iot_list_devices]
 
 // [START iot_create_unauth_device]
-// Creates a device without credentials
+/**
+ * Creates a device without credentials.
+ */
 function createDevice() {
   var cloudRegion = 'us-central1';
   var name = 'your-device-name';
