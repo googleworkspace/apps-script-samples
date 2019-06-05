@@ -21,7 +21,7 @@ function listRegistries() {
   Logger.log('Cloud IoT Core Apps Script sample');
   var projectId = 'your-project-id';
   var cloudRegion = 'us-central1';
-  var parent = 'projects/'+ projectId +'/locations/' + cloudRegion;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
   Logger.log(parent);
   var response = CloudIoT.Projects.Locations.Registries.list(parent);
   Logger.log(response);
