@@ -171,7 +171,7 @@ function createRsaDevice() {
 
   Logger.log('Creating device: ' + name + ' in Registry: ' + registry);
 
-  var parent = 'projects/'+ projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
   var device = {
     'id': name,
     'gatewayConfig': {
