@@ -198,7 +198,7 @@ function deleteDevice() {
 
   Logger.log('Deleting device: ' + name + ' in Registry: ' + registry);
 
-  var parent = 'projects/'+ projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
   var deviceName = parent + '/devices/' + name;
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName)
