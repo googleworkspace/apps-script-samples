@@ -172,7 +172,13 @@ function createRsaDevice() {
     gatewayConfig: {
       gatewayType: 'NON_GATEWAY',
       gatewayAuthMethod: 'ASSOCIATION_ONLY'
-    }
+    },
+    credentials: [{
+      publicKey: {
+        format: 'RSA_X509_PEM',
+        key: cert
+      }
+    }],
   };
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
@@ -182,7 +188,7 @@ function createRsaDevice() {
 
 // [START apps_script_iot_delete_device]
 /**
- * Devares a device from the given registry
+ * Deletes a device from the given registry.
  */
 function deleteDevice() {
   const cloudRegion = 'us-central1';
