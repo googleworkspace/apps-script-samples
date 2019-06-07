@@ -19,9 +19,9 @@
  */
 function listRegistries() {
   Logger.log(response);
-  const projectId = 'your-project-id';
-  const cloudRegion = 'us-central1';
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  var projectId = 'your-project-id';
+  var cloudRegion = 'us-central1';
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
   var response = CloudIoT.Projects.Locations.Registries.list(parent);
   if (response.deviceRegistries){
@@ -38,21 +38,21 @@ function listRegistries() {
  * Creates a registry.
  */
 function createRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
-  const topic = 'your-pubsub-topic';
+  var cloudRegion = 'us-central1';
+  var name = 'your-registry-name';
+  var projectId = 'your-project-id';
+  var topic = 'your-pubsub-topic';
 
-  const pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
+  var pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
 
-  const registry = {
+  var registry = {
     eventNotificationConfigs: [{
       // From - https://console.cloud.google.com/cloudpubsub
       pubsubTopicName : pubsubTopic
     }],
     'id': name
   };
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
   var response = CloudIoT.Projects.Locations.Registries.create(registry, parent)
   Logger.log('Created registry: ' + response.id);
@@ -64,12 +64,12 @@ function createRegistry() {
  * Describes a registry.
  */
 function getRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  var cloudRegion = 'us-central1';
+  var name = 'your-registry-name';
+  var projectId = 'your-project-id';
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  var registryName = parent + '/registries/' + name;
 
   var response = CloudIoT.Projects.Locations.Registries.get(registryName)
   Logger.log('Retrieved registry: ' + response.id);
@@ -81,12 +81,12 @@ function getRegistry() {
  * Deletes a registry.
  */
 function deleteRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  var cloudRegion = 'us-central1';
+  var name = 'your-registry-name';
+  var projectId = 'your-project-id';
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  var registryName = parent + '/registries/' + name;
 
   var response = CloudIoT.Projects.Locations.Registries.remove(registryName)
   // Successfully removed registry if exception was not thrown.
@@ -99,12 +99,12 @@ function deleteRegistry() {
  * Lists the devices in the given registry.
  */
 function listDevicesForRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  var cloudRegion = 'us-central1';
+  var name = 'your-registry-name';
+  var projectId = 'your-project-id';
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  var registryName = parent + '/registries/' + name;
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
 
@@ -123,15 +123,15 @@ function listDevicesForRegistry() {
  * Creates a device without credentials.
  */
 function createDevice() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  var cloudRegion = 'us-central1';
+  var name = 'your-device-name';
+  var projectId = 'your-project-id';
+  var registry = 'your-registry-name';
 
   Logger.log('Creating device: ' + name + ' in Registry: ' + registry);
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
 
-  const device = {
+  var device = {
     id: name,
     gatewayConfig: {
       gatewayType: 'NON_GATEWAY',
@@ -153,21 +153,21 @@ function createRsaDevice() {
   //    openssl req -x509 -newkey rsa:2048 -days 3650 -keyout rsa_private.pem \
   //      -nodes -out rsa_cert.pem -subj "/CN=unused"
   //
-  // **NOTE** Be sure to insert the newline charaters in the string constant.
-  const cert =
+  // **NOTE** Be sure to insert the newline charaters in the string varant.
+  var cert =
       '-----BEGIN CERTIFICATE-----\n' +
       'your-PUBLIC-certificate-b64-bytes\n' +
       '...\n' +
       'more-PUBLIC-certificate-b64-bytes==\n' +
       '-----END CERTIFICATE-----\n';
 
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  var cloudRegion = 'us-central1';
+  var name = 'your-device-name';
+  var projectId = 'your-project-id';
+  var registry = 'your-registry-name';
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
-  const device = {
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  var device = {
     id: name,
     gatewayConfig: {
       gatewayType: 'NON_GATEWAY',
@@ -191,13 +191,13 @@ function createRsaDevice() {
  * Deletes a device from the given registry.
  */
 function deleteDevice() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  var cloudRegion = 'us-central1';
+  var name = 'your-device-name';
+  var projectId = 'your-project-id';
+  var registry = 'your-registry-name';
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
-  const deviceName = parent + '/devices/' + name;
+  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  var deviceName = parent + '/devices/' + name;
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName)
   // If no exception thrown, device was successfully removed
