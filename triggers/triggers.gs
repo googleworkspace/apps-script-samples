@@ -36,7 +36,7 @@ function onInstall(e) {
 
 // [START apps_script_triggers_time]
 /**
- * Creates a two time-driven triggers.
+ * Creates two time-driven triggers.
  */
 function createTimeDrivenTriggers() {
   // Trigger every 6 hours.
