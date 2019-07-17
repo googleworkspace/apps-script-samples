@@ -33,7 +33,7 @@ function onInstall(e) {
  */
 function onOpen(e) {
   SlidesApp.getUi().createAddonMenu()
-      .addItem('Generate Script Document', 'generateSlideScript')
+      .addItem('Generate Script Document', 'generateSlidesScript')
       .addToUi();
 }
 
@@ -41,7 +41,7 @@ function onOpen(e) {
  * Creates a 'script' for the presentation user in a document
  * with the speaker notes for each slide.
  */
-function generateSlideScript() {
+function generateSlidesScript() {
   var presentation = SlidesApp.getActivePresentation();
   var docTitle = presentation.getName() + ' Script';
   var slides = presentation.getSlides();
