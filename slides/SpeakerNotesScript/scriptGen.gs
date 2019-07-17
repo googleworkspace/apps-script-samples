@@ -33,7 +33,7 @@ function onInstall(e) {
  */
 function onOpen(e) {
   SlidesApp.getUi().createAddonMenu()
-      .addItem('Generate Script Document', 'generateSlideScript')
+      .addItem('Generate Script Document', 'generateSlidesScript')
       .addToUi();
 }
 
