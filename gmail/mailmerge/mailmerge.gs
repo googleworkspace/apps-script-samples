@@ -196,7 +196,7 @@ function fillInTemplateFromObject(template, data) {
 
   // Replace variables from the template with the actual values from the data object.
   // If no value is available, replace with the empty string.
-  for (var i = 0; i < templateVars.length; ++i) {
+  for (var i = 0; templateVars && i < templateVars.length; ++i) {
     // normalizeHeader ignores ${"} so we can call it directly here.
     // [START apps_script_gmail_template_variable_data]
     var variableData = data[normalizeHeader(templateVars[i])];
