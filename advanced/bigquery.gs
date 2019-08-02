@@ -28,20 +28,22 @@ function runQuery() {
   };
   var queryResults = BigQuery.Jobs.query(request, projectId);
   var jobId = queryResults.jobReference.jobId;
+  var location = queryResults.jobReference.location;
 
   // Check on status of the Query Job.
   var sleepTimeMs = 500;
   while (!queryResults.jobComplete) {
     Utilities.sleep(sleepTimeMs);
     sleepTimeMs *= 2;
-    queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId);
+    queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId, {location: location});
   }
 
   // Get all the rows of results.
   var rows = queryResults.rows;
   while (queryResults.pageToken) {
     queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId, {
-      pageToken: queryResults.pageToken
+      pageToken: queryResults.pageToken,
+      location: location
     });
     rows = rows.concat(queryResults.rows);
   }
