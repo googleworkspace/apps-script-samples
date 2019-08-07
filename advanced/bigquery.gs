@@ -21,7 +21,7 @@ function runQuery() {
   // Replace this value with the project ID listed in the Google
   // Cloud Platform project.
   var projectId = 'XXXXXXXX';
-
+ 
   var request = {
     query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
       'FROM publicdata:samples.shakespeare WHERE LENGTH(word) > 10;'
