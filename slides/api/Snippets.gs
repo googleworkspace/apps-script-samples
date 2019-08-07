@@ -120,13 +120,11 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
 
 Snippets.prototype.createImage = function(presentationId, pageId) {
   // [START slides_create_image]
-  // Temporarily upload a local image file to Drive, in order to obtain a URL
-  // for the image. Alternatively, you can provide the Slides service a URL of
-  // an already hosted image.
+  // Temporarily upload a local image file to Drive, in order to obtain a
+  // URL for the image. Alternatively, you can provide the Slides service
+  // a URL of an already hosted image.
   //
-  // We will use an existing image under the variable: imageUrl.
-  //
-  // Create a new image, using the supplied object ID, with content downloaded from imageUrl.
+  // We will use an existing image under the variable: IMAGE_URL.
   var requests = [];
   var imageId = 'MyImage_01';
   var IMAGE_URL = 'https://www.google.com/images/branding/googlelogo/2x/' + 
