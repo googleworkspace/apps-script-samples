@@ -120,14 +120,16 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
 
 Snippets.prototype.createImage = function(presentationId, pageId) {
   // [START slides_create_image]
-  // Temporarily upload a local image file to Drive, in order to obtain a
-  // URL for the image. Alternatively, you can provide the Slides service
-  // a URL of an already hosted image.
+  // Temporarily upload a local image file to Drive, in order to obtain a URL
+  // for the image. Alternatively, you can provide the Slides service a URL of
+  // an already hosted image.
   //
-  // We will use an existing image under the variable: IMAGE_URL.
+  // We will use an existing image under the variable: imageUrl.
+  //
+  // Create a new image, using the supplied object ID, with content downloaded from imageUrl.
   var requests = [];
   var imageId = 'MyImage_01';
-  var IMAGE_URL = 'https://www.google.com/images/branding/googlelogo/2x/' + 
+  var imageUrl = 'https://www.google.com/images/branding/googlelogo/2x/' +
       'googlelogo_color_272x92dp.png';
   var emu4M = {
     magnitude: 4000000,
@@ -136,7 +138,7 @@ Snippets.prototype.createImage = function(presentationId, pageId) {
   requests.push({
     createImage: {
       objectId: imageId,
-      url: IMAGE_URL,
+      url: imageUrl,
       elementProperties: {
         pageObjectId: pageId,
         size: {
