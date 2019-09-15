@@ -57,7 +57,7 @@ function sendEmails2() {
     var emailAddress = row[0]; // First column
     var message = row[1]; // Second column
     var emailSent = row[2]; // Third column
-    if (emailSent != EMAIL_SENT) { // Prevents sending duplicates
+    if (emailSent !== EMAIL_SENT) { // Prevents sending duplicates
       var subject = 'Sending emails from a Spreadsheet';
       MailApp.sendEmail(emailAddress, subject, message);
       sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
