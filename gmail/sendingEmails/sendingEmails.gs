@@ -26,7 +26,7 @@ function sendEmails() {
   var dataRange = sheet.getRange(startRow, 1, numRows, 2);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
-  for (i in data) {
+  for (var i in data) {
     var row = data[i];
     var emailAddress = row[0]; // First column
     var message = row[1]; // Second column
