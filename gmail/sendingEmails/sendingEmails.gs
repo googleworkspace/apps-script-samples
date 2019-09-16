@@ -26,7 +26,7 @@ function sendEmails() {
   var dataRange = sheet.getRange(startRow, 1, numRows, 2);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
-  for (i in data) {
+  for (var i in data) {
     var row = data[i];
     var emailAddress = row[0]; // First column
     var message = row[1]; // Second column
@@ -57,7 +57,7 @@ function sendEmails2() {
     var emailAddress = row[0]; // First column
     var message = row[1]; // Second column
     var emailSent = row[2]; // Third column
-    if (emailSent != EMAIL_SENT) { // Prevents sending duplicates
+    if (emailSent !== EMAIL_SENT) { // Prevents sending duplicates
       var subject = 'Sending emails from a Spreadsheet';
       MailApp.sendEmail(emailAddress, subject, message);
       sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
