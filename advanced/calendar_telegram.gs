@@ -31,6 +31,7 @@ var notif = "\*Calendar*\n";
 // [START calendar_telegram_originalData]
 /**
  * Receice estring and set them as payload
+ * @param {string} estring message which will be sent to tg bot
  */
 function originalData(estring) {
     var payload = {
@@ -46,6 +47,7 @@ function originalData(estring) {
 // [START calendar_telegram_sendMsg]
 /**
  * send post request to send message to tg bot
+ * @param {string} payload payload of http request
  */
 function sendMsg(payload) {
     var options = {
@@ -59,6 +61,8 @@ function sendMsg(payload) {
 // [START calendar_telegram_getDateStr]
 /**
  * Generate speclized data format
+ * @param {number} dayCount The number of days people want to proceed
+ * @return {Date} The new date.
  */
 function getDateStr(dayCount) {
     // eslint-disable-next-line eqeqeq
@@ -76,6 +80,9 @@ function getDateStr(dayCount) {
 // [START calendar_telegram_prefixInteger]
 /**
  * required 2-digit
+ * @param {number} num The number people want to proceed
+ * @param {number} length The length of number
+ * @return {number} The new number.
  */
 function prefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
@@ -96,6 +103,7 @@ function launch() {
 // [START calendar_telegram_calendar]
 /**
  * fetch calendar data and proceed them
+ * @param {number} id Google Calendar id
  */
 function calendar(id) {
     var optionalArgs = {
@@ -129,8 +137,12 @@ function calendar(id) {
                     if(description && location){ 
                         tmp = summary + '\n'+description+ '@'+location+ '\n'+ start+' - '+ end +'\n\n';
                     }
-                    else if(description) tmp = summary + '\n'+description+ '\n'+ start+' - '+ end+'\n\b';
-                    else if(location) tmp = summary + '\n'+location+ '\n'+ start+' - '+ end+'\n\n';
+                    else if(description) {
+                        tmp = summary + '\n'+description+ '\n'+ start+' - '+ end+'\n\b';
+                    }
+                    else if(location) {
+                        tmp = summary + '\n'+location+ '\n'+ start+' - '+ end+'\n\n';
+                    }
                     else tmp = summary + '\n'+ start+' - '+ end+'\n\n';
                     //Logger.log(tmp);
                     notif+= tmp;
