@@ -13,22 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START calendar_telegram.gs]
 
 /*
 Your personal Calendar Bot
 Description :
     Get notifications from Google Calendar via Telegram Bot
-Instructions :
-   1. Create a bot from [BotFather](https://telegram.me/BotFather) and replace `BOT_TOKEN` with token received from bot father
-   2. Get your personal chat id from [get_id_bot](https://telegram.me/get_id_bot) and replace `CHAT_ID` with it
-   3. Register your application with the [Google Developers Console](https://console.developers.google.com)
-   4. Activate the Google Calendar API in the [Google Developers Console](https://console.developers.google.com)
-   5. Under Credentials, create a new Public API access key and replace the `API_KEY` with it
-   6. Find personal Calendar ID under `[Google Calendar] -> [Setting and Sharing] -> [Calendar Setting]` and add it into `calendar_id`
-   8. Copy all content to the `Google Script Editor`
-   9. Set a proper time to trigger it
-
 */
 var key = "API_KEY";
 var calendar_id = [
@@ -39,6 +28,10 @@ var token = 'BOT_TOKEN';
 var chat_id = "CHAT_ID";
 var url = "https://api.telegram.org/bot" + token;
 var notif = "\*Calendar*\n";
+// [START calendar_telegram_originalData]
+/**
+ * Receice estring and set them as payload
+ */
 function originalData(estring) {
     var payload = {
         "method": "sendMessage",
@@ -48,7 +41,12 @@ function originalData(estring) {
     };
     sendMsg(payload)
 }
+// [END calendar_telegram_originalData]
 
+// [START calendar_telegram_sendMsg]
+/**
+ * send post request to send message to tg bot
+ */
 function sendMsg(payload) {
     var options = {
         'method': 'post',
@@ -57,23 +55,36 @@ function sendMsg(payload) {
 
     UrlFetchApp.fetch(url + "/", options)
 }
-
+// [END calendar_telegram_sendMsg]
+// [START calendar_telegram_getDateStr]
+/**
+ * Generate speclized data format
+ */
 function getDateStr(dayCount) {
+    // eslint-disable-next-line eqeqeq
     if (null == dayCount) {
         dayCount = 0;
     }
     var dd = new Date();
-    dd.setDate(dd.getDate() + dayCount);//设置日期
+    dd.setDate(dd.getDate() + dayCount);
     var y = dd.getFullYear();
-    var m = PrefixInteger(dd.getMonth() + 1, 2);//获取当前月份的日期
+    var m = prefixInteger(dd.getMonth() + 1, 2);
     var d = dd.getDate();
     return y + "-" + m + "-" + d;
 }
-function PrefixInteger(num, length) {
+// [END calendar_telegram_getDateStr]
+// [START calendar_telegram_prefixInteger]
+/**
+ * required 2-digit
+ */
+function prefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
 }
-
-
+// [END apps_script_calendar_prefixInteger]
+// [START apps_script_calendar_launch]
+/**
+ * use loop to launch several service
+ */
 function launch() {
     for (var j in calendar_id) {
         var id = calendar_id[j][0];
@@ -81,7 +92,11 @@ function launch() {
     }
     notification();
 }
-
+// [END calendar_telegram_launch]
+// [START calendar_telegram_calendar]
+/**
+ * fetch calendar data and proceed them
+ */
 function calendar(id) {
     var optionalArgs = {
     timeMin: (new Date()).toISOString(),
@@ -99,29 +114,41 @@ function calendar(id) {
       var date = new Date().toISOString();
       for(var i=0; i< events.length;i++)
       {
-        if(events[i].status == "confirmed"&& events[i].start.dateTime >= getDateStr(0) && events[i].start.dateTime <= getDateStr(1)){
-          var tmp;
-          var summary = events[i].summary;
-          var description = events[i].description;
-          var location = events[i].location;
-          var start = events[i].start.dateTime.replace(":00+08:00","").replace("T"," ").replace("2020-","");
-          var end = events[i].end.dateTime.replace(":00+08:00","").replace("T"," ").replace("2020-","");
-          if(description && location) tmp = summary + '\n'+description+ '@'+location+ '\n'+ start+' - '+ end +'\n\n';
-          else if(description) tmp = summary + '\n'+description+ '\n'+ start+' - '+ end+'\n\b';
-          else if(location) tmp = summary + '\n'+location+ '\n'+ start+' - '+ end+'\n\n';
-          else tmp = summary + '\n'+ start+' - '+ end+'\n\n';
-          //Logger.log(tmp);
-          notif+= tmp;
+        // eslint-disable-next-line eqeqeq
+        if(events[i].status == "confirmed"){
+            if(events[i].start.dateTime >= getDateStr(0)){
+                if(events[i].start.dateTime <= getDateStr(1)){
+                    var tmp;
+                    var summary = events[i].summary;
+                    var description = events[i].description;
+                    var location = events[i].location;
+                    var start = events[i].start.dateTime.replace(":00+08:00","");
+                    start = start.replace("T"," ").replace("2020-","");
+                    var end = events[i].end.dateTime.replace(":00+08:00","");
+                    end = end.replace("T"," ").replace("2020-","");
+                    if(description && location){ 
+                        tmp = summary + '\n'+description+ '@'+location+ '\n'+ start+' - '+ end +'\n\n';
+                    }
+                    else if(description) tmp = summary + '\n'+description+ '\n'+ start+' - '+ end+'\n\b';
+                    else if(location) tmp = summary + '\n'+location+ '\n'+ start+' - '+ end+'\n\n';
+                    else tmp = summary + '\n'+ start+' - '+ end+'\n\n';
+                    //Logger.log(tmp);
+                    notif+= tmp;
+                }
+            }
         }
       }
-      //originalData(notif)
-      //if(notif != "\*Calendar*") originalData(notif);
-
     }
 }
+// [END calendar_telegram_calendar]
+// [START calendar_telegram_notification]
+/**
+ * set notification format
+ */
 function notification(){
-  if(notif != "\*Calendar*\n") originalData(notif);
-  else originalData("\*Calendar*\nNothing to plan today!")
+    // eslint-disable-next-line eqeqeq
+    if(notif != "\*Calendar*\n") originalData(notif);
+    else originalData("\*Calendar*\nNothing to plan today!")
 }
 
-// [END calendar_telegram.gs]
+// [END calendar_telegram_notification]
