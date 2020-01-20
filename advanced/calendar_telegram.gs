@@ -134,7 +134,8 @@ function calendar(id) {
                     start = start.replace("T"," ").replace("2020-","");
                     var end = events[i].end.dateTime.replace(":00+08:00","");
                     end = end.replace("T"," ").replace("2020-","");
-                    if(description && location){ 
+                    if(description && location){
+                    /*eslint "max-len": [2, {"code": 120}]*/
                         tmp = summary + '\n'+description+ '@'+location+ '\n'+ start+' - '+ end +'\n\n';
                     }
                     else if(description) {
