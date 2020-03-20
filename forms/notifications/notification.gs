@@ -220,7 +220,7 @@ function sendReauthorizationRequest() {
   if (lastAuthEmailDate != today) {
     if (MailApp.getRemainingDailyQuota() > 0) {
       var template =
-          HtmlService.createTemplateFromFile('AuthorizationEmail');
+          HtmlService.createTemplateFromFile('authorizationEmail');
       template.url = authInfo.getAuthorizationUrl();
       template.notice = NOTICE;
       var message = template.evaluate();
@@ -255,7 +255,7 @@ function sendCreatorNotification() {
     var addresses = settings.getProperty('creatorEmail').split(',');
     if (MailApp.getRemainingDailyQuota() > addresses.length) {
       var template =
-          HtmlService.createTemplateFromFile('CreatorNotification');
+          HtmlService.createTemplateFromFile('creatorNotification');
       template.sheet =
           DriveApp.getFileById(form.getDestinationId()).getUrl();
       template.summary = form.getSummaryUrl();
@@ -290,7 +290,7 @@ function sendRespondentNotification(response) {
       .getResponse();
   if (respondentEmail) {
     var template =
-        HtmlService.createTemplateFromFile('RespondentNotification');
+        HtmlService.createTemplateFromFile('respondentNotification');
     template.paragraphs = settings.getProperty('responseText').split('\n');
     template.notice = NOTICE;
     var message = template.evaluate();
