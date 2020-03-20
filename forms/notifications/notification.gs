@@ -75,7 +75,7 @@ function onInstall(e) {
  * configuring the notifications this add-on will produce.
  */
 function showSidebar() {
-  var ui = HtmlService.createHtmlOutputFromFile('Sidebar')
+  var ui = HtmlService.createHtmlOutputFromFile('sidebar')
       .setTitle('Form Notifications');
   FormApp.getUi().showSidebar(ui);
 }
@@ -85,7 +85,7 @@ function showSidebar() {
  * this add-on.
  */
 function showAbout() {
-  var ui = HtmlService.createHtmlOutputFromFile('About')
+  var ui = HtmlService.createHtmlOutputFromFile('about')
       .setWidth(420)
       .setHeight(270);
   FormApp.getUi().showModalDialog(ui, 'About Form Notifications');
