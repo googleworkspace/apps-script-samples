@@ -256,8 +256,6 @@ function sendCreatorNotification() {
     if (MailApp.getRemainingDailyQuota() > addresses.length) {
       var template =
           HtmlService.createTemplateFromFile('CreatorNotification');
-      template.sheet =
-          DriveApp.getFileById(form.getDestinationId()).getUrl();
       template.summary = form.getSummaryUrl();
       template.responses = form.getResponses().length;
       template.title = form.getTitle();
