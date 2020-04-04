@@ -52,7 +52,7 @@ function use() {
   var title = 'Date Custom Functions';
   var message = 'The functions DATEADD and DATESUBTRACT are now available in ' +
       'this spreadsheet. More information is available in the function help ' +
-      'box that appears when you start using them in a forumula.';
+      'box that appears when you start using them in a formula.';
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
@@ -113,7 +113,7 @@ function DATESUBTRACT(date, unit, amount) {
 
 /**
  * Validates that the date, unit, and amount supplied are compatible with
- * Momnent, throwing an exception if any of the parameters are invalid.
+ * Moment, throwing an exception if any of the parameters are invalid.
  * @param {Date} date The date to add to or subtract from.
  * @param {string} unit The unit of time to add/subtract.
  * @param {number} amount The amount of the specified unit to add/subtract.
