@@ -32,9 +32,9 @@ function onEdit(e) {
 function onSelectionChange(e) {
   // Set background to red if a single empty cell is selected.
   var range = e.range;
-  if(range.getNumRows() == 1 
-      && range.getNumColumns() == 1 
-      && range.getCell(1, 1).getValue() == "") {
+  if(range.getNumRows() === 1 
+      && range.getNumColumns() === 1 
+      && range.getCell(1, 1).getValue() === "") {
     range.setBackground("red");
   }
 }
