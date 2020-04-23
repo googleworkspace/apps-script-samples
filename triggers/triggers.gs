@@ -24,6 +24,23 @@ function onEdit(e) {
 }
 // [END apps_script_triggers_onedit]
 
+// [START apps_script_triggers_onselectionchange]
+/**
+ * The event handler triggered when the selection changes in the spreadsheet.
+ * @param {Event} e The onSelectionChange event.
+ */
+function onSelectionChange(e) {
+  // Set background to red if a single empty cell is selected.
+  var range = e.range;
+  if(range.getNumRows() == 1 
+      && range.getNumColumns() == 1 
+      && range.getCell(1, 1).getValue() == "") {
+    range.setBackground("red");
+  }
+}
+// [END apps_script_triggers_onselectionchange]
+
+
 // [START apps_script_triggers_oninstall]
 /**
  * The event handler triggered when installing the add-on.
