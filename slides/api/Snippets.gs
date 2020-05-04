@@ -250,7 +250,7 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
   var requests = [{
     replaceAllShapesWithImage: {
       imageUrl: logoUrl,
-      replaceMethod: 'CENTER_INSIDE',
+      imageReplaceMethod: 'CENTER_INSIDE',
       containsText: {
         text: '{{company-logo}}',
         matchCase: true
@@ -259,7 +259,7 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
   }, {
     replaceAllShapesWithImage: {
       imageUrl: customerGraphicUrl,
-      replaceMethod: 'CENTER_INSIDE',
+      imageReplaceMethod: 'CENTER_INSIDE',
       containsText: {
         text: '{{customer-graphic}}',
         matchCase: true
