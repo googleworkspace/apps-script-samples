@@ -8,7 +8,7 @@ function measuringExecutionTime() {
 
   // Log a JSON object at a DEBUG level. The log is labeled
   // with the message string in the log viewer, and the JSON content
-  // is displayed in the expanded log structure under "structPayload".
+  // is displayed in the expanded log structure under "jsonPayload".
   var parameters = {
       isValid: true,
       content: 'some string',
