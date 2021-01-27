@@ -63,7 +63,7 @@ function showLinkDialog(url, message, title) {
 
 /**
  * Creates a Salesforce OAuth2 service, using the Apps Script OAuth2 library:
- * https://github.com/gsuitedevs/apps-script-oauth2
+ * https://github.com/googleworkspace/apps-script-oauth2
  *
  * @return {Object} a Salesforce OAuth2 service
  */

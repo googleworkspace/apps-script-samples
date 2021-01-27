@@ -5,7 +5,7 @@ on the Docs Editors: APIs and Apps Script". It is an implementation of a
 Google Sheets add-on that:
 
 * Authenticates with Salesforce via OAuth2, using the
-[Apps Script OAuth2 library](https://github.com/gsuitedevs/apps-script-oauth2).
+[Apps Script OAuth2 library](https://github.com/googleworkspace/apps-script-oauth2).
 * Runs [SOQL](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_sosl_intro.htm)
   queries against Salesforce and outputs the results into a new sheet
 * Creates invoices in Google Docs and a sample presentation in Google Slides
