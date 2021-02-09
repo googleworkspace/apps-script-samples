@@ -10,7 +10,7 @@ Your data must be formatted with 2 columns, the first containing the date and/or
 
 ![Training](images/train.png)
 
-2. When the training is finished, select the number of time steps you'd like to forecast, and choose ** BQML > Forecast** from the menu. The script will populate the range. If no range is selected, it will prompt you for the number of time steps.
+2. When the training is finished, select the number of time steps you'd like to forecast, and choose **BQML > Forecast** from the menu. The script will populate the range. If no range is selected, it will prompt you for the number of time steps.
 
 ![Forecasting](images/forecast.png)
 
@@ -35,7 +35,8 @@ Your data must be formatted with 2 columns, the first containing the date and/or
 First, the script will extract rows from the selected range and insert them into a temporary table in [BigQuery](https://cloud.google.com/bigquery?utm_campaign=CDR_kwe_aiml_time-series-forecasting_011521&utm_source=external&utm_medium=web).
 
 Then, the script runs a BQML query to create an ARIMA [time series model](https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-create-time-series?utm_campaign=CDR_kwe_aiml_time-series-forecasting_011521&utm_source=external&utm_medium=web) that looks something like this:
-```
+
+```sql
 CREATE OR REPLACE MODEL
   `sheets_forecast.sheets_forecast_model` OPTIONS( MODEL_TYPE='ARIMA',
     TIME_SERIES_TIMESTAMP_COL='datetime',
@@ -52,7 +53,7 @@ The query can be further customized with other options, such as including holida
 
 To make a forecast, the script sets the `horizon` parameter in the BQML forecast query to the number of rows selected in the sheet. Two fields are extracted from the forecast: the datetime formatted as a string with the date, time, and time zone; and the forecasted value for that datetime. The query looks like this (assuming 3 rows are selected):
 
-```
+```sql
 SELECT
   FORMAT_TIMESTAMP("%FT%T%Ez", forecast_timestamp),
   forecast_value
