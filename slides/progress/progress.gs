@@ -19,7 +19,6 @@
  */
 var BAR_ID = 'PROGRESS_BAR_ID';
 var BAR_HEIGHT = 10; // px
-var presentation = SlidesApp.getActivePresentation();
 
 /**
  * Runs when the add-on is installed.
@@ -49,6 +48,7 @@ function onOpen(e) {
  */
 function createBars() {
   deleteBars(); // Delete any existing progress bars
+  var presentation = SlidesApp.getActivePresentation();
   var slides = presentation.getSlides();
   for (var i = 0; i < slides.length; ++i) {
     var ratioComplete = (i / (slides.length - 1));
@@ -68,6 +68,7 @@ function createBars() {
  * Deletes all progress bar rectangles.
  */
 function deleteBars() {
+  var presentation = SlidesApp.getActivePresentation();
   var slides = presentation.getSlides();
   for (var i = 0; i < slides.length; ++i) {
     var elements = slides[i].getPageElements();
