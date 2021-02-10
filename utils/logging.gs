@@ -35,11 +35,11 @@ function measuringExecutionTime() {
  * @param {string} email The email to send with the row data.
  */
 function emailDataRow(rowNumber, email) {
-  Logger.log('Emailing data row ' + rowNumber + ' to ' + email);
+  console.log('Emailing data row ' + rowNumber + ' to ' + email);
   var sheet = SpreadsheetApp.getActiveSheet();
   var data = sheet.getDataRange().getValues();
   var rowData = data[rowNumber-1].join(" ");
-  Logger.log('Row ' + rowNumber + ' data: ' + rowData);
+  console.log('Row ' + rowNumber + ' data: ' + rowData);
   MailApp.sendEmail(email,
                     'Data in row ' + rowNumber,
                     rowData);
