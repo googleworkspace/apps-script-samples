@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START admin_sdk_reseller_quickstart]
+// [START admin_sdk_reseller_quickstart] 
 /**
  * List Admin SDK reseller subscriptions.
  */
