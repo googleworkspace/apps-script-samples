@@ -97,3 +97,17 @@ function logRecentHistory() {
   });
 }
 // [END apps_script_gmail_history]
+
+// [START apps_script_gmail_raw]
+function getRawMessage() {
+  var messageId = Gmail.Users.Messages.list('me').messages[0].id;
+  console.log(messageId);
+  var message = Gmail.Users.Messages.get('me', messageId, {
+    'format': 'raw'
+  });
+
+  // Get raw content as base64url encoded string.
+  var encodedMessage = Utilities.base64Encode(message.raw);
+  console.log(encodedMessage);
+}
+// [END apps_script_gmail_raw]
