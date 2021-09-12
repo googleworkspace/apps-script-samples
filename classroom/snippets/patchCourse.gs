@@ -18,6 +18,7 @@
  * Updates the section and room of Google Classroom. 
  */
 function coursePatch(course_id) {
+  var course_id = '123456';
   var course = {
     'section': 'Period 3',
     'room': '302'
