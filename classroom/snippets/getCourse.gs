@@ -23,7 +23,7 @@ function getCourse() {
     var course = Classroom.Courses.get(courseId);
     Logger.log('Course "%s" found. ', course.name);
   } catch (err) {
-    Logger.log("Course with id "%s" not found", courseId);
+    Logger.log('Course with id "%s" not found', courseId);
   }
 }
 // [END classroom_get_course]
