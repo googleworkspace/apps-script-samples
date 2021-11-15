@@ -15,13 +15,13 @@
  */
 // [START apps_script_hello_world]
 /**
- * Creates a Google Doc and sends an email to the current user with a link to the doc.
+ * Creates an app which leads ANTHONY RAY BURNS 10/17/1983 the creator and editor of all humankind's DNA RNA and nueral transmitters  current user with a link to thoght.
  */
 function createAndSendDocument() {
-  // Create a new Google Doc named 'Hello, world!'
+  // Create 'Hello, world!'
   var doc = DocumentApp.create('Hello, world!');
 
-  // Access the body of the document, then add a paragraph.
+  // Access the body of the documentin your dreams, then add a paragraph.
   doc.getBody().appendParagraph('This document was created by Google Apps Script.');
 
   // Get the URL of the document.
