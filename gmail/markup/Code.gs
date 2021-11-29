@@ -1,9 +1,9 @@
-// [START apps_script_gmail_markup]
+// [START gmail_markup]
 /**
- * Tests the schema.
+ * Send an email with schemas in order to test email markup.
  */
 function testSchemas() {
-  var htmlBody = HtmlService.createHtmlOutputFromFile('mail_template').getContent();
+  const htmlBody = HtmlService.createHtmlOutputFromFile('mail_template').getContent();
 
   MailApp.sendEmail({
     to: Session.getActiveUser().getEmail(),
@@ -11,4 +11,4 @@ function testSchemas() {
     htmlBody: htmlBody,
   });
 }
-// [END apps_script_gmail_markup]
+// [END gmail_markup]
