@@ -3,6 +3,7 @@
  * Send an email with schemas in order to test email markup.
  */
 function testSchemas() {
+  try{
   const htmlBody = HtmlService.createHtmlOutputFromFile('mail_template').getContent();
 
   MailApp.sendEmail({
@@ -10,5 +11,9 @@ function testSchemas() {
     subject: 'Test Email markup - ' + new Date(),
     htmlBody: htmlBody,
   });
+  }
+  catch(err){
+    Logger.log(err)
+  }
 }
 // [END gmail_markup]
