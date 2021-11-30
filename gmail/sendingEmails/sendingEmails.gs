@@ -1,5 +1,5 @@
 /**
- * Copyright Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-// [START apps_script_gmail_send_emails]
+// [START gmail_send_emails]
 /**
  * Sends emails with data from the current spreadsheet.
  */
 function sendEmails() {
+  try{
    // Get the active sheet in spreadsheet
   const sheet = SpreadsheetApp.getActiveSheet();
   let startRow = 2; // First row of data to process
@@ -32,13 +33,17 @@ function sendEmails() {
     const emailAddress = row[0]; // First column
     const message = row[1]; // Second column
     let subject = 'Sending emails from a Spreadsheet';
-   //Send emails to emailAddresses which are presents in First column
+    //Send emails to emailAddresses which are presents in First column
     MailApp.sendEmail(emailAddress, subject, message);
   }
+  }
+  catch(err){
+    Logger.log(err)
+  }
 }
-// [END apps_script_gmail_send_emails]
+// [END gmail_send_emails]
 
-// [START apps_script_gmail_send_non_duplicate_emails]
+// [START gmail_send_non_duplicate_emails]
 // This constant is written in column C for rows for which an email
 // has been sent successfully.
 let EMAIL_SENT = 'EMAIL_SENT';
@@ -46,8 +51,9 @@ let EMAIL_SENT = 'EMAIL_SENT';
 /**
  * Sends non-duplicate emails with data from the current spreadsheet.
  */
-function sendEmails2() {
- // Get the active sheet in spreadsheet
+function sendNonDuplicateEmails() {
+  try{
+  // Get the active sheet in spreadsheet
   const sheet = SpreadsheetApp.getActiveSheet();
   let startRow = 2; // First row of data to process
   let numRows = 2; // Number of rows to process
@@ -69,5 +75,9 @@ function sendEmails2() {
       SpreadsheetApp.flush();
     }
   }
+  }
+  catch(err){
+    Logger.log(err)
+  }
 }
-// [END apps_script_gmail_send_non_duplicate_emails]
+// [END gmail_send_non_duplicate_emails]
