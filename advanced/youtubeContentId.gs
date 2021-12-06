@@ -37,7 +37,7 @@ function claimYourVideoWithMonetizePolicy() {
     'policy': {'rules': [{'action': 'monetize'}]}
   };
   try {
-    var claimInserted = YoutubeContentId.Claims.insert(claimToInsert,
+    var claimInserted = YouTubeContentId.Claims.insert(claimToInsert,
         {'onBehalfOfContentOwner': onBehalfOfContentOwner});
     Logger.log('Claim created on video %s: %s', videoId, claimInserted);
   } catch (e) {
@@ -70,7 +70,7 @@ function updateAssetOwnership() {
     ]
   };
   try {
-    var updatedOwnership = YoutubeContentId.Ownership.update(myAssetOwnership,
+    var updatedOwnership = YouTubeContentId.Ownership.update(myAssetOwnership,
         assetId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
     Logger.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
   } catch (e) {
@@ -94,7 +94,7 @@ function releaseClaim() {
     'status': 'inactive'
   };
   try {
-    var claimReleased = YoutubeContentId.Claims.patch(claimToBeReleased,
+    var claimReleased = YouTubeContentId.Claims.patch(claimToBeReleased,
         claimId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
     Logger.log('Claim %s was released: %s', claimId, claimReleased);
   } catch (e) {
