@@ -1,5 +1,5 @@
 /**
- * Copyright Google LLC
+ * Copyright  Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
  */
 // [START gmail_quickstart]
 /**
- * Lists the labels in the user's account.
+ * Lists all labels in the user's mailbox
  */
 function listLabels() {
+  try{
   const response = Gmail.Users.Labels.list('me');
   if (response.labels.length == 0) {
     Logger.log('No labels found.');
@@ -27,6 +28,10 @@ function listLabels() {
       const label = response.labels[i];
       Logger.log('- %s', label.name);
     }
+  }
+  }
+  catch(err){
+    Logger.log(err)
   }
 }
 // [END gmail_quickstart]
