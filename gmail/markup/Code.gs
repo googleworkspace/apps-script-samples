@@ -1,4 +1,4 @@
-// [START gmail_markup]
+// [START gmail_send_email_with_markup]
 /**
  * Send an email with schemas in order to test email markup.
  */
@@ -16,4 +16,4 @@ function testSchemas() {
     Logger.log(err)
   }
 }
-// [END gmail_markup]
+// [END gmail_send_email_with_markup]
