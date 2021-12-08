@@ -19,8 +19,8 @@
  */
 function listLabels() {
   try{
-    const response = Gmail.Users.Labels.list('me');
-    if (response.labels.length == 0) {
+   const response = Gmail.Users.Labels.list('me');
+   if (response.labels.length == 0) {
     Logger.log('No labels found.');
     return;
     } 
