@@ -19,16 +19,16 @@
  */
 function listLabels() {
   try{
-  const response = Gmail.Users.Labels.list('me');
-  if (response.labels.length == 0) {
-    Logger.log('No labels found.');
-  } else {
+    const response = Gmail.Users.Labels.list('me');
+    if (response.labels.length == 0) {
+      Logger.log('No labels found.');
+      return;
+    } 
     Logger.log('Labels:');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       Logger.log('- %s', label.name);
     }
-  }
   }
   catch(err){
     Logger.log(err)
