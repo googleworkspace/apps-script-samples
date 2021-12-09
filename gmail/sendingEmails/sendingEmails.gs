@@ -28,8 +28,7 @@ function sendEmails() {
     const dataRange = sheet.getRange(startRow, 1, numRows, 2);
     // Fetch values for each row in the Range.
     const data = dataRange.getValues();
-    for (let i in data) {
-      const row = data[i];
+    for (let row of data) {
       const emailAddress = row[0]; // First column
       const message = row[1]; // Second column
       let subject = 'Sending emails from a Spreadsheet';
