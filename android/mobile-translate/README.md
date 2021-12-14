@@ -1,12 +1,10 @@
-Mobile Doc Translate Add-on
-===========================
+# Mobile Doc Translate Add-on
 
 A sample Google Apps Script mobile add-on for Google Docs. This add-on is
 essentially a mobile version of the Docs
 [Translate Add-on Quickstart](https://developers.google.com/apps-script/quickstart/docs).
 
-Introduction
-------------
+## Introduction
 
 Google Apps Script now allows developers to construct Mobile Add-ons -- Android
 applications which extend and support Google Docs and Sheets.
@@ -18,8 +16,7 @@ of several languages. The user can then edit the translation as needed and
 replace the original selected text in the Doc with the translation.
 
 
-Getting Started
----------------
+## Getting Started
 
 The add-on will need to call an Apps Script project to get Doc text, make
 translations, and insert text into the Doc. Users can access this add-on from
@@ -43,7 +40,7 @@ To build this sample:
    Studio project.
 1. Create a new Apps Script project.
 1. Replace the code in the new project's `Code.gs` file with the code from this
-   repo.
+   repository.
 1. Save the project.
 1. In the code editor, select **Publish > Deploy as API** executable.
 1. In the dialog that opens, leave the **Version** as "New" and enter
@@ -72,8 +69,7 @@ To build this sample:
  1. Highlight some text in the doc and select the three-dot icon to open the
     context menu, and then select **Mobile Doc Translate**.
 
-Learn more
-----------
+## Learn more
 
 To continue learning about mobile add-ons for Google Docs and Sheets,
 take a look at the following resources:
@@ -81,38 +77,14 @@ take a look at the following resources:
 * [Mobile Add-ons](https://developers.google.com/apps-script/add-ons/mobile)
 * [Apps Script Execution API](https://developers.google.com/apps-script/guides/)
 
-Support
--------
+## Support
 
 For general Apps Script support, check the following:
 
 - Stack Overflow Tag: [google-apps-script](http://stackoverflow.com/questions/tagged/google-apps-script)
 - Issue Tracker: [google-apps-script-issues](https://code.google.com/p/google-apps-script-issues/issues/list)
 
-If you've found an error in this sample, please file an issue:
-https://github.com/googlesamples/apps-script-mobile-addons
+If you've found an error in this sample, please file an [issue](https://github.com/googleworkspace/apps-script-samples).
 
 Patches are encouraged, and may be submitted by forking this project and
 submitting a pull request through GitHub.
-
-License
--------
-
-Copyright 2016 Google, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
