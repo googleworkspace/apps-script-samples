@@ -31,7 +31,8 @@ function listLabels() {
     }
   }
   catch(err){
-    Logger.log(err)
+    //TODO(developer)-Handle Labels.list() exceptions 
+    Logger.log('failed with error %s',err.toString());
   }
 }
 // [END gmail_quickstart]
