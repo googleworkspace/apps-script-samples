@@ -29,7 +29,8 @@ function listFiles () {
     }
   }
   catch(err){
-    Logger.log(err)
+    //TODO(developer)-Handle Files.list() exception
+    Logger.log('failed with error %s',err.toString());
   }
 }
 // [END drive_quickstart]
