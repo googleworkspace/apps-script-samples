@@ -17,14 +17,20 @@
 /**
  * Lists the names and IDs of up to 10 files.
  */
-function listFiles() {
-  var files = Drive.Files.list({
-    fields: 'nextPageToken, items(id, title)',
-    maxResults: 10
-  }).items;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    Logger.log('%s (%s)', file.title, file.id);
+function listFiles () {
+  try{
+    const files = Drive.Files.list({
+      fields: 'nextPageToken, items(id, title)',
+      maxResults: 10
+    }).items;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      Logger.log('%s (%s)', file.title, file.id);
+    }
+  }
+  catch(err){
+    //TODO(developer)-Handle Files.list() exception
+    Logger.log('failed with error %s',err.toString());
   }
 }
 // [END drive_quickstart]
