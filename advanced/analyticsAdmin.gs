@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // [START apps_script_analyticsadmin]
+/**
+ * Logs the Google Analytics accounts accessible by the current user.
+ */
 function listAccounts() {
   var accounts = AnalyticsAdmin.Accounts.list();
   if (accounts.items && accounts.items.length) {

@@ -36,40 +36,40 @@ function runReport() {
   dateRange.endDate = 'today';
 
   var request = AnalyticsData.newRunReportRequest();
-  request.dimensions = [ dimension ];
-  request.metrics = [ metric ];
+  request.dimensions = [dimension];
+  request.metrics = [metric];
   request.dateRanges = dateRange;
 
   var report = AnalyticsData.Properties.runReport(request,
-                                                  'properties/' + propertyId);
+      'properties/' + propertyId);
   if (report.rows) {
     var spreadsheet = SpreadsheetApp.create('Google Analytics Report');
     var sheet = spreadsheet.getActiveSheet();
 
     // Append the headers.
     var dimensionHeaders = report.dimensionHeaders.map(
-      function(dimensionHeader) {
-        return dimensionHeader.name;
-    });
+        function(dimensionHeader) {
+          return dimensionHeader.name;
+        });
     var metricHeaders = report.metricHeaders.map(
-      function(metricHeader) {
-        return metricHeader.name;
-    });
-    var headers = [ ...dimensionHeaders, ...metricHeaders];
+        function(metricHeader) {
+          return metricHeader.name;
+        });
+    var headers = [...dimensionHeaders, ...metricHeaders];
 
     sheet.appendRow(headers);
 
     // Append the results.
     var rows = report.rows.map( function(row) {
       var dimensionValues = row.dimensionValues.map(
-        function(dimensionValue) {
-          return dimensionValue.value;
-      });
+          function(dimensionValue) {
+            return dimensionValue.value;
+          });
       var metricValues = row.metricValues.map(
-        function(metricValues) {
-          return metricValues.value;
-      });
-      return [ ...dimensionValues, ...metricValues];
+          function(metricValues) {
+            return metricValues.value;
+          });
+      return [...dimensionValues, ...metricValues];
     });
 
     sheet.getRange(2, 1, report.rows.length, headers.length)

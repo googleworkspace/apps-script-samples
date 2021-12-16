@@ -20,7 +20,7 @@ function sendChatMessageOnEdit(e) {
   var changeMessage;
   if (oldValue && value) {
     changeMessage = Utilities.formatString('changed from "%s" to "%s"',
-      oldValue, value);
+        oldValue, value);
   } else if (value) {
     changeMessage = Utilities.formatString('set to "%s"', value);
   } else {

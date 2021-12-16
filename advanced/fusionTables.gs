@@ -23,7 +23,7 @@ function listTables() {
     for (var i = 0; i < tables.items.length; i++) {
       var table = tables.items[i];
       Logger.log('Table with name "%s" and ID "%s" was found.',
-                 table.name, table.tableId);
+          table.name, table.tableId);
     }
   } else {
     Logger.log('No tables found.');

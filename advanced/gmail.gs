@@ -116,6 +116,9 @@ function logRecentHistory () {
 // [END gmail_history]
 
 // [START gmail_raw]
+/**
+ * Logs the raw message content for the most recent message in gmail.
+ */
 function getRawMessage() {
   try{
     const messageId = Gmail.Users.Messages.list('me').messages[0].id;

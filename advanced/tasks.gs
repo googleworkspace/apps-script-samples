@@ -23,7 +23,7 @@ function listTaskLists() {
     for (var i = 0; i < taskLists.items.length; i++) {
       var taskList = taskLists.items[i];
       Logger.log('Task list with title "%s" and ID "%s" was found.',
-                 taskList.title, taskList.id);
+          taskList.title, taskList.id);
     }
   } else {
     Logger.log('No task lists found.');
@@ -42,7 +42,7 @@ function listTasks(taskListId) {
     for (var i = 0; i < tasks.items.length; i++) {
       var task = tasks.items[i];
       Logger.log('Task with title "%s" and ID "%s" was found.',
-                 task.title, task.id);
+          task.title, task.id);
     }
   } else {
     Logger.log('No tasks found.');

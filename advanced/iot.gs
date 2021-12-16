@@ -24,11 +24,11 @@ function listRegistries() {
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
   var response = CloudIoT.Projects.Locations.Registries.list(parent);
-  if (response.deviceRegistries){
+  if (response.deviceRegistries) {
     response.deviceRegistries.forEach(
-      function(registry){
-        Logger.log(registry.id);
-      });
+        function(registry) {
+          Logger.log(registry.id);
+        });
   }
 }
 // [END apps_script_iot_list_registries]
@@ -46,15 +46,15 @@ function createRegistry() {
   var pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
 
   var registry = {
-    eventNotificationConfigs: [{
+    'eventNotificationConfigs': [{
       // From - https://console.cloud.google.com/cloudpubsub
-      pubsubTopicName : pubsubTopic
+      pubsubTopicName: pubsubTopic
     }],
     'id': name
   };
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
-  var response = CloudIoT.Projects.Locations.Registries.create(registry, parent)
+  var response = CloudIoT.Projects.Locations.Registries.create(registry, parent);
   Logger.log('Created registry: ' + response.id);
 }
 // [END apps_script_iot_create_registry]
@@ -71,7 +71,7 @@ function getRegistry() {
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
   var registryName = parent + '/registries/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.get(registryName)
+  var response = CloudIoT.Projects.Locations.Registries.get(registryName);
   Logger.log('Retrieved registry: ' + response.id);
 }
 // [END apps_script_iot_get_registry]
@@ -88,7 +88,7 @@ function deleteRegistry() {
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
   var registryName = parent + '/registries/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.remove(registryName)
+  var response = CloudIoT.Projects.Locations.Registries.remove(registryName);
   // Successfully removed registry if exception was not thrown.
   Logger.log('Deleted registry: ' + name);
 }
@@ -111,9 +111,9 @@ function listDevicesForRegistry() {
   Logger.log('Registry contains the following devices: ');
   if (response.devices) {
     response.devices.forEach(
-      function(device){
-        Logger.log('\t' + device.id);
-      });
+        function(device) {
+          Logger.log('\t' + device.id);
+        });
   }
 }
 // [END apps_script_iot_list_devices]
@@ -139,7 +139,7 @@ function createDevice() {
     }
   };
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent)
+  var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
   Logger.log('Created device:' + response.name);
 }
 // [END apps_script_iot_create_unauth_device]
@@ -178,7 +178,7 @@ function createRsaDevice() {
         format: 'RSA_X509_PEM',
         key: cert
       }
-    }],
+    }]
   };
 
   var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
@@ -199,7 +199,7 @@ function deleteDevice() {
   var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
   var deviceName = parent + '/devices/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName)
+  var response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
   // If no exception thrown, device was successfully removed
   Logger.log('Successfully deleted device: ' + deviceName);
 }
