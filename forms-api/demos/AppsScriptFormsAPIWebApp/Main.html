@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <style>
+    table,
+    th,
+    td {
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    tr {
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    b {
+      font-size: 16px;
+    }
+
+    a {
+      font-size: 12px;
+    }
+
+    div {
+      font-size: 14px;
+      padding: 10px 20px 15px;
+    }
+
+    a[disabled],
+    a[disabled]:hover {
+      pointer-events: none;
+      color: #e1e1e1;
+    }
+
+    .formInputs {
+      width: 100%;
+    }
+
+    div.scroll {
+      height: 600px;
+      width: 300px;
+      overflow: auto;
+      border: 1px solid #666;
+      background-color: #ccc;
+      padding: 8px;
+    }
+
+    pre {
+      font-size: 10px;
+    }
+  </style>
+  <script>
+    function resetFormId() {
+      let status = document.getElementById('status');
+      status.innerHTML = '';
+
+      let newFormId = document.getElementById('globalFormId').value;
+      document.getElementById('formAnchor').href =
+        'https://docs.google.com/forms/d/' + newFormId + '/edit';
+      document.getElementById('formAnchor').style.visibility = 'visible';
+    }
+
+    function create() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Creating new form...";
+      var newFormTitle = document.getElementById('newFormTitle');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function create: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response in client from Forms API: ' + JSON
+            .stringify(result));
+          let resObj = JSON.parse(result);
+          let newFormId = resObj["formId"];
+          console.log('New Form Id is: ' + newFormId);
+          document.getElementById('globalFormId').value = newFormId;
+          resetFormId();
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).create(newFormTitle.value);
+    }
+
+    function get() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Get form by id...";
+      var formId = document.getElementById('globalFormId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function get: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).get(formId.value);
+    }
+
+    function batchUpdate() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Batch update...";
+      var formId = document.getElementById('globalFormId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function batchUpdate: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>Success! Response code from API was: ' +
+            result + '</pre>';
+
+        }).batchUpdate(globalFormId.value);
+    }
+
+
+    function responsesList() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Get form by id...";
+      var formId = document.getElementById('globalFormId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function responseList: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).responsesList(formId.value);
+    }
+
+    function responsesGet() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Get response by id...";
+      var formId = document.getElementById('globalFormId');
+      var respId = document.getElementById('responseId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function responseList: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).responsesGet(formId.value, respId.value);
+    }
+
+    function watchesList() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Get watches ...";
+      var formId = document.getElementById('globalFormId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function responseList: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).watchesList(formId.value);
+    }
+
+    function createWatch() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Create watch ...";
+      var formId = document.getElementById('globalFormId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function createWatch: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).createWatch(formId.value);
+    }
+
+    function deleteWatch() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Delete watch ...";
+      var formId = document.getElementById('globalFormId');
+      var watchId = document.getElementById('watchId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function deleteWatch: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).deleteWatch(formId.value, watchId.value);
+    }
+
+    function renewWatch() {
+      var status = document.getElementById('status');
+      status.innerHTML = "Renew watch ...";
+      var formId = document.getElementById('globalFormId');
+      var watchId = document.getElementById('renewWatchId');
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          console.log('Error calling server function renewWatch: ' + error);
+        })
+        .withSuccessHandler(function(result) {
+          console.log('Raw response from Forms API: ' + result);
+          status.innerHTML = '<pre>' + result + '</pre>';
+
+        }).renewWatch(formId.value, watchId.value);
+    }
+  </script>
+</head>
+
+<body style="font-family: arial">
+  <h2><img src="https://www.gstatic.com/images/branding/product/2x/forms_2020q4_48dp.png" style="width:40px;height:40px;">Forms API & Apps Script Testing
+    Application - v.1 </h2>
+  <div>
+    <strong>Form Id: </strong><input type="text" id="globalFormId" size="50" value="<?= formId ?>"></input>
+    <button id="resetFormButton" onClick="resetFormId()">Set form id</button>
+    <a id="formAnchor" style="visibility: hidden" href="<?= formId ?>" target="_blank">Open in Forms</a>
+  </div>
+  <table style="width:100%">
+    <tr>
+      <th style="width:316px">Methods</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>
+        <div class="scroll">
+          <table style="width:100px">
+            <tr>
+              <div>
+                <b>forms.create</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/create" target="_blank">(spec)</a><br />
+                Form title: <input type="text" id="newFormTitle" class="formInputs" value="My new Form!"></input>
+                <button id="createButton" onClick="create()">Create
+                  Form</button>
+              </div>
+
+            </tr>
+            <tr>
+              <div>
+                <b>forms.get</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/get" target="_blank">(spec)</a><br />
+                <button id="getButton" onClick="get()">Get Form by id</button>
+              </div>
+
+            </tr>
+            <tr>
+              <div>
+                <b>forms.batchUpdate</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/batchUpdate" target="_blank">(spec)</a><br />
+                <!--Form id: <input type="text" id="batchId" class="formInputs" value="<?= formId ?>" ></input><br/>-->
+                <button id="batchUpdateButton" onClick="batchUpdate()">batchUpdate</button>
+              </div>
+
+            </tr>
+            <tr>
+              <div>
+                <b>forms.responses.list</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.responses/list" target="_blank">(spec)</a><br />
+                <button id="respListButton" onClick="responsesList()">List a
+                  form's responses</button>
+              </div>
+              <br />
+            </tr>
+            <tr>
+              <div>
+                <b>forms.responses.get</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.responses/get" target="_blank">(spec)</a><br />
+                Response id: <input type="text" id="responseId" class="formInputs"></input><br />
+                <button id="getListButton" onClick="responsesGet()">Get one
+                  response from the form</button>
+              </div>
+              <br />
+            </tr>
+            <tr>
+              <div>
+                <b>forms.watches.create</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/create" target="_blank">(spec)</a><br />
+                <button id="createWatchButton" onClick="createWatch()">Create
+                  Watch</button>
+              </div>
+              <br />
+            </tr>
+            <tr>
+              <div>
+                <b>forms.watches.delete</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/delete" target="_blank">(spec)</a><br />
+                Watch id: <input type="text" id="watchId" class="formInputs"></input><br />
+                <button id="deleteWatchButton" onClick="deleteWatch()">Delete
+                  Watch</button>
+              </div>
+              <br />
+            </tr>
+            <tr>
+              <div>
+                <b>forms.watches.list</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/list" target="_blank">(spec)</a><br />
+                <button id="watchListButton" onClick="watchesList()">Get Watches
+                  by Form id</button>
+              </div>
+              <br />
+            </tr>
+            <tr>
+              <div>
+                <b>forms.watches.renew</b>
+                <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/renew" target="_blank">(spec)</a><br />
+                Watch id:<input type="text" id="renewWatchId" class="formInputs"></input><br />
+                <button id="renewWatchButton" onClick="renewWatch()">Renew
+                  Watch</button>
+
+              </div>
+            </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+        <div id="status" />
+      </td>
+    </tr>
+  </table>
+  <div>
+    Forms API <a href="https://developers.google.com/forms/api/reference/rest" target="_blank">Reference</a>
+  </div>
+
+</body>
+</html>
