@@ -24,9 +24,9 @@ function listUserProfiles() {
   if (profiles.items) {
     // Print out the user ID and name of each
     for (var i = 0; i < profiles.items.length; i++) {
-    var profile = profiles.items[i];
-    Logger.log('Found profile with ID %s and name "%s".',
-        profile.profileId, profile.userName);
+      var profile = profiles.items[i];
+      Logger.log('Found profile with ID %s and name "%s".',
+          profile.profileId, profile.userName);
     }
   }
 }

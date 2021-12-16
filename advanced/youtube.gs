@@ -61,8 +61,8 @@ function retrieveMyUploads() {
       for (var j = 0; j < playlistResponse.items.length; j++) {
         var playlistItem = playlistResponse.items[j];
         Logger.log('[%s] Title: %s',
-                   playlistItem.snippet.resourceId.videoId,
-                   playlistItem.snippet.title);
+            playlistItem.snippet.resourceId.videoId,
+            playlistItem.snippet.title);
       }
       nextPageToken = playlistResponse.nextPageToken;
     }
@@ -144,7 +144,7 @@ function createSlides() {
   youTubeVideos.forEach(function(video) {
     var slide = presentation.appendSlide();
     slide.insertVideo(video.url,
-      0, 0, presentation.getPageWidth(), presentation.getPageHeight());
+        0, 0, presentation.getPageWidth(), presentation.getPageHeight());
   });
   Logger.log(presentation.getUrl());
 }

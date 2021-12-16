@@ -5,11 +5,11 @@
  * @return {Object} A set of folder names keyed by folder ID.
  */
 function getFoldersUnderRoot() {
-  var root = DriveApp.getRootFolder();
-  var folders = root.getFolders();
-  var folderSet = {};
+  const root = DriveApp.getRootFolder();
+  const folders = root.getFolders();
+  const folderSet = {};
   while (folders.hasNext()) {
-    var folder = folders.next();
+    const folder = folders.next();
     folderSet[folder.getId()] = folder.getName();
   }
   return folderSet;

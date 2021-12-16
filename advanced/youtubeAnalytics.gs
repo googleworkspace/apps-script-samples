@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- // [START apps_script_youtube_report]
+// [START apps_script_youtube_report]
 /**
  * Creates a spreadsheet containing daily view counts, watch-time metrics,
  * and new-subscriber counts for a channel's videos.

@@ -42,7 +42,7 @@ function claimYourVideoWithMonetizePolicy() {
     Logger.log('Claim created on video %s: %s', videoId, claimInserted);
   } catch (e) {
     Logger.log('Failed to create claim on video %s, error: %s',
-               videoId, e.message);
+        videoId, e.message);
   }
 }
 // [END apps_script_youtube_claim]
@@ -75,7 +75,7 @@ function updateAssetOwnership() {
     Logger.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
   } catch (e) {
     Logger.log('Ownership update failed on asset %s, error: %s',
-               assetId, e.message);
+        assetId, e.message);
   }
 }
 // [END apps_script_youtube_update_asset_ownership]

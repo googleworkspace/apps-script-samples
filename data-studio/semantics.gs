@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
- // [START apps_script_data_studio_manual]
- var schema = [
+// [START apps_script_data_studio_manual]
+var schema = [
   {
     'name': 'Income',
     'label': 'Income (in USD)',

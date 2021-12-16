@@ -160,18 +160,18 @@ function logSyncedEvents(calendarId, fullSync) {
 
     if (events.items && events.items.length > 0) {
       for (var i = 0; i < events.items.length; i++) {
-         var event = events.items[i];
-         if (event.status === 'cancelled') {
-           console.log('Event id %s was cancelled.', event.id);
-         } else if (event.start.date) {
-           // All-day event.
-           var start = new Date(event.start.date);
-           console.log('%s (%s)', event.summary, start.toLocaleDateString());
-         } else {
-           // Events that don't last all day; they have defined start times.
-           var start = new Date(event.start.dateTime);
-           console.log('%s (%s)', event.summary, start.toLocaleString());
-         }
+        var event = events.items[i];
+        if (event.status === 'cancelled') {
+          console.log('Event id %s was cancelled.', event.id);
+        } else if (event.start.date) {
+          // All-day event.
+          var start = new Date(event.start.date);
+          console.log('%s (%s)', event.summary, start.toLocaleDateString());
+        } else {
+          // Events that don't last all day; they have defined start times.
+          var start = new Date(event.start.dateTime);
+          console.log('%s (%s)', event.summary, start.toLocaleString());
+        }
       }
     } else {
       console.log('No events found.');
@@ -225,11 +225,11 @@ function conditionalUpdate() {
   event.location = 'The Coffee Shop';
   try {
     event = Calendar.Events.update(
-      event,
-      calendarId,
-      event.id,
-      {},
-      {'If-Match': event.etag}
+        event,
+        calendarId,
+        event.id,
+        {},
+        {'If-Match': event.etag}
     );
     Logger.log('Successfully updated event: ' + event.id);
   } catch (e) {

@@ -61,8 +61,8 @@ function logRecentHistory() {
   // Get the history ID associated with the most recent
   // sent message.
   var sent = Gmail.Users.Threads.list('me', {
-      q: 'label:sent',
-      maxResults: 1
+    q: 'label:sent',
+    maxResults: 1
   });
   if (!sent.threads || !sent.threads[0]) {
     Logger.log('No sent threads found.');
@@ -99,6 +99,9 @@ function logRecentHistory() {
 // [END apps_script_gmail_history]
 
 // [START apps_script_gmail_raw]
+/**
+ * Logs the raw message content for the most recent message in gmail.
+ */
 function getRawMessage() {
   var messageId = Gmail.Users.Messages.list('me').messages[0].id;
   console.log(messageId);

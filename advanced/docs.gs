@@ -40,7 +40,7 @@ function findAndReplace(documentId, findTextToReplacementMap) {
       replaceAllText: {
         containsText: {
           text: findText,
-          matchCase: true,
+          matchCase: true
         },
         replaceText: replaceText
       }
@@ -97,7 +97,7 @@ function insertAndStyleText(documentId, text) {
 // [END apps_script_docs_insert_and_style_text]
 
 // [START apps_script_docs_read_first_paragraph]
- /**
+/**
  * Read the first paragraph of the body of a document.
  * @param {string} documentId The ID of the document to read.
  */

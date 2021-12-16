@@ -10,9 +10,9 @@ function measuringExecutionTime() {
   // with the message string in the log viewer, and the JSON content
   // is displayed in the expanded log structure under "jsonPayload".
   var parameters = {
-      isValid: true,
-      content: 'some string',
-      timestamp: new Date()
+    isValid: true,
+    content: 'some string',
+    timestamp: new Date()
   };
   console.log({message: 'Function Input', initialData: parameters});
 
@@ -38,10 +38,10 @@ function emailDataRow(rowNumber, email) {
   console.log('Emailing data row ' + rowNumber + ' to ' + email);
   var sheet = SpreadsheetApp.getActiveSheet();
   var data = sheet.getDataRange().getValues();
-  var rowData = data[rowNumber-1].join(" ");
+  var rowData = data[rowNumber-1].join(' ');
   console.log('Row ' + rowNumber + ' data: ' + rowData);
   MailApp.sendEmail(email,
-                    'Data in row ' + rowNumber,
-                    rowData);
+      'Data in row ' + rowNumber,
+      rowData);
 }
 // [END apps_script_logging_2]

@@ -39,9 +39,9 @@ function createUser() {
  */
 function createTable() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
-  conn.createStatement().execute('CREATE TABLE entries '
-      + '(guestName VARCHAR(255), content VARCHAR(255), '
-      + 'entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));');
+  conn.createStatement().execute('CREATE TABLE entries ' +
+      '(guestName VARCHAR(255), content VARCHAR(255), ' +
+      'entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));');
 }
 // [END apps_script_jdbc_create]
 
@@ -62,8 +62,8 @@ var dbUrl = 'jdbc:google:mysql://' + connectionName + '/' + db;
 function writeOneRecord() {
   var conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
 
-  var stmt = conn.prepareStatement('INSERT INTO entries '
-      + '(guestName, content) values (?, ?)');
+  var stmt = conn.prepareStatement('INSERT INTO entries ' +
+      '(guestName, content) values (?, ?)');
   stmt.setString(1, 'First Guest');
   stmt.setString(2, 'Hello, world');
   stmt.execute();
@@ -77,8 +77,8 @@ function writeManyRecords() {
   conn.setAutoCommit(false);
 
   var start = new Date();
-  var stmt = conn.prepareStatement('INSERT INTO entries '
-      + '(guestName, content) values (?, ?)');
+  var stmt = conn.prepareStatement('INSERT INTO entries ' +
+      '(guestName, content) values (?, ?)');
   for (var i = 0; i < 500; i++) {
     stmt.setString(1, 'Name ' + i);
     stmt.setString(2, 'Hello, world ' + i);
