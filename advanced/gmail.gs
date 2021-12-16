@@ -18,18 +18,16 @@
  * Lists the user's labels, including name, type,
  * ID and visibility information.
  */
-
-function listLabelInfo(){
-  try{
+function listLabelInfo() {
+  try {
     const response =
       Gmail.Users.Labels.list('me');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       Logger.log(JSON.stringify(label));
     }
-  }
-  catch(err){
-    Logger.log(err)
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_label]
@@ -40,8 +38,7 @@ function listLabelInfo(){
  * snippet associated with that thread.
  */
 function listInboxSnippets() {
-
-  try{
+  try {
     let pageToken;
     do {
       const threadList = Gmail.Users.Threads.list('me', {
@@ -55,9 +52,8 @@ function listInboxSnippets() {
       }
       pageToken = threadList.nextPageToken;
     } while (pageToken);
-  }
-  catch(err){
-    Logger.log(err)
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_inbox_snippets]
@@ -69,13 +65,13 @@ function listInboxSnippets() {
  * recently sent message, then logs all the message IDs
  * that have changed since that message was sent.
  */
-function logRecentHistory () {
-  try{
+function logRecentHistory() {
+  try {
     // Get the history ID associated with the most recent
     // sent message.
     const sent = Gmail.Users.Threads.list('me', {
-        q: 'label:sent',
-        maxResults: 1
+      q: 'label:sent',
+      maxResults: 1
     });
     if (!sent.threads || !sent.threads[0]) {
       Logger.log('No sent threads found.');
@@ -86,7 +82,7 @@ function logRecentHistory () {
     // Log the ID of each message changed since the most
     // recent message was sent.
     let pageToken;
-    let changed = [];
+    const changed = [];
     do {
       const recordList = Gmail.Users.History.list('me', {
         startHistoryId: historyId,
@@ -104,13 +100,12 @@ function logRecentHistory () {
       }
       pageToken = recordList.nextPageToken;
     } while (pageToken);
-    
+
     changed.forEach(function(id) {
       Logger.log('Message Changed: %s', id);
     });
-  }
-  catch(err){
-    Logger.log(err)
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_history]
@@ -120,7 +115,7 @@ function logRecentHistory () {
  * Logs the raw message content for the most recent message in gmail.
  */
 function getRawMessage() {
-  try{
+  try {
     const messageId = Gmail.Users.Messages.list('me').messages[0].id;
     console.log(messageId);
     const message = Gmail.Users.Messages.get('me', messageId, {
@@ -130,9 +125,8 @@ function getRawMessage() {
     // Get raw content as base64url encoded string.
     const encodedMessage = Utilities.base64Encode(message.raw);
     console.log(encodedMessage);
-  }
-  catch(err){
-    Logger.log(err)
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_raw]
