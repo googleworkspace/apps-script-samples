@@ -18,17 +18,22 @@
  * Creates Course with an alias specified
  */
 function createAlias() {
-  var course = {
+  const courseDetails = {
     id: 'p:10th_bio',
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: "We'll be learning about about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!",
+    description: "We'll be learning about the structure of living creatures from a combination of textbooks, guest lectures and lab work. Expect to be excited!",
     room: '301',
     ownerId: 'me',
     courseState: 'PROVISIONED'
   };
-  var course = Classroom.Courses.create(course);
-  Logger.log('Course created: %s (%s)', course.name, course.id)
+  try {
+    const course = Classroom.Courses.create(courseDetails);
+    Logger.log('Course created: %s (%s)', course.name, course.id)
+  } catch (err) {
+    // TODO(developer)- Handle classroom API's Courses.create() exception
+    Logger.log('Failed to create alias for Course %s with error %s',  course.id,err.message)
+  }
 }
 // [END classroom_create_alias]
