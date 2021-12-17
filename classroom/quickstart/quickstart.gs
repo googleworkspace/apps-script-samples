@@ -18,18 +18,23 @@
  * Lists 10 course names and ids.
  */
 function listCourses() {
-  var optionalArgs = {
+  const optionalArgs = {
     pageSize: 10
   };
-  var response = Classroom.Courses.list(optionalArgs);
-  var courses = response.courses;
-  if (courses && courses.length > 0) {
-    for (i = 0; i < courses.length; i++) {
-      var course = courses[i];
-      Logger.log('%s (%s)', course.name, course.id);
+  try {
+    const response = Classroom.Courses.list(optionalArgs);
+    const courses = response.courses;
+    if (courses && courses.length > 0) {
+      for (let i = 0; i < courses.length; i++) {
+        const course = courses[i];
+        Logger.log('%s (%s)', course.name, course.id);
+      }
+      return;
     }
-  } else {
     Logger.log('No courses found.');
+  } catch (err) {
+    //TODO(developer)- Handle Courses.list() exception from Classroom API
+    Logger.log(err.toString())
   }
 }
 // [END classroom_quickstart]
