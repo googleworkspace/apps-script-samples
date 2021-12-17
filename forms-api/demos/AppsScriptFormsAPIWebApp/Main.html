@@ -2,6 +2,7 @@
 <html>
 
 <head>
+   <title>Main Web Page</title>
   <base target="_top">
   <style>
     table,
@@ -237,11 +238,11 @@
 </head>
 
 <body style="font-family: arial">
-  <h2><img src="https://www.gstatic.com/images/branding/product/2x/forms_2020q4_48dp.png" style="width:40px;height:40px;">Forms API & Apps Script Testing
+  <h2><img src="https://www.gstatic.com/images/branding/product/2x/forms_2020q4_48dp.png" style="width:40px;height:40px;">Forms API &#38; Apps Script Testing
     Application - v.1 </h2>
   <div>
-    <strong>Form Id: </strong><input type="text" id="globalFormId" size="50" value="<?= formId ?>"></input>
-    <button id="resetFormButton" onClick="resetFormId()">Set form id</button>
+    <strong>Form Id: </strong><input type="text" id="globalFormId" size="50" value="<?= formId ?>">
+    <button id="resetFormButton" onclick="resetFormId()">Set form id</button>
     <a id="formAnchor" style="visibility: hidden" href="<?= formId ?>" target="_blank">Open in Forms</a>
   </div>
   <table style="width:100%">
@@ -257,8 +258,8 @@
               <div>
                 <b>forms.create</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/create" target="_blank">(spec)</a><br />
-                Form title: <input type="text" id="newFormTitle" class="formInputs" value="My new Form!"></input>
-                <button id="createButton" onClick="create()">Create
+                Form title: <input type="text" id="newFormTitle" class="formInputs" value="My new Form!">
+                <button id="createButton" onclick="create()">Create
                   Form</button>
               </div>
 
@@ -267,7 +268,7 @@
               <div>
                 <b>forms.get</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/get" target="_blank">(spec)</a><br />
-                <button id="getButton" onClick="get()">Get Form by id</button>
+                <button id="getButton" onclick="get()">Get Form by id</button>
               </div>
 
             </tr>
@@ -275,8 +276,8 @@
               <div>
                 <b>forms.batchUpdate</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms/batchUpdate" target="_blank">(spec)</a><br />
-                <!--Form id: <input type="text" id="batchId" class="formInputs" value="<?= formId ?>" ></input><br/>-->
-                <button id="batchUpdateButton" onClick="batchUpdate()">batchUpdate</button>
+                <!--Form id: <input type="text" id="batchId" class="formInputs" value="<?= formId ?>" ><br/>-->
+                <button id="batchUpdateButton" onclick="batchUpdate()">batchUpdate</button>
               </div>
 
             </tr>
@@ -284,7 +285,7 @@
               <div>
                 <b>forms.responses.list</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.responses/list" target="_blank">(spec)</a><br />
-                <button id="respListButton" onClick="responsesList()">List a
+                <button id="respListButton" onclick="responsesList()">List a
                   form's responses</button>
               </div>
               <br />
@@ -293,8 +294,8 @@
               <div>
                 <b>forms.responses.get</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.responses/get" target="_blank">(spec)</a><br />
-                Response id: <input type="text" id="responseId" class="formInputs"></input><br />
-                <button id="getListButton" onClick="responsesGet()">Get one
+                Response id: <input type="text" id="responseId" class="formInputs"><br />
+                <button id="getListButton" onclick="responsesGet()">Get one
                   response from the form</button>
               </div>
               <br />
@@ -303,7 +304,7 @@
               <div>
                 <b>forms.watches.create</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/create" target="_blank">(spec)</a><br />
-                <button id="createWatchButton" onClick="createWatch()">Create
+                <button id="createWatchButton" onclick="createWatch()">Create
                   Watch</button>
               </div>
               <br />
@@ -312,8 +313,8 @@
               <div>
                 <b>forms.watches.delete</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/delete" target="_blank">(spec)</a><br />
-                Watch id: <input type="text" id="watchId" class="formInputs"></input><br />
-                <button id="deleteWatchButton" onClick="deleteWatch()">Delete
+                Watch id: <input type="text" id="watchId" class="formInputs"><br />
+                <button id="deleteWatchButton" onclick="deleteWatch()">Delete
                   Watch</button>
               </div>
               <br />
@@ -322,7 +323,7 @@
               <div>
                 <b>forms.watches.list</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/list" target="_blank">(spec)</a><br />
-                <button id="watchListButton" onClick="watchesList()">Get Watches
+                <button id="watchListButton" onclick="watchesList()">Get Watches
                   by Form id</button>
               </div>
               <br />
@@ -331,8 +332,8 @@
               <div>
                 <b>forms.watches.renew</b>
                 <a href="https://developers.google.com/forms/api/reference/rest/v1beta/forms.watches/renew" target="_blank">(spec)</a><br />
-                Watch id:<input type="text" id="renewWatchId" class="formInputs"></input><br />
-                <button id="renewWatchButton" onClick="renewWatch()">Renew
+                Watch id:<input type="text" id="renewWatchId" class="formInputs"><br />
+                <button id="renewWatchButton" onclick="renewWatch()">Renew
                   Watch</button>
 
               </div>
