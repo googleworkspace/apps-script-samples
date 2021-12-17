@@ -1,5 +1,5 @@
 ---
-title: Google Forms API Apps Script Webapp
+title: Google Forms API Apps Script Web app
 description: Serves as an example of how to use the Google Forms API via REST calls from Apps Script.
 labels: Apps Script, Google Forms API, Forms
 material_icon: Feed
