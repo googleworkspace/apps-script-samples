@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2.4.0
         with:
           fetch-depth: 0
-      - uses: github/super-linter/slim@v4.8.4
+      - uses: github/super-linter/slim@v4.8.5
         env:
           ERROR_ON_MISSING_EXEC_BIT: true
           VALIDATE_JSCPD: false
