@@ -31,8 +31,8 @@ function coursePatch(courseId) {
     Logger.log('Course "%s" updated.', course.name);
   } catch (err) {
     // TODO (developer) - Handle Courses.patch() exception
-    Logger.log('Failed to update the course.')
-    Logger.log(err.message)
+    Logger.log('Failed to update the course. Error message: %s', err.message)
+    
   } 
 }
 // [END classroom_patch_course]s
