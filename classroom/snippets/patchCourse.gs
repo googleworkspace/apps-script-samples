@@ -35,4 +35,4 @@ function coursePatch(courseId) {
     
   } 
 }
-// [END classroom_patch_course]s
+// [END classroom_patch_course]
