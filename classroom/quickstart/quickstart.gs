@@ -24,17 +24,19 @@ function listCourses() {
   try {
     const response = Classroom.Courses.list(optionalArgs);
     const courses = response.courses;
-    if (courses && courses.length > 0) {
-      for (let i = 0; i < courses.length; i++) {
+    if (courses && courses.length == 0) {
+      Logger.log('No courses found.');
+      return;
+    }
+    Logger.log('Courses :');
+    for (let i = 0; i < courses.length; i++) {
         const course = courses[i];
         Logger.log('%s (%s)', course.name, course.id);
       }
-      return;
-    }
-    Logger.log('No courses found.');
+   
   } catch (err) {
-    //TODO(developer)- Handle Courses.list() exception from Classroom API
-    Logger.log(err.toString())
+    // TODO (developer)- Handle Courses.list() exception from Classroom API
+    Logger.log('Failed with error %s', err.message)
   }
 }
 // [END classroom_quickstart]
