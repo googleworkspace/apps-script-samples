@@ -22,8 +22,8 @@
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.OAUTH2)
-    .build();
+      .setAuthType(cc.AuthType.OAUTH2)
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_oauth2]
 
@@ -35,9 +35,9 @@ function getAuthType() {
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.PATH_USER_PASS)
-    .setHelpUrl('https://www.example.org/connector-auth-help')
-    .build();
+      .setAuthType(cc.AuthType.PATH_USER_PASS)
+      .setHelpUrl('https://www.example.org/connector-auth-help')
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_path_user_pass]
 
@@ -49,9 +49,9 @@ function getAuthType() {
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.USER_PASS)
-    .setHelpUrl('https://www.example.org/connector-auth-help')
-    .build();
+      .setAuthType(cc.AuthType.USER_PASS)
+      .setHelpUrl('https://www.example.org/connector-auth-help')
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_pass]
 
@@ -63,9 +63,9 @@ function getAuthType() {
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.USER_TOKEN)
-    .setHelpUrl('https://www.example.org/connector-auth-help')
-    .build();
+      .setAuthType(cc.AuthType.USER_TOKEN)
+      .setHelpUrl('https://www.example.org/connector-auth-help')
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_token]
 
@@ -77,9 +77,9 @@ function getAuthType() {
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.KEY)
-    .setHelpUrl('https://www.example.org/connector-auth-help')
-    .build();
+      .setAuthType(cc.AuthType.KEY)
+      .setHelpUrl('https://www.example.org/connector-auth-help')
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_key]
 
@@ -91,8 +91,8 @@ function getAuthType() {
 function getAuthType() {
   var cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
-    .setAuthType(cc.AuthType.NONE)
-    .build();
+      .setAuthType(cc.AuthType.NONE)
+      .build();
 }
 // [END apps_script_data_studio_get_auth_type_none]
 
@@ -226,13 +226,13 @@ function isAuthValid() {
  */
 function getOAuthService() {
   return OAuth2.createService('exampleService')
-    .setAuthorizationBaseUrl('...')
-    .setTokenUrl('...')
-    .setClientId('...')
-    .setClientSecret('...')
-    .setPropertyStore(PropertiesService.getUserProperties())
-    .setCallbackFunction('authCallback')
-    .setScope('...');
+      .setAuthorizationBaseUrl('...')
+      .setTokenUrl('...')
+      .setClientId('...')
+      .setClientSecret('...')
+      .setPropertyStore(PropertiesService.getUserProperties())
+      .setCallbackFunction('authCallback')
+      .setScope('...');
 };
 // [END apps_script_data_studio_auth_library]
 

@@ -24,7 +24,8 @@ function runQuery() {
 
   var request = {
     query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
-      'FROM publicdata:samples.shakespeare WHERE LENGTH(word) > 10;'
+      'FROM `publicdata.samples.shakespeare` WHERE LENGTH(word) > 10;',
+    useLegacySql: false
   };
   var queryResults = BigQuery.Jobs.query(request, projectId);
   var jobId = queryResults.jobReference.jobId;

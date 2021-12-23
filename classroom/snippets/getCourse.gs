@@ -26,6 +26,7 @@ function getCourse() {
   } catch (err) {
     // TODO (developer) - Handle Courses.get() exception of Handle Classroom API
     Logger.log("Course with id %s not found", courseId);
+
   }
 }
 // [END classroom_get_course]

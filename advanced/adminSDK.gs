@@ -208,9 +208,9 @@ function getLicenseAssignments() {
   do {
     assignments = AdminLicenseManager.LicenseAssignments
         .listForProduct(productId, customerId, {
-      maxResults: 500,
-      pageToken: pageToken
-    });
+          maxResults: 500,
+          pageToken: pageToken
+        });
   } while (pageToken);
   for (var i = 0; i < assignments.items.length; i++) {
     var assignment = assignments.items[i];
@@ -345,7 +345,7 @@ function generateUserUsageReport() {
 
     // Append the headers.
     var headers = ['Date', 'User', 'Last Login', 'Num Emails Received',
-        'Num Drive Files Created'];
+      'Num Drive Files Created'];
     sheet.appendRow(headers);
 
     // Append the results.

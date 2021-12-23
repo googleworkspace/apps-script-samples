@@ -62,9 +62,9 @@ function createContainerVersion(accountPath) {
       workspacePath);
   // Creates a container version with the variabe, trigger, and tag.
   var version = TagManager.Accounts.Containers.Workspaces
-                    .create_version(
-                        {'name': 'apps script version'}, workspacePath)
-                    .containerVersion;
+      .create_version(
+          {'name': 'apps script version'}, workspacePath)
+      .containerVersion;
   Logger.log(version);
   return version;
 }

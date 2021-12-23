@@ -46,7 +46,7 @@ function listWebProperties(accountId) {
 
       // List profiles in the web property.
       listProfiles(accountId, webProperty.id);
-      }
+    }
   } else {
     Logger.log('\tNo web properties found.');
   }

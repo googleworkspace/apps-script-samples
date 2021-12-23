@@ -19,17 +19,18 @@
  * ID and visibility information.
  */
 
-function listLabelInfo(){
-  try{
+function listLabelInfo() {
+  try {
+
     const response =
       Gmail.Users.Labels.list('me');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       Logger.log(JSON.stringify(label));
     }
-  }
-  catch(err){
-    Logger.log(err)
+
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_label]
@@ -40,7 +41,6 @@ function listLabelInfo(){
  * snippet associated with that thread.
  */
 function listInboxSnippets() {
-
   try{
     let pageToken;
     do {
@@ -55,9 +55,8 @@ function listInboxSnippets() {
       }
       pageToken = threadList.nextPageToken;
     } while (pageToken);
-  }
-  catch(err){
-    Logger.log(err)
+  } catch (err) {
+    Logger.log(err);
   }
 }
 // [END gmail_inbox_snippets]
@@ -87,6 +86,7 @@ function logRecentHistory () {
     // recent message was sent.
     let pageToken;
     let changed = [];
+
     do {
       const recordList = Gmail.Users.History.list('me', {
         startHistoryId: historyId,
@@ -116,8 +116,11 @@ function logRecentHistory () {
 // [END gmail_history]
 
 // [START gmail_raw]
+/**
+ * Logs the raw message content for the most recent message in gmail.
+ */
 function getRawMessage() {
-  try{
+  try {
     const messageId = Gmail.Users.Messages.list('me').messages[0].id;
     console.log(messageId);
     const message = Gmail.Users.Messages.get('me', messageId, {
@@ -130,6 +133,7 @@ function getRawMessage() {
   }
   catch(err){
     Logger.log(err)
+
   }
 }
 // [END gmail_raw]

@@ -163,7 +163,7 @@ function formatShapeText(presentationId, shapeId) {
 function saveThumbnailImage(i) {
   var presentation = SlidesApp.getActivePresentation();
   var thumbnail = Slides.Presentations.Pages.getThumbnail(
-    presentation.getId(), presentation.getSlides()[i].getObjectId());
+      presentation.getId(), presentation.getSlides()[i].getObjectId());
   var response = UrlFetchApp.fetch(thumbnail.contentUrl);
   var image = response.getBlob();
   var file = DriveApp.createFile(image);
