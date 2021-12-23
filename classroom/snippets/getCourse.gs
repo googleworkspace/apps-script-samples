@@ -18,12 +18,14 @@
  * Retrieves course by id. 
  */
 function getCourse() {
-  var courseId = '123456';
+  const courseId = '123456';
   try {
-    var course = Classroom.Courses.get(courseId);
+    // Get the course using course id
+    const course = Classroom.Courses.get(courseId);
     Logger.log('Course "%s" found. ', course.name);
   } catch (err) {
-    Logger.log("Course with id "%s" not found", courseId);
+    // TODO (developer) - Handle Courses.get() exception of Handle Classroom API
+    Logger.log("Course with id %s not found", courseId);
   }
 }
 // [END classroom_get_course]
