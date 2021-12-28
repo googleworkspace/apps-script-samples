@@ -17,15 +17,22 @@
 /**
  * Updates the section and room of Google Classroom. 
  */
-function coursePatch(course_id) {
-  var course = {
+function coursePatch(courseId) {
+  const courseDetails = {
     'section': 'Period 3',
     'room': '302'
   };
-  var mask = { 
-    updateMask: 'section,room' 
+  const mask = {
+    updateMask: 'section,room'
   };
-  var course = Classroom.Courses.patch(body=course, id=course_id, updateMask=mask);
-  Logger.log('Course "%s" updated.', course.name);
+  try {
+    // Update section and room in course.
+    const course = Classroom.Courses.patch(body=courseDetails, id=courseId, updateMask=mask);
+    Logger.log('Course "%s" updated.', course.name);
+  } catch (err) {
+    // TODO (developer) - Handle Courses.patch() exception
+    Logger.log('Failed to update the course. Error message: %s',JSON.stringify(err.message))
+
+  }
 }
 // [END classroom_patch_course]
