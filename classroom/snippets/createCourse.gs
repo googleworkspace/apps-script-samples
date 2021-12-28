@@ -18,16 +18,22 @@
  * Creates 10th Grade Biology Course.
  */
 function createCourse() {
-  var course = {
+  const courseDetails = {
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: "We'll be learning about about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!",
+    description: 'We\'ll be learning about the structure of living creatures from a combination of textbooks, guest lectures, lab work. Expect to be excited!',
     room: '301',
     ownerId: 'me',
     courseState: 'PROVISIONED'
   };
-  var course = Classroom.Courses.create(course);
-  Logger.log('Course created: %s (%s)', course.name, course.id)
+  try {
+    // Create the course using course details.
+    const course = Classroom.Courses.create(courseDetails);
+    Logger.log('Course created: %s (%s)', course.name, course.id);
+  } catch (err) {
+    // TODO (developer) - Handle Courses.create() exception
+    Logger.log('Failed to create course %s with an error %s', courseDetails.name, err.message);
+  }
 }
 // [END classroom_create_course]
