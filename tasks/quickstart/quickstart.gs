@@ -18,19 +18,23 @@
  * Lists the user's tasks.
  */
 function listTaskLists() {
-  var optionalArgs = {
+  const optionalArgs = {
     maxResults: 10
   };
-  var response = Tasks.Tasklists.list(optionalArgs);
-  var taskLists = response.items;
-  if (taskLists && taskLists.length > 0) {
-    Logger.log('Task lists:');
-    for (var i = 0; i < taskLists.length; i++) {
-      var taskList = taskLists[i];
-      Logger.log('%s (%s)', taskList.title, taskList.id);
+  try {
+    const response = Tasks.Tasklists.list(optionalArgs);
+    const taskLists = response.items;
+    if (taskLists && taskLists.length > 0) {
+      for (let i = 0; i < taskLists.length; i++) {
+        const taskList = taskLists[i];
+        Logger.log('%s (%s)', taskList.title, taskList.id);
+      }
+      return;
     }
-  } else {
     Logger.log('No task lists found.');
+  } catch (err) {
+    // TODO (developer) - Handle exception from Task API
+    Logger.log('Failed with error %s', err.message);
   }
 }
 // [END tasks_quickstart]

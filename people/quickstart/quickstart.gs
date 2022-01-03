@@ -18,16 +18,21 @@
  * Print the display name if available for 10 connections.
  */
 function listConnectionNames() {
-  var connections = People.People.Connections.list('people/me', {
-    pageSize: 10,
-    personFields: 'names,emailAddresses'
-  });
-  connections.connections.forEach(function(person) {
-    if (person.names && person.names.length > 0) {
-      Logger.log(person.names[0].displayName);
-    } else {
+  try {
+    const connections = People.People.Connections.list('people/me', {
+      pageSize: 10,
+      personFields: 'names,emailAddresses'
+    });
+    connections.connections.forEach((person) => {
+      if (person.names && person.names.length > 0) {
+        Logger.log(person.names[0].displayName);
+        return;
+      }
       Logger.log('No display name found for connection.');
-    }
-  });
+    });
+  } catch (err) {
+    // TODO (developer) - Handle exception from People API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END people_quickstart]

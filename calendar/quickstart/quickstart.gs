@@ -18,27 +18,34 @@
  * Lists 10 upcoming events in the user's calendar.
  */
 function listUpcomingEvents() {
-  var calendarId = 'primary';
-  var optionalArgs = {
+  const calendarId = 'primary';
+  const optionalArgs = {
     timeMin: (new Date()).toISOString(),
     showDeleted: false,
     singleEvents: true,
     maxResults: 10,
     orderBy: 'startTime'
   };
-  var response = Calendar.Events.list(calendarId, optionalArgs);
-  var events = response.items;
-  if (events.length > 0) {
-    for (i = 0; i < events.length; i++) {
-      var event = events[i];
-      var when = event.start.dateTime;
-      if (!when) {
-        when = event.start.date;
+  try {
+    // List the calendar events using list() method.
+    const response = Calendar.Events.list(calendarId, optionalArgs);
+    const events = response.items;
+    if (events.length > 0) {
+      // Print the calendar events
+      for (let i = 0; i < events.length; i++) {
+        const event = events[i];
+        let when = event.start.dateTime;
+        if (!when) {
+          when = event.start.date;
+        }
+        Logger.log('%s (%s)', event.summary, when);
       }
-      Logger.log('%s (%s)', event.summary, when);
+      return;
     }
-  } else {
     Logger.log('No upcoming events found.');
+  } catch (err) {
+    // TODO (developer) - Handle exception from Calendar API
+    Logger.log('Failed with error %s', err.message);
   }
 }
 // [END calendar_quickstart]
