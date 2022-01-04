@@ -18,21 +18,20 @@
  * Lists all labels in the user's mailbox
  */
 function listLabels() {
-  try{
+  try {
     const response = Gmail.Users.Labels.list('me');
-    if (response.labels.length == 0) {
+    if (response.labels.length === 0) {
       Logger.log('No labels found.');
       return;
-    } 
+    }
     Logger.log('Labels:');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       Logger.log('- %s', label.name);
     }
-  }
-  catch(err){
-    //TODO(developer)-Handle Labels.list() exceptions 
-    Logger.log('failed with error %s',err.toString());
+  } catch (err) {
+    // TODO (developer) - Handle Labels.list() exceptions
+    Logger.log('failed with error %s', err.toString());
   }
 }
 // [END gmail_quickstart]

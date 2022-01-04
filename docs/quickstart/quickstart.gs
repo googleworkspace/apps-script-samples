@@ -19,8 +19,14 @@
  * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
  */
 function printDocTitle() {
-  var documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE'
-  var doc = Docs.Documents.get(documentId)
-  Logger.log('The title of the doc is: %s', doc.title)
+  const documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
+  try {
+    // Get the document using document id
+    const doc = Docs.Documents.get(documentId);
+    Logger.log('The title of the doc is: %s', doc.title);
+  } catch (err) {
+    // TODO (developer) - Handle exception from Docs API
+    Logger.log('Failed to found document with an error %s', err.message);
+  }
 }
 // [END docs_quickstart]
