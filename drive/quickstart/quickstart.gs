@@ -1,5 +1,5 @@
 /**
- * Copyright Google LLC
+ * Copyright  Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START drive_quickstart]
+// [START gmail_quickstart]
 /**
- * Lists the names and IDs of up to 10 files.
+ * Lists all labels in the user's mailbox
  */
-function listFiles () {
-  try{
-    const files = Drive.Files.list({
-      fields: 'nextPageToken, items(id, title)',
-      maxResults: 10
-    }).items;
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      Logger.log('%s (%s)', file.title, file.id);
+function listLabels() {
+  try {
+    const response = Gmail.Users.Labels.list('me');
+    if (response.labels.length === 0) {
+      Logger.log('No labels found.');
+      return;
     }
-  }
-  catch(err){
-    //TODO(developer)-Handle Files.list() exception
-    Logger.log('failed with error %s',err.toString());
+    Logger.log('Labels:');
+    for (let i = 0; i < response.labels.length; i++) {
+      const label = response.labels[i];
+      Logger.log('- %s', label.name);
+    }
+  } catch (err) {
+    // TODO (developer) - Handle Labels.list() exceptions
+    Logger.log('failed with error %s', err.toString());
   }
 }
-// [END drive_quickstart]
+// [END gmail_quickstart]
