@@ -23,8 +23,12 @@ function logNamesAndMajors() {
   const spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
   const rangeName = 'Class Data!A2:E';
   try {
-    // Get the values from the spreadsheet.
+    /**
+     * Get the values from the spreadsheet using spreadsheetId and range
+     * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
+     */
     const values = Sheets.Spreadsheets.Values.get(spreadsheetId, rangeName).values;
+    //  Print the values from spreadsheet if values are available.
     if (!values) {
       Logger.log('No data found.');
       return;

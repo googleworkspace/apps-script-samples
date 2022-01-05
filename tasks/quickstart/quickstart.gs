@@ -19,11 +19,16 @@
  */
 function listTaskLists() {
   const optionalArgs = {
-    maxResults: 10
+    maxResults: 10 // Maximum number of task lists returned on one page
   };
   try {
+    /**
+     * Returns all the authenticated user's task lists.
+     * @see https://developers.google.com/tasks/reference/rest/v1/tasklists/list
+     */
     const response = Tasks.Tasklists.list(optionalArgs);
     const taskLists = response.items;
+    // Print task list of user if available.
     if (taskLists && taskLists.length > 0) {
       for (let i = 0; i < taskLists.length; i++) {
         const taskList = taskLists[i];

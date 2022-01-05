@@ -22,9 +22,13 @@
 function logSlidesAndElements() {
   const presentationId = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc';
   try {
-    // Gets the latest version of the specified presentation.
+    /**
+     * Gets the specified presentation using presentationId
+     * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/get
+     */
     const presentation = Slides.Presentations.get(presentationId);
     const slides = presentation.slides;
+    // Print the number of slides and elements in presentation
     Logger.log('The presentation contains %s slides:', slides.length);
     for ( let i = 0; i < slides.length; i++) {
       Logger.log('- Slide # %s contains %s elements.', i + 1, slides[i].pageElements.length);
