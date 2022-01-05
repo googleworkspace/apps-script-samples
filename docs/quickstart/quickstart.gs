@@ -21,8 +21,12 @@
 function printDocTitle() {
   const documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
   try {
-    // Get the document using document id
+    /**
+     * Get the document using document id
+     * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
+     */
     const doc = Docs.Documents.get(documentId);
+    // Log the title  of document.
     Logger.log('The title of the doc is: %s', doc.title);
   } catch (err) {
     // TODO (developer) - Handle exception from Docs API
