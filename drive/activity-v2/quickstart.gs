@@ -15,30 +15,41 @@
  */
 // [START drive_activity_v2_quickstart]
 /**
- * Lists activity for a Drive user.
+ * Lists 10 activity for a Drive user.
  */
 function listDriveActivity() {
-  const request = {pageSize: 10};
+  const request = {
+    pageSize: 10 // number of activities desired in the response
+    // Use other parameter here if needed.
+  };
   try {
+    /**
+    * Activity.query method is used Query past activity in Google Drive.
+    * @see https://developers.google.com/drive/activity/v2/reference/rest/v2/activity/query
+    */
     const response = DriveActivity.Activity.query(request);
     const activities = response.activities;
     if (activities && activities.length > 0) {
       Logger.log('Recent activity:');
       for (let i = 0; i < activities.length; i++) {
         const activity = activities[i];
+        // get time information of activity.
         const time = getTimeInfo(activity);
+        // get the action details/information
         const action = getActionInfo(activity.primaryActionDetail);
+        // get the actor's details of activity
         const actors = activity.actors.map(getActorInfo);
+        // get target information of activity.
         const targets = activity.targets.map(getTargetInfo);
-        Logger.log(
-            '%s: %s, %s, %s', time, actors, action, targets);
+        // print the time,actor,action and targets of drive activity.
+        Logger.log('%s: %s, %s, %s', time, actors, action, targets);
       }
       return;
     }
     Logger.log('No activity.');
   } catch (err) {
     // TODO (developer) - Handle error from drive activity API
-    Logger.log(err.message);
+    Logger.log('Failed with an error %s', err.message);
   }
 }
 
