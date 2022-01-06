@@ -19,11 +19,16 @@
  */
 function listLabels() {
   try {
+    /**
+     * Gmail.Users.Labels.list() method returns the list of all Labels in user's mailbox
+     * @see https://developers.google.com/gmail/api/reference/rest/v1/users.labels/list
+     */
     const response = Gmail.Users.Labels.list('me');
     if (response.labels.length === 0) {
       Logger.log('No labels found.');
       return;
     }
+    // Print the the Labels if available.
     Logger.log('Labels:');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
