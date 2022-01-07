@@ -13,54 +13,85 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_tasks_lists_task_lists]
+// [START tasks_lists_task_lists]
 /**
- * Lists tasks titles and IDs.
+ * Lists the titles and IDs of tasksList.
  */
 function listTaskLists() {
-  var taskLists = Tasks.Tasklists.list();
-  if (taskLists.items) {
-    for (var i = 0; i < taskLists.items.length; i++) {
-      var taskList = taskLists.items[i];
-      Logger.log('Task list with title "%s" and ID "%s" was found.',
-          taskList.title, taskList.id);
+  try {
+    /**
+     * Returns all the authenticated user's task lists.
+     * @see https://developers.google.com/tasks/reference/rest/v1/tasklists/list
+     */
+    const taskLists = Tasks.Tasklists.list();
+    // If taskLists are available then print all tasklists.
+    if (taskLists.items) {
+      // Print the tasklist title and tasklist id.
+      for (let i = 0; i < taskLists.items.length; i++) {
+        const taskList = taskLists.items[i];
+        Logger.log('Task list with title "%s" and ID "%s" was found.', taskList.title, taskList.id);
+      }
+    } else {
+      Logger.log('No task lists found.');
     }
-  } else {
-    Logger.log('No task lists found.');
+  } catch (err) {
+    // TODO (developer) - Handle exception from Task API
+    Logger.log('Failed with an error %s ', err.message);
   }
 }
-// [END apps_script_tasks_lists_task_lists]
+// [END tasks_lists_task_lists]
 
-// [START apps_script_tasks_list_tasks]
+// [START tasks_list_tasks]
 /**
  * Lists task items for a provided tasklist ID.
  * @param  {string} taskListId The tasklist ID.
  */
 function listTasks(taskListId) {
-  var tasks = Tasks.Tasks.list(taskListId);
-  if (tasks.items) {
-    for (var i = 0; i < tasks.items.length; i++) {
-      var task = tasks.items[i];
-      Logger.log('Task with title "%s" and ID "%s" was found.',
-          task.title, task.id);
+  try {
+    /**
+     * List the task items of specified tasklist using taskList id.
+     * @see https://developers.google.com/tasks/reference/rest/v1/tasks/list
+     */
+    const tasks = Tasks.Tasks.list(taskListId);
+    // If tasks are availble then print all task of given tasklists.
+    if (tasks.items) {
+      // Print the task title and task id of specified tasklist.
+      for (let i = 0; i < tasks.items.length; i++) {
+        const task = tasks.items[i];
+        Logger.log('Task with title "%s" and ID "%s" was found.', task.title, task.id);
+      }
+    } else {
+      Logger.log('No tasks found.');
     }
-  } else {
-    Logger.log('No tasks found.');
+  } catch (err) {
+    // TODO (developer) - Handle exception from Task API
+    Logger.log('Failed with an error %s', err.message);
   }
 }
-// [END apps_script_tasks_list_tasks]
+// [END tasks_list_tasks]
 
-// [START apps_script_tasks_add_task]
+// [START tasks_add_task]
 /**
  * Adds a task to a tasklist.
  * @param {string} taskListId The tasklist to add to.
  */
 function addTask(taskListId) {
-  var task = {
-    title: 'Pick up dry cleaning',
+  /**
+   * Task details with title and notes for inserting new task
+   * @see https://developers.google.com/tasks/reference/rest/v1/tasks/insert
+   */
+  const taskDetails = {
+    title: 'Pick up courier',
     notes: 'Remember to get this done!'
   };
-  task = Tasks.Tasks.insert(task, taskListId);
-  Logger.log('Task with ID "%s" was created.', task.id);
+  try {
+    // Call insert method with taskDetails and taskListId to insert Task to specified tasklist.
+    const task= Tasks.Tasks.insert(taskDetails, taskListId);
+    // Print the Task ID of created task.
+    Logger.log('Task with ID "%s" was created.', task.id);
+  } catch (err) {
+    // TODO (developer) - Handle exception from Tasks.insert() of Task API
+    Logger.log('Failed with an error %s', err.message);
+  }
 }
-// [END apps_script_tasks_add_task]
+// [END tasks_add_task]
