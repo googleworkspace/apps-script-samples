@@ -16,23 +16,25 @@
 // [START gmail_quickstart]
 /**
  * Lists all labels in the user's mailbox
+ * @see https://developers.google.com/gmail/api/reference/rest/v1/users.labels/list
  */
 function listLabels() {
-  try{
+  try {
+    // Gmail.Users.Labels.list() method returns the list of all Labels in user's mailbox
     const response = Gmail.Users.Labels.list('me');
-    if (response.labels.length == 0) {
+    if (response.labels.length === 0) {
       Logger.log('No labels found.');
       return;
-    } 
+    }
+    // Print the the Labels if available.
     Logger.log('Labels:');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       Logger.log('- %s', label.name);
     }
-  }
-  catch(err){
-    //TODO(developer)-Handle Labels.list() exceptions 
-    Logger.log('failed with error %s',err.toString());
+  } catch (err) {
+    // TODO (developer) - Handle Labels.list() exceptions
+    Logger.log('failed with error %s', err.toString());
   }
 }
 // [END gmail_quickstart]
