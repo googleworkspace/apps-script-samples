@@ -17,6 +17,7 @@
 /**
  * List Admin SDK reseller subscriptions.
  */
+
 function listSubscriptions() {
   var optionalArgs = {
     maxResults: 10
