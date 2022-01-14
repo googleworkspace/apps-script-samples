@@ -26,7 +26,7 @@ function listCourses() {
     // Use other parameter here if needed
   };
   try {
-    // call courses.list() method to
+    // call courses.list() method to list the courses in classroom
     const response = Classroom.Courses.list(optionalArgs);
     const courses = response.courses;
     if (!courses || courses.length === 0) {
