@@ -17,20 +17,21 @@
 /**
  * Lists the names and IDs of up to 10 files.
  */
-function listFiles () {
-  try{
+function listFiles() {
+  try {
+    // Files.list method returns the list of files in drive.
     const files = Drive.Files.list({
       fields: 'nextPageToken, items(id, title)',
       maxResults: 10
     }).items;
+    // Print the title and id of files available in drive
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       Logger.log('%s (%s)', file.title, file.id);
     }
-  }
-  catch(err){
-    //TODO(developer)-Handle Files.list() exception
-    Logger.log('failed with error %s',err.toString());
+  } catch (err) {
+    // TODO(developer)-Handle Files.list() exception
+    Logger.log('failed with error %s', err.message);
   }
 }
 // [END drive_quickstart]
