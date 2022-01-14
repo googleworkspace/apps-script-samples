@@ -29,7 +29,7 @@ function listCourses() {
     // call courses.list() method to list the courses in classroom
     const response = Classroom.Courses.list(optionalArgs);
     const courses = response.courses;
-    if (!courses && courses.length === 0) {
+    if (!courses || courses.length === 0) {
       Logger.log('No courses found.');
       return;
     }
