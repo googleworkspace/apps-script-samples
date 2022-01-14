@@ -27,7 +27,7 @@ function listTaskLists() {
     const response = Tasks.Tasklists.list(optionalArgs);
     const taskLists = response.items;
     // Print task list of user if available.
-    if (taskLists && taskLists.length === 0) {
+    if (!taskLists || taskLists.length === 0) {
       Logger.log('No task lists found.');
       return;
     }
