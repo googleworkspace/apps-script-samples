@@ -33,7 +33,7 @@ function listUpcomingEvents() {
     // call Events.list method to list the calendar events using calendarId optional query parameter
     const response = Calendar.Events.list(calendarId, optionalArgs);
     const events = response.items;
-    if (events.length===0) {
+    if (events.length === 0) {
       Logger.log('No upcoming events found');
       return;
     }

@@ -27,7 +27,7 @@ function listDriveActivity() {
     // Activity.query method is used Query past activity in Google Drive.
     const response = DriveActivity.Activity.query(request);
     const activities = response.activities;
-    if (activities && activities.length === 0) {
+    if (!activities && activities.length === 0) {
       Logger.log('No activity.');
       return;
     }
