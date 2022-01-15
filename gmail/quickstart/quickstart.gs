@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 // [START gmail_quickstart]
 /**
- * Lists all labels in the user's mailbox
+ * @func listLabels
+ * @summary Demonstrate to use the Gmail.Users.labels.list() API, this API function returns list of
+ * all labels for the user passed.
  * @see https://developers.google.com/gmail/api/reference/rest/v1/users.labels/list
  */
 function listLabels() {
   try {
-    // Gmail.Users.Labels.list() method returns the list of all Labels in user's mailbox
+    // Gmail.Users.Labels.list() API returns the list of all Labels in user's mailbox
     const response = Gmail.Users.Labels.list('me');
-    if (response.labels.length === 0) {
+    if (!response || response.labels.length === 0) {
+      // TODO (developer) - No labels are returned from the response
       Logger.log('No labels found.');
       return;
     }
-    // Print the the Labels if available.
+    // Print the Labels that are available.
     Logger.log('Labels:');
-    for (let i = 0; i < response.labels.length; i++) {
-      const label = response.labels[i];
-      Logger.log('- %s', label.name);
+    for(let index in response.labels ) {
+      // TODO (developer) - use the labels returned from the list() API
+      Logger.log('- %s', response.labels[index].name);
     }
   } catch (err) {
-    // TODO (developer) - Handle Labels.list() exceptions
-    Logger.log('failed with error %s', err.toString());
+    // TODO (developer) - Handle exception on Labels.list() API
+    Logger.log('Labels.list() API failed with error %s', err.toString());
   }
 }
 // [END gmail_quickstart]
