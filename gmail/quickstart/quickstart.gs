@@ -16,9 +16,7 @@
 
 // [START gmail_quickstart]
 /**
- * @func listLabels
- * @summary Demonstrate to use the Gmail.Users.labels.list() API, this API function returns list of
- * all labels for the user passed.
+ * Lists all labels in the user's mailbox
  * @see https://developers.google.com/gmail/api/reference/rest/v1/users.labels/list
  */
 function listLabels() {
