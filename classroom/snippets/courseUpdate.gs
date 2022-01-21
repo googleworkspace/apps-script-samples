@@ -29,6 +29,7 @@ function courseUpdate(courseId) {
     course = Classroom.Courses.update(course, courseId);
     Logger.log('Course "%s" updated.', course.name);
   } catch (e) {
+    // TODO (developer) - Handle exception
     Logger.log('Failed to update the course with error %s', e.message);
   }
 }
