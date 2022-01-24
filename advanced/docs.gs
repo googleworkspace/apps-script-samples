@@ -14,29 +14,39 @@
  * limitations under the License.
  */
 
-// [START apps_script_docs_create_document]
+// [START docs_create_document]
 /**
  * Create a new document.
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/create
  */
 function createDocument() {
-  var document = Docs.Documents.create({'title': 'My New Document'});
-  Logger.log('Created document with ID: ' + document.documentId);
+  try {
+    // Create document with title
+    const document = Docs.Documents.create({'title': 'My New Document'});
+    if (document!== null) {
+      Logger.log('Created document with ID: ' + document.documentId);
+      return;
+    }
+    Logger.log('Unable to create Document');
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_docs_create_document]
+// [END docs_create_document]
 
-// [START apps_script_docs_find_and_replace]
+// [START docs_find_and_replace_text]
 /**
  * Performs "replace all".
- * @param {string} documentId The document to perform the replace text
- *     operations on.
- * @param {Object} findTextToReplacementMap A map from the "find text" to the
- *     "replace text".
+ * @param {string} documentId The document to perform the replace text operations on.
+ * @param {Object} findTextToReplacementMap A map from the "find text" to the "replace text".
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function findAndReplace(documentId, findTextToReplacementMap) {
-  var requests = [];
-  for (var findText in findTextToReplacementMap) {
-    var replaceText = findTextToReplacementMap[findText];
-    var request = {
+  const requests = [];
+  for (let findText in findTextToReplacementMap) {
+    const replaceText = findTextToReplacementMap[findText];
+    const request = {
       replaceAllText: {
         containsText: {
           text: findText,
@@ -47,26 +57,30 @@ function findAndReplace(documentId, findTextToReplacementMap) {
     };
     requests.push(request);
   }
-
-  var response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
-  var replies = response.replies;
-  for (var i = 0; i < replies.length; i++) {
-    var reply = replies[i];
-    var numReplacements = reply.replaceAllText.occurrencesChanged || 0;
-    Logger.log('Request %s performed %s replacements.', i, numReplacements);
+  try {
+    const response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    const replies = response.replies;
+    for (let [index] of replies.entries()) {
+      const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
+      Logger.log('Request %s performed %s replacements.', index, numReplacements);
+    }
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with error : %s', e.message);
   }
 }
-// [END apps_script_docs_find_and_replace]
+// [END docs_find_and_replace_text]
 
-// [START apps_script_docs_insert_and_style_text]
+// [START docs_insert_and_style_text]
 /**
  * Insert text at the beginning of the document and then style the inserted
  * text.
  * @param {string} documentId The document the text is inserted into.
  * @param {string} text The text to insert into the document.
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function insertAndStyleText(documentId, text) {
-  var requests = [{
+  const requests = [{
     insertText: {
       location: {
         index: 1
@@ -92,35 +106,47 @@ function insertAndStyleText(documentId, text) {
       fields: 'weightedFontFamily, fontSize'
     }
   }];
-  Docs.Documents.batchUpdate({'requests': requests}, documentId);
+  try {
+    Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    Logger.log('Insert text : %s', text);
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with an error %s', e.message);
+  }
 }
-// [END apps_script_docs_insert_and_style_text]
+// [END docs_insert_and_style_text]
 
-// [START apps_script_docs_read_first_paragraph]
+// [START docs_read_first_paragraph]
 /**
  * Read the first paragraph of the body of a document.
  * @param {string} documentId The ID of the document to read.
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
  */
 function readFirstParagraph(documentId) {
-  var document = Docs.Documents.get(documentId);
-  var bodyElements = document.body.content;
+  try {
+    // Get the document using document ID
+    const document = Docs.Documents.get(documentId);
+    const bodyElements = document.body.content;
+    for (let i = 0; i < bodyElements.length; i++) {
+      const structuralElement = bodyElements[i];
+      // Print the first paragraph text present in document
+      if (structuralElement.paragraph) {
+        const paragraphElements = structuralElement.paragraph.elements;
+        let paragraphText = '';
 
-  for (var i = 0; i < bodyElements.length; i++) {
-    var structuralElement = bodyElements[i];
-    if (structuralElement.paragraph !== null) {
-      var paragraphElements = structuralElement.paragraph.elements;
-      var paragraphText = '';
-
-      for (var j = 0; j < paragraphElements.length; j++) {
-        var paragraphElement = paragraphElements[j];
-        if (paragraphElement.textRun !== null) {
-          paragraphText += paragraphElement.textRun.content;
+        for (let j = 0; j < paragraphElements.length; j++) {
+          const paragraphElement = paragraphElements[j];
+          if (paragraphElement.textRun !== null) {
+            paragraphText += paragraphElement.textRun.content;
+          }
         }
+        Logger.log(paragraphText);
+        return;
       }
-
-      Logger.log(paragraphText);
-      return;
     }
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_docs_read_first_paragraph]
+// [END docs_read_first_paragraph]
