@@ -19,6 +19,7 @@
  */
 function createAlias() {
   let course = {
+    id: 'p:bio_101',
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
