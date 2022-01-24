@@ -23,7 +23,11 @@ function createDocument() {
   try {
     // Create document with title
     const document = Docs.Documents.create({'title': 'My New Document'});
-    Logger.log('Created document with ID: ' + document.documentId);
+    if (document!== null) {
+      Logger.log('Created document with ID: ' + document.documentId);
+      return;
+    }
+    Logger.log('Unable to create Document');
   } catch (e) {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', e.message);
@@ -34,14 +38,13 @@ function createDocument() {
 // [START docs_find_and_replace_text]
 /**
  * Performs "replace all".
- * @param {string} documentId The document to perform the replace text
- *     operations on.
- * @param {Object} findTextToReplacementMap A map from the "find text" to the
- *     "replace text".
+ * @param {string} documentId The document to perform the replace text operations on.
+ * @param {Object} findTextToReplacementMap A map from the "find text" to the "replace text".
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function findAndReplace(documentId, findTextToReplacementMap) {
   const requests = [];
-  for (const findText in findTextToReplacementMap) {
+  for (let findText in findTextToReplacementMap) {
     const replaceText = findTextToReplacementMap[findText];
     const request = {
       replaceAllText: {
@@ -57,12 +60,12 @@ function findAndReplace(documentId, findTextToReplacementMap) {
   try {
     const response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
     const replies = response.replies;
-    for (let i = 0; i < replies.length; i++) {
-      const reply = replies[i];
-      const numReplacements = reply.replaceAllText.occurrencesChanged || 0;
-      Logger.log('Request %s performed %s replacements.', i, numReplacements);
+    for (let [index] of replies.entries()) {
+      const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
+      Logger.log('Request %s performed %s replacements.', index, numReplacements);
     }
   } catch (e) {
+    // TODO (developer) - Handle exception
     Logger.log('Failed with error : %s', e.message);
   }
 }
@@ -107,6 +110,7 @@ function insertAndStyleText(documentId, text) {
     Docs.Documents.batchUpdate({'requests': requests}, documentId);
     Logger.log('Insert text : %s', text);
   } catch (e) {
+    // TODO (developer) - Handle exception
     Logger.log('Failed with an error %s', e.message);
   }
 }
@@ -116,13 +120,13 @@ function insertAndStyleText(documentId, text) {
 /**
  * Read the first paragraph of the body of a document.
  * @param {string} documentId The ID of the document to read.
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
  */
 function readFirstParagraph(documentId) {
   try {
     // Get the document using document ID
     const document = Docs.Documents.get(documentId);
     const bodyElements = document.body.content;
-
     for (let i = 0; i < bodyElements.length; i++) {
       const structuralElement = bodyElements[i];
       // Print the first paragraph text present in document
@@ -136,12 +140,12 @@ function readFirstParagraph(documentId) {
             paragraphText += paragraphElement.textRun.content;
           }
         }
-
         Logger.log(paragraphText);
         return;
       }
     }
   } catch (e) {
+    // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', e.message);
   }
 }
