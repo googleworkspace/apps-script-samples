@@ -44,7 +44,7 @@ function createDocument() {
  */
 function findAndReplace(documentId, findTextToReplacementMap) {
   const requests = [];
-  for (let findText in findTextToReplacementMap) {
+  for (const findText in findTextToReplacementMap) {
     const replaceText = findTextToReplacementMap[findText];
     const request = {
       replaceAllText: {
@@ -60,7 +60,7 @@ function findAndReplace(documentId, findTextToReplacementMap) {
   try {
     const response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
     const replies = response.replies;
-    for (let [index] of replies.entries()) {
+    for (const [index] of replies.entries()) {
       const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
       Logger.log('Request %s performed %s replacements.', index, numReplacements);
     }
