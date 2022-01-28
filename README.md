@@ -61,6 +61,7 @@ width="96px"/>
 ### Drive
 - [Manage Google Drive files and folders](drive/quickstart)
 - [View Google Drive activity](drive/activity)
+- [Get MD5-checksum of all files and sub-directories](drive/md5-checksum)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/forms_96dp.png"
