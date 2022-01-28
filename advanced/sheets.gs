@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// TODO (developer)- Replace the spreadsheet ID and sheet ID with yours values.
+const kspreadsheetId = '1YdrrmXSjpi4Tz-UuQ0eUKtdzQuvpzRLMoPEz3niTTVU';
+const kpivotSourceDataSheetId = 635809130;
+const kdestinationSheetId = 83410180;
 // [START sheets_read_range]
 /**
  * Read a range (A1:D5) of data values. Logs the values.
  * @param {string} spreadsheetId The spreadsheet ID to read from.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
  */
-function readRange(spreadsheetId) {
+function readRange(spreadsheetId = kspreadsheetId) {
   try {
     const response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
     if (response.values) {
@@ -40,7 +44,7 @@ function readRange(spreadsheetId) {
  * @param {string} spreadsheetId The spreadsheet ID to write to.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate
  */
-function writeToMultipleRanges(spreadsheetId) {
+function writeToMultipleRanges(spreadsheetId = kspreadsheetId) {
   // Specify some values to write to the sheet.
   const columnAValues = [
     ['Item', 'Wheel', 'Door', 'Engine']
@@ -85,7 +89,7 @@ function writeToMultipleRanges(spreadsheetId) {
  * @param {string} spreadsheetId The spreadsheet ID.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
-function addSheet(spreadsheetId) {
+function addSheet(spreadsheetId = kspreadsheetId) {
   const requests = [{
     'addSheet': {
       'properties': {
@@ -123,7 +127,9 @@ function addSheet(spreadsheetId) {
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
 function addPivotTable(
-    spreadsheetId, pivotSourceDataSheetId, destinationSheetId) {
+    spreadsheetId = kspreadsheetId,
+    pivotSourceDataSheetId= kpivotSourceDataSheetId,
+    destinationSheetId= kdestinationSheetId) {
   const requests = [{
     'updateCells': {
       'rows': {
