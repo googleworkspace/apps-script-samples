@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// TODO(developer) - Replace file Id with yours value
-const fileID ='1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc';
 
 // [START drive_upload_file]
 /**
@@ -78,7 +76,8 @@ function listRootFolders() {
  * other applications (if the visibility is set to PUBLIC).
  * @param {string} fileId The ID of the file to add the property to.
  */
-function addCustomProperty(fileId=fileID) {
+// TODO(developer) - Replace file Id with yours value
+function addCustomProperty(fileId='1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc') {
   try {
     const property = {
       key: 'department',
@@ -101,7 +100,8 @@ function addCustomProperty(fileId=fileID) {
  * files do not consume space in Google Drive and thus list a file size of 0.
  * @param {string} fileId The ID of the file to list revisions for.
  */
-function listRevisions(fileId= fileID) {
+// TODO(developer) - Replace file Id with yours value
+function listRevisions(fileId= '1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc') {
   try {
     const revisions = Drive.Revisions.list(fileId);
     if (!revisions.items || revisions.items.length === 0) {
