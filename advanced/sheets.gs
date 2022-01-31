@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 // TODO (developer)- Replace the spreadsheet ID and sheet ID with yours values.
-const kspreadsheetId = '1YdrrmXSjpi4Tz-UuQ0eUKtdzQuvpzRLMoPEz3niTTVU';
-const kpivotSourceDataSheetId = 635809130;
-const kdestinationSheetId = 83410180;
+const yourspreadsheetId = '1YdrrmXSjpi4Tz-UuQ0eUKtdzQuvpzRLMoPEz3niTTVU';
+const yourpivotSourceDataSheetId = 635809130;
+const yourdestinationSheetId = 83410180;
 // [START sheets_read_range]
 /**
  * Read a range (A1:D5) of data values. Logs the values.
  * @param {string} spreadsheetId The spreadsheet ID to read from.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
  */
-function readRange(spreadsheetId = kspreadsheetId) {
+function readRange(spreadsheetId = yourspreadsheetId) {
   try {
     const response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
     if (response.values) {
@@ -44,7 +44,7 @@ function readRange(spreadsheetId = kspreadsheetId) {
  * @param {string} spreadsheetId The spreadsheet ID to write to.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate
  */
-function writeToMultipleRanges(spreadsheetId = kspreadsheetId) {
+function writeToMultipleRanges(spreadsheetId = yourspreadsheetId) {
   // Specify some values to write to the sheet.
   const columnAValues = [
     ['Item', 'Wheel', 'Door', 'Engine']
@@ -127,9 +127,9 @@ function addSheet(spreadsheetId = kspreadsheetId) {
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
 function addPivotTable(
-    spreadsheetId = kspreadsheetId,
-    pivotSourceDataSheetId= kpivotSourceDataSheetId,
-    destinationSheetId= kdestinationSheetId) {
+    spreadsheetId = yourspreadsheetId,
+    pivotSourceDataSheetId= yourpivotSourceDataSheetId,
+    destinationSheetId= yourdestinationSheetId) {
   const requests = [{
     'updateCells': {
       'rows': {
