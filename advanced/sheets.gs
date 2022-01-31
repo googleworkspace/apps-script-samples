@@ -89,7 +89,7 @@ function writeToMultipleRanges(spreadsheetId = yourspreadsheetId) {
  * @param {string} spreadsheetId The spreadsheet ID.
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
-function addSheet(spreadsheetId = kspreadsheetId) {
+function addSheet(spreadsheetId = yourspreadsheetId) {
   const requests = [{
     'addSheet': {
       'properties': {
