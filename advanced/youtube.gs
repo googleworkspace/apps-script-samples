@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_youtube_search]
+// [START youtube_search_videos]
 /**
  * Searches for videos about dogs, then logs the video IDs and title.
  * Note that this sample limits the results to 25. To return more
@@ -21,63 +21,87 @@
  * @see https://developers.google.com/youtube/v3/docs/search/list
  */
 function searchByKeyword() {
-  var results = YouTube.Search.list('id,snippet', {
-    q: 'dogs',
-    maxResults: 25
-  });
-
-  results.items.forEach(function(item) {
-    Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
-  });
+  try {
+    const results = YouTube.Search.list('id,snippet', {
+      q: 'dogs',
+      maxResults: 25
+    });
+    if (results === null) {
+      Logger.log('Unable to search videos');
+      return;
+    }
+    results.items.forEach((item)=> {
+      Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
+    });
+  } catch (err) {
+    // TODO (developer) - Handle exceptions from Youtube API
+    Logger.log('Failed with an error %s', err.message);
+  }
 }
-// [END apps_script_youtube_search]
+// [END youtube_search_videos]
 
-// [START apps_script_youtube_uploads]
+// [START youtube_retrieve_uploads]
 /**
  * This function retrieves the user's uploaded videos by:
  * 1. Fetching the user's channel's.
  * 2. Fetching the user's "uploads" playlist.
  * 3. Iterating through this playlist and logs the video IDs and titles.
- * 4. If there is a next page of resuts, fetching it and returns to step 3.
+ * 4. If there is a next page of results, fetching it and returns to step 3.
  */
 function retrieveMyUploads() {
-  var results = YouTube.Channels.list('contentDetails', {
-    mine: true
-  });
-
-  for (var i = 0; i < results.items.length; i++) {
-    var item = results.items[i];
-    // Get the channel ID - it's nested in contentDetails, as described in the
-    // Channel resource: https://developers.google.com/youtube/v3/docs/channels
-    var playlistId = item.contentDetails.relatedPlaylists.uploads;
-    var nextPageToken;
-    while (nextPageToken !== null) {
-      var playlistResponse = YouTube.PlaylistItems.list('snippet', {
-        playlistId: playlistId,
-        maxResults: 25,
-        pageToken: nextPageToken
-      });
-
-      for (var j = 0; j < playlistResponse.items.length; j++) {
-        var playlistItem = playlistResponse.items[j];
-        Logger.log('[%s] Title: %s',
-            playlistItem.snippet.resourceId.videoId,
-            playlistItem.snippet.title);
-      }
-      nextPageToken = playlistResponse.nextPageToken;
+  try {
+    // @see https://developers.google.com/youtube/v3/docs/channels/list
+    const results = YouTube.Channels.list('contentDetails', {
+      mine: true
+    });
+    if (!results || results.items.length === 0) {
+      Logger.log('No Channels found.');
+      return;
     }
+
+    for (let i = 0; i < results.items.length; i++) {
+      const item = results.items[i];
+      /** Get the channel ID - it's nested in contentDetails, as described in the
+       * Channel resource: https://developers.google.com/youtube/v3/docs/channels.
+       */
+      const playlistId = item.contentDetails.relatedPlaylists.uploads;
+      let nextPageToken;
+      do {
+        // @see: https://developers.google.com/youtube/v3/docs/playlistItems/list
+        const playlistResponse = YouTube.PlaylistItems.list('snippet', {
+          playlistId: playlistId,
+          maxResults: 25,
+          pageToken: nextPageToken
+        });
+        if (!playlistResponse || playlistResponse.items.length === 0) {
+          Logger.log('No Playlist found.');
+          return;
+        }
+        for (let j = 0; j < playlistResponse.items.length; j++) {
+          const playlistItem = playlistResponse.items[j];
+          Logger.log('[%s] Title: %s',
+              playlistItem.snippet.resourceId.videoId,
+              playlistItem.snippet.title);
+        }
+        nextPageToken = playlistResponse.nextPageToken;
+      } while (nextPageToken);
+    }
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with err %s', err.message);
   }
 }
-// [END apps_script_youtube_uploads]
+// [END youtube_retrieve_uploads]
 
-// [START apps_script_youtube_subscription]
+// [START youtube_add_subscription]
 /**
  * This sample subscribes the user to the Google Developers channel on YouTube.
+ * @see https://developers.google.com/youtube/v3/docs/subscriptions/insert
  */
 function addSubscription() {
   // Replace this channel ID with the channel ID you want to subscribe to
-  var channelId = 'UC9gFih9rw0zNCK3ZtoKQQyA';
-  var resource = {
+  const channelId = 'UC9gFih9rw0zNCK3ZtoKQQyA';
+  const resource = {
     snippet: {
       resourceId: {
         kind: 'youtube#channel',
@@ -87,41 +111,42 @@ function addSubscription() {
   };
 
   try {
-    var response = YouTube.Subscriptions.insert(resource, 'snippet');
-    Logger.log(response);
+    const response = YouTube.Subscriptions.insert(resource, 'snippet');
+    Logger.log('Added subscription for channel title : %s', response.snippet.title);
   } catch (e) {
     if (e.message.match('subscriptionDuplicate')) {
       Logger.log('Cannot subscribe; already subscribed to channel: ' +
-          channelId);
+        channelId);
     } else {
+      // TODO (developer) - Handle exception
       Logger.log('Error adding subscription: ' + e.message);
     }
   }
 }
-// [END apps_script_youtube_subscription]
+// [END youtube_add_subscription]
 
-// [START apps_script_youtube_slides]
+// [START youtube_create_slides_with_youtube_videos]
 /**
  * Creates a slide presentation with 10 videos from the YouTube search `YOUTUBE_QUERY`.
  * The YouTube Advanced Service must be enabled before using this sample.
  */
-var PRESENTATION_TITLE = 'San Francisco, CA';
-var YOUTUBE_QUERY = 'San Francisco, CA';
+const PRESENTATION_TITLE = 'San Francisco, CA';
+const YOUTUBE_QUERY = 'San Francisco, CA';
 
 /**
  * Gets a list of YouTube videos.
  * @param {String} query - The query term to search for.
  * @return {object[]} A list of objects with YouTube video data.
- * @ref https://developers.google.com/youtube/v3/docs/search/list
+ * @see https://developers.google.com/youtube/v3/docs/search/list
  */
 function getYouTubeVideosJSON(query) {
-  var youTubeResults = YouTube.Search.list('id,snippet', {
+  const youTubeResults = YouTube.Search.list('id,snippet', {
     q: query,
     type: 'video',
     maxResults: 10
   });
 
-  return youTubeResults.items.map(function(item) {
+  return youTubeResults.items.map((item)=> {
     return {
       url: 'https://youtu.be/' + item.id.videoId,
       title: item.snippet.title,
@@ -135,17 +160,25 @@ function getYouTubeVideosJSON(query) {
  * Logs out the URL of the presentation.
  */
 function createSlides() {
-  var youTubeVideos = getYouTubeVideosJSON(YOUTUBE_QUERY);
-  var presentation = SlidesApp.create(PRESENTATION_TITLE);
-  presentation.getSlides()[0].getPageElements()[0].asShape()
-      .getText().setText(PRESENTATION_TITLE);
-
-  // Add slides with videos and log the presentation URL to the user.
-  youTubeVideos.forEach(function(video) {
-    var slide = presentation.appendSlide();
-    slide.insertVideo(video.url,
-        0, 0, presentation.getPageWidth(), presentation.getPageHeight());
-  });
-  Logger.log(presentation.getUrl());
+  try {
+    const youTubeVideos = getYouTubeVideosJSON(YOUTUBE_QUERY);
+    const presentation = SlidesApp.create(PRESENTATION_TITLE);
+    presentation.getSlides()[0].getPageElements()[0].asShape()
+        .getText().setText(PRESENTATION_TITLE);
+    if (!presentation) {
+      Logger.log('Unable to create presentation');
+      return;
+    }
+    // Add slides with videos and log the presentation URL to the user.
+    youTubeVideos.forEach((video)=> {
+      const slide = presentation.appendSlide();
+      slide.insertVideo(video.url,
+          0, 0, presentation.getPageWidth(), presentation.getPageHeight());
+    });
+    Logger.log(presentation.getUrl());
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed with error %s', err.message);
+  }
 }
-// [END apps_script_youtube_slides]
+// [END youtube_create_slides_with_youtube_videos]
