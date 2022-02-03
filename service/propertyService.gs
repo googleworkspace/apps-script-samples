@@ -18,7 +18,7 @@
  * Save or set the property in each three property store.
  */
 function saveSingleProperty() {
-  // [START property_service_save_data_single_value]
+  // [START apps_script_property_service_save_data_single_value]
   try {
     // Set a property in each of the three property stores.
     const scriptProperties = PropertiesService.getScriptProperties();
@@ -33,14 +33,14 @@ function saveSingleProperty() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_save_data_single_value]
+  // [END apps_script_property_service_save_data_single_value]
 }
 
 /**
  * Save the multiple script properties.
  */
 function saveMultipleProperties() {
-  // [START property_service_save_data_multiple_value]
+  // [START apps_script_property_service_save_data_multiple_value]
   try {
     // Set multiple script properties in one call.
     const scriptProperties = PropertiesService.getScriptProperties();
@@ -53,14 +53,14 @@ function saveMultipleProperties() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_save_data_multiple_value]
+  // [END apps_script_property_service_save_data_multiple_value]
 }
 
 /**
  * Read single value for user property.
  */
 function readSingleProperty() {
-  // [START property_service_read_data_single_value]
+  // [START apps_script_property_service_read_data_single_value]
   try {
     // Get the value for the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
@@ -70,14 +70,14 @@ function readSingleProperty() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_read_data_single_value]
+  // [END apps_script_property_service_read_data_single_value]
 }
 
 /**
  * Read the multiple script properties.
  */
 function readAllProperties() {
-  // [START property_service_read_multiple_data_value]
+  // [START apps_script_property_service_read_multiple_data_value]
   try {
     // Get multiple script properties in one call, then log them all.
     const scriptProperties = PropertiesService.getScriptProperties();
@@ -89,14 +89,14 @@ function readAllProperties() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_read_multiple_data_value]
+  // [END apps_script_property_service_read_multiple_data_value]
 }
 
 /**
  * Update the user property value.
  */
 function updateProperty() {
-  // [START property_service_modify_data]
+  // [START apps_script_property_service_modify_data]
   try {
     // Change the unit type in the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
@@ -107,14 +107,14 @@ function updateProperty() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_modify_data]
+  // [END apps_script_property_service_modify_data]
 }
 
 /**
  * Delete the single user property.
  */
 function deleteSingleProperty() {
-  // [START property_service_delete_data_single_value]
+  // [START apps_script_property_service_delete_data_single_value]
   try {
     // Delete the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
@@ -123,14 +123,14 @@ function deleteSingleProperty() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_delete_data_single_value]
+  // [END apps_script_property_service_delete_data_single_value]
 }
 
 /**
  * Delete all user properties in the current script.
  */
 function deleteAllUserProperties() {
-  // [START property_service_delete_all_data]
+  // [START apps_script_property_service_delete_all_data]
   try {
     // Get user properties in the current script.
     const userProperties = PropertiesService.getUserProperties();
@@ -140,5 +140,5 @@ function deleteAllUserProperties() {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', err.message);
   }
-  // [END property_service_delete_all_data]
+  // [END apps_script_property_service_delete_all_data]
 }
