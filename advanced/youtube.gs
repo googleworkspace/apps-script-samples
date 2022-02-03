@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START youtube_search_videos]
+// [START apps_script_youtube_search_videos]
 /**
  * Searches for videos about dogs, then logs the video IDs and title.
  * Note that this sample limits the results to 25. To return more
@@ -38,9 +38,9 @@ function searchByKeyword() {
     Logger.log('Failed with an error %s', err.message);
   }
 }
-// [END youtube_search_videos]
+// [END apps_script_youtube_search_videos]
 
-// [START youtube_retrieve_uploads]
+// [START apps_script_youtube_retrieve_uploads]
 /**
  * This function retrieves the user's uploaded videos by:
  * 1. Fetching the user's channel's.
@@ -91,9 +91,9 @@ function retrieveMyUploads() {
     Logger.log('Failed with err %s', err.message);
   }
 }
-// [END youtube_retrieve_uploads]
+// [END apps_script_youtube_retrieve_uploads]
 
-// [START youtube_add_subscription]
+// [START apps_script_youtube_add_subscription]
 /**
  * This sample subscribes the user to the Google Developers channel on YouTube.
  * @see https://developers.google.com/youtube/v3/docs/subscriptions/insert
@@ -123,9 +123,9 @@ function addSubscription() {
     }
   }
 }
-// [END youtube_add_subscription]
+// [END apps_script_youtube_add_subscription]
 
-// [START youtube_create_slides_with_youtube_videos]
+// [START apps_script_youtube_create_slides_with_youtube_videos]
 /**
  * Creates a slide presentation with 10 videos from the YouTube search `YOUTUBE_QUERY`.
  * The YouTube Advanced Service must be enabled before using this sample.
@@ -181,4 +181,4 @@ function createSlides() {
     Logger.log('Failed with error %s', err.message);
   }
 }
-// [END youtube_create_slides_with_youtube_videos]
+// [END apps_script_youtube_create_slides_with_youtube_videos]
