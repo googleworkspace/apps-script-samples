@@ -113,7 +113,6 @@ function listNext10Events() {
     return;
   }
   for (const event of events.items) {
-    // const event = events.items[i];
     if (event.start.date) {
       // All-day event.
       const start = new Date(event.start.date);
