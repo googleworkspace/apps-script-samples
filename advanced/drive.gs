@@ -110,7 +110,7 @@ function listRevisions(fileId) {
       const revision = revisions.items[i];
       const date = new Date(revision.modifiedDate);
       Logger.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
-        revision.fileSize);
+          revision.fileSize);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
