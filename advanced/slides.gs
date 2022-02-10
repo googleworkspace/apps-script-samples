@@ -73,7 +73,7 @@ function readPageElementIds(presentationId, pageId) {
   // in a get request, or what fields are updated in an batchUpdate.
   try {
     const response = Slides.Presentations.Pages.get(
-      presentationId, pageId, {'fields': 'pageElements.objectId'});
+        presentationId, pageId, {'fields': 'pageElements.objectId'});
     Logger.log(response);
   } catch (e) {
     // TODO (developer) - Handle Exception
@@ -172,7 +172,7 @@ function formatShapeText(presentationId, shapeId) {
   }];
   try {
     Slides.Presentations.batchUpdate({'requests': requests},
-      presentationId);
+        presentationId);
   } catch (e) {
     // TODO (developer) - Handle Exception
     Logger.log('Failed with error %s', e.message);
@@ -193,7 +193,7 @@ function saveThumbnailImage(i=0) {
     const presentation = SlidesApp.getActivePresentation();
     // Get the thumbnail of specified page
     const thumbnail = Slides.Presentations.Pages.getThumbnail(
-      presentation.getId(), presentation.getSlides()[i].getObjectId());
+        presentation.getId(), presentation.getSlides()[i].getObjectId());
     // fetch the  URL to the thumbnail image.
     const response = UrlFetchApp.fetch(thumbnail.contentUrl);
     const image = response.getBlob();
