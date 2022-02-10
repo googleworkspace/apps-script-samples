@@ -79,8 +79,8 @@ function retrieveMyUploads() {
         for (let j = 0; j < playlistResponse.items.length; j++) {
           const playlistItem = playlistResponse.items[j];
           Logger.log('[%s] Title: %s',
-            playlistItem.snippet.resourceId.videoId,
-            playlistItem.snippet.title);
+              playlistItem.snippet.resourceId.videoId,
+              playlistItem.snippet.title);
         }
         nextPageToken = playlistResponse.nextPageToken;
       } while (nextPageToken);
@@ -163,7 +163,7 @@ function createSlides() {
     const youTubeVideos = getYouTubeVideosJSON(YOUTUBE_QUERY);
     const presentation = SlidesApp.create(PRESENTATION_TITLE);
     presentation.getSlides()[0].getPageElements()[0].asShape()
-      .getText().setText(PRESENTATION_TITLE);
+        .getText().setText(PRESENTATION_TITLE);
     if (!presentation) {
       Logger.log('Unable to create presentation');
       return;
@@ -172,7 +172,7 @@ function createSlides() {
     youTubeVideos.forEach((video)=> {
       const slide = presentation.appendSlide();
       slide.insertVideo(video.url,
-        0, 0, presentation.getPageWidth(), presentation.getPageHeight());
+          0, 0, presentation.getPageWidth(), presentation.getPageHeight());
     });
     Logger.log(presentation.getUrl());
   } catch (err) {
