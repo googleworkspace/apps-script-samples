@@ -74,7 +74,7 @@ function retrieveMyUploads() {
         });
         if (!playlistResponse || playlistResponse.items.length === 0) {
           Logger.log('No Playlist found.');
-          return;
+          break;
         }
         for (let j = 0; j < playlistResponse.items.length; j++) {
           const playlistItem = playlistResponse.items[j];
