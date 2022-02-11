@@ -72,12 +72,11 @@ function listRootFolders() {
 // [START drive_add_custom_property]
 /**
  * Adds a custom property to a file. Unlike Apps Script's DocumentProperties,
- * Drive's custom file properties can be accessed outside of Apps Script and by
- * other applications (if the visibility is set to PUBLIC).
+ * Drive's custom file properties can be accessed outside of Apps Script and
+ * by other applications (if the visibility is set to PUBLIC).
  * @param {string} fileId The ID of the file to add the property to.
  */
-// TODO(developer) - Replace file Id with yours value
-function addCustomProperty(fileId='1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc') {
+function addCustomProperty(fileId) {
   try {
     const property = {
       key: 'department',
@@ -100,8 +99,7 @@ function addCustomProperty(fileId='1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc') {
  * files do not consume space in Google Drive and thus list a file size of 0.
  * @param {string} fileId The ID of the file to list revisions for.
  */
-// TODO(developer) - Replace file Id with yours value
-function listRevisions(fileId= '1knNC_0zxCQ8Z3_0pEuPpkAfR1vgc-Knc') {
+function listRevisions(fileId) {
   try {
     const revisions = Drive.Revisions.list(fileId);
     if (!revisions.items || revisions.items.length === 0) {
