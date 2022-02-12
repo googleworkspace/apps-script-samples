@@ -28,7 +28,7 @@ function expectToExist(value) {
 }
 
 /**
- * Helper functions to help test drive.gs expectToEqual(...)
+ * Helper functions to help test drive.gs expectToEqual
  * @param {string} actual
  * @param {string} expected
  * To test drive.gs please add drive services
@@ -60,7 +60,7 @@ function fileCleanUp() {
 }
 
 /**
- * Helper functions getFoldersByName() 
+ * Helper functions folderCleanUp() 
  *
  * To test getFoldersByName() please add drive services
  */
