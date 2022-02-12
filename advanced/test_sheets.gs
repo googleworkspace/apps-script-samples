@@ -18,10 +18,8 @@
  * Helper functions for sheets.gs testing
  *
  * to tests sheets.gs please add sheets services
- */
-
-/**
  * create test spreadsheets
+ * return {string} spreadsheet
  */
 function createTestSpreadsheet() {
   const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
@@ -53,11 +51,8 @@ function populateValues(spreadsheetId) {
 
 /**
  * Functions to test sheets.gs below this line
- */
-
-/**
  * tests readRange function of sheets.gs
- * @returns {string} spreadsheet ID
+ * @return {string} spreadsheet ID
  */
 function itShouldReadRange() {
   Logger.log('> itShouldReadRange');
@@ -85,7 +80,7 @@ function itShouldAddPivotTable(spreadsheetId) {
  * runs all the tests
  */
 function RUN_ALL_TEST() {
-  let spreadsheetId = itShouldReadRange();
+  const spreadsheetId = itShouldReadRange();
   Logger.log('> itShouldWriteToMultipleRanges');
   writeToMultipleRanges(spreadsheetId);
   Logger.log('> itShouldAddSheet');
