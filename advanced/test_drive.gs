@@ -15,11 +15,10 @@
  */
 
 /**
- * Helper functions to help test drive.gs
+ * Helper functions to help test drive.gs expectToExist(value)
  *
  * To test drive.gs please add drive services
  */
-
 function expectToExist(value) {
   if (value) {
     console.log('TEST: Exists');
@@ -28,6 +27,11 @@ function expectToExist(value) {
   }
 }
 
+/**
+ * Helper functions to help test drive.gs expectToEqual(actual, expected)
+ *
+ * To test drive.gs please add drive services
+ */
 function expectToEqual(actual, expected) {
   console.log('TEST: actual: %s = expected: %s', actual, expected);
   if (actual !== expected) {
@@ -35,15 +39,30 @@ function expectToEqual(actual, expected) {
   }
 }
 
+/**
+ * Helper functions to help test drive.gs createFolder(...)
+ *
+ * To test drive.gs please add drive services
+ */
 function createTestFolder() {
   DriveApp.createFolder('test1');
   DriveApp.createFolder('test2');
 }
 
+/**
+ * Helper functions to help test drive.gs getFilesByName(...)
+ *
+ * To test drive.gs please add drive services
+ */
 function fileCleanUp() {
   DriveApp.getFilesByName('google_logo.png').next().setTrashed(true);
 }
 
+/**
+ * Helper functions to help test drive.gs getFoldersByName(...)
+ *
+ * To test drive.gs please add drive services
+ */
 function folderCleanUp() {
   DriveApp.getFoldersByName('test1').next().setTrashed(true);
   DriveApp.getFoldersByName('test2').next().setTrashed(true);
