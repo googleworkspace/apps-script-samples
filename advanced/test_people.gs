@@ -21,10 +21,10 @@
  */
 
 function RUN_ALL_TESTS(){
-  Logger.log("> itShouldGetConnections");
+  Logger.log('> itShouldGetConnections');
   getConnections();
-  Logger.log("> itShouldGetSelf"); // Requires the scope userinfo.profile
+  Logger.log('> itShouldGetSelf'); // Requires the scope userinfo.profile
   getSelf();
-  Logger.log("> itShouldGetAccount");
+  Logger.log('> itShouldGetAccount');
   getAccount('me');
 }
