@@ -22,7 +22,7 @@
 
 /**
  * create test spreadsheets
- * @returns {string} spreadsheet ID
+ * @return {string} spreadsheet ID
  */
 function createTestSpreadsheet() {
   const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
@@ -34,20 +34,20 @@ function createTestSpreadsheet() {
 
 /**
  * populate the created spreadshet with values
- * @param {string} spreadsheet ID
+ * @param {string} spreadsheetId
  */
-function populateValues (spreadsheetId) {
+function populateValues(spreadsheetId) {
   const batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
   const repeatCellRequest = Sheets.newRepeatCellRequest();
 
-  let values = [];
+  const values = [];
   for (let i = 0; i < 10; ++i) {
     values[i] = [];
     for (let j = 0; j < 10; ++j) {
       values[i].push('Hello');
     }
   }
-  let range = 'A1:J10';
+  const range = 'A1:J10';
   SpreadsheetApp.openById(spreadsheetId).getRange(range).setValues(values);
   SpreadsheetApp.flush();
 };
@@ -61,7 +61,7 @@ function populateValues (spreadsheetId) {
  * @returns {string} spreadsheet ID
  */
 function itShouldReadRange() {
-  Logger.log("> itShouldReadRange");
+  Logger.log('> itShouldReadRange');
   spreadsheetId = createTestSpreadsheet();
   populateValues(spreadsheetId);
   readRange(spreadsheetId);
@@ -70,15 +70,16 @@ function itShouldReadRange() {
 
 /**
  * tests the addPivotTable function of sheets.gs
+ * @param {sting} spreadsheetId
  */
 function itShouldAddPivotTable(spreadsheetId) {
-  Logger.log("> itShouldAddPivotTable");
+  Logger.log('> itShouldAddPivotTable');
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   const sheets = spreadsheet.getSheets();
   sheetId = sheets[0].getSheetId();
   addPivotTable(spreadsheetId, sheetId, sheetId);
   SpreadsheetApp.flush();
-  Logger.log("Created pivot table");
+  Logger.log('Created pivot table');
 }
 
 /**
@@ -86,9 +87,9 @@ function itShouldAddPivotTable(spreadsheetId) {
  */
 function RUN_ALL_TEST() {
   let spreadsheetId = itShouldReadRange();
-  Logger.log("> itShouldWriteToMultipleRanges");
+  Logger.log('> itShouldWriteToMultipleRanges');
   writeToMultipleRanges(spreadsheetId);
-  Logger.log("> itShouldAddSheet");
+  Logger.log('> itShouldAddSheet');
   addSheet(spreadsheetId);
   itShouldAddPivotTable(spreadsheetId);
 }
