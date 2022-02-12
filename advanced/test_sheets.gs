@@ -19,7 +19,7 @@
  *
  * to tests sheets.gs please add sheets services
  * create test spreadsheets
- * return {string} spreadsheet
+ * @return {string} spreadsheet
  */
 function createTestSpreadsheet() {
   const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
