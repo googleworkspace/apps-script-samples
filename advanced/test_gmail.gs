@@ -22,12 +22,12 @@
  * Please Add gmail services to run
  */
 function RUN_ALL_TESTS() {
-  Logger.log("> ltShouldListLableInfo");
+  Logger.log('> ltShouldListLableInfo');
   listLabelInfo();
-  Logger.log("> ltShouldListInboxSnippets");
+  Logger.log('> ltShouldListInboxSnippets');
   listInboxSnippets();
-  Logger.log("> ltShouldLogRecentHistory");
+  Logger.log('> ltShouldLogRecentHistory');
   logRecentHistory();
-  Logger.log("> ltShouldGetRawMessage");
+  Logger.log('> ltShouldGetRawMessage');
   getRawMessage();
 }
