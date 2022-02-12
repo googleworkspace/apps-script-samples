@@ -15,7 +15,7 @@
  */
 
 /**
- * Helper functions to help test drive.gs expectToExist(value)
+ * Helper functions to help test drive.gs expectToExist(...)
  *
  * To test drive.gs please add drive services
  */
@@ -28,7 +28,7 @@ function expectToExist(value) {
 }
 
 /**
- * Helper functions to help test drive.gs expectToEqual(actual, expected)
+ * Helper functions to help test drive.gs expectToEqual(...)
  *
  * To test drive.gs please add drive services
  */
