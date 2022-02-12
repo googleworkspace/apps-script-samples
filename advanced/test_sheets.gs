@@ -22,7 +22,6 @@
 
 /**
  * create test spreadsheets
- * @return {string} spreadsheet ID
  */
 function createTestSpreadsheet() {
   const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
