@@ -60,7 +60,7 @@ function fileCleanUp() {
 }
 
 /**
- * Helper functions folderCleanUp() 
+ * Helper functions folderCleanUp()
  *
  * To test getFoldersByName() please add drive services
  */
