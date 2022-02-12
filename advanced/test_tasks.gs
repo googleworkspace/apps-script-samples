@@ -24,7 +24,7 @@
  * tests listTaskLists of tasks.gs
  */
 function itShouldListTaskLists() {
-  Logger.log("> itShouldListTaskLists");
+  Logger.log('> itShouldListTaskLists');
   listTaskLists();
 }
 
@@ -32,7 +32,7 @@ function itShouldListTaskLists() {
  * tests listTasks of tasks.gs
  */
 function itShouldListTasks() {
-  Logger.log("> itShouldListTasks");
+  Logger.log('> itShouldListTasks');
   const taskId = Tasks.Tasklists.list().items[0].id;
   listTasks(taskId);
 }
@@ -41,7 +41,7 @@ function itShouldListTasks() {
  * tests addTask of tasks.gs
  */
 function itShouldAddTask() {
-  Logger.log("> itShouldAddTask");
+  Logger.log('> itShouldAddTask');
   const taskId = Tasks.Tasklists.list().items[0].id;
   addTask(taskId);
 }
@@ -49,7 +49,7 @@ function itShouldAddTask() {
 /**
  * run all tests
  */
-function RUN_ALL_TESTS () {
+function RUN_ALL_TESTS() {
   itShouldListTaskLists();
   itShouldListTasks();
   itShouldAddTask();
