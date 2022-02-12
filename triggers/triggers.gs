@@ -22,7 +22,13 @@
  */
 function onOpen(e) {
   // Add a custom menu to the spreadsheet.
-	@@ -16,10 +33,11 @@ function onOpen(e) {
+  SpreadsheetApp.getUi() // Or DocumentApp, SlidesApp, or FormApp.
+      .createMenu('Custom Menu')
+      .addItem('First item', 'menuItem1')
+      .addToUi();
+}
+// [END apps_script_triggers_onopen]
+// [START apps_script_triggers_onedit]
 /**
  * The event handler triggered when editing the spreadsheet.
  * @param {Event} e The onEdit event.
@@ -34,7 +40,7 @@ function onEdit(e) {
   range.setNote('Last modified: ' + new Date());
 }
 // [END apps_script_triggers_onedit]
-	@@ -28,13 +46,14 @@ function onEdit(e) {
+// [START apps_script_triggers_onselectionchange]
 /**
  * The event handler triggered when the selection changes in the spreadsheet.
  * @param {Event} e The onSelectionChange event.
@@ -49,7 +55,8 @@ function onSelectionChange(e) {
     range.setBackground('red');
   }
 }
-	@@ -45,6 +64,7 @@ function onSelectionChange(e) {
+// [END apps_script_triggers_onselectionchange]
+// [START apps_script_triggers_oninstall]
 /**
  * The event handler triggered when installing the add-on.
  * @param {Event} e The onInstall event.
@@ -57,7 +64,8 @@ function onSelectionChange(e) {
  */
 function onInstall(e) {
   onOpen(e);
-	@@ -54,6 +74,7 @@ function onInstall(e) {
+}
+// [END apps_script_triggers_oninstall]
 // [START apps_script_triggers_time]
 /**
  * Creates two time-driven triggers.
@@ -65,7 +73,18 @@ function onInstall(e) {
  */
 function createTimeDrivenTriggers() {
   // Trigger every 6 hours.
-	@@ -74,9 +95,10 @@ function createTimeDrivenTriggers() {
+  ScriptApp.newTrigger('myFunction')
+      .timeBased()
+      .everyHours(6)
+      .create();
+  // Trigger every Monday at 09:00.
+  ScriptApp.newTrigger('myFunction')
+      .timeBased()
+      .onWeekDay(ScriptApp.WeekDay.MONDAY)
+      .atHour(9)
+      .create();
+}
+// [END apps_script_triggers_time]
 // [START apps_script_triggers_open]
 /**
  * Creates a trigger for when a spreadsheet opens.
@@ -76,7 +95,10 @@ function createSpreadsheetOpenTrigger() {
   ScriptApp.newTrigger('myFunction')
       .forSpreadsheet(ss)
       .onOpen()
-	@@ -88,14 +110,15 @@ function createSpreadsheetOpenTrigger() {
+      .create();
+}
+// [END apps_script_triggers_open]
+// [START apps_script_triggers_delete]
 /**
  * Deletes a trigger.
  * @param {string} triggerId The Trigger ID.
@@ -92,3 +114,5 @@ function deleteTrigger(triggerId) {
       break;
     }
   }
+}
+// [END apps_script_triggers_delete]
