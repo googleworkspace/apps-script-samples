@@ -16,7 +16,7 @@
 
 /**
  * Helper functions to help test drive.gs expectToExist(...)
- *
+ * @param {string} value
  * To test drive.gs please add drive services
  */
 function expectToExist(value) {
@@ -29,7 +29,8 @@ function expectToExist(value) {
 
 /**
  * Helper functions to help test drive.gs expectToEqual(...)
- *
+ * @param {string} actual
+ * @param {string} expected
  * To test drive.gs please add drive services
  */
 function expectToEqual(actual, expected) {
@@ -40,7 +41,7 @@ function expectToEqual(actual, expected) {
 }
 
 /**
- * Helper functions to help test drive.gs createFolder(...)
+ * Helper functions to help test drive.gs createFolder()
  *
  * To test drive.gs please add drive services
  */
@@ -59,9 +60,9 @@ function fileCleanUp() {
 }
 
 /**
- * Helper functions to help test drive.gs getFoldersByName(...)
+ * Helper functions getFoldersByName() 
  *
- * To test drive.gs please add drive services
+ * To test getFoldersByName() please add drive services
  */
 function folderCleanUp() {
   DriveApp.getFoldersByName('test1').next().setTrashed(true);
