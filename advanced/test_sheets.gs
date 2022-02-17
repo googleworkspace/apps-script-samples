@@ -22,11 +22,11 @@
  * @return {string} spreadsheet
  */
 function createTestSpreadsheet() {
-    const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
-    for (let i = 0; i < 3; ++i) {
-        spreadsheet.appendRow([1, 2, 3]);
-    }
-    return spreadsheet.getId();
+  const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
+  for (let i = 0; i < 3; ++i) {
+    spreadsheet.appendRow([1, 2, 3]);
+  }
+  return spreadsheet.getId();
 }
 
 /**
@@ -34,19 +34,19 @@ function createTestSpreadsheet() {
  * @param {string} spreadsheetId
  */
 function populateValues(spreadsheetId) {
-    const batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
-    const repeatCellRequest = Sheets.newRepeatCellRequest();
+  const batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
+  const repeatCellRequest = Sheets.newRepeatCellRequest();
 
-    const values = [];
-    for (let i = 0; i < 10; ++i) {
-        values[i] = [];
-        for (let j = 0; j < 10; ++j) {
-            values[i].push('Hello');
-        }
+  const values = [];
+  for (let i = 0; i < 10; ++i) {
+    values[i] = [];
+    for (let j = 0; j < 10; ++j) {
+      values[i].push('Hello');
     }
-    const range = 'A1:J10';
-    SpreadsheetApp.openById(spreadsheetId).getRange(range).setValues(values);
-    SpreadsheetApp.flush();
+  }
+  const range = 'A1:J10';
+  SpreadsheetApp.openById(spreadsheetId).getRange(range).setValues(values);
+  SpreadsheetApp.flush();
 }
 
 /**
@@ -55,11 +55,11 @@ function populateValues(spreadsheetId) {
  * @return {string} spreadsheet ID
  */
 function itShouldReadRange() {
-    Logger.log('> itShouldReadRange');
-    spreadsheetId = createTestSpreadsheet();
-    populateValues(spreadsheetId);
-    readRange(spreadsheetId);
-    return spreadsheetId;
+  Logger.log('> itShouldReadRange');
+  spreadsheetId = createTestSpreadsheet();
+  populateValues(spreadsheetId);
+  readRange(spreadsheetId);
+  return spreadsheetId;
 }
 
 /**
@@ -67,23 +67,23 @@ function itShouldReadRange() {
  * @param {string} spreadsheetId
  */
 function itShouldAddPivotTable(spreadsheetId) {
-    Logger.log('> itShouldAddPivotTable');
-    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-    const sheets = spreadsheet.getSheets();
-    sheetId = sheets[0].getSheetId();
-    addPivotTable(spreadsheetId, sheetId, sheetId);
-    SpreadsheetApp.flush();
-    Logger.log('Created pivot table');
+  Logger.log('> itShouldAddPivotTable');
+  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+  const sheets = spreadsheet.getSheets();
+  sheetId = sheets[0].getSheetId();
+  addPivotTable(spreadsheetId, sheetId, sheetId);
+  SpreadsheetApp.flush();
+  Logger.log('Created pivot table');
 }
 
 /**
  * runs all the tests
  */
 function RUN_ALL_TEST() {
-    const spreadsheetId = itShouldReadRange();
-    Logger.log('> itShouldWriteToMultipleRanges');
-    writeToMultipleRanges(spreadsheetId);
-    Logger.log('> itShouldAddSheet');
-    addSheet(spreadsheetId);
-    itShouldAddPivotTable(spreadsheetId);
+  const spreadsheetId = itShouldReadRange();
+  Logger.log('> itShouldWriteToMultipleRanges');
+  writeToMultipleRanges(spreadsheetId);
+  Logger.log('> itShouldAddSheet');
+  addSheet(spreadsheetId);
+  itShouldAddPivotTable(spreadsheetId);
 }

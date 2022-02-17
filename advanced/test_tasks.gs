@@ -24,34 +24,34 @@
  * tests listTaskLists of tasks.gs
  */
 function itShouldListTaskLists() {
-    Logger.log('> itShouldListTaskLists');
-    listTaskLists();
+  Logger.log('> itShouldListTaskLists');
+  listTaskLists();
 }
 
 /**
  * tests listTasks of tasks.gs
  */
 function itShouldListTasks() {
-    Logger.log('> itShouldListTasks');
-    const taskId = Tasks.Tasklists.list().items[0].id;
-    listTasks(taskId);
+  Logger.log('> itShouldListTasks');
+  const taskId = Tasks.Tasklists.list().items[0].id;
+  listTasks(taskId);
 }
 
 /**
  * tests addTask of tasks.gs
  */
 function itShouldAddTask() {
-    Logger.log('> itShouldAddTask');
-    const taskId = Tasks.Tasklists.list().items[0].id;
-    addTask(taskId);
+  Logger.log('> itShouldAddTask');
+  const taskId = Tasks.Tasklists.list().items[0].id;
+  addTask(taskId);
 }
 
 /**
  * run all tests
  */
 function RUN_ALL_TESTS() {
-    itShouldListTaskLists();
-    itShouldListTasks();
-    itShouldAddTask();
-    itShouldListTasks();
+  itShouldListTaskLists();
+  itShouldListTasks();
+  itShouldAddTask();
+  itShouldListTasks();
 }

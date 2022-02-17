@@ -20,10 +20,10 @@
  * to tests people.gs add people api services
  */
 function RUN_ALL_TESTS() {
-    Logger.log('> itShouldGetConnections');
-    getConnections();
-    Logger.log('> itShouldGetSelf'); // Requires the scope userinfo.profile
-    getSelf();
-    Logger.log('> itShouldGetAccount');
-    getAccount('me');
+  Logger.log('> itShouldGetConnections');
+  getConnections();
+  Logger.log('> itShouldGetSelf'); // Requires the scope userinfo.profile
+  getSelf();
+  Logger.log('> itShouldGetAccount');
+  getAccount('me');
 }
