@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-// [START apps_script_slides_create_presentation]
+// [START slides_create_presentation]
 /**
  * Create a new presentation.
+ * @return {string} presentation Id.
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/create
  */
 function createPresentation() {
@@ -24,17 +25,19 @@ function createPresentation() {
     const presentation =
       Slides.Presentations.create({'title': 'MyNewPresentation'});
     Logger.log('Created presentation with ID: ' + presentation.presentationId);
+    return presentation.presentationId;
   } catch (e) {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_create_presentation]
+// [END slides_create_presentation]
 
-// [START apps_script_slides_create_slide]
+// [START slides_create_slide]
 /**
  * Create a new slide.
  * @param {string} presentationId The presentation to add the slide to.
+ * @return {Object} slide
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function createSlide(presentationId) {
@@ -54,18 +57,20 @@ function createSlide(presentationId) {
     const slide =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
     Logger.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
+    return slide;
   } catch (e) {
     // TODO (developer) - Handle Exception
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_create_slide]
+// [END slides_create_slide]
 
-// [START apps_script_slides_read_page]
+// [START slides_read_page]
 /**
  * Read page element IDs.
  * @param {string} presentationId The presentation to read from.
  * @param {string} pageId The page to read from.
+ * @return {Object} response
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations.pages/get
  */
 function readPageElementIds(presentationId, pageId) {
@@ -75,18 +80,20 @@ function readPageElementIds(presentationId, pageId) {
     const response = Slides.Presentations.Pages.get(
         presentationId, pageId, {'fields': 'pageElements.objectId'});
     Logger.log(response);
+    return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_read_page]
+// [END slides_read_page]
 
-// [START apps_script_slides_add_text_box]
+// [START slides_add_text_box]
 /**
  * Add a new text box with text to a page.
  * @param {string} presentationId The presentation ID.
  * @param {string} pageId The page ID.
+ * @return {Object} response
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function addTextBox(presentationId, pageId) {
@@ -131,18 +138,20 @@ function addTextBox(presentationId, pageId) {
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
     Logger.log('Created Textbox with ID: ' +
       response.replies[0].createShape.objectId);
+    return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_add_text_box]
+// [END slides_add_text_box]
 
-// [START apps_script_slides_format_shape_text]
+// [START slides_format_shape_text]
 /**
  * Format the text in a shape.
  * @param {string} presentationId The presentation ID.
  * @param {string} shapeId The shape ID.
+ * @return {Object} replies
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function formatShapeText(presentationId, shapeId) {
@@ -171,16 +180,17 @@ function formatShapeText(presentationId, shapeId) {
     }
   }];
   try {
-    Slides.Presentations.batchUpdate({'requests': requests},
-        presentationId);
+    const response =
+      Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
+    return response.replies;
   } catch (e) {
     // TODO (developer) - Handle Exception
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_format_shape_text]
+// [END slides_format_shape_text]
 
-// [START apps_script_slides_save_thumbnail]
+// [START slides_save_thumbnail]
 /**
  * Saves a thumbnail image of the current Google Slide presentation in Google Drive.
  * Logs the image URL.
@@ -188,7 +198,7 @@ function formatShapeText(presentationId, shapeId) {
  * @example saveThumbnailImage(0)
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations.pages/getThumbnail
  */
-function saveThumbnailImage(i=0) {
+function saveThumbnailImage(i) {
   try {
     const presentation = SlidesApp.getActivePresentation();
     // Get the thumbnail of specified page
@@ -205,4 +215,4 @@ function saveThumbnailImage(i=0) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END apps_script_slides_save_thumbnail]
+// [END slides_save_thumbnail]
