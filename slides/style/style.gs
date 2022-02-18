@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function setTextHelloWorld(){
+function setTextHelloWorld() {
 // [START apps_script_slides_hello]
   try {
     // Get the first slide of active presentation
@@ -34,8 +34,10 @@ function setTextHelloWorld(){
   }
 // [END apps_script_slides_hello]
 }
-
-function insertText(){
+/**
+ * Insert Text in shape.
+ */
+function insertText() {
 // [START apps_script_slides_insert_text]
   try {
     // Get the first slide of active presentation
@@ -55,8 +57,10 @@ function insertText(){
   }
 // [END apps_script_slides_insert_text]
 }
-
-function styleText(){
+/**
+ * Style the text
+ */
+function styleText() {
 // [START apps_script_slides_style_text]
   try {
     // Get the first slide of active presentation
@@ -70,12 +74,13 @@ function styleText(){
     const insertedText = textRange.appendText('world!');
     // Style the text with url,bold
     insertedText.getTextStyle()
-      .setBold(true)
-      .setLinkUrl('www.example.com')
-      .setForegroundColor('#ff0000');
+        .setBold(true)
+        .setLinkUrl('www.example.com')
+        .setForegroundColor('#ff0000');
     const helloRange = textRange.getRange(0, 5);
     Logger.log('Text: ' + helloRange.asString() + '; Bold: ' + helloRange.getTextStyle().isBold());
-    Logger.log('Text: ' + insertedText.asString() + '; Bold: ' + insertedText.getTextStyle().isBold());
+    Logger.log('Text: ' + insertedText.asString() + '; Bold: ' +
+      insertedText.getTextStyle().isBold());
     Logger.log('Text: ' + textRange.asString() + '; Bold: ' + textRange.getTextStyle().isBold());
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -83,7 +88,11 @@ function styleText(){
   }
 // [END apps_script_slides_style_text]
 }
-function paragraphStyling(){
+
+/**
+ * Style the paragraph
+ */
+function paragraphStyling() {
 // [START apps_script_slides_paragraph_styling]
   try {
     // Get the first slide of active presentation
@@ -105,8 +114,10 @@ function paragraphStyling(){
   }
 // [END apps_script_slides_paragraph_styling]
 }
-
-function listStyling(){
+/**
+ * Style the list
+ */
+function listStyling() {
 // [START apps_script_slides_list_styling]
   try {
     // Get the first slide of active presentation
@@ -116,9 +127,9 @@ function listStyling(){
     // Add and style the list
     const textRange = shape.getText();
     textRange.appendText('Item 1\n')
-      .appendText('\tItem 2\n')
-      .appendText('\t\tItem 3\n')
-      .appendText('Item 4');
+        .appendText('\tItem 2\n')
+        .appendText('\t\tItem 3\n')
+        .appendText('Item 4');
     // Preset patterns of glyphs for lists in text.
     textRange.getListStyle().applyListPreset(SlidesApp.ListPreset.DIGIT_ALPHA_ROMAN);
     const paragraphs = textRange.getParagraphs();
