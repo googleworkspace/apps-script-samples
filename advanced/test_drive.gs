@@ -93,7 +93,7 @@ function checkListRootFolders() {
   const folders = DriveApp.getFolders();
   while (folders.hasNext()) {
     const folder = folders.next();
-      Logger.log(folder.getName() + ' ' + folder.getId());
+    Logger.log(folder.getName() + ' ' + folder.getId());
   }
   listRootFolders();
   folderCleanUp();
@@ -106,7 +106,7 @@ function checkListRootFolders() {
 function checkAddCustomProperty(fileId) {
   addCustomProperty(fileId);
   expectToEqual(Drive.Properties.get(fileId, 'department',
-    {visibility: 'PUBLIC'}).value, 'Sales');
+      {visibility: 'PUBLIC'}).value, 'Sales');
 }
 
 /**
