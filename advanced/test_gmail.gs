@@ -19,12 +19,12 @@
  * Add gmail services to run
  */
 function RUN_ALL_TESTS() {
-    Logger.log('> ltShouldListLabelInfo');
-    listLabelInfo();
-    Logger.log('> ltShouldListInboxSnippets');
-    listInboxSnippets();
-    Logger.log('> ltShouldLogRecentHistory');
-    logRecentHistory();
-    Logger.log('> ltShouldGetRawMessage');
-    getRawMessage();
+  Logger.log('> ltShouldListLabelInfo');
+  listLabelInfo();
+  Logger.log('> ltShouldListInboxSnippets');
+  listInboxSnippets();
+  Logger.log('> ltShouldLogRecentHistory');
+  logRecentHistory();
+  Logger.log('> ltShouldGetRawMessage');
+  getRawMessage();
 }
