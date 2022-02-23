@@ -17,8 +17,8 @@
 /**
  * @OnlyCurrentDoc Adds progress bars to a presentation.
  */
-var BAR_ID = 'PROGRESS_BAR_ID';
-var BAR_HEIGHT = 10; // px
+const BAR_ID = 'PROGRESS_BAR_ID';
+const BAR_HEIGHT = 10; // px
 
 /**
  * Runs when the add-on is installed.
@@ -48,16 +48,16 @@ function onOpen(e) {
  */
 function createBars() {
   deleteBars(); // Delete any existing progress bars
-  var presentation = SlidesApp.getActivePresentation();
-  var slides = presentation.getSlides();
-  for (var i = 0; i < slides.length; ++i) {
-    var ratioComplete = (i / (slides.length - 1));
-    var x = 0;
-    var y = presentation.getPageHeight() - BAR_HEIGHT;
-    var barWidth = presentation.getPageWidth() * ratioComplete;
+  const presentation = SlidesApp.getActivePresentation();
+  const slides = presentation.getSlides();
+  for (let i = 0; i < slides.length; ++i) {
+    const ratioComplete = (i / (slides.length - 1));
+    const x = 0;
+    const y = presentation.getPageHeight() - BAR_HEIGHT;
+    const barWidth = presentation.getPageWidth() * ratioComplete;
     if (barWidth > 0) {
-      var bar = slides[i].insertShape(SlidesApp.ShapeType.RECTANGLE, x, y,
-                                      barWidth, BAR_HEIGHT);
+      const bar = slides[i].insertShape(SlidesApp.ShapeType.RECTANGLE, x, y,
+          barWidth, BAR_HEIGHT);
       bar.getBorder().setTransparent();
       bar.setLinkUrl(BAR_ID);
     }
@@ -68,15 +68,14 @@ function createBars() {
  * Deletes all progress bar rectangles.
  */
 function deleteBars() {
-  var presentation = SlidesApp.getActivePresentation();
-  var slides = presentation.getSlides();
-  for (var i = 0; i < slides.length; ++i) {
-    var elements = slides[i].getPageElements();
-    for (var j = 0; j < elements.length; ++j) {
-      var el = elements[j];
+  const presentation = SlidesApp.getActivePresentation();
+  const slides = presentation.getSlides();
+  for (let i = 0; i < slides.length; ++i) {
+    const elements = slides[i].getPageElements();
+    for (const el of elements) {
       if (el.getPageElementType() === SlidesApp.PageElementType.SHAPE &&
-          el.asShape().getLink() &&
-          el.asShape().getLink().getUrl() === BAR_ID) {
+        el.asShape().getLink() &&
+        el.asShape().getLink().getUrl() === BAR_ID) {
         el.remove();
       }
     }
