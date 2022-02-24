@@ -18,16 +18,14 @@
 /**
  * Create a new document.
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/create
+ * @return {string} documentId
  */
 function createDocument() {
   try {
     // Create document with title
     const document = Docs.Documents.create({'title': 'My New Document'});
-    if (document!== null) {
-      Logger.log('Created document with ID: ' + document.documentId);
-      return;
-    }
-    Logger.log('Unable to create Document');
+    Logger.log('Created document with ID: ' + document.documentId);
+    return document.documentId;
   } catch (e) {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error %s', e.message);
@@ -40,6 +38,7 @@ function createDocument() {
  * Performs "replace all".
  * @param {string} documentId The document to perform the replace text operations on.
  * @param {Object} findTextToReplacementMap A map from the "find text" to the "replace text".
+ * @return {Object} replies
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function findAndReplace(documentId, findTextToReplacementMap) {
@@ -64,6 +63,7 @@ function findAndReplace(documentId, findTextToReplacementMap) {
       const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
       Logger.log('Request %s performed %s replacements.', index, numReplacements);
     }
+    return replies;
   } catch (e) {
     // TODO (developer) - Handle exception
     Logger.log('Failed with error : %s', e.message);
@@ -77,6 +77,7 @@ function findAndReplace(documentId, findTextToReplacementMap) {
  * text.
  * @param {string} documentId The document the text is inserted into.
  * @param {string} text The text to insert into the document.
+ * @return {Object} replies
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function insertAndStyleText(documentId, text) {
@@ -107,8 +108,8 @@ function insertAndStyleText(documentId, text) {
     }
   }];
   try {
-    Docs.Documents.batchUpdate({'requests': requests}, documentId);
-    Logger.log('Insert text : %s', text);
+    const response =Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    return response.replies;
   } catch (e) {
     // TODO (developer) - Handle exception
     Logger.log('Failed with an error %s', e.message);
@@ -120,6 +121,7 @@ function insertAndStyleText(documentId, text) {
 /**
  * Read the first paragraph of the body of a document.
  * @param {string} documentId The ID of the document to read.
+ * @return {Object} paragraphText
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
  */
 function readFirstParagraph(documentId) {
@@ -141,7 +143,7 @@ function readFirstParagraph(documentId) {
           }
         }
         Logger.log(paragraphText);
-        return;
+        return paragraphText;
       }
     }
   } catch (e) {
