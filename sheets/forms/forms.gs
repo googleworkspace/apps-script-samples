@@ -24,7 +24,7 @@ function onOpen() {
     SpreadsheetApp.getActive().addMenu('Conference', menu);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -50,7 +50,7 @@ function setUpConference_() {
     ss.removeMenu('Conference');
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -79,7 +79,7 @@ function setUpCalendar_(values, range) {
     ScriptProperties.setProperty('calId', cal.getId());
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -136,7 +136,7 @@ function setUpForm_(ss, values) {
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -173,7 +173,7 @@ function onFormSubmit(e) {
     sendDoc_(user, response);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -191,7 +191,7 @@ function sendInvites_(user, response) {
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -225,7 +225,7 @@ function sendDoc_(user, response) {
     });
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 // [END apps_script_sheets_custom_form_responses_quickstart]

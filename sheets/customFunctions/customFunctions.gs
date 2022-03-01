@@ -32,7 +32,7 @@ function onOpen() {
     spreadsheet.addMenu('Directions', menuItems);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -79,9 +79,9 @@ function prepareSheet_() {
     sheet.getRange('A2:B2').setValues([initialData]);
     sheet.setFrozenRows(1);
     sheet.autoResizeColumns(1, 4);
-  } catch {
+  } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -172,7 +172,7 @@ function generateStepByStep_() {
     SpreadsheetApp.flush();
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: ' + e.error);
+    Logger.log('Failed with error: %s' + e.error);
   }
 }
 
