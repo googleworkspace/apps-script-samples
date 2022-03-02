@@ -107,7 +107,7 @@ function createSpreadsheetOpenTrigger() {
 function deleteTrigger(triggerId) {
   // Loop over all triggers.
   const allTriggers = ScriptApp.getProjectTriggers();
-  for (let index = 0; i < allTriggers.length; i++) {
+  for (let index = 0; index < allTriggers.length; index++) {
     // If the current trigger is the correct one, delete it.
     if (allTriggers[index].getUniqueId() === triggerId) {
       ScriptApp.deleteTrigger(allTriggers[index]);
