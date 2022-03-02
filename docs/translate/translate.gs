@@ -60,7 +60,7 @@ function onInstall(e) {
  * the mobile add-on version.
  */
 function showSidebar() {
-  var ui = HtmlService.createHtmlOutputFromFile('sidebar')
+  const ui = HtmlService.createHtmlOutputFromFile('sidebar')
       .setTitle('Translate');
   DocumentApp.getUi().showSidebar(ui);
 }
@@ -72,23 +72,23 @@ function showSidebar() {
  * @return {Array.<string>} The selected text.
  */
 function getSelectedText() {
-  var selection = DocumentApp.getActiveDocument().getSelection();
-  var text = [];
+  const selection = DocumentApp.getActiveDocument().getSelection();
+  const text = [];
   if (selection) {
-    var elements = selection.getSelectedElements();
-    for (var i = 0; i < elements.length; ++i) {
+    const elements = selection.getSelectedElements();
+    for (let i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
-        var element = elements[i].getElement().asText();
-        var startIndex = elements[i].getStartOffset();
-        var endIndex = elements[i].getEndOffsetInclusive();
+        const element = elements[i].getElement().asText();
+        const startIndex = elements[i].getStartOffset();
+        const endIndex = elements[i].getEndOffsetInclusive();
 
         text.push(element.getText().substring(startIndex, endIndex + 1));
       } else {
-        var element = elements[i].getElement();
+        const element = elements[i].getElement();
         // Only translate elements that can be edited as text; skip images and
         // other non-text elements.
         if (element.editAsText) {
-          var elementText = element.asText().getText();
+          const elementText = element.asText().getText();
           // This check is necessary to exclude images, which return a blank
           // text element.
           if (elementText) {
@@ -112,7 +112,7 @@ function getSelectedText() {
  *     they exist.
  */
 function getPreferences() {
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   return {
     originLang: userProperties.getProperty('originLang'),
     destLang: userProperties.getProperty('destLang')
@@ -139,7 +139,7 @@ function getTextAndTranslation(origin, dest, savePrefs) {
         .setProperty('originLang', origin)
         .setProperty('destLang', dest);
   }
-  var text = getSelectedText().join('\n');
+  const text = getSelectedText().join('\n');
   return {
     text: text,
     translation: translateText(text, origin, dest)
@@ -156,19 +156,19 @@ function getTextAndTranslation(origin, dest, savePrefs) {
  * @param {string} newText The text with which to replace the current selection.
  */
 function insertText(newText) {
-  var selection = DocumentApp.getActiveDocument().getSelection();
+  const selection = DocumentApp.getActiveDocument().getSelection();
   if (selection) {
-    var replaced = false;
-    var elements = selection.getSelectedElements();
+    let replaced = false;
+    const elements = selection.getSelectedElements();
     if (elements.length === 1 && elements[0].getElement().getType() ===
-        DocumentApp.ElementType.INLINE_IMAGE) {
+      DocumentApp.ElementType.INLINE_IMAGE) {
       throw new Error('Can\'t insert text into an image.');
     }
-    for (var i = 0; i < elements.length; ++i) {
+    for (let i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
-        var element = elements[i].getElement().asText();
-        var startIndex = elements[i].getStartOffset();
-        var endIndex = elements[i].getEndOffsetInclusive();
+        const element = elements[i].getElement().asText();
+        const startIndex = elements[i].getStartOffset();
+        const endIndex = elements[i].getEndOffsetInclusive();
         element.deleteText(startIndex, endIndex);
         if (!replaced) {
           element.insertText(startIndex, newText);
@@ -177,8 +177,8 @@ function insertText(newText) {
           // This block handles a selection that ends with a partial element. We
           // want to copy this partial text to the previous element so we don't
           // have a line-break before the last partial.
-          var parent = element.getParent();
-          var remainingText = element.getText().substring(endIndex + 1);
+          const parent = element.getParent();
+          const remainingText = element.getText().substring(endIndex + 1);
           parent.getPreviousSibling().asText().appendText(remainingText);
           // We cannot remove the last paragraph of a doc. If this is the case,
           // just remove the text within the last paragraph instead.
@@ -189,7 +189,7 @@ function insertText(newText) {
           }
         }
       } else {
-        var element = elements[i].getElement();
+        const element = elements[i].getElement();
         if (!replaced && element.editAsText) {
           // Only translate elements that can be edited as text, removing other
           // elements.
@@ -208,20 +208,20 @@ function insertText(newText) {
       }
     }
   } else {
-    var cursor = DocumentApp.getActiveDocument().getCursor();
-    var surroundingText = cursor.getSurroundingText().getText();
-    var surroundingTextOffset = cursor.getSurroundingTextOffset();
+    const cursor = DocumentApp.getActiveDocument().getCursor();
+    const surroundingText = cursor.getSurroundingText().getText();
+    const surroundingTextOffset = cursor.getSurroundingTextOffset();
 
     // If the cursor follows or preceds a non-space character, insert a space
     // between the character and the translation. Otherwise, just insert the
     // translation.
     if (surroundingTextOffset > 0) {
-      if (surroundingText.charAt(surroundingTextOffset - 1) != ' ') {
+      if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
         newText = ' ' + newText;
       }
     }
     if (surroundingTextOffset < surroundingText.length) {
-      if (surroundingText.charAt(surroundingTextOffset) != ' ') {
+      if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
         newText += ' ';
       }
     }
