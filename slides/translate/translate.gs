@@ -53,7 +53,15 @@ function showSidebar() {
  */
 function getElementTexts(elements) {
   var texts = [];
-  elements.forEach(function(element) {
+
+  if (elements instanceof Array) {
+    elements.forEach(recursion);
+  }
+  else {
+    recursion(elements);
+  }
+  
+  function recursion(element) {
     switch (element.getPageElementType()) {
       case SlidesApp.PageElementType.GROUP:
         element.asGroup().getChildren().forEach(function(child) {
@@ -64,7 +72,11 @@ function getElementTexts(elements) {
         var table = element.asTable();
         for (var y = 0; y < table.getNumColumns(); ++y) {
           for (var x = 0; x < table.getNumRows(); ++x) {
-            texts.push(table.getCell(x, y).getText());
+            var cell = table.getCell(x, y);
+            if (cell.getMergeState() === SlidesApp.CellMergeState.MERGED) {
+              continue;
+            }
+            texts.push(cell.getText());
           }
         }
         break;
@@ -72,7 +84,7 @@ function getElementTexts(elements) {
         texts.push(element.asShape().getText());
         break;
     }
-  });
+  }
   return texts;
 }
 
