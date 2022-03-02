@@ -35,7 +35,7 @@ function onOpen() {
  */
 function showPicker() {
   try {
-    var html = HtmlService.createHtmlOutputFromFile('dialog.html')
+    const html = HtmlService.createHtmlOutputFromFile('dialog.html')
         .setWidth(600)
         .setHeight(425)
         .setSandboxMode(HtmlService.SandboxMode.IFRAME);
