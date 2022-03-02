@@ -27,7 +27,7 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
         with:
           fetch-depth: 0
       - uses: github/super-linter/slim@v4.9.0
