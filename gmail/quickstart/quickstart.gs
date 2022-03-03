@@ -30,9 +30,8 @@ function listLabels() {
     }
     // Print the Labels that are available.
     Logger.log('Labels:');
-    for(let index in response.labels ) {
-      // TODO (developer) - use the labels returned from the list() API
-      Logger.log('- %s', response.labels[index].name);
+    for (const label of response.labels ) {
+      Logger.log('- %s', label.name);
     }
   } catch (err) {
     // TODO (developer) - Handle exception on Labels.list() API
