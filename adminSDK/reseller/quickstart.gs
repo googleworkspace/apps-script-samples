@@ -35,7 +35,7 @@ function listSubscriptions() {
           subscription.plan.planName);
     }
   } catch (err) {
-    // TODO (developer)- Handle exception from the Report  API
+    // TODO (developer)- Handle exception from the Reseller  API
     Logger.log('Failed with error %s', err.message);
   }
 }
