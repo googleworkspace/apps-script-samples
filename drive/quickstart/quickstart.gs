@@ -25,8 +25,7 @@ function listFiles() {
       maxResults: 10
     }).items;
     // Print the title and id of files available in drive
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    for (const file of files) {
       Logger.log('%s (%s)', file.title, file.id);
     }
   } catch (err) {

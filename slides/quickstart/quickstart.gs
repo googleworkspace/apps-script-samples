@@ -15,10 +15,10 @@
  */
 // [START slides_quickstart]
 /**
-  * Creates a Slides API service object and logs the number of slides and
-  * elements in a sample presentation:
-  * https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
-  */
+ * Creates a Slides API service object and logs the number of slides and
+ * elements in a sample presentation:
+ * https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
+ */
 function logSlidesAndElements() {
   const presentationId = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc';
   try {

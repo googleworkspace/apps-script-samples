@@ -19,8 +19,8 @@
  */
 function listCourses() {
   /**  here pass pageSize Query parameter as argument to get maximum number of result
-  * @see https://developers.google.com/classroom/reference/rest/v1/courses/list
-  */
+   * @see https://developers.google.com/classroom/reference/rest/v1/courses/list
+   */
   const optionalArgs = {
     pageSize: 10
     // Use other parameter here if needed
@@ -34,8 +34,7 @@ function listCourses() {
       return;
     }
     // Print the course names and IDs of the courses
-    for (let i = 0; i < courses.length; i++) {
-      const course = courses[i];
+    for (const course of courses) {
       Logger.log('%s (%s)', course.name, course.id);
     }
   } catch (err) {
