@@ -18,14 +18,20 @@
  * Logs the Google Analytics accounts accessible by the current user.
  */
 function listAccounts() {
-  var accounts = AnalyticsAdmin.Accounts.list();
-  if (accounts.items && accounts.items.length) {
-    for (var i = 0; i < accounts.items.length; i++) {
-      var account = accounts.items[i];
+  try {
+    accounts = AnalyticsAdmin.Accounts.list();
+    if (!accounts.items || !accounts.items.length) {
+      Logger.log('No accounts found.');
+      return;
+    }
+
+    for (let i = 0; i < accounts.items.length; i++) {
+      const account = accounts.items[i];
       Logger.log('Account: name "%s", displayName "%s".', account.name, account.displayName);
     }
-  } else {
-    Logger.log('No accounts found.');
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    Logger.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analyticsadmin]
