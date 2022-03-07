@@ -18,34 +18,46 @@
  * This sample inserts a new item into the timeline.
  */
 function insertTimelineItem() {
-  var timelineItem = Mirror.newTimelineItem();
+  const timelineItem = Mirror.newTimelineItem();
   timelineItem.text = 'Hello world!';
 
-  var notificationConfig = Mirror.newNotificationConfig();
+  const notificationConfig = Mirror.newNotificationConfig();
   notificationConfig.level = 'AUDIO_ONLY';
 
-  var menuItem = Mirror.newMenuItem();
+  const menuItem = Mirror.newMenuItem();
   menuItem.action = 'REPLY';
 
   timelineItem.notification = notificationConfig;
   timelineItem.menuItems = [menuItem];
-
-  Mirror.Timeline.insert(timelineItem);
+  try {
+    // @see https://developers.google.com/glass/v1/reference/timeline/insert
+    Mirror.Timeline.insert(timelineItem);
+    Logger.log('Successfully inserted new item to Timeline ');
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_mirror_timeline]
 
 // [START apps_script_mirror_contact]
 /**
  * This sample inserts a new contact.
+ * @see https://developers.google.com/glass/v1/reference/contacts/insert
  */
 function insertContact() {
-  var contact = {
+  const contact = {
     id: 'harold',
     displayName: 'Harold Penguin',
     imageUrls: ['https://developers.google.com/glass/images/harold.jpg']
   };
-
-  Mirror.Contacts.insert(contact);
+  try {
+    Mirror.Contacts.insert(contact);
+    Logger.log('Successfully inserted contact ');
+  } catch (err) {
+    // TODO (developer)- Handle exception from the API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_mirror_contact]
 
@@ -53,13 +65,19 @@ function insertContact() {
 /**
  * This sample prints the most recent known location of the user's Glass to the
  * script editor's log.
+ * @see https://developers.google.com/glass/v1/reference/locations/get
  */
 function printLatestLocation() {
-  var location = Mirror.Locations.get('latest');
+  try {
+    const location = Mirror.Locations.get('latest');
 
-  Logger.log('Location recorded on: ' + location.timestamp);
-  Logger.log('  > Latitude: ' + location.latitude);
-  Logger.log('  > Longitude: ' + location.longitude);
-  Logger.log('  > Accuracy: ' + location.accuracy + ' meters');
+    Logger.log('Location recorded on: ' + location.timestamp);
+    Logger.log('  > Latitude: ' + location.latitude);
+    Logger.log('  > Longitude: ' + location.longitude);
+    Logger.log('  > Accuracy: ' + location.accuracy + ' meters');
+  } catch (err) {
+    // TODO (developer)- Handle exception from the API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_mirror_location]
