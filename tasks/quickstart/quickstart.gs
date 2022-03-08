@@ -31,8 +31,7 @@ function listTaskLists() {
       Logger.log('No task lists found.');
       return;
     }
-    for (let i = 0; i < taskLists.length; i++) {
-      const taskList = taskLists[i];
+    for (const taskList of taskLists) {
       Logger.log('%s (%s)', taskList.title, taskList.id);
     }
   } catch (err) {

@@ -32,8 +32,7 @@ function listDriveActivity() {
       return;
     }
     Logger.log('Recent activity:');
-    for (let i = 0; i < activities.length; i++) {
-      const activity = activities[i];
+    for (const activity of activities) {
       // get time information of activity.
       const time = getTimeInfo(activity);
       // get the action details/information

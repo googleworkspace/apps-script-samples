@@ -38,8 +38,7 @@ function listUpcomingEvents() {
       return;
     }
     // Print the calendar events
-    for (let i = 0; i < events.length; i++) {
-      const event = events[i];
+    for (const event of events) {
       let when = event.start.dateTime;
       if (!when) {
         when = event.start.date;
