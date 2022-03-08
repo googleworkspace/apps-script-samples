@@ -21,34 +21,38 @@
 function queryHostedModel() {
   // When querying hosted models you must always use this
   // specific project number.
-  var projectNumber = '414649711441';
-  var hostedModelName = 'sample.sentiment';
+  const projectNumber = '414649711441';
+  const hostedModelName = 'sample.sentiment';
+  try {
+    // Query the hosted model with a positive statement.
+    let predictionString = 'Want to go to the park this weekend?';
+    let prediction = Prediction.Hostedmodels.predict(
+        {
+          input: {
+            csvInstance: [predictionString]
+          }
+        },
+        projectNumber,
+        hostedModelName);
+    // Logs Sentiment: positive.
+    Logger.log('Sentiment: ' + prediction.outputLabel);
 
-  // Query the hosted model with a positive statement.
-  var predictionString = 'Want to go to the park this weekend?';
-  var prediction = Prediction.Hostedmodels.predict(
-      {
-        input: {
-          csvInstance: [predictionString]
-        }
-      },
-      projectNumber,
-      hostedModelName);
-  // Logs Sentiment: positive.
-  Logger.log('Sentiment: ' + prediction.outputLabel);
-
-  // Now query the hosted model with a negative statement.
-  predictionString = 'You are not very nice!';
-  prediction = Prediction.Hostedmodels.predict(
-      {
-        input: {
-          csvInstance: [predictionString]
-        }
-      },
-      projectNumber,
-      hostedModelName);
-  // Logs Sentiment: negative.
-  Logger.log('Sentiment: ' + prediction.outputLabel);
+    // Now query the hosted model with a negative statement.
+    predictionString = 'You are not very nice!';
+    prediction = Prediction.Hostedmodels.predict(
+        {
+          input: {
+            csvInstance: [predictionString]
+          }
+        },
+        projectNumber,
+        hostedModelName);
+    // Logs Sentiment: negative.
+    Logger.log('Sentiment: ' + prediction.outputLabel);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_prediction_query_hosted_model]
 
@@ -59,18 +63,22 @@ function queryHostedModel() {
 function createNewModel() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
-  var projectNumber = 'XXXXXXXX';
-  var id = 'mylanguageidmodel';
-  var storageDataLocation = 'languageidsample/language_id.txt';
-
-  // Returns immediately. Training happens asynchronously.
-  var result = Prediction.Trainedmodels.insert(
-      {
-        id: id,
-        storageDataLocation: storageDataLocation
-      },
-      projectNumber);
-  Logger.log(result);
+  const projectNumber = 'XXXXXXXX';
+  const id = 'mylanguageidmodel';
+  const storageDataLocation = 'languageidsample/language_id.txt';
+  try {
+    // Returns immediately. Training happens asynchronously.
+    const result = Prediction.Trainedmodels.insert(
+        {
+          id: id,
+          storageDataLocation: storageDataLocation
+        },
+        projectNumber);
+    Logger.log(result);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_prediction_create_new_model]
 
@@ -82,11 +90,15 @@ function createNewModel() {
 function queryTrainingStatus() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
-  var projectNumber = 'XXXXXXXX';
-  var id = 'mylanguageidmodel';
-
-  var result = Prediction.Trainedmodels.get(projectNumber, id);
-  Logger.log(result.trainingStatus);
+  const projectNumber = 'XXXXXXXX';
+  const id = 'mylanguageidmodel';
+  try {
+    const result = Prediction.Trainedmodels.get(projectNumber, id);
+    Logger.log(result.trainingStatus);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_prediction_query_training_status]
 
@@ -98,20 +110,24 @@ function queryTrainingStatus() {
 function queryTrainedModel() {
   // Replace this value with the project number listed in the Google
   // APIs Console project.
-  var projectNumber = 'XXXXXXXX';
-  var id = 'mylanguageidmodel';
-  var query = 'Este es un mensaje de prueba de ejemplo';
-
-  var prediction = Prediction.Trainedmodels.predict(
-      {
-        input:
+  const projectNumber = 'XXXXXXXX';
+  const id = 'mylanguageidmodel';
+  const query = 'Este es un mensaje de prueba de ejemplo';
+  try {
+    const prediction = Prediction.Trainedmodels.predict(
+        {
+          input:
           {
             csvInstance: [query]
           }
-      },
-      projectNumber,
-      id);
-  // Logs Language: Spanish.
-  Logger.log('Language: ' + prediction.outputLabel);
+        },
+        projectNumber,
+        id);
+    // Logs Language: Spanish.
+    Logger.log('Language: ' + prediction.outputLabel);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_prediction_query_trailed_model]

@@ -18,15 +18,20 @@
  * This sample lists Fusion Tables that the user has access to.
  */
 function listTables() {
-  var tables = FusionTables.Table.list();
-  if (tables.items) {
-    for (var i = 0; i < tables.items.length; i++) {
-      var table = tables.items[i];
+  try {
+    const tables = FusionTables.Table.list();
+    if (!tables.items) {
+      Logger.log('No tables found.');
+      return;
+    }
+    // Print Table name and Id
+    for (const table of tables.items) {
       Logger.log('Table with name "%s" and ID "%s" was found.',
           table.name, table.tableId);
     }
-  } else {
-    Logger.log('No tables found.');
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_fusion_tables_list]
@@ -38,25 +43,25 @@ function listTables() {
  * @param {string} tableId The table ID.
  */
 function runQuery(tableId) {
-  var sql = 'SELECT * FROM ' + tableId + ' LIMIT 100';
-  var result = FusionTables.Query.sqlGet(sql, {
+  const sql = 'SELECT * FROM ' + tableId + ' LIMIT 100';
+  const result = FusionTables.Query.sqlGet(sql, {
     hdrs: false
   });
-  if (result.rows) {
-    var spreadsheet = SpreadsheetApp.create('Fusion Table Query Results');
-    var sheet = spreadsheet.getActiveSheet();
-
-    // Append the headers.
-    sheet.appendRow(result.columns);
-
-    // Append the results.
-    sheet.getRange(2, 1, result.rows.length, result.columns.length)
-        .setValues(result.rows);
-
-    Logger.log('Query results spreadsheet created: %s',
-        spreadsheet.getUrl());
-  } else {
+  if (!result.rows) {
     Logger.log('No rows returned.');
+    return;
   }
+  const spreadsheet = SpreadsheetApp.create('Fusion Table Query Results');
+  const sheet = spreadsheet.getActiveSheet();
+
+  // Append the headers.
+  sheet.appendRow(result.columns);
+
+  // Append the results.
+  sheet.getRange(2, 1, result.rows.length, result.columns.length)
+      .setValues(result.rows);
+
+  Logger.log('Query results spreadsheet created: %s',
+      spreadsheet.getUrl());
 }
 // [END apps_script_fusion_tables_run_query]
