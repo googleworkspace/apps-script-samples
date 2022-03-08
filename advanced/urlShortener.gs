@@ -18,10 +18,15 @@
  * Shortens a long URL. Logs this URL.
  */
 function shortenUrl() {
-  var url = UrlShortener.Url.insert({
-    longUrl: 'http://www.example.com'
-  });
-  Logger.log('Shortened URL is "%s".', url.id);
+  try {
+    const url = UrlShortener.Url.insert({
+      longUrl: 'http://www.example.com'
+    });
+    Logger.log('Shortened URL is "%s".', url.id);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_url_shortener_shorten]
 
@@ -31,9 +36,14 @@ function shortenUrl() {
  * @param  {string} shortUrl The short URL.
  */
 function getClicks(shortUrl) {
-  var url = UrlShortener.Url.get(shortUrl, {
-    projection: 'ANALYTICS_CLICKS'
-  });
-  Logger.log('The URL received %s clicks this week.', url.analytics.week.shortUrlClicks);
+  try {
+    const url = UrlShortener.Url.get(shortUrl, {
+      projection: 'ANALYTICS_CLICKS'
+    });
+    Logger.log('The URL received %s clicks this week.', url.analytics.week.shortUrlClicks);
+  } catch (err) {
+    // TODO (developer)- Handle exception from the  API
+    Logger.log('Failed with error %s', err.message);
+  }
 }
 // [END apps_script_url_shortener_get_clicks]
