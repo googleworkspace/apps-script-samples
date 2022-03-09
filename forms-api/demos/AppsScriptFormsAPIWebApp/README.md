@@ -11,7 +11,7 @@ This solution demonstrates how to interact with the new Google Forms API directl
 1. Create a new blank Apps Script project.
 
 1. Click **Project Settings**, then:
-    *  Check **Show "appsscript.json" manifest file in editor**
+    *  Check **Show "appsscript.json" manifest file in editor**.
     *  Enter the project number of the Google Cloud project that has the
        Forms API enabled and click **Change project**.
 
@@ -22,8 +22,8 @@ This solution demonstrates how to interact with the new Google Forms API directl
     * `formId`: Choose a `formId` from an existing form.
     * `topicName`: Optional, if using watches (pub/sub). 
 
-      Note: Further project setup is required to use the watches features. To 
-      setup pub/sub topics, see 
+      Note: Further project setup is required to use the watch features. To 
+      set up pub/sub topics, see 
       [Google Cloud Pubsub](https://cloud.google.com/pubsub/docs/building-pubsub-messaging-system)
       for additional details.
 
