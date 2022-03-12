@@ -15,7 +15,7 @@
     "API"
   ],
   "devDependencies": {
-    "eslint": "8.10.0",
+    "eslint": "8.11.0",
     "eslint-config-google": "0.14.0",
     "eslint-plugin-async-await": "0.0.0",
     "eslint-plugin-googleappsscript": "1.0.4"
