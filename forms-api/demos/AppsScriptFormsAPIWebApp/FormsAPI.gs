@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Global constants. Customize as needed.
-const formsAPIUrl = 'https://forms.googleapis.com/v1beta/forms/';
+const formsAPIUrl = 'https://forms.googleapis.com/v1/forms/';
 const formId = '<YOUR_FORM_ID>';
 const topicName = 'projects/<YOUR_TOPIC_PATH>';
 
@@ -22,7 +22,7 @@ const topicName = 'projects/<YOUR_TOPIC_PATH>';
 
 /**
  * Forms API Method: forms.create
- * POST https://forms.googleapis.com/v1beta/forms
+ * POST https://forms.googleapis.com/v1/forms
  */
 function create(title) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -50,7 +50,7 @@ function create(title) {
 
 /**
  * Forms API Method: forms.get
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses/{responseId}
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
  */
 function get(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -76,7 +76,7 @@ function get(formId) {
 
 /**
  * Forms API Method: forms.batchUpdate
- * POST https://forms.googleapis.com/v1beta/forms/{formId}:batchUpdate
+ * POST https://forms.googleapis.com/v1/forms/{formId}:batchUpdate
  */
 function batchUpdate(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -111,7 +111,7 @@ function batchUpdate(formId) {
 
 /**
  * Forms API Method: forms.responses.get
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses/{responseId}
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
  */
 function responsesGet(formId, responseId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -137,7 +137,7 @@ function responsesGet(formId, responseId) {
 
 /**
  * Forms API Method: forms.responses.list
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses
  */
 function responsesList(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -163,7 +163,7 @@ function responsesList(formId) {
 
 /**
  * Forms API Method: forms.watches.create
- * POST https://forms.googleapis.com/v1beta/forms/{formId}/watches
+ * POST https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function createWatch(formId) {
   let accessToken = ScriptApp.getOAuthToken();
@@ -200,7 +200,7 @@ function createWatch(formId) {
 
 /**
  * Forms API Method: forms.watches.delete
- * DELETE https://forms.googleapis.com/v1beta/forms/{formId}/watches/{watchId}
+ * DELETE https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}
  */
 function deleteWatch(formId, watchId) {
   let accessToken = ScriptApp.getOAuthToken();
@@ -230,7 +230,7 @@ function deleteWatch(formId, watchId) {
 
 /** 
  * Forms API Method: forms.watches.list
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/watches
+ * GET https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function watchesList(formId) {
   Logger.log('formId is: ' + formId);
@@ -255,7 +255,7 @@ function watchesList(formId) {
 
 /**
  * Forms API Method: forms.watches.renew
- * POST https://forms.googleapis.com/v1beta/forms/{formId}/watches/{watchId}:renew
+ * POST https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}:renew
  */
 function renewWatch(formId, watchId) {
   let accessToken = ScriptApp.getOAuthToken();
