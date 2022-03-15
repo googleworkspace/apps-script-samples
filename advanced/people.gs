@@ -13,40 +13,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_people_get_connections]
+// [START people_get_connections]
 /**
  * Gets a list of people in the user's contacts.
+ * @see https://developers.google.com/people/api/rest/v1/people.connections/list
  */
 function getConnections() {
-  var people = People.People.Connections.list('people/me', {
-    personFields: 'names,emailAddresses'
-  });
-  Logger.log('Connections: %s', JSON.stringify(people, null, 2));
+  try {
+    // Get the list of connections/contacts of user's profile
+    const people = People.People.Connections.list('people/me', {
+      personFields: 'names,emailAddresses'
+    });
+    // Print the connections/contacts
+    Logger.log('Connections: %s', JSON.stringify(people, null, 2));
+  } catch (err) {
+    // TODO (developers) - Handle exception here
+    Logger.log('Failed to get the connection with an error %s', err.message);
+  }
 }
-// [END apps_script_people_get_connections]
+// [END people_get_connections]
 
-// [START apps_script_people_get_self]
+// [START people_get_self_profile]
 /**
  * Gets the own user's profile.
+ * @see https://developers.google.com/people/api/rest/v1/people/getBatchGet
  */
 function getSelf() {
-  var people = People.People.getBatchGet({
-    resourceNames: ['people/me'],
-    personFields: 'names,emailAddresses'
-  });
-  Logger.log('Myself: %s', JSON.stringify(people, null, 2));
+  try {
+    // Get own user's profile using People.getBatchGet() method
+    const people = People.People.getBatchGet({
+      resourceNames: ['people/me'],
+      personFields: 'names,emailAddresses'
+      // Use other query parameter here if needed
+    });
+    Logger.log('Myself: %s', JSON.stringify(people, null, 2));
+  } catch (err) {
+    // TODO (developer) -Handle exception
+    Logger.log('Failed to get own profile with an error %s', err.message);
+  }
 }
-// [END apps_script_people_get_self]
+// [END people_get_self_profile]
 
-// [START apps_script_people_get_account]
+// [START people_get_account]
 /**
  * Gets the person information for any Google Account.
  * @param {string} accountId The account ID.
+ * @see https://developers.google.com/people/api/rest/v1/people/get
  */
 function getAccount(accountId) {
-  var people = People.People.get('people/' + accountId, {
-    personFields: 'names,emailAddresses'
-  });
-  Logger.log('Public Profile: %s', JSON.stringify(people, null, 2));
+  try {
+    // Get the Account details using account ID.
+    const people = People.People.get('people/' + accountId, {
+      personFields: 'names,emailAddresses'
+    });
+    // Print the profile details of Account.
+    Logger.log('Public Profile: %s', JSON.stringify(people, null, 2));
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    Logger.log('Failed to get account with an error %s', err.message);
+  }
 }
-// [END apps_script_people_get_account]
+// [END people_get_account]

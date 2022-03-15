@@ -23,7 +23,7 @@ var deploymentId;
 var params = [];
 
 const jsonString = JSON.stringify(configJSON);
-let encoded = encodeURIComponent(jsonString);
+const encoded = encodeURIComponent(jsonString);
 params.push('connectorConfig=' + encoded);
 
 params.push('reportTemplateId=' + templateId);

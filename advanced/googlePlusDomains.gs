@@ -29,7 +29,7 @@ function getProfile() {
 }
 // [END apps_script_plus_domains_profile]
 
- // [START apps_script_plus_domains_circle]
+// [START apps_script_plus_domains_circle]
 /**
  * The following example demonstrates how to create an empty circle for a user
  * within your G Suite domain.
@@ -44,7 +44,7 @@ function createCircle() {
 }
 // [END apps_script_plus_domains_circle]
 
- // [START apps_script_plus_domains_get_posts]
+// [START apps_script_plus_domains_get_posts]
 /**
  * The following example demonstrates how to list a user's posts. The returned
  * results contain a brief summary of the posts, including a title. Use the

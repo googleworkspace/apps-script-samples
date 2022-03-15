@@ -40,7 +40,7 @@ function onInstall(event) {
  * Opens a sidebar in the document containing the add-on's user interface.
  */
 function showSidebar() {
-  var ui = HtmlService
+  const ui = HtmlService
       .createHtmlOutputFromFile('sidebar')
       .setTitle('Translate');
   SlidesApp.getUi().showSidebar(ui);
@@ -52,18 +52,18 @@ function showSidebar() {
  * @return {Text[]} An array of text elements.
  */
 function getElementTexts(elements) {
-  var texts = [];
-  elements.forEach(function(element) {
+  let texts = [];
+  elements.forEach((element)=> {
     switch (element.getPageElementType()) {
       case SlidesApp.PageElementType.GROUP:
-        element.asGroup().getChildren().forEach(function(child) {
+        element.asGroup().getChildren().forEach((child)=> {
           texts = texts.concat(getElementTexts(child));
         });
         break;
       case SlidesApp.PageElementType.TABLE:
-        var table = element.asTable();
-        for (var y = 0; y < table.getNumColumns(); ++y) {
-          for (var x = 0; x < table.getNumRows(); ++x) {
+        const table = element.asTable();
+        for (let y = 0; y < table.getNumColumns(); ++y) {
+          for (let x = 0; x < table.getNumRows(); ++x) {
             texts.push(table.getCell(x, y).getText());
           }
         }
@@ -84,33 +84,33 @@ function getElementTexts(elements) {
  */
 function translateSelectedElements(targetLanguage) {
   // Get selected elements.
-  var selection = SlidesApp.getActivePresentation().getSelection();
-  var selectionType = selection.getSelectionType();
-  var texts = [];
+  const selection = SlidesApp.getActivePresentation().getSelection();
+  const selectionType = selection.getSelectionType();
+  let texts = [];
   switch (selectionType) {
     case SlidesApp.SelectionType.PAGE:
-      var pages = selection.getPageRange().getPages().forEach(function(page) {
+      selection.getPageRange().getPages().forEach((page)=> {
         texts = texts.concat(getElementTexts(page.getPageElements()));
       });
-    break;
+      break;
     case SlidesApp.SelectionType.PAGE_ELEMENT:
-      var pageElements = selection.getPageElementRange().getPageElements();
+      const pageElements = selection.getPageElementRange().getPageElements();
       texts = texts.concat(getElementTexts(pageElements));
-    break;
+      break;
     case SlidesApp.SelectionType.TABLE_CELL:
-      var cells = selection.getTableCellRange().getTableCells().forEach(function(cell) {
+      selection.getTableCellRange().getTableCells().forEach((cell)=> {
         texts.push(cell.getText());
       });
-    break;
+      break;
     case SlidesApp.SelectionType.TEXT:
-      var elements = selection.getPageElementRange().getPageElements().forEach(function(element) {
+      selection.getPageElementRange().getPageElements().forEach((element) =>{
         texts.push(element.asShape().getText());
       });
-    break;
+      break;
   }
 
   // Translate all elements in-place.
-  texts.forEach(function(text) {
+  texts.forEach((text)=> {
     text.setText(LanguageApp.translate(text.asRenderedString(), '', targetLanguage));
   });
 

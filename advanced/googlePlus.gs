@@ -39,7 +39,7 @@ function getPeople() {
 }
 // [END apps_script_plus_people]
 
- // [START apps_script_plus_posts]
+// [START apps_script_plus_posts]
 /**
  * The following example demonstrates how to list a user's posts. The returned
  * results contain a brief summary of the posts, including a list of comments

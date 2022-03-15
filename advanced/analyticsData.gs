@@ -25,51 +25,56 @@ function runReport() {
    */
   const propertyId = 'YOUR-GA4-PROPERTY-ID';
 
-  var metric = AnalyticsData.newMetric();
-  metric.name = 'activeUsers';
+  try {
+    const metric = AnalyticsData.newMetric();
+    metric.name = 'activeUsers';
 
-  var dimension = AnalyticsData.newDimension();
-  dimension.name = 'city';
+    const dimension = AnalyticsData.newDimension();
+    dimension.name = 'city';
 
-  var dateRange = AnalyticsData.newDateRange();
-  dateRange.startDate = '2020-03-31';
-  dateRange.endDate = 'today';
+    const dateRange = AnalyticsData.newDateRange();
+    dateRange.startDate = '2020-03-31';
+    dateRange.endDate = 'today';
 
-  var request = AnalyticsData.newRunReportRequest();
-  request.dimensions = [ dimension ];
-  request.metrics = [ metric ];
-  request.dateRanges = dateRange;
+    const request = AnalyticsData.newRunReportRequest();
+    request.dimensions = [dimension];
+    request.metrics = [metric];
+    request.dateRanges = dateRange;
 
-  var report = AnalyticsData.Properties.runReport(request,
-                                                  'properties/' + propertyId);
-  if (report.rows) {
-    var spreadsheet = SpreadsheetApp.create('Google Analytics Report');
-    var sheet = spreadsheet.getActiveSheet();
+    const report = AnalyticsData.Properties.runReport(request,
+        'properties/' + propertyId);
+    if (!report.rows) {
+      Logger.log('No rows returned.');
+      return;
+    }
+
+    const spreadsheet = SpreadsheetApp.create('Google Analytics Report');
+    const sheet = spreadsheet.getActiveSheet();
 
     // Append the headers.
-    var dimensionHeaders = report.dimensionHeaders.map(
-      function(dimensionHeader) {
-        return dimensionHeader.name;
-    });
-    var metricHeaders = report.metricHeaders.map(
-      function(metricHeader) {
-        return metricHeader.name;
-    });
-    var headers = [ ...dimensionHeaders, ...metricHeaders];
+    const dimensionHeaders = report.dimensionHeaders.map(
+        (dimensionHeader) => {
+          return dimensionHeader.name;
+        });
+    const metricHeaders = report.metricHeaders.map(
+        (metricHeader) => {
+          return metricHeader.name;
+        });
+    const headers = [...dimensionHeaders, ...metricHeaders];
 
     sheet.appendRow(headers);
 
     // Append the results.
-    var rows = report.rows.map( function(row) {
-      var dimensionValues = row.dimensionValues.map(
-        function(dimensionValue) {
-          return dimensionValue.value;
-      });
-      var metricValues = row.metricValues.map(
-        function(metricValues) {
-          return metricValues.value;
-      });
-      return [ ...dimensionValues, ...metricValues];
+    const rows = report.rows.map((row) => {
+      const dimensionValues = row.dimensionValues.map(
+          (dimensionValue) => {
+            return dimensionValue.value;
+          });
+      const metricValues = row.metricValues.map(
+          (metricValues) => {
+            return metricValues.value;
+          });
+      return [...dimensionValues, ...metricValues];
     });
 
     sheet.getRange(2, 1, report.rows.length, headers.length)
@@ -77,8 +82,9 @@ function runReport() {
 
     Logger.log('Report spreadsheet created: %s',
         spreadsheet.getUrl());
-  } else {
-    Logger.log('No rows returned.');
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    Logger.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analyticsdata]
