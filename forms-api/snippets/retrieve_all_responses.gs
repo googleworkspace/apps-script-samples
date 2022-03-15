@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
   // Get OAuth Token
  var OAuthToken = ScriptApp.getOAuthToken();
  Logger.log('OAuth token is: ' + OAuthToken);
- var formsAPIUrl = 'https://forms.googleapis.com/v1beta/forms/' + formId + '/' + 'responses';
+ var formsAPIUrl = 'https://forms.googleapis.com/v1/forms/' + formId + '/' + 'responses';
  Logger.log('formsAPIUrl is: ' + formsAPIUrl);
  var options = {
     'headers': {
