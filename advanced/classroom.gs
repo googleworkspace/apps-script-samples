@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START classroom_list_courses]
+// [START apps_script_classroom_list_courses]
 /**
  * Lists 10 course names and IDs.
  */
@@ -41,4 +41,4 @@ function listCourses() {
     Logger.log('Failed with error %s', err.message);
   }
 }
-// [END classroom_list_courses]
+// [END apps_script_classroom_list_courses]
