@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// [START slides_create_presentation]
+// [START apps_script_slides_create_presentation]
 /**
  * Create a new presentation.
  * @return {string} presentation Id.
@@ -31,9 +31,9 @@ function createPresentation() {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_create_presentation]
+// [END apps_script_slides_create_presentation]
 
-// [START slides_create_slide]
+// [START apps_script_slides_create_slide]
 /**
  * Create a new slide.
  * @param {string} presentationId The presentation to add the slide to.
@@ -63,9 +63,9 @@ function createSlide(presentationId) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_create_slide]
+// [END apps_script_slides_create_slide]
 
-// [START slides_read_page]
+// [START apps_script_slides_read_page]
 /**
  * Read page element IDs.
  * @param {string} presentationId The presentation to read from.
@@ -86,9 +86,9 @@ function readPageElementIds(presentationId, pageId) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_read_page]
+// [END apps_script_slides_read_page]
 
-// [START slides_add_text_box]
+// [START apps_script_slides_add_text_box]
 /**
  * Add a new text box with text to a page.
  * @param {string} presentationId The presentation ID.
@@ -144,9 +144,9 @@ function addTextBox(presentationId, pageId) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_add_text_box]
+// [END apps_script_slides_add_text_box]
 
-// [START slides_format_shape_text]
+// [START apps_script_slides_format_shape_text]
 /**
  * Format the text in a shape.
  * @param {string} presentationId The presentation ID.
@@ -188,9 +188,9 @@ function formatShapeText(presentationId, shapeId) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_format_shape_text]
+// [END apps_script_slides_format_shape_text]
 
-// [START slides_save_thumbnail]
+// [START apps_script_slides_save_thumbnail]
 /**
  * Saves a thumbnail image of the current Google Slide presentation in Google Drive.
  * Logs the image URL.
@@ -215,4 +215,4 @@ function saveThumbnailImage(i) {
     Logger.log('Failed with error %s', e.message);
   }
 }
-// [END slides_save_thumbnail]
+// [END apps_script_slides_save_thumbnail]
