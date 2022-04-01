@@ -99,7 +99,7 @@ function retrieveMyUploads() {
  */
 function addSubscription() {
   // Replace this channel ID with the channel ID you want to subscribe to
-  const channelId = 'UC9gFih9rw0zNCK3ZtoKQQyA';
+  const channelId = 'UC_x5XG1OV2P6uZZ5FSM9Ttw';
   const resource = {
     snippet: {
       resourceId: {
