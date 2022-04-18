@@ -24,6 +24,7 @@ exit_code=0
 
 for dir in "${dirs[@]}"; do
   pushd "${dir}" || exit
+  echo "Publishing ${dir}"
   clasp push -f
   status=$?
   if [ $status -ne 0 ]; then
