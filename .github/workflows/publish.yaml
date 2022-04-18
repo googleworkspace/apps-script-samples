@@ -19,7 +19,7 @@ on:
     branches:
       - master
 jobs:
-  lint:
+  publish:
     concurrency:
       group: ${{ github.head_ref || github.ref }}
       cancel-in-progress: false

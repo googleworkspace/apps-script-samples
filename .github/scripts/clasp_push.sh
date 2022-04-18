@@ -18,7 +18,7 @@ export LANG=C.UTF-8
 
 dirs=()
 
-IFS=$'\n' read -r -d '' -a dirs < <( find . -name 'build.gradle' -exec dirname '{}' \; | sort -u )
+IFS=$'\n' read -r -d '' -a dirs < <( find . -name '.clasp.json' -exec dirname '{}' \; | sort -u )
 
 exit_code=0
 
