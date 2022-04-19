@@ -16,21 +16,33 @@
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
+function contains_changes() {
+  [[ "${@:2}" = "" ]] && return 0
+  for f in ${@:2}; do
+    case $(realpath $f)/ in 
+      "$(realpath $1)"/*) return 0;;
+    esac
+  done
+  return 1
+}
+
+changed_files=$(echo "${@:1}" | xargs realpath | xargs -I {} dirname {}| sort -u | uniq)
 dirs=()
 
-IFS=$'\n' read -r -d '' -a dirs < <( find . -name '.clasp.json' -exec dirname '{}' \; | sort -u )
+IFS=$'\n' read -r -d '' -a dirs < <( find . -name '.clasp.json' -exec dirname '{}' \; | sort -u | xargs realpath )
 
 exit_code=0
 
 for dir in "${dirs[@]}"; do
-  pushd "${dir}" || exit
+  pushd "${dir}" > /dev/null || exit
+  contains_changes "$dir" "${changed_files[@]}" || continue
   echo "Publishing ${dir}"
   clasp push -f
   status=$?
   if [ $status -ne 0 ]; then
     exit_code=$status
   fi
-  popd || exit
+  popd > /dev/null || exit
 done
 
 if [ $exit_code -ne 0 ]; then
