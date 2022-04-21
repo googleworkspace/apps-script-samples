@@ -17,10 +17,10 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
 function contains_changes() {
-  [[ "${@:2}" = "" ]] && return 0
-  for f in ${@:2}; do
-    case $(realpath $f)/ in 
-      "$(realpath $1)"/*) return 0;;
+  [[ "${*:2}" = "" ]] && return 0
+  for f in "${@:2}"; do
+    case $(realpath "$f")/ in 
+      $(realpath "$1")/*) return 0;;
     esac
   done
   return 1
@@ -37,7 +37,7 @@ for dir in "${dirs[@]}"; do
   pushd "${dir}" > /dev/null || exit
   contains_changes "$dir" "${changed_files[@]}" || continue
   echo "Publishing ${dir}"
-  clasp push -f
+  echo clasp push -f
   status=$?
   if [ $status -ne 0 ]; then
     exit_code=$status
