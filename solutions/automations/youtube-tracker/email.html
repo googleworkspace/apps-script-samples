@@ -1,13 +1,20 @@
 <!-- [START email_template] -->
-<body>Hello,<br><br>You have new comments and/or replies on videos: <br><br>
-<table border =1><tr><th>Video Title</th><th>Link</th><th>Number of new replies and comments</th></tr>
-<? for (var i = 0; i < content.length; i++) { ?>
-  <tr>
-  <? for (var j = 0; j < content[i].length; j++) { ?>
-    <td Align = 'center'><?= content[i][j] ?></td>
-  <? } ?>
-  </tr>
-<? } ?>
-</table>
+<body>
+  Hello,<br><br>You have new comments and/or replies on videos: <br><br>
+  <table border="1">
+    <tr>
+      <th>Video Title</th>
+      <th>Link</th>
+      <th>Number of new replies and comments</th>
+    </tr>
+    <? for (var i = 0; i < content.length; i++) { ?>
+    <tr>
+      <? for (var j = 0; j < content[i].length; j++) { ?>
+      <td align="center"><?= content[i][j] ?></td>
+      <? } ?>
+    </tr>
+    <? } ?>
+  </table>
+</body>
 <!-- [END email_template] -->
 
