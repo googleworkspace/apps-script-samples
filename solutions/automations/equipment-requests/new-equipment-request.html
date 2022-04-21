@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>
+    A new equipment request has been made by <?= request.email ?>.
+    </p>
+    
+    <p>
+    Employee name: <?= request['Employee name'] ?><br/>
+    Desk location name: <?= request['Desk location'] ?><br/>
+    Due date: <?= request['Due date'] ?><br/>
+    Laptop model: <?= request['Laptop'] ?><br/>
+    Desktop model: <?= request['Desktop'] ?><br/>
+    Monitor(s): <?= request['Monitor'] ?><br/>
+    </p>
+    
+    See <a href="<?= sheetUrl ?>">the spreadsheet</a> to take or assign this item.
+  </body>
+</html>
