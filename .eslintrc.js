@@ -20,7 +20,6 @@ module.exports = {
     'no-unused-vars': 'off' // functions aren't used.
   },
   plugins: [
-    'async-await',
      'googleappsscript'
   ]
 }
