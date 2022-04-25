@@ -17,7 +17,6 @@
   "devDependencies": {
     "eslint": "8.12.0",
     "eslint-config-google": "0.14.0",
-    "eslint-plugin-async-await": "0.0.0",
     "eslint-plugin-googleappsscript": "1.0.4"
   },
   "scripts": {

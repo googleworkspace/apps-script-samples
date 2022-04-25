@@ -95,7 +95,7 @@ function insertAndStyleText(documentId, text) {
         startIndex: 1,
         endIndex: text.length + 1
       },
-      text_style: {
+      textStyle: {
         fontSize: {
           magnitude: 12,
           unit: 'PT'

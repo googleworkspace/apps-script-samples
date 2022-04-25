@@ -133,9 +133,9 @@ function resetAuth() {
  * Resets the auth service.
  */
 function resetAuth() {
-  var user_tokenProperties = PropertiesService.getUserProperties();
-  user_tokenProperties.deleteProperty('dscc.username');
-  user_tokenProperties.deleteProperty('dscc.password');
+  var userTokenProperties = PropertiesService.getUserProperties();
+  userTokenProperties.deleteProperty('dscc.username');
+  userTokenProperties.deleteProperty('dscc.password');
 }
 // [END apps_script_data_studio_auth_reset_user_token]
 
