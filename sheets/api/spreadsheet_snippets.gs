@@ -402,7 +402,7 @@ Snippets.prototype.conditionalFormatting = (spreadsheetId) => {
 
     let rule2Condition = Sheets.newBooleanCondition();
     rule2Condition.type = 'CUSTOM_FORMULA';
-    rule2Condition.values = [rule1ConditionalValue];
+    rule2Condition.values = [rule2ConditionalValue];
 
     let rule2BooleanRule = Sheets.newBooleanRule();
     rule2BooleanRule.condition = rule2Condition;
