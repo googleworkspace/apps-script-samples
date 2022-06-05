@@ -240,7 +240,6 @@ Snippets.prototype.batchUpdateValues =
  */
 Snippets.prototype.appendValues = (spreadsheetId, range,
   valueInputOption, _values) => {
-  // [START sheets_append_values]
   let values = [
     [
       // Cell values ...
