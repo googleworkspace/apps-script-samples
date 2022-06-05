@@ -147,10 +147,10 @@ Snippets.prototype.batchGetValues = (spreadsheetId,
  * Updates the values in the specified range
  * @param {string} spreadsheetId spreadsheet's ID
  * @param {string} range the range of cells in spreadsheet
- * @param {} valueInputOption determines how the input should be interpreted
+ * @param {string} valueInputOption determines how the input should be interpreted
  * @see
  * https://developers.google.com/sheets/api/reference/rest/v4/ValueInputOption
- * @param {list<string>} _values list of values to input
+ * @param {list<list<string>>} _values list of string lists to input
  * @returns {*} spreadsheet with updated values
  */
 Snippets.prototype.updateValues = (spreadsheetId, range,
@@ -186,10 +186,10 @@ Snippets.prototype.updateValues = (spreadsheetId, range,
  * Updates the values in the specified range
  * @param {string} spreadsheetId spreadsheet's ID
  * @param {string} range range of cells of the spreadsheet
- * @param valueInputOption determines how the input should be interpreted
+ * @param {string} valueInputOption determines how the input should be interpreted
  * @see
  * https://developers.google.com/sheets/api/reference/rest/v4/ValueInputOption
- * @param {list<string>} _values list of values to input
+ * @param {list<list<string>>} _values list of string values to input
  * @returns {*} spreadsheet with updated values
  */
 Snippets.prototype.batchUpdateValues =
