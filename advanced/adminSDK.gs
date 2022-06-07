@@ -249,16 +249,16 @@ function getLicenseAssignments() {
   let pageToken = null;
   do {
     const response = AdminLicenseManager.LicenseAssignments.listForProduct(productId, customerId, {
-        maxResults: 500,
-        pageToken: pageToken
+      maxResults: 500,
+      pageToken: pageToken
     });
     assignments = assignments.concat(response.items);
-    pageToken = response.nextPageToken
+    pageToken = response.nextPageToken;
   } while (pageToken);
   // Print the productId and skuId
   for (const assignment of assignments) {
-    Logger.log('userId: %s, productId: %s, skuId: %s', 
-               assignment.userId, assignment.productId, assignment.skuId);
+    Logger.log('userId: %s, productId: %s, skuId: %s',
+        assignment.userId, assignment.productId, assignment.skuId);
   }
 }
 // [END apps_script_admin_sdk_get_license_assignments]
