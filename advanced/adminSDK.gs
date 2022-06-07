@@ -245,19 +245,20 @@ function updateGroupSettings() {
 function getLicenseAssignments() {
   const productId = 'Google-Apps';
   const customerId = 'example.com';
-  let assignments;
-  let pageToken;
+  let assignments = [];
+  let pageToken = null;
   do {
-    assignments = AdminLicenseManager.LicenseAssignments
-        .listForProduct(productId, customerId, {
-          maxResults: 500,
-          pageToken: pageToken
-        });
+    const response = AdminLicenseManager.LicenseAssignments.listForProduct(productId, customerId, {
+        maxResults: 500,
+        pageToken: pageToken
+    });
+    assignments = assignments.concat(response.items);
+    pageToken = response.nextPageToken
   } while (pageToken);
   // Print the productId and skuId
-  for (const assignment of assignments.items) {
-    Logger.log('userId: %s, productId: %s, skuId: %s',
-        assignment.userId, assignment.productId, assignment.skuId);
+  for (const assignment of assignments) {
+    Logger.log('userId: %s, productId: %s, skuId: %s', 
+               assignment.userId, assignment.productId, assignment.skuId);
   }
 }
 // [END apps_script_admin_sdk_get_license_assignments]
