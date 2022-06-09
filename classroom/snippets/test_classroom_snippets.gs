@@ -76,6 +76,9 @@ function itShouldListCourses() {
   listCourses();
 }
 
+/**
+ * Runs all the tests
+ */
 function RUN_ALL_TESTS() {
   const courseId = itShouldCreateCourse();
   itShouldGetCourse(courseId);
