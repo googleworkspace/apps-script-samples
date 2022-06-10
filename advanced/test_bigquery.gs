@@ -30,6 +30,9 @@ function itShouldLoadCsv() {
   loadCsv();
 }
 
+/**
+ * Runs all the tests
+ */
 function RUN_ALL_TESTS() {
   itShouldRunQuery();
   itShouldLoadCsv();
