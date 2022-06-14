@@ -15,11 +15,12 @@
  */
 // Before running tagManager tests create a test tagMAnager account
 // and replace the value below with its account path
-const path = 'accounts/6007387289'
+const path = 'accounts/6007387289';
 
 /**
  * Tests createContainerVersion function of tagManager.gs
  * @param {string} accountPath Tag manager account's path
+ * @return {object} version The container version
  */
 function itShouldCreateContainerVersion(accountPath) {
   Logger.log('> itShouldCreateContainerVersion');
