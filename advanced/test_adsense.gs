@@ -30,7 +30,7 @@ function itShouldListAccounts() {
  * Tests listAdClients function of adsense.gs
  */
 function itShouldListAdClients() {
-  Logger.log('> itShouldListAdClients')
+  Logger.log('> itShouldListAdClients');
   listAdClients(accountName);
 }
 
