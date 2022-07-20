@@ -120,7 +120,7 @@ function writeManyRecords() {
 
     const end = new Date();
     Logger.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
-  } catch {
+  } catch (err) {
     // TODO(developer) - Handle exception from the API
     Logger.log('Failed with an error %s', err.message);
   }
@@ -153,7 +153,7 @@ function readFromTable() {
 
     const end = new Date();
     Logger.log('Time elapsed: %sms', end - start);
-  } catch {
+  } catch (err) {
     // TODO(developer) - Handle exception from the API
     Logger.log('Failed with an error %s', err.message);
   }
