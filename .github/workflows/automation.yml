@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+---
 name: Automation
 on: [pull_request]
 jobs:
@@ -25,4 +25,4 @@ jobs:
       - name: approve
         run: gh pr review --approve "$PR_URL"
       - name: merge
-        run: gh pr merge --auto --squash --delete-branch "$PR_URL
+        run: gh pr merge --auto --squash --delete-branch "$PR_URL"
