@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,14 +11,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+---
 name: Lint
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.head_ref || github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          echo "No lint checks";
-          exit 1;
+      - uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+      - uses: github/super-linter/slim@v4.9.4
+        env:
+          ERROR_ON_MISSING_EXEC_BIT: true
+          VALIDATE_JSCPD: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm run lint
