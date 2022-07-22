@@ -1,5 +1,3 @@
-# Google Apps Script Samples [![Build Status](https://travis-ci.org/googleworkspace/apps-script-samples.svg?branch=main)](https://travis-ci.org/googleworkspace/apps-script-samples)
-
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
 Learn more at [developers.google.com](https://developers.google.com/apps-script).
