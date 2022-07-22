@@ -13,11 +13,11 @@
 # limitations under the License.
 ---
 name: Automation
-on: [pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' &&  github.event_name == 'pull_request' }}
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
       GITHUB_TOKEN: ${{secrets.GOOGLEWORKSPACE_BOT_TOKEN}}
@@ -26,3 +26,44 @@ jobs:
         run: gh pr review --approve "$PR_URL"
       - name: merge
         run: gh pr merge --auto --squash --delete-branch "$PR_URL"
+  default-branch-migration:
+    # this job helps with migrating the default branch to main
+    # it pushes main to master if master exists and main is the default branch
+    # it pushes master to main if master is the default branch
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # required otherwise GitHub blocks infinite loops in pushes originating in an action
+          token: ${{ secrets.GOOGLEWORKSPACE_BOT_TOKEN }}
+      - name: Set env
+        run: |
+          # set DEFAULT BRANCH
+          echo "DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_ENV;
+
+          # set HAS_MASTER_BRANCH
+          if [ ! -z "$(git ls-remote --heads origin master)" ]; then
+            echo "HAS_MASTER_BRANCH=true" >> $GITHUB_ENV
+          else
+            echo "HAS_MASTER_BRANCH=false" >> $GITHUB_ENV
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: configure git
+        run: |
+          git config --global user.name 'googleworkspace-bot'
+          git config --global user.email 'googleworkspace-bot@google.com'
+      - if: ${{ env.DEFAULT_BRANCH == 'main' && env.HAS_MASTER_BRANCH == 'true' }}
+        name: Update master branch from main
+        run: |
+          git checkout -b master
+          git reset --hard origin/main
+          git push origin master
+      - if: ${{ env.DEFAULT_BRANCH == 'master'}}
+        name: Update main branch from master
+        run: |
+          git checkout -b main
+          git reset --hard origin/master
+          git push origin main
