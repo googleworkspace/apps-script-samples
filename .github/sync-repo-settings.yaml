@@ -34,21 +34,6 @@ branchProtectionRules:
       - "conventionalcommits.org"
     requiredApprovingReviewCount: 1
     requiresCodeOwnerReviews: true
-  - pattern: master
-    isAdminEnforced: false
-    requiresStrictStatusChecks: false
-    requiredStatusCheckContexts:
-      # .github/workflows/test.yml with a job called "test"
-      - "test"
-      # .github/workflows/lint.yml with a job called "lint"
-      - "lint"
-      # Google bots below
-      - "cla/google"
-      - "snippet-bot check"
-      - "header-check"
-      - "conventionalcommits.org"
-    requiredApprovingReviewCount: 1
-    requiresCodeOwnerReviews: true
 permissionRules:
   - team: workspace-devrel-dpe
     permission: admin
