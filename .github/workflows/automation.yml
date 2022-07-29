@@ -58,12 +58,12 @@ jobs:
       - if: ${{ env.DEFAULT_BRANCH == 'main' && env.HAS_MASTER_BRANCH == 'true' }}
         name: Update master branch from main
         run: |
-          git checkout -b master
+          git checkout -B master
           git reset --hard origin/main
           git push origin master
       - if: ${{ env.DEFAULT_BRANCH == 'master'}}
         name: Update main branch from master
         run: |
-          git checkout -b main
+          git checkout -B main
           git reset --hard origin/master
           git push origin main
