@@ -13,7 +13,7 @@
 # limitations under the License.
 ---
 name: Automation
-on: [push, pull_request, workflow_dispatch]
+on: [ push, pull_request, workflow_dispatch ]
 jobs:
   dependabot:
     runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
       - name: Set env
         run: |
           # set DEFAULT BRANCH
-          echo "DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_ENV;
+          echo "DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> "$GITHUB_ENV";
 
           # set HAS_MASTER_BRANCH
-          if [ ! -z "$(git ls-remote --heads origin master)" ]; then
-            echo "HAS_MASTER_BRANCH=true" >> $GITHUB_ENV
+          if [ -n "$(git ls-remote --heads origin master)" ]; then
+            echo "HAS_MASTER_BRANCH=true" >> "$GITHUB_ENV"
           else
-            echo "HAS_MASTER_BRANCH=false" >> $GITHUB_ENV
+            echo "HAS_MASTER_BRANCH=false" >> "$GITHUB_ENV"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
