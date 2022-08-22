@@ -1,19 +1,36 @@
+
+/**
+ * Copyright Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 function sendEmailToMyself() {
   // You can use this method to test the welcome email.
   sendEmailWithInlineImage(Session.getActiveUser().getEmail());
 }
 
 function sendEmailWithInlineImage(toAddress) {
-  var options = {};
+  const options = {};
+  const imageName = 'cat_emoji';
   // The URL "cid:cat_emoji" means that the inline attachment named "cat_emoji" would be used.
-  options['htmlBody'] = 'Welcome! <img src="cid:cat_emoji" alt="Cat Emoji" />';
-  options['inlineImages'] = getImage();
+  options['htmlBody'] = 'Welcome! <img src="cid:' + imageName + '" alt="Cat Emoji" />';
+  options['inlineImages'] = {[imageName]: Utilities.newBlob(getImageBinary(), 'image/png', imageName)};
   GmailApp.sendEmail(toAddress, 'Welcome!', 'Welcome!', options);
 }
 
-function getImage() {
-  // Cat Face Emoji from https://www.google.com/get/noto/help/emoji/, Base64 encoded.
-  const catPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAIgAAACACAMAAADnN9ENAAABrVBMVEVMaXHskADskADskADskADskADskADskADskADskADskADskADskADskADskADxpQf1sRPxoQXskADskAD8yir+0i/9ziz6wiHvmAP3uBnzqw3ulAD6xiT5vR7wnQPzyTDEozOhhjW4mzTbtzLnvjGIdzg+Pj5wYznQqC9WTjlLRz2UfjatkzaAajZjWTm8kTR3QjySYjNzPzlnNzKddzBcLypTJyH+0S7dsSxFHBc+Pj4+Pj4+Pj4+Pj6GXhmzdQ7ijACzhSAwCwnJkyH+0C4+Pj6XZxceAgFAPz2Idjj9zy5zUx0+Pj4uKCMfHx/XhgKBYSP9zS39yyzxwCz8xyv8xCo7LyL0vWf////65MD53Kz1yIHxrT/znhTlsCqncxvl5eU+Pj77wChbW1uurq7x8fE+Pj7jqCd+fn68vLxuXjfNnCv6uydWRCBoaGibm5tdTDLJycn5tyQ+Pj75siLuqCPtkQDxmgj3qB9KRTz1oxrimiD4rSH2pR6MTkr2pB6qWlXhcmrueHFnUS1/OBflaFG5OgHbQQDfTQjiViXmXTZoLBDocAjjXgLugg/VR3SUAAAAhHRSTlMAIHCvv5+AYEAQ/98wz4/////vUP//////////////////////////////////////////////////QBuE2vX///////+///+k////Yv//////////////////////////MP/////v////////////5///UP///////////////////89IdxrkAAAJDElEQVR4AezV4Y6qPBDGcVwB6sNqW2UKLej9X+b7HnoUwnSyJNYvJ/v7RrIuf8q0FL9+/fo3HL6OZVnVjSo+56SauirL49dB/pMKL+2xVqf8DfWxxUsl3OC7xcb5knFp1OWMjfY7mTt3aGOsxeJa3YoMbtUVC2uN0XNJak0qALajmeuNHpaWN9dFLRWDNr2jWWcBVIk5BaBprfPhGdM2wi3Urf5LKSG3aZ8RwXe0pgHwib0Ao6Ot6dlyrU/bsSvBlNVmxE/19Vkx0ZYbgQsLOQOBUqYwxpTm+c+bqoUgjvjtGdPEjDFWMAE4sxAAdxL4Id5B/TlpNrP/sLMH1nBs/m9R8U8HT4I7gFRIT6Lexp3PdiA9IRqW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';
-  // The name "cat_emoji" below needs to match the name in the "cid:" in the image URL.
-  return {'cat_emoji': Utilities.newBlob(Utilities.base64Decode(catPngBase64), 'image/png', 'cat_emoji')};
+function getImageBinary() {
+  // Cat Face Emoji from https://github.com/googlefonts/noto-emoji/blob/main/png/32/emoji_u1f431.png, Base64 encoded.
+  const catPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA+BJREFUeNrsV01ME1EQnpaltPK3iAT0oAsxMSYmlIOaGBO2etCDMTVq8CYl3jRBvehBI0YPehIPxhvFkxo1gHpQE9P15+KtROJFI6sxhEKwW6FY27o6s/vabpd9tPUn8eAkj8e+nTffzDez814B/kX5oXT4/7A9GceAk12Xg/IkThIOFUfIJb9XfgNYxCmMI8iWNLTXZNVx2zYEGTiwOUKe/wZ4xAJOIhIbXAdQuo2/dacB6i8gP7X0dA43hSsEJ+eJST9UtZv2fIdyr5d1wMyRsMkcBSd6y2WCRT5C0RrgZKN6K4C3x1FfcFw1QSFvYP4sWk4SE1F426gyRyVo/mbqzdUgiK6BoEcBkv35yAsBcEUoGRIZ8uwA+PYAQHeNgPsHzUv1MjYyfT0lwZ1S4Cz6DNNG8LoMX8+XLfz/9XZhXwUOaMUJTQJ8OYnRvSqs1VpAyCEaTu++T5p7aa7AgXGTzlfmRsq93cCKbHHE1qjt7FAAORvZidyqwm1E7BuNlORtoRoNou8iK0INi1DQ+emhWqBhpqQdm5HKK8JoWTVhB8o5wv02k+bA7moFX5ICfKmV7cQfErdDBys6MNTpLAzeS4AynirLoLagQ+jyLOw7G3PaI9lbsT0FQfuOwMkpwwmS8KkW6N1Vv6wDJ67NwfDjebPaxr9C/L5kV5GthWj/Cjrt2jlwkrGXiyUZUGPZIjYcWOgeGhrqxSHnGaAFKqVE5rq/sXqOa1ysK923pFahSF/u9Oaf3yS2wJsvm/2szhRrCuhBfjGzV6xyZ6Gr6Tm0eT8YLwYON8HAjbhhrH9/Y97Y+eE4KFEzOqlNgCvHmg2dK0ebjci1pI76DXn9d/OdkNa9sGdNOOrbOXGC1wciC1lRTus1sNIT40ZJwIHjU0VrkcE1IPu93D2f063wMbkB4ukWTU1uJAbUvr6+kAvpP44PhyllDdWfJcGVkbauepJngCehS7Mw/MgsNtnvg5GLrcumiBjwuFPgqUopq3dHAjwG6Mw/xzPStEeF8OkWCG6vNWhuP/TRmOMPJQM8x8zkrbVGWqzyNHYQ6oQELGbrFWTgKhGJDGh5LWLi5ofFbtEzC6sxej/WwZICQ6P7zsSMiNXpjAFO0nXkE/jX18DoyyTOniXgJDtb78B0ah281raNsV5DTU9xMXCR9QAl1HExbL82WT8rKr7ou7Tx3H+gASOvgqt3E8Y7azHyyge7baDUrbi8A+nXpAsdiC57IWHX8PN/ATxkB3dkoNyCrEA0Bj5a0ZUMN5ADAfsFokLgQXb+j3JxKrjnB9nvBpFTpLmjnM77ZzhG2fH+X/5t+SnAAE+HjvApIyOGAAAAAElFTkSuQmCC';
+  return Utilities.base64Decode(catPngBase64);
 }
