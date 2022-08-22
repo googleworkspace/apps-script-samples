@@ -1,3 +1,5 @@
+# Google Apps Script Samples
+
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
 Learn more at [developers.google.com](https://developers.google.com/apps-script).
