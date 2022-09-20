@@ -42,7 +42,6 @@ function listLabels() {
  * Get a label by name.
  */
 function getLabel(labelName) {
-  labelName = "labels/CKQOeFVnsZLQxqiOqNQT8yBRAwNs1MJ9s7NRNNEbbFcb";
   try {
     const label = DriveLabels.Labels.get(labelName, {view: "LABEL_VIEW_FULL"});
     Logger.log("Fetched label with title: '%s' and %d fields.", label.properties.title, label.fields.length);
