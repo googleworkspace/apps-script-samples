@@ -14,7 +14,7 @@ function listLabels() {
       // TODO (developer) - Handle exception
       Logger.log('Failed to list labels with error %s', err.message);
     }
-  } while(pageToken != null);
+  } while (pageToken != null);
  
   Logger.log('Found %d labels', labels.length);
   console.log(labels[0].name)
