@@ -84,7 +84,7 @@ function runReport() {
         spreadsheet.getUrl());
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    Logger.log('Failed with error: %s', e.message);
   }
 }
 // [END apps_script_analyticsdata]
