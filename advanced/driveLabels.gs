@@ -33,7 +33,7 @@ function listLabels() {
   } while (pageToken != null);
  
   Logger.log('Found %d labels', labels.length);
-  console.log(labels[0].name)
+  Logger.log(labels[0].name)
 }
 // [END apps_script_drive_labels_list_labels]
  
@@ -51,3 +51,61 @@ function getLabel(labelName) {
   }
 }
 // [END apps_script_drive_labels_get_label]
+
+
+// [START apps_script_drive_labels_list_labels_on_drive_item]
+/*
+ * List Labels on a Drive Item
+ * Fetches a Drive Item and prints all applied values along with their to their human-readable names.
+ * 
+ * - fileId: Drive File ID
+ */
+function listLabelsOnDriveItem(fileId) {
+  try {
+    const appliedLabels = Drive.Files.listLabels(fileId);
+
+    Logger.log("%d label(s) are applied to this file", appliedLabels.items.length);
+
+    appliedLabels.items.forEach((appliedLabel) => {
+      // Resource name of the label at the applied revision.
+      const labelName = "labels/" + appliedLabel.id + "@" + appliedLabel.revisionId;
+
+      Logger.log("Fetching Label: %s", labelName);
+      const label = DriveLabels.Labels.get(labelName, {view: "LABEL_VIEW_FULL"});
+
+      Logger.log("Label Title: %s", label.properties.title);
+
+      Object.keys(appliedLabel.fields).forEach(fieldId => {
+        const fieldValue = appliedLabel.fields[fieldId];
+        const field = label.fields.find((f) => f.id == fieldId);
+
+        Logger.log("Field ID: %s, Display Name: %s", field.id, field.properties.displayName);
+        switch(fieldValue.valueType) {
+          case 'text':
+            Logger.log("Text: %s", fieldValue.text[0]);
+            break;
+          case 'integer':
+            Logger.log("Integer: %d", fieldValue.integer[0]);
+            break;
+          case 'dateString':
+            Logger.log("Date: %s", fieldValue.dateString[0]);
+            break;
+          case 'user':
+            Logger.log("User: %s", fieldValue.user.map((user) => user.emailAddress + ": " + user.displayName).join(", "));
+            break;
+          case 'selection':
+          const choices = fieldValue.selection.map((choiceId) => field.selectionOptions.choices.find((choice) => choice.id == choiceId));
+          Logger.log("Selection: %s", choices.map((choice) => choice.id + ": " + choice.properties.displayName).join(", "));
+            break;
+          default:
+            Logger.log("Unknown: %s", fieldValue.valueType);
+            Logger.log(fieldValue.value);
+        }
+      });
+    });
+  } catch (err) {
+      // TODO (developer) - Handle exception
+    Logger.log('Failed with error %s', err.message);   
+  }
+}
+// [END apps_script_drive_labels_list_labels_on_drive_item]
