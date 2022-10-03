@@ -38,4 +38,4 @@ permissionRules:
   - team: workspace-devrel-dpe
     permission: admin
   - team: workspace-devrel
-    permission: write
+    permission: push
