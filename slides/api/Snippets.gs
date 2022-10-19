@@ -15,17 +15,12 @@
  */
 const title = 'my title';
 
-/**
- * Snippet class for the Google Slides Advanced Service.
- */
-function Snippets() {}
-
 // [START slides_create_presentation]
 /**
  * Creates a presentation
  * @returns {*} the created presentation
  */
-Snippets.prototype.createPresentation = function() {
+function createPresentation() {
   try {
     const presentation = Slides.Presentations.create({
       title: title
@@ -42,12 +37,11 @@ Snippets.prototype.createPresentation = function() {
 
 // [START slides_copy_presentation]
 /**
- * create a presentation and copy it??? doesn't this need a presentation file as input????
- * doesn't make any sense!
+ * create a presentation and copy it
+ * @param {string} presentationId - ID of presentation to copy
  * @returns {*} the copy's presentation id
  */
-Snippets.prototype.copyPresentation = function() {
-  const presentationId = this.createPresentation().presentationId;
+function copyPresentation(presentationId) {
   const copyTitle = 'Copy Title';
 
   let copyFile = {
@@ -74,7 +68,7 @@ Snippets.prototype.copyPresentation = function() {
  * @param {string} pageId
  * @returns {*}
  */
-Snippets.prototype.createSlide = function(presentationId, pageId) {
+function createSlide(presentationId, pageId) {
   // See Presentation.insertSlide(...) to learn how to add a slide using SlidesApp.
   // http://developers.google.com/apps-script/reference/slides/presentation#appendslidelayout
   const requests = [{
@@ -111,33 +105,33 @@ Snippets.prototype.createSlide = function(presentationId, pageId) {
  * @param {string} pageId
  * @returns {*}
  */
-Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
+function createTextboxWithText(presentationId, pageId) {
   const elementId = 'MyTextBox_01';
   const pt350 = {
     magnitude: 350,
     unit: 'PT'
   };
-  const requests = [{
-    createShape: {
-      objectId: elementId,
-      shapeType: 'TEXT_BOX',
-      elementProperties: {
-        pageObjectId: pageId,
-        size: {
-          height: pt350,
-          width: pt350
-        },
-        transform: {
-          scaleX: 1,
-          scaleY: 1,
-          translateX: 350,
-          translateY: 100,
-          unit: 'PT'
+  const requests = [
+    {
+      createShape: {
+        objectId: elementId,
+        shapeType: 'TEXT_BOX',
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            height: pt350,
+            width: pt350
+          },
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 350,
+            translateY: 100,
+            unit: 'PT'
+          }
         }
       }
-    }
-  },
-
+    },
     // Insert text into the box, using the supplied element ID.
     {
       insertText: {
@@ -145,7 +139,8 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
         insertionIndex: 0,
         text: 'New Box Text Inserted!'
       }
-    }];
+    }
+  ];
 
   // Execute the request.
   try {
@@ -170,7 +165,7 @@ Snippets.prototype.createTextboxWithText = function(presentationId, pageId) {
  * @param {string} pageId
  * @returns {*}
  */
-Snippets.prototype.createImage = function(presentationId, pageId) {
+function createImage(presentationId, pageId) {
   let requests = [];
   const imageId = 'MyImage_01';
   const imageUrl = 'https://www.google.com/images/branding/googlelogo/2x/' +
@@ -224,7 +219,7 @@ Snippets.prototype.createImage = function(presentationId, pageId) {
  * @param {string} dataSpreadsheetId
  * @returns {*[]}
  */
-Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadsheetId) {
+function textMerging(templatePresentationId, dataSpreadsheetId) {
   let responses = [];
   const dataRangeNotation = 'Customers!A2:M6';
   try {
@@ -306,7 +301,7 @@ Snippets.prototype.textMerging = function(templatePresentationId, dataSpreadshee
  * @param {string} customerName
  * @returns {*}
  */
-Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, customerName) {
+function imageMerging(templatePresentationId, imageUrl, customerName) {
   const logoUrl = imageUrl;
   const customerGraphicUrl = imageUrl;
 
@@ -368,7 +363,7 @@ Snippets.prototype.imageMerging = function(templatePresentationId, imageUrl, cus
  * @param {string} replacementText
  * @returns {*}
  */
-Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replacementText) {
+function simpleTextReplace(presentationId, shapeId, replacementText) {
   const requests = [{
     deleteText: {
       objectId: shapeId,
@@ -408,7 +403,7 @@ Snippets.prototype.simpleTextReplace = function(presentationId, shapeId, replace
  * @param {string} shapeId
  * @returns {*}
  */
-Snippets.prototype.textStyleUpdate = function(presentationId, shapeId) {
+function textStyleUpdate(presentationId, shapeId) {
   const requests = [{
     updateTextStyle: {
       objectId: shapeId,
@@ -485,7 +480,7 @@ Snippets.prototype.textStyleUpdate = function(presentationId, shapeId) {
 /**
  * Add arrow-diamond-disc bullets to all text in the shape.
  */
-Snippets.prototype.createBulletedText = function(presentationId, shapeId) {
+function createBulletedText(presentationId, shapeId) {
   const requests = [{
     createParagraphBullets: {
       objectId: shapeId,
@@ -522,7 +517,7 @@ Snippets.prototype.createBulletedText = function(presentationId, shapeId) {
  * @param {string} sheetChartId
  * @returns {*}
  */
-Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId, sheetChartId) {
+function createSheetsChart(presentationId, pageId, shapeId, sheetChartId) {
   const emu4M = {
     magnitude: 4000000,
     unit: 'EMU'
@@ -573,7 +568,7 @@ Snippets.prototype.createSheetsChart = function(presentationId, pageId, shapeId,
  * @param {string} presentationChartId
  * @returns {*}
  */
-Snippets.prototype.refreshSheetsChart = function(presentationId, presentationChartId) {
+function refreshSheetsChart(presentationId, presentationChartId) {
   const requests = [{
     refreshSheetsChart: {
       objectId: presentationChartId

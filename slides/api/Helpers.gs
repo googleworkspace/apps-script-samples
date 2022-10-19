@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-let filesToDelete = [];
 
 /**
  * Helper functions.
@@ -31,7 +30,7 @@ Helpers.prototype.deleteFileOnCleanup = function(id) {
 };
 
 Helpers.prototype.cleanup = function() {
-  filesToDelete.forEach(Drive.Files.remove);
+  this.filesToDelete.forEach(Drive.Files.remove);
 };
 
 Helpers.prototype.createTestPresentation = function() {
