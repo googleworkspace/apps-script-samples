@@ -19,16 +19,15 @@
  */
 function listAccounts() {
   try {
-    accounts = AnalyticsAdmin.Accounts.list();
-    if (!accounts.items || !accounts.items.length) {
+    let response = AnalyticsAdmin.Accounts.list();
+    if (!response.accounts || !response.accounts.length) {
       Logger.log('No accounts found.');
       return;
     }
 
-    for (let i = 0; i < accounts.items.length; i++) {
-      const account = accounts.items[i];
+    response.accounts.map((account) => {
       Logger.log('Account: name "%s", displayName "%s".', account.name, account.displayName);
-    }
+    });
   } catch (e) {
     // TODO (Developer) - Handle exception
     Logger.log('Failed with error: %s', e.error);
