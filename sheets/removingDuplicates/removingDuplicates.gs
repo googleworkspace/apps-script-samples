@@ -26,10 +26,10 @@ function removeDuplicates() {
   // [START apps_script_sheets_new_data]
   let newData = [];
   // [END apps_script_sheets_new_data]
-  for (let i in data) {
+  for (let i = 0; i < data.length; i++) {
     let row = data[i];
     let duplicate = false;
-    for (let j in newData) {
+    for (let j = 0; j < newData.length; j++) {
       if (row.join() == newData[j].join()) {
         duplicate = true;
       }
