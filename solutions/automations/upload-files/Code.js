@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// [START upload-files-code]
 // TODO Before you start using this sample, you must run the setUp() 
 // function in the Setup.gs file.
 
@@ -107,4 +108,4 @@ function getSubFolder_(objParentFolder, subFolderName) {
     .setDescription(`Created by ${APP_TITLE} application to store uploaded Forms files.`);
 }
 
-
+// [END upload-files-code]
