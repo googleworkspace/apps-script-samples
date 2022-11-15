@@ -15,7 +15,7 @@
  */
 // [START admin_sdk_directory_quickstart]
 /**
- * Lists users in a G Suite domain.
+ * Lists users in a Google Workspace domain.
  * @see https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list
  */
 function listUsers() {
