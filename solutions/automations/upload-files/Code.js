@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// [START upload-files-code]
+// [START apps_script_upload_files]
 // TODO Before you start using this sample, you must run the setUp() 
 // function in the Setup.gs file.
 
