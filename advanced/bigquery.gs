@@ -62,7 +62,7 @@ function runQuery() {
   sheet.appendRow(headers);
 
   // Append the results.
-  var data = new Array(rows.length);
+  const data = new Array(rows.length);
   for (let i = 0; i < rows.length; i++) {
     const cols = rows[i].f;
     data[i] = new Array(cols.length);
