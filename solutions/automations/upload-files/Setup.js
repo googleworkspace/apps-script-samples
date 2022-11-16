@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// [START upload-files-setup]
+// [START apps_script_upload_files_setup]
 // TODO You must run the setUp() function before you start using this sample.
 
 /** 
@@ -116,4 +116,4 @@ function deleteAllResponses() {
   FormApp.getActiveForm().deleteAllResponses();
 }
 
-// [END upload-files-setup]
+// [END apps_script_upload_files_setup]
