@@ -108,4 +108,4 @@ function getSubFolder_(objParentFolder, subFolderName) {
     .setDescription(`Created by ${APP_TITLE} application to store uploaded Forms files.`);
 }
 
-// [END upload-files-code]
+// [END apps_script_upload_files]
