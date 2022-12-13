@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// [START apps_script_upload_files_setup]
 // TODO You must run the setUp() function before you start using this sample.
 
 /** 
@@ -114,3 +115,5 @@ function removeTriggersAndScriptProperties() {
 function deleteAllResponses() {
   FormApp.getActiveForm().deleteAllResponses();
 }
+
+// [END apps_script_upload_files_setup]
