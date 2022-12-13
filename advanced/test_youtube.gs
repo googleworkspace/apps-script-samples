@@ -18,12 +18,12 @@
  * Run all tests
  */
 function RUN_ALL_TESTS() {
-  Logger.log('> itShouldSearchByKeyword');
+  console.log('> itShouldSearchByKeyword');
   searchByKeyword();
-  Logger.log('> itShouldRetrieveMyUploads');
+  console.log('> itShouldRetrieveMyUploads');
   retrieveMyUploads();
-  Logger.log('> itShouldAddSubscription');
+  console.log('> itShouldAddSubscription');
   addSubscription();
-  Logger.log('> itShouldCreateSlides');
+  console.log('> itShouldCreateSlides');
   createSlides();
 }

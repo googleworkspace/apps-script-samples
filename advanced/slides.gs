@@ -24,11 +24,11 @@ function createPresentation() {
   try {
     const presentation =
       Slides.Presentations.create({'title': 'MyNewPresentation'});
-    Logger.log('Created presentation with ID: ' + presentation.presentationId);
+    console.log('Created presentation with ID: ' + presentation.presentationId);
     return presentation.presentationId;
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_create_presentation]
@@ -56,11 +56,11 @@ function createSlide(presentationId) {
   try {
     const slide =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-    Logger.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
+    console.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
     return slide;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_create_slide]
@@ -79,11 +79,11 @@ function readPageElementIds(presentationId, pageId) {
   try {
     const response = Slides.Presentations.Pages.get(
         presentationId, pageId, {'fields': 'pageElements.objectId'});
-    Logger.log(response);
+    console.log(response);
     return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_read_page]
@@ -136,12 +136,12 @@ function addTextBox(presentationId, pageId) {
   try {
     const response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-    Logger.log('Created Textbox with ID: ' +
+    console.log('Created Textbox with ID: ' +
       response.replies[0].createShape.objectId);
     return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_add_text_box]
@@ -185,7 +185,7 @@ function formatShapeText(presentationId, shapeId) {
     return response.replies;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_format_shape_text]
@@ -209,10 +209,10 @@ function saveThumbnailImage(i) {
     const image = response.getBlob();
     // Creates a file in the root of the user's Drive from a given Blob of arbitrary data.
     const file = DriveApp.createFile(image);
-    Logger.log(file.getUrl());
+    console.log(file.getUrl());
   } catch (e) {
     // TODO (developer) - Handle Exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END apps_script_slides_save_thumbnail]

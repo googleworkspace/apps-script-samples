@@ -25,10 +25,10 @@ function addAlias(course_id) {
   };
   try {
     const course_alias = Classroom.Courses.Aliases.create(resource=alias, courseId=course_id);
-    Logger.log('%s successfully added as an alias!', course_alias.alias);
+    console.log('%s successfully added as an alias!', course_alias.alias);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Request to add alias %s failed with error %s.', alias.alias, err.message);
+    console.log('Request to add alias %s failed with error %s.', alias.alias, err.message);
   }
 }
 // [END classroom_add_alias]
