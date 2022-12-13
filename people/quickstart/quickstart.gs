@@ -31,14 +31,14 @@ function listConnectionNames() {
     connections.connections.forEach((person) => {
       // if contacts/connections is available, print the name of person.
       if (person.names && person.names.length === 0) {
-        Logger.log('No display name found for connection.');
+        console.log('No display name found for connection.');
         return;
       }
-      Logger.log(person.names[0].displayName);
+      console.log(person.names[0].displayName);
     });
   } catch (err) {
     // TODO (developer) - Handle exception from People API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END people_quickstart]

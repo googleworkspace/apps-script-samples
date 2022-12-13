@@ -20,10 +20,10 @@
  */
 function expectToExist(value) {
   if (!value) {
-    Logger.log('DNE');
+    console.log('DNE');
     return;
   }
-  Logger.log('TEST: Exists');
+  console.log('TEST: Exists');
 }
 
 /**
@@ -33,10 +33,10 @@ function expectToExist(value) {
  */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
-    Logger.log('TEST: actual: %s = expected: %s', actual, expected);
+    console.log('TEST: actual: %s = expected: %s', actual, expected);
     return;
   }
-  Logger.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log('TEST: actual: %s = expected: %s', actual, expected);
 }
 /**
  * Creates a presentation.
@@ -86,7 +86,7 @@ function addShape(presentationId, pageId) {
     requests: requests
   }, presentationId);
   const createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
-  Logger.log('Created textbox with ID: %s', createShapeResponse.objectId);
+  console.log('Created textbox with ID: %s', createShapeResponse.objectId);
   // [END slides_create_textbox_with_text]
   return createShapeResponse.objectId;
 }
@@ -117,7 +117,7 @@ function itShouldCreateAPresentation() {
  * Creates a new slide.
  */
 function itShouldCreateASlide() {
-  Logger.log('> itShouldCreateASlide');
+  console.log('> itShouldCreateASlide');
   const presentationId = createPresentation();
   const slideId=createSlide(presentationId);
   expectToExist(slideId);

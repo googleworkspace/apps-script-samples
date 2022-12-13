@@ -41,7 +41,7 @@ function createAndSendDocument() {
     GmailApp.sendEmail(email, subject, body);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_hello_world]

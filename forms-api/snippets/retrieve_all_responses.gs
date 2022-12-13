@@ -14,14 +14,14 @@
 
  # [START forms_retrieve_all_responses]
  function callFormsAPI() {
-  Logger.log('Calling the Forms API!');
+  console.log('Calling the Forms API!');
   var formId = '<YOUR_FORM_ID>';
 
   // Get OAuth Token
  var OAuthToken = ScriptApp.getOAuthToken();
- Logger.log('OAuth token is: ' + OAuthToken);
+ console.log('OAuth token is: ' + OAuthToken);
  var formsAPIUrl = 'https://forms.googleapis.com/v1/forms/' + formId + '/' + 'responses';
- Logger.log('formsAPIUrl is: ' + formsAPIUrl);
+ console.log('formsAPIUrl is: ' + formsAPIUrl);
  var options = {
     'headers': {
       Authorization: 'Bearer ' + OAuthToken,
@@ -30,6 +30,6 @@
     'method': 'get'
   };  
 var response = UrlFetchApp.fetch(formsAPIUrl, options);
- Logger.log('Response from forms.responses was: ' + response);
+ console.log('Response from forms.responses was: ' + response);
 }
 # [END forms_retrieve_all_responses]

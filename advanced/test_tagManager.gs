@@ -23,7 +23,7 @@ const path = 'accounts/6007387289';
  * @return {object} version The container version
  */
 function itShouldCreateContainerVersion(accountPath) {
-  Logger.log('> itShouldCreateContainerVersion');
+  console.log('> itShouldCreateContainerVersion');
   const version = createContainerVersion(accountPath);
   return version;
 }
@@ -33,7 +33,7 @@ function itShouldCreateContainerVersion(accountPath) {
  * @param {object} version tag managers container version
  */
 function itShouldPublishVersionAndQuickPreviewDraft(version) {
-  Logger.log('> itShouldPublishVersionAndQuickPreviewDraft');
+  console.log('> itShouldPublishVersionAndQuickPreviewDraft');
   publishVersionAndQuickPreviewDraft(version);
 }
 
@@ -42,7 +42,7 @@ function itShouldPublishVersionAndQuickPreviewDraft(version) {
  * @param {object} version tag managers container version
  */
 function itShouldCreateAndReauthorizeUserEnvironment(version) {
-  Logger.log('> itShouldCreateAndReauthorizeUserEnvironment');
+  console.log('> itShouldCreateAndReauthorizeUserEnvironment');
   createAndReauthorizeUserEnvironment(version);
 }
 
@@ -51,7 +51,7 @@ function itShouldCreateAndReauthorizeUserEnvironment(version) {
  * @param {string} accountPath Tag manager account's path
  */
 function itShouldLogAllAccountUserPermissionsWithContainerAccess(accountPath) {
-  Logger.log('> itShouldLogAllAccountUserPermissionsWithContainerAccess');
+  console.log('> itShouldLogAllAccountUserPermissionsWithContainerAccess');
   logAllAccountUserPermissionsWithContainerAccess(accountPath);
 }
 /**

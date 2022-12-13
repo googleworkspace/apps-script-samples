@@ -21,7 +21,7 @@ const profileId = 'abcd';
  * Tests listAccounts function of analytics.gs
  */
 function itShouldListAccounts() {
-  Logger.log('> itShouldListAccounts');
+  console.log('> itShouldListAccounts');
   listAccounts();
 }
 
@@ -29,7 +29,7 @@ function itShouldListAccounts() {
  * Tests runReport function of analytics.gs
  */
 function itShouldRunReport() {
-  Logger.log('> itShouldRunReport');
+  console.log('> itShouldRunReport');
   runReport(profileId);
 }
 

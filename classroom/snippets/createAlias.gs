@@ -32,10 +32,10 @@ function createAlias() {
   try {
     // Create the course using course details.
     course = Classroom.Courses.create(course);
-    Logger.log('Course created: %s (%s)', course.name, course.id);
+    console.log('Course created: %s (%s)', course.name, course.id);
   } catch (err) {
     // TODO (developer) - Handle Courses.create() exception
-    Logger.log('Failed to create course %s with an error %s', course.name, err.message);
+    console.log('Failed to create course %s with an error %s', course.name, err.message);
   }
 }
 // [END classroom_create_alias]
