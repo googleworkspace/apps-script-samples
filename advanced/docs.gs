@@ -24,11 +24,11 @@ function createDocument() {
   try {
     // Create document with title
     const document = Docs.Documents.create({'title': 'My New Document'});
-    Logger.log('Created document with ID: ' + document.documentId);
+    console.log('Created document with ID: ' + document.documentId);
     return document.documentId;
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END docs_create_document]
@@ -61,12 +61,12 @@ function findAndReplace(documentId, findTextToReplacementMap) {
     const replies = response.replies;
     for (const [index] of replies.entries()) {
       const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
-      Logger.log('Request %s performed %s replacements.', index, numReplacements);
+      console.log('Request %s performed %s replacements.', index, numReplacements);
     }
     return replies;
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error : %s', e.message);
+    console.log('Failed with error : %s', e.message);
   }
 }
 // [END docs_find_and_replace_text]
@@ -112,7 +112,7 @@ function insertAndStyleText(documentId, text) {
     return response.replies;
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s', e.message);
+    console.log('Failed with an error %s', e.message);
   }
 }
 // [END docs_insert_and_style_text]
@@ -142,13 +142,13 @@ function readFirstParagraph(documentId) {
             paragraphText += paragraphElement.textRun.content;
           }
         }
-        Logger.log(paragraphText);
+        console.log(paragraphText);
         return paragraphText;
       }
     }
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END docs_read_first_paragraph]

@@ -27,13 +27,13 @@ function readRange(spreadsheetId = yourspreadsheetId) {
   try {
     const response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
     if (response.values) {
-      Logger.log(response.values);
+      console.log(response.values);
       return;
     }
-    Logger.log('Failed to get range of values from spreadsheet');
+    console.log('Failed to get range of values from spreadsheet');
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END sheets_read_range]
@@ -72,13 +72,13 @@ function writeToMultipleRanges(spreadsheetId = yourspreadsheetId) {
   try {
     const response = Sheets.Spreadsheets.Values.batchUpdate(request, spreadsheetId);
     if (response) {
-      Logger.log(response);
+      console.log(response);
       return;
     }
-    Logger.log('response null');
+    console.log('response null');
   } catch (e) {
     // TODO (developer) - Handle  exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END sheets_write_range]
@@ -109,11 +109,11 @@ function addSheet(spreadsheetId = yourspreadsheetId) {
   try {
     const response =
       Sheets.Spreadsheets.batchUpdate({'requests': requests}, spreadsheetId);
-    Logger.log('Created sheet with ID: ' +
+    console.log('Created sheet with ID: ' +
       response.replies[0].addSheet.properties.sheetId);
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END sheets_add_new_sheet]
@@ -195,7 +195,7 @@ function addPivotTable(
     // The Pivot table will appear anchored to cell A50 of the destination sheet.
   } catch (e) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', e.message);
+    console.log('Failed with error %s', e.message);
   }
 }
 // [END sheets_add_pivot_table]

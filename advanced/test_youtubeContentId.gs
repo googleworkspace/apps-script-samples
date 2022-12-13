@@ -18,7 +18,7 @@
  * Tests claimYourVideoWithMonetizePolicy function of youtubeContentId.gs
  */
 function itShouldClaimVideoWithMonetizePolicy() {
-  Logger.log('> itShouldClaimVideoWithMonetizePolicy');
+  console.log('> itShouldClaimVideoWithMonetizePolicy');
   claimYourVideoWithMonetizePolicy();
 }
 
@@ -26,7 +26,7 @@ function itShouldClaimVideoWithMonetizePolicy() {
  * Tests updateAssetOwnership function of youtubeContentId.gs
  */
 function itShouldUpdateAssetOwnership() {
-  Logger.log('> itShouldUpdateAssetOwnership');
+  console.log('> itShouldUpdateAssetOwnership');
   updateAssetOwnership();
 }
 
@@ -34,7 +34,7 @@ function itShouldUpdateAssetOwnership() {
  * Tests releaseClaim function of youtubeContentId.gs
  */
 function itShouldReleaseClaim() {
-  Logger.log('> itShouldReleaseClaim');
+  console.log('> itShouldReleaseClaim');
   releaseClaim();
 }
 

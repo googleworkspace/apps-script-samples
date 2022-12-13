@@ -22,11 +22,11 @@ function listAccounts() {
   do {
     const response = AdSense.Accounts.list({pageToken: pageToken});
     if (!response.accounts) {
-      Logger.log('No accounts found.');
+      console.log('No accounts found.');
       return;
     }
     for (const account of response.accounts) {
-      Logger.log('Found account with resource name "%s" and display name "%s".',
+      console.log('Found account with resource name "%s" and display name "%s".',
           account.name, account.displayName);
     }
     pageToken = response.nextPageToken;
@@ -48,13 +48,13 @@ function listAdClients(accountName) {
       pageToken: pageToken
     });
     if (!response.adClients) {
-      Logger.log('No ad clients found for this account.');
+      console.log('No ad clients found for this account.');
       return;
     }
     for (const adClient of response.adClients) {
-      Logger.log('Found ad client for product "%s" with resource name "%s".',
+      console.log('Found ad client for product "%s" with resource name "%s".',
           adClient.productCode, adClient.name);
-      Logger.log('Reporting dimension ID: %s',
+      console.log('Reporting dimension ID: %s',
           adClient.reportingDimensionId ?? 'None');
     }
     pageToken = response.nextPageToken;
@@ -76,11 +76,11 @@ function listAdUnits(adClientName) {
       pageToken: pageToken
     });
     if (!response.adUnits) {
-      Logger.log('No ad units found for this ad client.');
+      console.log('No ad units found for this ad client.');
       return;
     }
     for (const adUnit of response.adUnits) {
-      Logger.log('Found ad unit with resource name "%s" and display name "%s".',
+      console.log('Found ad unit with resource name "%s" and display name "%s".',
           adUnit.name, adUnit.displayName);
     }
 
@@ -115,7 +115,7 @@ function generateReport(accountName, adClientReportingDimensionId) {
   });
 
   if (!report.rows) {
-    Logger.log('No rows returned.');
+    console.log('No rows returned.');
     return;
   }
   const spreadsheet = SpreadsheetApp.create('AdSense Report');
@@ -128,7 +128,7 @@ function generateReport(accountName, adClientReportingDimensionId) {
   sheet.getRange(2, 1, report.rows.length, report.headers.length)
       .setValues(report.rows.map((row) => row.cells.map((cell) => cell.value)));
 
-  Logger.log('Report spreadsheet created: %s',
+  console.log('Report spreadsheet created: %s',
       spreadsheet.getUrl());
 }
 

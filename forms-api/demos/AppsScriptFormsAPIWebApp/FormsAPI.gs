@@ -41,9 +41,9 @@ function create(title) {
     'payload': jsonTitle
   };
 
-  Logger.log('Forms API POST options was: ' + JSON.stringify(options));
+  console.log('Forms API POST options was: ' + JSON.stringify(options));
   let response = UrlFetchApp.fetch(formsAPIUrl, options);
-  Logger.log('Response from Forms API was: ' + JSON.stringify(response));
+  console.log('Response from Forms API was: ' + JSON.stringify(response));
 
   return ('' + response);
 }
@@ -65,10 +65,10 @@ function get(formId) {
 
   try {
     let response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
-    Logger.log('Response from Forms API was: ' + response);
+    console.log('Response from Forms API was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e) +
       '<br/><br/>Unable to find Form with formId:<br/>' + formId);
   }
@@ -105,7 +105,7 @@ function batchUpdate(formId) {
 
   let response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
     options);
-  Logger.log('Response code from API: ' + response.getResponseCode());
+  console.log('Response code from API: ' + response.getResponseCode());
   return (response.getResponseCode());
 }
 
@@ -127,10 +127,10 @@ function responsesGet(formId, responseId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
       responseId, options);
-    Logger.log('Response from Forms.responses.get was: ' + response);
+    console.log('Response from Forms.responses.get was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e))
   }
 }
@@ -153,10 +153,10 @@ function responsesList(formId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
       options);
-    Logger.log('Response from Forms.responses was: ' + response);
+    console.log('Response from Forms.responses was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e))
   }
 }
@@ -178,7 +178,7 @@ function createWatch(formId) {
       'eventType': 'RESPONSES',
     }
   };
-  Logger.log('myWatch is: ' + JSON.stringify(myWatch));
+  console.log('myWatch is: ' + JSON.stringify(myWatch));
 
   var options = {
     'headers': {
@@ -189,12 +189,12 @@ function createWatch(formId) {
     'payload': JSON.stringify(myWatch),
     'muteHttpExceptions': false,
   };
-  Logger.log('options are: ' + JSON.stringify(options));
-  Logger.log('formsAPIURL was: ' + formsAPIUrl);
+  console.log('options are: ' + JSON.stringify(options));
+  console.log('formsAPIURL was: ' + formsAPIUrl);
 
   var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
     options);
-  Logger.log(response);
+  console.log(response);
   return ('' + response);
 }
 
@@ -205,7 +205,7 @@ function createWatch(formId) {
 function deleteWatch(formId, watchId) {
   let accessToken = ScriptApp.getOAuthToken();
 
-  Logger.log('formsAPIUrl is: ' + formsAPIUrl);
+  console.log('formsAPIUrl is: ' + formsAPIUrl);
 
   var options = {
     'headers': {
@@ -219,10 +219,10 @@ function deleteWatch(formId, watchId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId, options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 
@@ -233,7 +233,7 @@ function deleteWatch(formId, watchId) {
  * GET https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function watchesList(formId) {
-  Logger.log('formId is: ' + formId);
+  console.log('formId is: ' + formId);
   let accessToken = ScriptApp.getOAuthToken();
   var options = {
     'headers': {
@@ -245,10 +245,10 @@ function watchesList(formId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
       options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 }
@@ -271,10 +271,10 @@ function renewWatch(formId, watchId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId + ':renew', options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 }

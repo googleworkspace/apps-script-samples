@@ -24,10 +24,10 @@ function listLabelInfo() {
       Gmail.Users.Labels.list('me');
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
-      Logger.log(JSON.stringify(label));
+      console.log(JSON.stringify(label));
     }
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_label]
@@ -47,13 +47,13 @@ function listInboxSnippets() {
       });
       if (threadList.threads && threadList.threads.length > 0) {
         threadList.threads.forEach(function(thread) {
-          Logger.log('Snippet: %s', thread.snippet);
+          console.log('Snippet: %s', thread.snippet);
         });
       }
       pageToken = threadList.nextPageToken;
     } while (pageToken);
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_inbox_snippets]
@@ -74,7 +74,7 @@ function logRecentHistory() {
       maxResults: 1
     });
     if (!sent.threads || !sent.threads[0]) {
-      Logger.log('No sent threads found.');
+      console.log('No sent threads found.');
       return;
     }
     const historyId = sent.threads[0].historyId;
@@ -102,10 +102,10 @@ function logRecentHistory() {
     } while (pageToken);
 
     changed.forEach(function(id) {
-      Logger.log('Message Changed: %s', id);
+      console.log('Message Changed: %s', id);
     });
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_history]
@@ -126,7 +126,7 @@ function getRawMessage() {
     const encodedMessage = Utilities.base64Encode(message.raw);
     console.log(encodedMessage);
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_raw]

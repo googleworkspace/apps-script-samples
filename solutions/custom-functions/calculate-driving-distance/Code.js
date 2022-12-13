@@ -35,7 +35,7 @@ function onOpen() {
     spreadsheet.addMenu('Directions', menuItems);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: %s' + e.error);
+    console.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -84,7 +84,7 @@ function prepareSheet_() {
     sheet.autoResizeColumns(1, 4);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: %s' + e.error);
+    console.log('Failed with error: %s' + e.error);
   }
 }
 
@@ -175,7 +175,7 @@ function generateStepByStep_() {
     SpreadsheetApp.flush();
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    Logger.log('Failed with error: %s' + e.error);
+    console.log('Failed with error: %s' + e.error);
   }
 }
 

@@ -18,7 +18,7 @@
  * Tests listUserProfiles function of doubleclick.gs
  */
 function itShouldListUserProfiles() {
-  Logger.log('> itShouldListUserProfiles');
+  console.log('> itShouldListUserProfiles');
   listUserProfiles();
 }
 
@@ -26,7 +26,7 @@ function itShouldListUserProfiles() {
  * Tests listActiveCampaigns function of doubleclick.gs
  */
 function itShouldListActiveCampaigns() {
-  Logger.log('> itShouldListActiveCampaigns');
+  console.log('> itShouldListActiveCampaigns');
   listActiveCampaigns();
 }
 
@@ -34,7 +34,7 @@ function itShouldListActiveCampaigns() {
  * Tests createAdvertiserAndCampaign function of doubleclick.gs
  */
 function itShouldCreateAdvertiserAndCampaign() {
-  Logger.log('> itShouldCreateAdvertiserAndCampaign');
+  console.log('> itShouldCreateAdvertiserAndCampaign');
   createAdvertiserAndCampaign();
 }
 
