@@ -12,7 +12,7 @@ function testSchemas() {
       htmlBody: htmlBody
     });
   } catch (err) {
-    Logger.log(err.message);
+    console.log(err.message);
   }
 }
 // [END gmail_send_email_with_markup]

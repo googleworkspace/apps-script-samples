@@ -30,10 +30,10 @@ function coursePatch(courseId) {
   try {
     // Update section and room in course.
     course = Classroom.Courses.patch(body=course, id=courseId, updateMask=mask);
-    Logger.log('Course "%s" updated.', course.name);
+    console.log('Course "%s" updated.', course.name);
   } catch (err) {
     // TODO (developer) - Handle Courses.patch() exception
-    Logger.log('Failed to update the course. Error message: %s', err.message);
+    console.log('Failed to update the course. Error message: %s', err.message);
   }
 }
 // [END classroom_patch_course]

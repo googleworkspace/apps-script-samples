@@ -18,7 +18,7 @@
  * Tests runQuery function of adminSDK.gs
  */
 function itShouldRunQuery() {
-  Logger.log('> itShouldRunQuery');
+  console.log('> itShouldRunQuery');
   runQuery();
 }
 
@@ -26,7 +26,7 @@ function itShouldRunQuery() {
  * Tests loadCsv function of adminSDK.gs
  */
 function itShouldLoadCsv() {
-  Logger.log('> itShouldLoadCsv');
+  console.log('> itShouldLoadCsv');
   loadCsv();
 }
 

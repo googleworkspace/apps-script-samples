@@ -46,7 +46,7 @@ function createReport() {
   });
 
   if (!result.rows) {
-    Logger.log('No rows returned.');
+    console.log('No rows returned.');
     return;
   }
   const spreadsheet = SpreadsheetApp.create('YouTube Analytics Report');
@@ -62,7 +62,7 @@ function createReport() {
   sheet.getRange(2, 1, result.rows.length, headers.length)
       .setValues(result.rows);
 
-  Logger.log('Report spreadsheet created: %s',
+  console.log('Report spreadsheet created: %s',
       spreadsheet.getUrl());
 }
 

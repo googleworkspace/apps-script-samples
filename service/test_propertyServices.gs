@@ -18,19 +18,19 @@
  * Run all tests for propertyService.gs
  */
 function RUN_ALL_TESTS() {
-  Logger.log('> itShouldSaveSingleProperty');
+  console.log('> itShouldSaveSingleProperty');
   saveSingleProperty();
-  Logger.log('> itShouldSaveMultipleProperties');
+  console.log('> itShouldSaveMultipleProperties');
   saveMultipleProperties();
-  Logger.log('> itShouldReadSingleProperty');
+  console.log('> itShouldReadSingleProperty');
   readSingleProperty();
-  Logger.log('> itShouldReadAllProperties');
+  console.log('> itShouldReadAllProperties');
   readAllProperties();
   // The tests below are successful if they run without any extra output
-  Logger.log('> itShouldUpdateProperty');
+  console.log('> itShouldUpdateProperty');
   updateProperty();
-  Logger.log('> itShouldDeleteSingleProperty');
+  console.log('> itShouldDeleteSingleProperty');
   deleteSingleProperty();
-  Logger.log('> itShouldDeleteAllUserProperties');
+  console.log('> itShouldDeleteAllUserProperties');
   deleteAllUserProperties();
 }

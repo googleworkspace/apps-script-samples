@@ -21,10 +21,10 @@ const documentId='1EaLpBfuo3bMUeP6_P34auuQroh3bCWi6hLDppY6J6us';
  */
 function expectToExist(value) {
   if (!value) {
-    Logger.log('DNE');
+    console.log('DNE');
     return;
   }
-  Logger.log('TEST: Exists');
+  console.log('TEST: Exists');
 }
 
 /**
@@ -35,10 +35,10 @@ function expectToExist(value) {
  */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
-    Logger.log('TEST: actual: %s = expected: %s', actual, expected);
+    console.log('TEST: actual: %s = expected: %s', actual, expected);
     return;
   }
-  Logger.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log('TEST: actual: %s = expected: %s', actual, expected);
 }
 
 

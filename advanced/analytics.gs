@@ -21,20 +21,20 @@ function listAccounts() {
   try {
     const accounts = Analytics.Management.Accounts.list();
     if (!accounts.items || !accounts.items.length) {
-      Logger.log('No accounts found.');
+      console.log('No accounts found.');
       return;
     }
 
     for (let i = 0; i < accounts.items.length; i++) {
       const account = accounts.items[i];
-      Logger.log('Account: name "%s", id "%s".', account.name, account.id);
+      console.log('Account: name "%s", id "%s".', account.name, account.id);
 
       // List web properties in the account.
       listWebProperties(account.id);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -46,12 +46,12 @@ function listWebProperties(accountId) {
   try {
     const webProperties = Analytics.Management.Webproperties.list(accountId);
     if (!webProperties.items || !webProperties.items.length) {
-      Logger.log('\tNo web properties found.');
+      console.log('\tNo web properties found.');
       return;
     }
     for (let i = 0; i < webProperties.items.length; i++) {
       const webProperty = webProperties.items[i];
-      Logger.log('\tWeb Property: name "%s", id "%s".',
+      console.log('\tWeb Property: name "%s", id "%s".',
           webProperty.name, webProperty.id);
 
       // List profiles in the web property.
@@ -59,7 +59,7 @@ function listWebProperties(accountId) {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -77,17 +77,17 @@ function listProfiles(accountId, webPropertyId) {
         webPropertyId);
 
     if (!profiles.items || !profiles.items.length) {
-      Logger.log('\t\tNo web properties found.');
+      console.log('\t\tNo web properties found.');
       return;
     }
     for (let i = 0; i < profiles.items.length; i++) {
       const profile = profiles.items[i];
-      Logger.log('\t\tProfile: name "%s", id "%s".', profile.name,
+      console.log('\t\tProfile: name "%s", id "%s".', profile.name,
           profile.id);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analytics_accounts]
@@ -118,7 +118,7 @@ function runReport(profileId) {
       options);
 
   if (!report.rows) {
-    Logger.log('No rows returned.');
+    console.log('No rows returned.');
     return;
   }
 
@@ -135,7 +135,7 @@ function runReport(profileId) {
   sheet.getRange(2, 1, report.rows.length, headers.length)
       .setValues(report.rows);
 
-  Logger.log('Report spreadsheet created: %s',
+  console.log('Report spreadsheet created: %s',
       spreadsheet.getUrl());
 }
 // [END apps_script_analytics_reports]

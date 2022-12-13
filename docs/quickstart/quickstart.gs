@@ -25,10 +25,10 @@ function printDocTitle() {
     // Get the document using document id
     const doc = Docs.Documents.get(documentId);
     // Log the title  of document.
-    Logger.log('The title of the doc is: %s', doc.title);
+    console.log('The title of the doc is: %s', doc.title);
   } catch (err) {
     // TODO (developer) - Handle exception from Docs API
-    Logger.log('Failed to found document with an error %s', err.message);
+    console.log('Failed to found document with an error %s', err.message);
   }
 }
 // [END docs_quickstart]

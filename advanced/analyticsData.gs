@@ -44,7 +44,7 @@ function runReport() {
     const report = AnalyticsData.Properties.runReport(request,
         'properties/' + propertyId);
     if (!report.rows) {
-      Logger.log('No rows returned.');
+      console.log('No rows returned.');
       return;
     }
 
@@ -80,11 +80,11 @@ function runReport() {
     sheet.getRange(2, 1, report.rows.length, headers.length)
         .setValues(rows);
 
-    Logger.log('Report spreadsheet created: %s',
+    console.log('Report spreadsheet created: %s',
         spreadsheet.getUrl());
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analyticsdata]
