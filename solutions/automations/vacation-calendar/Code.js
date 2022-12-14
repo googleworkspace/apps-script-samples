@@ -134,7 +134,7 @@ function findEvents(user, keyword, start, end, optSince) {
       continue;
     }
     events = events.concat(response.items.filter(function(item) {
-      return shoudImportEvent(user, keyword, item);
+      return shouldImportEvent(user, keyword, item);
     }));
     pageToken = response.nextPageToken;
   } while (pageToken);
@@ -149,7 +149,7 @@ function findEvents(user, keyword, start, end, optSince) {
  * @param {Calendar.Event} event The event being considered.
  * @return {boolean} True if the event should be imported.
  */
-function shoudImportEvent(user, keyword, event) {
+function shouldImportEvent(user, keyword, event) {
   // Filters out events where the keyword did not appear in the summary
   // (that is, the keyword appeared in a different field, and are thus
   // is not likely to be relevant).
