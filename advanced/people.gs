@@ -151,9 +151,10 @@ function getFullName() {
  */
 function getPhoneNumbers() {
   try {
-    // Gets the person by specifying resource name/account ID in the first parameter of People.People.get. 
+    // Gets the person by specifying resource name/account ID
+    // in the first parameter of People.People.get.
     // This example gets the person for the user running the script.
-    const people = People.People.get('people/me', { personFields: 'phoneNumbers' });
+    const people = People.People.get('people/me', {personFields: 'phoneNumbers'});
     // Prints the phone numbers.
     console.log(people['phoneNumbers']);
   } catch (err) {
@@ -171,11 +172,12 @@ function getPhoneNumbers() {
  */
 function getPhone() {
   try {
-    // Gets the person by specifying resource name/account ID in the first parameter of People.People.get. 
+    // Gets the person by specifying resource name/account ID
+    // in the first parameter of People.People.get.
     // This example gets the person for the user running the script.
-    const people = People.People.get('people/me', { personFields: 'phoneNumbers' });
+    const people = People.People.get('people/me', {personFields: 'phoneNumbers'});
     // Gets phone number by type, such as home or work.
-    const phoneNumber = people['phoneNumbers'].find(phone => phone['type'] === 'home')['value']
+    const phoneNumber = people['phoneNumbers'].find((phone) => phone['type'] === 'home')['value'];
     // Prints the phone numbers.
     console.log(phoneNumber);
   } catch (err) {
