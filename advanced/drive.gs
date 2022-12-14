@@ -95,7 +95,7 @@ function addCustomProperty(fileId) {
 // [START drive_list_revisions]
 /**
  * Lists the revisions of a given file. Note that some properties of revisions
- * are only available for certain file types. For example, Google Workspace 
+ * are only available for certain file types. For example, Google Workspace
  * application files do not consume space in Google Drive and thus list a file
  * size of 0.
  * @param {string} fileId The ID of the file to list revisions for.

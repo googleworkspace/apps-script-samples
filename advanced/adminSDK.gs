@@ -392,8 +392,7 @@ function generateUserUsageReport() {
     console.log('No results returned.');
     return;
   }
-  const spreadsheet 
-    = SpreadsheetApp.create('Google Workspace User Usage Report');
+  const spreadsheet = SpreadsheetApp.create('Google Workspace User Usage Report');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
