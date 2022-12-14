@@ -23,7 +23,7 @@ const productResource3 = {};
  * Tests productInsert function of shoppingContent.gs
  */
 function itShouldProductInsert() {
-  Logger.log('> itShouldPproductInsert');
+  console.log('> itShouldPproductInsert');
   productInsert();
 }
 
@@ -31,7 +31,7 @@ function itShouldProductInsert() {
  * Tests productList function of shoppingContent.gs
  */
 function itShouldProductList() {
-  Logger.log('> itShouldProductList');
+  console.log('> itShouldProductList');
   productList();
 }
 
@@ -39,7 +39,7 @@ function itShouldProductList() {
  * Tests custombatch function of shoppingContent.gs
  */
 function itShouldCustombatch() {
-  Logger.log('> itShouldCustombatch');
+  console.log('> itShouldCustombatch');
   custombatch(productResource1, productResource2, productResource3);
 }
 
@@ -47,7 +47,7 @@ function itShouldCustombatch() {
  * Tests updateAccountTax function of shoppingContent.gs
  */
 function itShouldUpdateAccountTax() {
-  Logger.log('> itShouldUpdateAccountTax');
+  console.log('> itShouldUpdateAccountTax');
   updateAccountTax();
 }
 

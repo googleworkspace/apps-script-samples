@@ -39,7 +39,7 @@ function createDatabase() {
     conn.createStatement().execute('CREATE DATABASE ' + db);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 
@@ -58,7 +58,7 @@ function createUser() {
     conn.createStatement().execute('GRANT ALL ON `%`.* TO ' + user);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 
@@ -73,7 +73,7 @@ function createTable() {
       'entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));');
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 // [END apps_script_jdbc_create]
@@ -93,7 +93,7 @@ function writeOneRecord() {
     stmt.execute();
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 
@@ -119,10 +119,10 @@ function writeManyRecords() {
     conn.close();
 
     const end = new Date();
-    Logger.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
+    console.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 // [END apps_script_jdbc_write]
@@ -145,17 +145,17 @@ function readFromTable() {
       for (let col = 0; col < numCols; col++) {
         rowString += results.getString(col + 1) + '\t';
       }
-      Logger.log(rowString);
+      console.log(rowString);
     }
 
     results.close();
     stmt.close();
 
     const end = new Date();
-    Logger.log('Time elapsed: %sms', end - start);
+    console.log('Time elapsed: %sms', end - start);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 // [END apps_script_jdbc_read]

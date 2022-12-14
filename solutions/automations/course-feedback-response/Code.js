@@ -102,7 +102,7 @@ function createEmailBody(responses) {
  * @param {string} emailBody The email body as an HTML string
  */
 function createDraft(timestamp, email, emailBody) {
-  Logger.log('draft email create process started');
+  console.log('draft email create process started');
 
   // create subject line
   let subjectLine = 'Thanks for your course feedback! ' + timestamp;

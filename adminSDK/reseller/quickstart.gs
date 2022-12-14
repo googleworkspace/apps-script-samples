@@ -26,17 +26,17 @@ function listSubscriptions() {
     const response = AdminReseller.Subscriptions.list(optionalArgs);
     const subscriptions = response.subscriptions;
     if (!subscriptions || subscriptions.length === 0) {
-      Logger.log('No subscriptions found.');
+      console.log('No subscriptions found.');
       return;
     }
-    Logger.log('Subscriptions:');
+    console.log('Subscriptions:');
     for (const subscription of subscriptions) {
-      Logger.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
+      console.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
           subscription.plan.planName);
     }
   } catch (err) {
     // TODO (developer)- Handle exception from the Reseller  API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END admin_sdk_reseller_quickstart]

@@ -49,7 +49,7 @@ function runQuery() {
   }
 
   if (!rows) {
-    Logger.log('No rows returned.');
+    console.log('No rows returned.');
     return;
   }
   const spreadsheet = SpreadsheetApp.create('BiqQuery Results');
@@ -72,7 +72,7 @@ function runQuery() {
   }
   sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
 
-  Logger.log('Results spreadsheet created: %s',
+  console.log('Results spreadsheet created: %s',
       spreadsheet.getUrl());
 }
 // [END apps_script_bigquery_run_query]
@@ -111,9 +111,9 @@ function loadCsv() {
   };
   try {
     table = BigQuery.Tables.insert(table, projectId, datasetId);
-    Logger.log('Table created: %s', table.id);
+    console.log('Table created: %s', table.id);
   } catch (err) {
-    Logger.log('unable to create table');
+    console.log('unable to create table');
   }
   // Load CSV data from Drive and convert to the correct format for upload.
   const file = DriveApp.getFileById(csvFileId);
@@ -134,10 +134,10 @@ function loadCsv() {
   };
   try {
     BigQuery.Jobs.insert(job, projectId, data);
-    Logger.log('Load job started. Check on the status of it here: ' +
+    console.log('Load job started. Check on the status of it here: ' +
       'https://bigquery.cloud.google.com/jobs/%s', projectId);
   } catch (err) {
-    Logger.log('unable to insert job');
+    console.log('unable to insert job');
   }
 }
 // [END apps_script_bigquery_load_csv]

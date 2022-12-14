@@ -19,7 +19,7 @@
  * Tests createDatabase function of jdbc.gs
  */
 function itShouldCreateDatabase() {
-  Logger.log('itShouldCreateDatabase');
+  console.log('itShouldCreateDatabase');
   createDatabase();
 }
 
@@ -27,7 +27,7 @@ function itShouldCreateDatabase() {
  * Tests createUser function of jdbc.gs
  */
 function itShouldCreateUser() {
-  Logger.log('itShouldCreateUser');
+  console.log('itShouldCreateUser');
   createUser();
 }
 
@@ -35,7 +35,7 @@ function itShouldCreateUser() {
  * Tests createTable function of jdbc.gs
  */
 function itShouldCreateTable() {
-  Logger.log('itShouldCreateTable');
+  console.log('itShouldCreateTable');
   createTable();
 }
 
@@ -43,7 +43,7 @@ function itShouldCreateTable() {
  * Tests writeOneRecord function of jdbc.gs
  */
 function itShouldWriteOneRecord() {
-  Logger.log('itShouldWriteOneRecord');
+  console.log('itShouldWriteOneRecord');
   writeOneRecord();
 }
 
@@ -51,7 +51,7 @@ function itShouldWriteOneRecord() {
  * Tests writeManyRecords function of jdbc.gs
  */
 function itShouldWriteManyRecords() {
-  Logger.log('itShouldWriteManyRecords');
+  console.log('itShouldWriteManyRecords');
   writeManyRecords();
 }
 
@@ -59,7 +59,7 @@ function itShouldWriteManyRecords() {
  * Tests readFromTable function of jdbc.gs
  */
 function itShouldReadFromTable() {
-  Logger.log('itShouldReadFromTable');
+  console.log('itShouldReadFromTable');
   readFromTable();
 }
 

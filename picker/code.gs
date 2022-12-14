@@ -25,7 +25,7 @@ function onOpen() {
         .addToUi();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -42,7 +42,7 @@ function showPicker() {
     SpreadsheetApp.getUi().showModalDialog(html, 'Select a file');
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -62,7 +62,7 @@ function getOAuthToken() {
     return ScriptApp.getOAuthToken();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END picker_code]

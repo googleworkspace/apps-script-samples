@@ -27,15 +27,15 @@ function searchByKeyword() {
       maxResults: 25
     });
     if (results === null) {
-      Logger.log('Unable to search videos');
+      console.log('Unable to search videos');
       return;
     }
     results.items.forEach((item)=> {
-      Logger.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
+      console.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
     });
   } catch (err) {
     // TODO (developer) - Handle exceptions from Youtube API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 // [END apps_script_youtube_search]
@@ -55,7 +55,7 @@ function retrieveMyUploads() {
       mine: true
     });
     if (!results || results.items.length === 0) {
-      Logger.log('No Channels found.');
+      console.log('No Channels found.');
       return;
     }
     for (let i = 0; i < results.items.length; i++) {
@@ -73,12 +73,12 @@ function retrieveMyUploads() {
           pageToken: nextPageToken
         });
         if (!playlistResponse || playlistResponse.items.length === 0) {
-          Logger.log('No Playlist found.');
+          console.log('No Playlist found.');
           break;
         }
         for (let j = 0; j < playlistResponse.items.length; j++) {
           const playlistItem = playlistResponse.items[j];
-          Logger.log('[%s] Title: %s',
+          console.log('[%s] Title: %s',
               playlistItem.snippet.resourceId.videoId,
               playlistItem.snippet.title);
         }
@@ -87,7 +87,7 @@ function retrieveMyUploads() {
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with err %s', err.message);
+    console.log('Failed with err %s', err.message);
   }
 }
 // [END apps_script_youtube_uploads]
@@ -111,14 +111,14 @@ function addSubscription() {
 
   try {
     const response = YouTube.Subscriptions.insert(resource, 'snippet');
-    Logger.log('Added subscription for channel title : %s', response.snippet.title);
+    console.log('Added subscription for channel title : %s', response.snippet.title);
   } catch (e) {
     if (e.message.match('subscriptionDuplicate')) {
-      Logger.log('Cannot subscribe; already subscribed to channel: ' +
+      console.log('Cannot subscribe; already subscribed to channel: ' +
         channelId);
     } else {
       // TODO (developer) - Handle exception
-      Logger.log('Error adding subscription: ' + e.message);
+      console.log('Error adding subscription: ' + e.message);
     }
   }
 }
@@ -165,7 +165,7 @@ function createSlides() {
     presentation.getSlides()[0].getPageElements()[0].asShape()
         .getText().setText(PRESENTATION_TITLE);
     if (!presentation) {
-      Logger.log('Unable to create presentation');
+      console.log('Unable to create presentation');
       return;
     }
     // Add slides with videos and log the presentation URL to the user.
@@ -174,10 +174,10 @@ function createSlides() {
       slide.insertVideo(video.url,
           0, 0, presentation.getPageWidth(), presentation.getPageHeight());
     });
-    Logger.log(presentation.getUrl());
+    console.log(presentation.getUrl());
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_youtube_slides]

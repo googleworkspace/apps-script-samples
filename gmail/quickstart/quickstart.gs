@@ -25,17 +25,17 @@ function listLabels() {
     const response = Gmail.Users.Labels.list('me');
     if (!response || response.labels.length === 0) {
       // TODO (developer) - No labels are returned from the response
-      Logger.log('No labels found.');
+      console.log('No labels found.');
       return;
     }
     // Print the Labels that are available.
-    Logger.log('Labels:');
+    console.log('Labels:');
     for (const label of response.labels ) {
-      Logger.log('- %s', label.name);
+      console.log('- %s', label.name);
     }
   } catch (err) {
     // TODO (developer) - Handle exception on Labels.list() API
-    Logger.log('Labels.list() API failed with error %s', err.toString());
+    console.log('Labels.list() API failed with error %s', err.toString());
   }
 }
 // [END gmail_quickstart]

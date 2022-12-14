@@ -28,15 +28,15 @@ function listTaskLists() {
     const taskLists = response.items;
     // Print task list of user if available.
     if (!taskLists || taskLists.length === 0) {
-      Logger.log('No task lists found.');
+      console.log('No task lists found.');
       return;
     }
     for (const taskList of taskLists) {
-      Logger.log('%s (%s)', taskList.title, taskList.id);
+      console.log('%s (%s)', taskList.title, taskList.id);
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Task API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END tasks_quickstart]

@@ -26,13 +26,13 @@ function listUserProfiles() {
       // Print out the user ID and name of each
       for (let i = 0; i < profiles.items.length; i++) {
         const profile = profiles.items[i];
-        Logger.log('Found profile with ID %s and name "%s".',
+        console.log('Found profile with ID %s and name "%s".',
             profile.profileId, profile.userName);
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_doubleclick_list_user_profiles]
@@ -57,7 +57,7 @@ function listActiveCampaigns() {
       if (result.campaigns) {
         for (let i = 0; i < result.campaigns.length; i++) {
           const campaign = result.campaigns[i];
-          Logger.log('Found campaign with ID %s and name "%s".',
+          console.log('Found campaign with ID %s and name "%s".',
               campaign.id, campaign.name);
         }
       }
@@ -65,7 +65,7 @@ function listActiveCampaigns() {
     } while (pageToken);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_doubleclick_list_active_campaigns]
@@ -111,7 +111,7 @@ function createAdvertiserAndCampaign() {
     DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_doubleclick_create_advertiser_and_campaign]

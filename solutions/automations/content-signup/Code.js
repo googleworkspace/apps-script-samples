@@ -84,7 +84,7 @@ function onFormSubmit(e) {
   let column = e.values.length + 1;
   sheet.getRange(row, column).setValue(status);
 
-  Logger.log("status=" + status + "; responses=" + JSON.stringify(responses));
+  console.log("status=" + status + "; responses=" + JSON.stringify(responses));
 }
 
 /**
