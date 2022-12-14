@@ -84,15 +84,9 @@ function getAccount(accountId) {
  */
 function getContactGroup(name) {
   try {
-    var group = null;
     const people = People.ContactGroups.list();
-    // Iterates over all contact groups for the person to find where the name matches.
-    for (var i = 0; i < people["contactGroups"].length; i++) {
-      if (people["contactGroups"][i]["name"] == name) {
-        group = people["contactGroups"][i];
-        break;
-      }
-    }
+    // Finds the contact group for the person where the name matches.
+    const group = people['contactGroups'].find(group => group['name'] === name)
     // Prints the contact group
     console.log('Group: %s', JSON.stringify(group, null, 2));
   } catch (err) {
@@ -114,15 +108,9 @@ function getContactByEmail(email) {
   try {
     // Gets the person with that email address by iterating over all contacts.
     const people = People.People.Connections.list('people/me', { personFields: 'names,emailAddresses' });
-    var contact = null;
-    for (var i = 0; i < people["connections"].length; i++) {
-      for (var j = 0; j < people["connections"][i]["emailAddresses"].length; j++) {
-        if (people["connections"][i]["emailAddresses"][j]["value"] == email) {
-          contact = people["connections"][i];
-          break;
-        }
-      }
-    }
+    const contact = people['connections'].find(connection => {
+      return connection['emailAddresses'].some(emailAddress => emailAddress['value'] === email);
+    });
     // Prints the contact.
     console.log('Contact: %s', JSON.stringify(contact, null, 2));
   } catch (err) {
@@ -144,7 +132,7 @@ function getFullName() {
     // This example gets the person for the user running the script.
     const people = People.People.get('people/me', { personFields: 'names' });
     // Prints the full name (given name + family name)
-    console.log(people["names"][0]["givenName"] + ' ' + people["names"][0]["familyName"]);
+    console.log(`${people['names'][0]['givenName']} ${people['names'][0]['familyName']}`);
   } catch (err) {
     // TODO (developers) - Handle exception
     console.log('Failed to get the connection with an error %s', err.message);
@@ -164,7 +152,7 @@ function getPhoneNumbers() {
     // This example gets the person for the user running the script.
     const people = People.People.get('people/me', { personFields: 'phoneNumbers' });
     // Prints the phone numbers.
-    console.log(people["phoneNumbers"]);
+    console.log(people['phoneNumbers']);
   } catch (err) {
     // TODO (developers) - Handle exception
     console.log('Failed to get the connection with an error %s', err.message);
@@ -179,18 +167,12 @@ function getPhoneNumbers() {
  * @see https://developers.google.com/people/api/rest/v1/people/get
  */
 function getPhone() {
-  var phoneNumber;
   try {
     // Gets the person by specifying resource name/account ID in the first parameter of People.People.get. 
     // This example gets the person for the user running the script.
     const people = People.People.get('people/me', { personFields: 'phoneNumbers' });
-    for (var i = 0; i < people["phoneNumbers"].length; i++) {
-      // Gets phone number by type, such as home or work.
-      if (people["phoneNumbers"][i]["type"] == "home") {
-        phoneNumber = people["phoneNumbers"][i]["value"];
-        break;
-      }
-    }
+    // Gets phone number by type, such as home or work.
+    const phoneNumber = people['phoneNumbers'].find(phone => phone['type'] === 'home')['value']
     // Prints the phone numbers.
     console.log(phoneNumber);
   } catch (err) {
