@@ -26,13 +26,13 @@ function logSlidesAndElements() {
     const presentation = Slides.Presentations.get(presentationId);
     const slides = presentation.slides;
     // Print the number of slides and elements in presentation
-    Logger.log('The presentation contains %s slides:', slides.length);
+    console.log('The presentation contains %s slides:', slides.length);
     for ( let i = 0; i < slides.length; i++) {
-      Logger.log('- Slide # %s contains %s elements.', i + 1, slides[i].pageElements.length);
+      console.log('- Slide # %s contains %s elements.', i + 1, slides[i].pageElements.length);
     }
   } catch (err) {
     // TODO (developer) - Handle  Presentation.get() exception from Slides API
-    Logger.log('Failed to found Presentation with error %s', err.message);
+    console.log('Failed to found Presentation with error %s', err.message);
   }
 }
 // [END slides_quickstart]

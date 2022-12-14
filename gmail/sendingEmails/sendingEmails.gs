@@ -32,7 +32,7 @@ function sendEmails() {
       MailApp.sendEmail(emailAddress, subject, message); // Send emails to emailAddresses which are presents in First column
     }
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_send_emails]
@@ -55,7 +55,7 @@ function sendNonDuplicateEmails() {
       const message = row[1]; // Second column
       const emailSent = row[2]; // Third column
       if (emailSent === EMAIL_SENT) {
-        Logger.log('Email already sent');
+        console.log('Email already sent');
         return;
       }
       const subject = 'Sending emails from a Spreadsheet';
@@ -64,7 +64,7 @@ function sendNonDuplicateEmails() {
       SpreadsheetApp.flush(); // Make sure the cell is updated right away in case the script is interrupted
     }
   } catch (err) {
-    Logger.log(err);
+    console.log(err);
   }
 }
 // [END gmail_send_non_duplicate_emails]

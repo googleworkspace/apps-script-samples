@@ -25,10 +25,10 @@ function getConnections() {
       personFields: 'names,emailAddresses'
     });
     // Print the connections/contacts
-    Logger.log('Connections: %s', JSON.stringify(people, null, 2));
+    console.log('Connections: %s', JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developers) - Handle exception here
-    Logger.log('Failed to get the connection with an error %s', err.message);
+    console.log('Failed to get the connection with an error %s', err.message);
   }
 }
 // [END people_get_connections]
@@ -46,10 +46,10 @@ function getSelf() {
       personFields: 'names,emailAddresses'
       // Use other query parameter here if needed
     });
-    Logger.log('Myself: %s', JSON.stringify(people, null, 2));
+    console.log('Myself: %s', JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developer) -Handle exception
-    Logger.log('Failed to get own profile with an error %s', err.message);
+    console.log('Failed to get own profile with an error %s', err.message);
   }
 }
 // [END people_get_self_profile]
@@ -67,10 +67,10 @@ function getAccount(accountId) {
       personFields: 'names,emailAddresses'
     });
     // Print the profile details of Account.
-    Logger.log('Public Profile: %s', JSON.stringify(people, null, 2));
+    console.log('Public Profile: %s', JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed to get account with an error %s', err.message);
+    console.log('Failed to get account with an error %s', err.message);
   }
 }
 // [END people_get_account]

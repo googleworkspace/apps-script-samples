@@ -55,10 +55,10 @@ function productInsert() {
   try {
     response = ShoppingContent.Products.insert(productResource, merchantId);
     // RESTful insert returns the JSON object as a response.
-    Logger.log(response);
+    console.log(response);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_shopping_product_insert]
@@ -78,20 +78,20 @@ function productList() {
         pageToken: pageToken,
         maxResults: maxResults
       });
-      Logger.log('Page ' + pageNum);
+      console.log('Page ' + pageNum);
       if (products.resources) {
         for (let i = 0; i < products.resources.length; i++) {
-          Logger.log('Item [' + i + '] ==> ' + products.resources[i]);
+          console.log('Item [' + i + '] ==> ' + products.resources[i]);
         }
       } else {
-        Logger.log('No more products in account ' + merchantId);
+        console.log('No more products in account ' + merchantId);
       }
       pageToken = products.nextPageToken;
       pageNum++;
     } while (pageToken);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_shopping_product_list]
@@ -132,10 +132,10 @@ function custombatch(productResource1, productResource2, productResource3) {
   };
   try {
     const response = ShoppingContent.Products.custombatch(custombatchResource);
-    Logger.log(response);
+    console.log(response);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_shopping_product_batch_insert]
@@ -154,7 +154,7 @@ function updateAccountTax() {
 
   try {
     const accounttax = ShoppingContent.Accounttax.get(merchantId, accountId);
-    Logger.log(accounttax);
+    console.log(accounttax);
 
     const taxInfo = {
       accountId: accountId,
@@ -179,11 +179,11 @@ function updateAccountTax() {
       ]
     };
 
-    Logger.log(ShoppingContent.Accounttax
+    console.log(ShoppingContent.Accounttax
         .update(taxInfo, merchantId, accountId));
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_shopping_account_info]

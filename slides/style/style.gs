@@ -23,14 +23,14 @@ function setTextHelloWorld() {
     const textRange = shape.getText();
     // Set text in TEXT_BOX
     textRange.setText('Hello world!');
-    Logger.log('Start: ' + textRange.getStartIndex() + '; End: ' +
+    console.log('Start: ' + textRange.getStartIndex() + '; End: ' +
       textRange.getEndIndex() + '; Content: ' + textRange.asString());
     const subRange = textRange.getRange(0, 5);
-    Logger.log('Sub-range Start: ' + subRange.getStartIndex() + '; Sub-range End: ' +
+    console.log('Sub-range Start: ' + subRange.getStartIndex() + '; Sub-range End: ' +
       subRange.getEndIndex() + '; Sub-range Content: ' + subRange.asString());
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s ', err.message);
+    console.log('Failed with an error %s ', err.message);
   }
 // [END apps_script_slides_hello]
 }
@@ -49,11 +49,11 @@ function insertText() {
     textRange.clear(6, 11);
     // Insert text in TEXT_BOX
     textRange.insertText(6, 'galaxy');
-    Logger.log('Start: ' + textRange.getStartIndex() + '; End: ' +
+    console.log('Start: ' + textRange.getStartIndex() + '; End: ' +
       textRange.getEndIndex() + '; Content: ' + textRange.asString());
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s ', err.message);
+    console.log('Failed with an error %s ', err.message);
   }
 // [END apps_script_slides_insert_text]
 }
@@ -78,13 +78,13 @@ function styleText() {
         .setLinkUrl('www.example.com')
         .setForegroundColor('#ff0000');
     const helloRange = textRange.getRange(0, 5);
-    Logger.log('Text: ' + helloRange.asString() + '; Bold: ' + helloRange.getTextStyle().isBold());
-    Logger.log('Text: ' + insertedText.asString() + '; Bold: ' +
+    console.log('Text: ' + helloRange.asString() + '; Bold: ' + helloRange.getTextStyle().isBold());
+    console.log('Text: ' + insertedText.asString() + '; Bold: ' +
       insertedText.getTextStyle().isBold());
-    Logger.log('Text: ' + textRange.asString() + '; Bold: ' + textRange.getTextStyle().isBold());
+    console.log('Text: ' + textRange.asString() + '; Bold: ' + textRange.getTextStyle().isBold());
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s ', err.message);
+    console.log('Failed with an error %s ', err.message);
   }
 // [END apps_script_slides_style_text]
 }
@@ -110,7 +110,7 @@ function paragraphStyling() {
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s ', err.message);
+    console.log('Failed with an error %s ', err.message);
   }
 // [END apps_script_slides_paragraph_styling]
 }
@@ -135,11 +135,11 @@ function listStyling() {
     const paragraphs = textRange.getParagraphs();
     for (let i = 0; i < paragraphs.length; i++) {
       const listStyle = paragraphs[i].getRange().getListStyle();
-      Logger.log('Paragraph ' + (i + 1) + '\'s nesting level: ' + listStyle.getNestingLevel());
+      console.log('Paragraph ' + (i + 1) + '\'s nesting level: ' + listStyle.getNestingLevel());
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with an error %s ', err.message);
+    console.log('Failed with an error %s ', err.message);
   }
 // [END apps_script_slides_list_styling]
 }

@@ -55,7 +55,7 @@ function populateValues(spreadsheetId) {
  * @return {string} spreadsheet ID
  */
 function itShouldReadRange() {
-  Logger.log('> itShouldReadRange');
+  console.log('> itShouldReadRange');
   spreadsheetId = createTestSpreadsheet();
   populateValues(spreadsheetId);
   readRange(spreadsheetId);
@@ -67,13 +67,13 @@ function itShouldReadRange() {
  * @param {string} spreadsheetId
  */
 function itShouldAddPivotTable(spreadsheetId) {
-  Logger.log('> itShouldAddPivotTable');
+  console.log('> itShouldAddPivotTable');
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   const sheets = spreadsheet.getSheets();
   sheetId = sheets[0].getSheetId();
   addPivotTable(spreadsheetId, sheetId, sheetId);
   SpreadsheetApp.flush();
-  Logger.log('Created pivot table');
+  console.log('Created pivot table');
 }
 
 /**
@@ -81,9 +81,9 @@ function itShouldAddPivotTable(spreadsheetId) {
  */
 function RUN_ALL_TEST() {
   const spreadsheetId = itShouldReadRange();
-  Logger.log('> itShouldWriteToMultipleRanges');
+  console.log('> itShouldWriteToMultipleRanges');
   writeToMultipleRanges(spreadsheetId);
-  Logger.log('> itShouldAddSheet');
+  console.log('> itShouldAddSheet');
   addSheet(spreadsheetId);
   itShouldAddPivotTable(spreadsheetId);
 }

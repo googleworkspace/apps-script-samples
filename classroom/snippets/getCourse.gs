@@ -23,10 +23,10 @@ function getCourse(courseId) {
   try {
     // Get the course details using course id
     const course = Classroom.Courses.get(courseId);
-    Logger.log('Course "%s" found. ', course.name);
+    console.log('Course "%s" found. ', course.name);
   } catch (err) {
     // TODO (developer) - Handle Courses.get() exception of Handle Classroom API
-    Logger.log('Failed to found course %s with error %s ', courseId, err.message);
+    console.log('Failed to found course %s with error %s ', courseId, err.message);
   }
 }
 // [END classroom_get_course]

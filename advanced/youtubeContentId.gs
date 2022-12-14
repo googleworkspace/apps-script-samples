@@ -40,9 +40,9 @@ function claimYourVideoWithMonetizePolicy() {
   try {
     const claimInserted = YouTubeContentId.Claims.insert(claimToInsert,
         {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Claim created on video %s: %s', videoId, claimInserted);
+    console.log('Claim created on video %s: %s', videoId, claimInserted);
   } catch (e) {
-    Logger.log('Failed to create claim on video %s, error: %s',
+    console.log('Failed to create claim on video %s, error: %s',
         videoId, e.message);
   }
 }
@@ -76,9 +76,9 @@ function updateAssetOwnership() {
   try {
     const updatedOwnership = YouTubeContentId.Ownership.update(myAssetOwnership,
         assetId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
+    console.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
   } catch (e) {
-    Logger.log('Ownership update failed on asset %s, error: %s',
+    console.log('Ownership update failed on asset %s, error: %s',
         assetId, e.message);
   }
 }
@@ -102,9 +102,9 @@ function releaseClaim() {
   try {
     const claimReleased = YouTubeContentId.Claims.patch(claimToBeReleased,
         claimId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Claim %s was released: %s', claimId, claimReleased);
+    console.log('Claim %s was released: %s', claimId, claimReleased);
   } catch (e) {
-    Logger.log('Failed to release claim %s, error: %s', claimId, e.message);
+    console.log('Failed to release claim %s, error: %s', claimId, e.message);
   }
 }
 // [END apps_script_youtube_release_claim]

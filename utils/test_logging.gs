@@ -50,7 +50,7 @@ function populateValues(spreadsheetId) {
  * Test emailDataRow of logging.gs
  */
 function itShouldEmailDataRow() {
-  Logger.log('> itShouldEmailDataRow');
+  console.log('> itShouldEmailDataRow');
   const email = Session.getActiveUser().getEmail();
   const spreadsheetId = createTestSpreadsheet();
   populateValues(spreadsheetId);
@@ -62,7 +62,7 @@ function itShouldEmailDataRow() {
  * runs all the functions of logging.gs
  */
 function RUN_ALL_TESTS() {
-  Logger.log('> itShouldMeasureExecutionTime');
+  console.log('> itShouldMeasureExecutionTime');
   measuringExecutionTime();
   itShouldEmailDataRow();
 }
