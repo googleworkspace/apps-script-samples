@@ -93,7 +93,7 @@ function checkListRootFolders() {
   const folders = DriveApp.getFolders();
   while (folders.hasNext()) {
     const folder = folders.next();
-    Logger.log(folder.getName() + ' ' + folder.getId());
+    console.log(folder.getName() + ' ' + folder.getId());
   }
   listRootFolders();
   folderCleanUp();

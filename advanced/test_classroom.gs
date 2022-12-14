@@ -18,7 +18,7 @@
  * Tests listCourses function of classroom.gs
  */
 function itShouldListCourses() {
-  Logger.log('> itShouldListCourses');
+  console.log('> itShouldListCourses');
   listCourses();
 }
 

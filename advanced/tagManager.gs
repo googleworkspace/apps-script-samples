@@ -67,11 +67,11 @@ function createContainerVersion(accountPath) {
         .create_version(
             {'name': 'apps script version'}, workspacePath)
         .containerVersion;
-    Logger.log(version);
+    console.log(version);
     return version;
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_tag_manager_create_version]
@@ -104,10 +104,10 @@ function publishVersionAndQuickPreviewDraft(version) {
     // Quick previews the current container draft.
     const quickPreview = TagManager.Accounts.Containers.Workspaces
         .quick_preview(workspace.path);
-    Logger.log(quickPreview);
+    console.log(quickPreview);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_tag_manager_publish_version]
@@ -140,14 +140,14 @@ function createAndReauthorizeUserEnvironment(version) {
           'containerVersionId': version.containerVersionId
         },
         containerPath);
-    Logger.log('Original user environment: ' + environment);
+    console.log('Original user environment: ' + environment);
     // Reauthorizes the user environment that points to a container version.
     TagManager.Accounts.Containers.Environments.reauthorize(
         {}, environment.path);
-    Logger.log('Reauthorized user environment: ' + environment);
+    console.log('Reauthorized user environment: ' + environment);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_tag_manager_create_user_environment]
@@ -167,7 +167,7 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
         const containerAccesses = userPermission.containerAccess;
         for (let j = 0; j < containerAccesses.length; j++) {
           const containerAccess = containerAccesses[j];
-          Logger.log(
+          console.log(
               'emailAddress:' + userPermission.emailAddress +
             ' containerId:' + containerAccess.containerId +
             ' containerAccess:' + containerAccess.permission);
@@ -176,7 +176,7 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
     }
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    Logger.log('Failed with error: $s', e.error);
+    console.log('Failed with error: $s', e.error);
   }
 }
 // [END apps_script_tag_manager_log]

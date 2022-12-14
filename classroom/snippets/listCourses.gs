@@ -29,17 +29,17 @@ function listCourses() {
     const response = Classroom.Courses.list(optionalArgs);
     courses = response.courses;
     if (courses.length === 0) {
-      Logger.log('No courses found.');
+      console.log('No courses found.');
       return;
     }
     // Print the courses available in classroom
-    Logger.log('Courses:');
+    console.log('Courses:');
     for ( const course in courses) {
-      Logger.log('%s (%s)', courses[course].name, courses[course].id);
+      console.log('%s (%s)', courses[course].name, courses[course].id);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END classroom_list_courses]

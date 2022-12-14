@@ -28,10 +28,10 @@ function uploadFile() {
     };
     // Insert new files to user's Drive
     file = Drive.Files.insert(file, image);
-    Logger.log('ID: %s, File size (bytes): %s', file.id, file.fileSize);
+    console.log('ID: %s, File size (bytes): %s', file.id, file.fileSize);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed to upload file with error %s', err.message);
+    console.log('Failed to upload file with error %s', err.message);
   }
 }
 // [END drive_upload_file]
@@ -53,17 +53,17 @@ function listRootFolders() {
         pageToken: pageToken
       });
       if (!folders.items || folders.items.length === 0) {
-        Logger.log('No folders found.');
+        console.log('No folders found.');
         return;
       }
       for (let i = 0; i < folders.items.length; i++) {
         const folder = folders.items[i];
-        Logger.log('%s (ID: %s)', folder.title, folder.id);
+        console.log('%s (ID: %s)', folder.title, folder.id);
       }
       pageToken = folders.nextPageToken;
     } catch (err) {
       // TODO (developer) - Handle exception
-      Logger.log('Failed with error %s', err.message);
+      console.log('Failed with error %s', err.message);
     }
   } while (pageToken);
 }
@@ -87,7 +87,7 @@ function addCustomProperty(fileId) {
     Drive.Properties.insert(property, fileId);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END drive_add_custom_property]
@@ -104,18 +104,18 @@ function listRevisions(fileId) {
   try {
     const revisions = Drive.Revisions.list(fileId);
     if (!revisions.items || revisions.items.length === 0) {
-      Logger.log('No revisions found.');
+      console.log('No revisions found.');
       return;
     }
     for (let i = 0; i < revisions.items.length; i++) {
       const revision = revisions.items[i];
       const date = new Date(revision.modifiedDate);
-      Logger.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
+      console.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
           revision.fileSize);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 

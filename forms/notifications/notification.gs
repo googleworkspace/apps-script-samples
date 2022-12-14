@@ -59,7 +59,7 @@ function onOpen(e) {
         .addToUi();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -87,7 +87,7 @@ function showSidebar() {
     FormApp.getUi().showSidebar(ui);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -103,7 +103,7 @@ function showAbout() {
     FormApp.getUi().showModalDialog(ui, 'About Form Notifications');
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -120,7 +120,7 @@ function saveSettings(settings) {
     adjustFormSubmitTrigger();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -155,7 +155,7 @@ function getSettings() {
     return settings;
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -190,7 +190,7 @@ function adjustFormSubmitTrigger() {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -238,7 +238,7 @@ function respondToFormSubmit(e) {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -273,7 +273,7 @@ function sendReauthorizationRequest() {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -316,7 +316,7 @@ function sendCreatorNotification() {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -349,7 +349,7 @@ function sendRespondentNotification(response) {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_forms_notifications_quickstart]

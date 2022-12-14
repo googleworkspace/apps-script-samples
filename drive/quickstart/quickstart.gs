@@ -26,11 +26,11 @@ function listFiles() {
     }).items;
     // Print the title and id of files available in drive
     for (const file of files) {
-      Logger.log('%s (%s)', file.title, file.id);
+      console.log('%s (%s)', file.title, file.id);
     }
   } catch (err) {
     // TODO(developer)-Handle Files.list() exception
-    Logger.log('failed with error %s', err.message);
+    console.log('failed with error %s', err.message);
   }
 }
 // [END drive_quickstart]

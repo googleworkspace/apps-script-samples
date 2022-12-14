@@ -31,7 +31,7 @@ function saveSingleProperty() {
         '1j3GgabZvXUF177W0Zs_2v--H6SPCQb4pmZ6HsTZYT5k');
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_save_data_single_value]
 }
@@ -51,7 +51,7 @@ function saveMultipleProperties() {
     });
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_save_data_multiple_value]
 }
@@ -65,10 +65,10 @@ function readSingleProperty() {
     // Get the value for the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
     const units = userProperties.getProperty('DISPLAY_UNITS');
-    Logger.log('values of units %s', units);
+    console.log('values of units %s', units);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_read_data_single_value]
 }
@@ -83,11 +83,11 @@ function readAllProperties() {
     const scriptProperties = PropertiesService.getScriptProperties();
     const data = scriptProperties.getProperties();
     for (const key in data) {
-      Logger.log('Key: %s, Value: %s', key, data[key]);
+      console.log('Key: %s, Value: %s', key, data[key]);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_read_multiple_data_value]
 }
@@ -105,7 +105,7 @@ function updateProperty() {
     userProperties.setProperty('DISPLAY_UNITS', units); // Updates stored value.
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_modify_data]
 }
@@ -121,7 +121,7 @@ function deleteSingleProperty() {
     userProperties.deleteProperty('DISPLAY_UNITS');
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_delete_data_single_value]
 }
@@ -138,7 +138,7 @@ function deleteAllUserProperties() {
     userProperties.deleteAllProperties();
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
   // [END apps_script_property_service_delete_all_data]
 }

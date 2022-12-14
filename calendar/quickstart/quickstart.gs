@@ -34,7 +34,7 @@ function listUpcomingEvents() {
     const response = Calendar.Events.list(calendarId, optionalArgs);
     const events = response.items;
     if (events.length === 0) {
-      Logger.log('No upcoming events found');
+      console.log('No upcoming events found');
       return;
     }
     // Print the calendar events
@@ -43,11 +43,11 @@ function listUpcomingEvents() {
       if (!when) {
         when = event.start.date;
       }
-      Logger.log('%s (%s)', event.summary, when);
+      console.log('%s (%s)', event.summary, when);
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Calendar API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END calendar_quickstart]
