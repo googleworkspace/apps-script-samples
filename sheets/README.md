@@ -24,4 +24,4 @@ This tutorial shows you how to use the Spreadsheets service to create Tournament
 
 ## [Removing Duplicates](https://developers.google.com/apps-script/articles/removing_duplicates)
 
-This tutorial shows how to avoid duplicates when you want to automate the process of copying data in G Suite and specifically how to remove duplicate rows in spreadsheet data.
+This tutorial shows how to avoid duplicates when you want to automate the process of copying data in Google Workspace and specifically how to remove duplicate rows in spreadsheet data.

@@ -15,7 +15,7 @@
  */
 // [START admin_sdk_reports_quickstart]
 /**
- * List login events for a G Suite domain.
+ * List login events for a Google Workspace domain.
  * @see https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list
  */
 function listLogins() {

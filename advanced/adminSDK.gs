@@ -325,7 +325,7 @@ function generateLoginActivityReport() {
     console.log('No results returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('G Suite Login Report');
+  const spreadsheet = SpreadsheetApp.create('Google Workspace Login Report');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -392,7 +392,7 @@ function generateUserUsageReport() {
     console.log('No results returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('G Suite User Usage Report');
+  const spreadsheet = SpreadsheetApp.create('Google Workspace User Usage Report');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
