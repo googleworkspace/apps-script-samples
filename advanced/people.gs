@@ -86,7 +86,7 @@ function getContactGroup(name) {
   try {
     const people = People.ContactGroups.list();
     // Finds the contact group for the person where the name matches.
-    const group = people['contactGroups'].find(group => group['name'] === name)
+    const group = people['contactGroups'].find(group => group['name'] === name);
     // Prints the contact group
     console.log('Group: %s', JSON.stringify(group, null, 2));
   } catch (err) {
