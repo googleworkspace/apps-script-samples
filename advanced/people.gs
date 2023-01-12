@@ -20,6 +20,7 @@
  */
 function getConnections() {
   try {
+    // Testing
     // Get the list of connections/contacts of user's profile
     const people = People.People.Connections.list('people/me', {
       personFields: 'names,emailAddresses'
