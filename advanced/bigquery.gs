@@ -24,8 +24,12 @@ function runQuery() {
 
   const request = {
     // TODO (developer) - Replace query with yours
-    query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
-      'FROM `publicdata.samples.shakespeare` WHERE LENGTH(word) > 10;',
+    query: 'SELECT refresh_date AS Day, term AS Top_Term, rank ' +
+      'FROM `bigquery-public-data.google_trends.top_terms` ' +
+      'WHERE rank = 1 ' +
+      'AND refresh_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK) ' +
+      'GROUP BY Day, Top_Term, rank ' +
+      'ORDER BY Day DESC;',
     useLegacySql: false
   };
   let queryResults = BigQuery.Jobs.query(request, projectId);
@@ -52,7 +56,7 @@ function runQuery() {
     console.log('No rows returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('BiqQuery Results');
+  const spreadsheet = SpreadsheetApp.create('BigQuery Results');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -72,8 +76,7 @@ function runQuery() {
   }
   sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
 
-  console.log('Results spreadsheet created: %s',
-      spreadsheet.getUrl());
+  console.log('Results spreadsheet created: %s', spreadsheet.getUrl());
 }
 // [END apps_script_bigquery_run_query]
 
