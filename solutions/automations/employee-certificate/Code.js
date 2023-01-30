@@ -24,7 +24,7 @@ const tempFolderId = 'FOLDER_ID'; // Create an empty folder in Google Drive
  * Creates a custom menu "Appreciation" in the spreadsheet
  * with drop-down options to create and send certificates
  */
-function onOpen(e) {
+function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu('Appreciation')
       .addItem('Create certificates', 'createCertificates')
