@@ -19,9 +19,14 @@
  * Creates a custom menu in Google Sheets when the spreadsheet opens.
  */
 function onOpen() {
-  SpreadsheetApp.getUi().createMenu('Picker')
-      .addItem('Start', 'showPicker')
-      .addToUi();
+  try {
+    SpreadsheetApp.getUi().createMenu('Picker')
+        .addItem('Start', 'showPicker')
+        .addToUi();
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
+  }
 }
 
 /**
@@ -29,11 +34,16 @@ function onOpen() {
  * JavaScript code for the Google Picker API.
  */
 function showPicker() {
-  var html = HtmlService.createHtmlOutputFromFile('dialog.html')
-      .setWidth(600)
-      .setHeight(425)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
-  SpreadsheetApp.getUi().showModalDialog(html, 'Select a file');
+  try {
+    const html = HtmlService.createHtmlOutputFromFile('dialog.html')
+        .setWidth(600)
+        .setHeight(425)
+        .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+    SpreadsheetApp.getUi().showModalDialog(html, 'Select a file');
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
+  }
 }
 
 /**
@@ -47,7 +57,12 @@ function showPicker() {
  * @return {string} The user's OAuth 2.0 access token.
  */
 function getOAuthToken() {
-  DriveApp.getRootFolder();
-  return ScriptApp.getOAuthToken();
+  try {
+    DriveApp.getRootFolder();
+    return ScriptApp.getOAuthToken();
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
+  }
 }
 // [END picker_code]

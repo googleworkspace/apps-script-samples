@@ -16,21 +16,27 @@
 // [START tasks_quickstart]
 /**
  * Lists the user's tasks.
+ * @see https://developers.google.com/tasks/reference/rest/v1/tasklists/list
  */
 function listTaskLists() {
-  var optionalArgs = {
+  const optionalArgs = {
     maxResults: 10
   };
-  var response = Tasks.Tasklists.list(optionalArgs);
-  var taskLists = response.items;
-  if (taskLists && taskLists.length > 0) {
-    Logger.log('Task lists:');
-    for (var i = 0; i < taskLists.length; i++) {
-      var taskList = taskLists[i];
-      Logger.log('%s (%s)', taskList.title, taskList.id);
+  try {
+    // Returns all the authenticated user's task lists.
+    const response = Tasks.Tasklists.list(optionalArgs);
+    const taskLists = response.items;
+    // Print task list of user if available.
+    if (!taskLists || taskLists.length === 0) {
+      console.log('No task lists found.');
+      return;
     }
-  } else {
-    Logger.log('No task lists found.');
+    for (const taskList of taskLists) {
+      console.log('%s (%s)', taskList.title, taskList.id);
+    }
+  } catch (err) {
+    // TODO (developer) - Handle exception from Task API
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END tasks_quickstart]

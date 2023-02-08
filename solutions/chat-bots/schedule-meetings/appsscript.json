@@ -1,0 +1,8 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "chat": {
+    "addToSpaceFallbackMessage": "Thank you for adding this Chat Bot!"
+  }
+}

@@ -15,17 +15,25 @@
  */
 // [START classroom_patch_course]
 /**
- * Updates the section and room of Google Classroom. 
+ * Updates the section and room of Google Classroom.
+ * @param {string} courseId
+ * @see https://developers.google.com/classroom/reference/rest/v1/courses/patch
  */
-function coursePatch(course_id) {
-  var course = {
+function coursePatch(courseId) {
+  let course = {
     'section': 'Period 3',
     'room': '302'
   };
-  var mask = { 
-    updateMask: 'section,room' 
+  const mask = {
+    updateMask: 'section,room'
   };
-  var course = Classroom.Courses.patch(body=course, id=course_id, updateMask=mask);
-  Logger.log('Course "%s" updated.', course.name);
+  try {
+    // Update section and room in course.
+    course = Classroom.Courses.patch(body=course, id=courseId, updateMask=mask);
+    console.log('Course "%s" updated.', course.name);
+  } catch (err) {
+    // TODO (developer) - Handle Courses.patch() exception
+    console.log('Failed to update the course. Error message: %s', err.message);
+  }
 }
 // [END classroom_patch_course]

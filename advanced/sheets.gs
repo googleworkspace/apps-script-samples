@@ -13,38 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var spreadsheetId = '1LcjJcCdM6OGrJtJEkHegV-rH5bWZ-mCukEMMCKYtUkc';
-var sheetId = 371977894;
-var pivotSourceDataSheetId = 371977894;
-var destinationSheetId = 1428299768;
-
-// [START apps_script_sheets_read_range]
+// TODO (developer)- Replace the spreadsheet ID and sheet ID with yours values.
+const yourspreadsheetId = '1YdrrmXSjpi4Tz-UuQ0eUKtdzQuvpzRLMoPEz3niTTVU';
+const yourpivotSourceDataSheetId = 635809130;
+const yourdestinationSheetId = 83410180;
+// [START sheets_read_range]
 /**
  * Read a range (A1:D5) of data values. Logs the values.
  * @param {string} spreadsheetId The spreadsheet ID to read from.
+ * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
  */
-function readRange(spreadsheetId) {
-  var response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
-  Logger.log(response.values);
+function readRange(spreadsheetId = yourspreadsheetId) {
+  try {
+    const response = Sheets.Spreadsheets.Values.get(spreadsheetId, 'Sheet1!A1:D5');
+    if (response.values) {
+      console.log(response.values);
+      return;
+    }
+    console.log('Failed to get range of values from spreadsheet');
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_sheets_read_range]
+// [END sheets_read_range]
 
-// [START apps_script_sheets_write_range]
+// [START sheets_write_range]
 /**
  * Write to multiple, disjoint data ranges.
  * @param {string} spreadsheetId The spreadsheet ID to write to.
+ * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate
  */
-function writeToMultipleRanges(spreadsheetId) {
+function writeToMultipleRanges(spreadsheetId = yourspreadsheetId) {
   // Specify some values to write to the sheet.
-  var columnAValues = [
+  const columnAValues = [
     ['Item', 'Wheel', 'Door', 'Engine']
   ];
-  var rowValues = [
+  const rowValues = [
     ['Cost', 'Stocked', 'Ship Date'],
     ['$20.50', '4', '3/1/2016']
   ];
 
-  var request = {
+  const request = {
     'valueInputOption': 'USER_ENTERED',
     'data': [
       {
@@ -59,19 +69,28 @@ function writeToMultipleRanges(spreadsheetId) {
       }
     ]
   };
-
-  var response = Sheets.Spreadsheets.Values.batchUpdate(request, spreadsheetId);
-  Logger.log(response);
+  try {
+    const response = Sheets.Spreadsheets.Values.batchUpdate(request, spreadsheetId);
+    if (response) {
+      console.log(response);
+      return;
+    }
+    console.log('response null');
+  } catch (e) {
+    // TODO (developer) - Handle  exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_sheets_write_range]
+// [END sheets_write_range]
 
-// [START apps_script_sheets_new_sheet]
+// [START sheets_add_new_sheet]
 /**
  * Add a new sheet with some properties.
  * @param {string} spreadsheetId The spreadsheet ID.
+ * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
-function addSheet(spreadsheetId) {
-  var requests = [{
+function addSheet(spreadsheetId = yourspreadsheetId) {
+  const requests = [{
     'addSheet': {
       'properties': {
         'title': 'Deposits',
@@ -87,24 +106,31 @@ function addSheet(spreadsheetId) {
       }
     }
   }];
-
-  var response =
+  try {
+    const response =
       Sheets.Spreadsheets.batchUpdate({'requests': requests}, spreadsheetId);
-  Logger.log('Created sheet with ID: ' +
+    console.log('Created sheet with ID: ' +
       response.replies[0].addSheet.properties.sheetId);
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_sheets_new_sheet]
+// [END sheets_add_new_sheet]
 
-// [START apps_script_sheets_add_pivot_table]
+// [START sheets_add_pivot_table]
 /**
  * Add a pivot table.
  * @param {string} spreadsheetId The spreadsheet ID to add the pivot table to.
  * @param {string} pivotSourceDataSheetId The sheet ID to get the data from.
  * @param {string} destinationSheetId The sheet ID to add the pivot table to.
+ * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate
  */
 function addPivotTable(
-    spreadsheetId, pivotSourceDataSheetId, destinationSheetId) {
-  var requests = [{
+    spreadsheetId = yourspreadsheetId,
+    pivotSourceDataSheetId= yourpivotSourceDataSheetId,
+    destinationSheetId= yourdestinationSheetId) {
+  const requests = [{
     'updateCells': {
       'rows': {
         'values': [
@@ -164,9 +190,12 @@ function addPivotTable(
       'fields': 'pivotTable'
     }
   }];
-
-  var response =
-      Sheets.Spreadsheets.batchUpdate({'requests': requests}, spreadsheetId);
-  // The Pivot table will appear anchored to cell A50 of the destination sheet.
+  try {
+    const response = Sheets.Spreadsheets.batchUpdate({'requests': requests}, spreadsheetId);
+    // The Pivot table will appear anchored to cell A50 of the destination sheet.
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_sheets_add_pivot_table]
+// [END sheets_add_pivot_table]

@@ -6,7 +6,7 @@
   "private": true,
   "author": "Grant Timmerman",
   "keywords": [
-    "G Suite",
+    "Google Workspace",
     "Apps Script",
     "Calendar",
     "Drive",
@@ -15,12 +15,13 @@
     "API"
   ],
   "devDependencies": {
-    "eslint": "^4.17.0",
-    "eslint-config-google": "^0.9.1",
-    "eslint-plugin-async-await": "0.0.0"
+    "eslint": "8.18.0",
+    "eslint-config-google": "0.14.0",
+    "eslint-plugin-googleappsscript": "1.0.4"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint **/*.gs --fix --quiet"
+    "lint": "./node_modules/.bin/eslint **/*.gs",
+    "fix": "./node_modules/.bin/eslint **/*.gs --fix --quiet"
   },
   "eslintIgnore": [
     "**/node_modules/**"

@@ -20,16 +20,16 @@
  */
 function removeDuplicates() {
   // [START apps_script_sheets_sheet]
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var data = sheet.getDataRange().getValues();
+  let sheet = SpreadsheetApp.getActiveSheet();
+  let data = sheet.getDataRange().getValues();
   // [END apps_script_sheets_sheet]
   // [START apps_script_sheets_new_data]
-  var newData = [];
+  let newData = [];
   // [END apps_script_sheets_new_data]
-  for (var i in data) {
-    var row = data[i];
-    var duplicate = false;
-    for (var j in newData) {
+  for (let i in data) {
+    let row = data[i];
+    let duplicate = false;
+    for (let j in newData) {
       if (row.join() == newData[j].join()) {
         duplicate = true;
       }

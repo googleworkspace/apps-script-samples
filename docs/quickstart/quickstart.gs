@@ -17,10 +17,18 @@
 /**
  * Prints the title of the sample document:
  * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
  */
 function printDocTitle() {
-  var documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE'
-  var doc = Docs.Documents.get(documentId)
-  Logger.log('The title of the doc is: %s', doc.title)
+  const documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
+  try {
+    // Get the document using document id
+    const doc = Docs.Documents.get(documentId);
+    // Log the title  of document.
+    console.log('The title of the doc is: %s', doc.title);
+  } catch (err) {
+    // TODO (developer) - Handle exception from Docs API
+    console.log('Failed to found document with an error %s', err.message);
+  }
 }
 // [END docs_quickstart]

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var filesToDelete = [];
 
 /**
  * Helper functions.
@@ -31,11 +30,11 @@ Helpers.prototype.deleteFileOnCleanup = function(id) {
 };
 
 Helpers.prototype.cleanup = function() {
-  filesToDelete.forEach(Drive.Files.remove);
+  this.filesToDelete.forEach(Drive.Files.remove);
 };
 
 Helpers.prototype.createTestPresentation = function() {
-  var presentation = Slides.Presentations.create({
+  const presentation = Slides.Presentations.create({
     title: 'Test Preso'
   });
   this.deleteFileOnCleanup(presentation.presentationId);
@@ -43,9 +42,9 @@ Helpers.prototype.createTestPresentation = function() {
 };
 
 Helpers.prototype.addSlides = function(presentationId, num, layout) {
-  var requests = [];
-  var slideIds = [];
-  for (var i = 0; i < num; ++i) {
+  let requests = [];
+  let slideIds = [];
+  for (let i = 0; i < num; ++i) {
     slideIds.push('slide_' + i);
     requests.push({
       createSlide: {
@@ -61,12 +60,12 @@ Helpers.prototype.addSlides = function(presentationId, num, layout) {
 };
 
 Helpers.prototype.createTestTextbox = function(presentationId, pageId, callback) {
-  var boxId = 'MyTextBox_01';
-  var pt350 = {
+  const boxId = 'MyTextBox_01';
+  const pt350 = {
     magnitude: 350,
     unit: 'PT'
   };
-  var requests = [{
+  const requests = [{
     createShape: {
       objectId: boxId,
       shapeType: 'TEXT_BOX',
@@ -87,25 +86,25 @@ Helpers.prototype.createTestTextbox = function(presentationId, pageId, callback)
     }
   }, {
     insertText: {
-        objectId: boxId,
-        insertionIndex: 0,
-        text: 'New Box Text Inserted'
+      objectId: boxId,
+      insertionIndex: 0,
+      text: 'New Box Text Inserted'
     }
   }];
-  var createTextboxResponse = Slides.Presentations.batchUpdate({
+  const createTextboxResponse = Slides.Presentations.batchUpdate({
     requests: requests
   }, presentationId);
   return createTextboxResponse.replies[0].createShape.objectId;
 };
 
 Helpers.prototype.createTestSheetsChart = function(presentationId, pageId,
-    spreadsheetId, sheetChartId, callback) {
-  var chartId = 'MyChart_01';
-  var emu4M = {
+                                                   spreadsheetId, sheetChartId, callback) {
+  const chartId = 'MyChart_01';
+  const emu4M = {
     magnitude: 4000000,
     unit: 'EMU'
   };
-  var requests = [{
+  const requests = [{
     createSheetsChart: {
       objectId: chartId,
       spreadsheetId: spreadsheetId,
@@ -127,7 +126,7 @@ Helpers.prototype.createTestSheetsChart = function(presentationId, pageId,
       }
     }
   }];
-  var createSheetsChartResponse = Slides.Presentations.batchUpdate({
+  const createSheetsChartResponse = Slides.Presentations.batchUpdate({
     requests: requests
   }, presentationId);
   return createSheetsChartResponse.replies[0].createSheetsChart.objectId;

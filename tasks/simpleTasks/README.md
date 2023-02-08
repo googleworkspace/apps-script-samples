@@ -3,7 +3,7 @@
 Simple Tasks is a sample web app built using Apps Script that provides limited
 read and write access to your data in
 [Google Tasks](https://mail.google.com/tasks/canvas). It was created using the
-[Html Service](https://developers.google.com/apps-script/guides/html-service)
+[HTML Service](https://developers.google.com/apps-script/guides/html-service)
 and demonstrates some common patterns and best practices to use when developing
 user interfaces.
 
@@ -30,8 +30,8 @@ scratch, follow the steps below.
    and add in each of the files in this directory. You should already  have a
    file named Code.gs in your project, and you can replace its contents with
    the new code. For the remaining files, ensure you select
-   **File > New > Html file** when creating the files, and when entering the
-   file name omit the .html suffix as it will be added automatically.
+   **File > New > HTML file** when creating the files, and when entering the
+   filename omit the `.html` suffix as it will be added automatically.
 
 2. Enabled the Google Tasks API on the script
    ([instructions available here](https://developers.google.com/apps-script/built_in_services#advanced_google_services)).

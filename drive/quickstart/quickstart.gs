@@ -18,13 +18,19 @@
  * Lists the names and IDs of up to 10 files.
  */
 function listFiles() {
-  var files = Drive.Files.list({
-    fields: 'nextPageToken, items(id, title)',
-    maxResults: 10
-  }).items;
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    Logger.log('%s (%s)', file.title, file.id);
+  try {
+    // Files.list method returns the list of files in drive.
+    const files = Drive.Files.list({
+      fields: 'nextPageToken, items(id, title)',
+      maxResults: 10
+    }).items;
+    // Print the title and id of files available in drive
+    for (const file of files) {
+      console.log('%s (%s)', file.title, file.id);
+    }
+  } catch (err) {
+    // TODO(developer)-Handle Files.list() exception
+    console.log('failed with error %s', err.message);
   }
 }
 // [END drive_quickstart]

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--
+ Copyright 2022 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+        #main {
+            display: none
+        }
+
+        #categories-as-item-title {
+            display: none
+        }
+
+        #show_title_warning {
+            display: none
+        }
+
+        #show_description_warning {
+            display: none
+        }
+
+        .red {
+            color: red;
+        }
+
+        .branding-below {
+            bottom: 56px;
+            top: 0;
+        }
+
+        input[type=number] {
+            width: 50px;
+            height: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar branding-below" id="wait">
+        Please wait...
+    </div>
+    <div class="sidebar branding-below" id="main">
+        <div class="block" id="checks">
+            <b>Synchronise calendars</b>
+            <div>
+                <span class="error" id="calendar-message"></span>
+            </div>
+        </div>
+
+        <div class="block">
+            <b>Synchronisation period</b>
+            <br>Synchronise from the last <input type="number" name="sync-from" id="sync-from"> days
+            <br>Synchronise up to the coming <input type="number" name="sync-to" id="sync-to"> days
+        </div>
+
+        <div class="block">
+            <b>Update the calendar items</b><br>
+            <input type="checkbox" id="is-update-calendar-item-title">
+            <label for="is-update-calendar-item-title">Overwrite the calendar item title</label>
+            <span class="secondary" id="show_title_warning">The calendar title will be overwritten with the values in
+                title
+                column of the sheet</span>
+        </div>
+        <div id="categories-as-item-title">
+            <input type="checkbox" id="is-use-categories-as-item-title">
+            <label for="is-use-categories-as-item-title">Use categories as the calendar item title</label>
+        </div>
+        <div class="block">
+            <input type="checkbox" id="is-update-calendar-item-description">
+            <label for="is-update-calendar-item-description">Overwrite the calendar item description</label>
+            <span class="secondary" id="show_description_warning">The calendar description will be overwritten with the
+                values in description column of the sheet</span>
+        </div>
+        <div class="block">
+            <button class="blue" onClick="saveSettings()">Save</button>
+        </div>
+        <div class="block">
+            <span class="error" id="generic-error"></span>
+            <span class="gray" id="generic-message"></span>
+        </div>
+
+    </div>
+    <div class="sidebar bottom">
+        <span class="gray">
+            myTime v1.2.0</span>
+    </div>
+</body>
+<script>
+    // event handler for categrories
+    document.getElementById('is-update-calendar-item-title').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            document.getElementById('categories-as-item-title').style.display = "block";
+            document.getElementById('show_title_warning').style.display = "block";
+        } else {
+            document.getElementById('categories-as-item-title').style.display = "none";
+            document.getElementById('is-use-categories-as-item-title').checked = false;
+            document.getElementById('show_title_warning').style.display = "none";
+        }
+    })
+
+    document.getElementById('is-update-calendar-item-description').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            document.getElementById('show_description_warning').style.display = "block";
+        } else {
+            document.getElementById('show_description_warning').style.display = "none";
+        }
+    })
+
+    // generic error handler
+    const onFailure = (error) => {
+        console.debug(error);
+        document.getElementById('generic-error').innerHTML = error.message;
+    }
+
+    // receiving the settings
+    const onSuccessGetSettings = (settings) => {
+        console.debug(settings);
+
+        settings.calendarSettings.forEach((calendar, index) => {
+            const div = document.createElement('div');
+
+            const check = document.createElement('input');
+            check.className = 'calendar-check';
+            check.className = 'calendar-check red';
+            check.type = 'checkbox';
+            check.id = 'calendar' + index;
+            check.value = (calendar.id);
+            check.name = (calendar.name);
+            check.checked = (calendar.sync);
+
+            const label = document.createElement('label')
+            label.htmlFor = "calendar" + index;
+            label.appendChild(document.createTextNode(calendar.name));
+            if (index == 0) {
+                label.className = 'red';
+            }
+
+            div.appendChild(check);
+            div.appendChild(label);
+
+            document.getElementById('checks').appendChild(div);
+        });
+
+        document.getElementById('sync-from').value = settings.syncFrom || 31;
+        document.getElementById('sync-to').value = settings.syncTo || 31;
+        document.getElementById('is-update-calendar-item-title').checked = settings.isUpdateCalendarItemTitle;
+
+        if (settings.isUpdateCalendarItemTitle) {
+            document.getElementById('categories-as-item-title').style.display = "block";
+            document.getElementById('is-use-categories-as-item-title').checked = settings.isUseCategoriesAsCalendarItemTitle;
+            document.getElementById('show_title_warning').style.display = "block";
+        }
+
+        if (settings.isUpdateCalendarItemDescription) {
+            document.getElementById('is-update-calendar-item-description').checked = settings.isUpdateCalendarItemDescription;
+            document.getElementById('show_description_warning').style.display = "block";
+        }
+        document.getElementById('wait').style.display = "none";
+        document.getElementById('main').style.display = "block";
+
+
+    }
+
+    // receiving the settings saved confirmation
+    const onSuccessSaveSettings = (msg) => {
+        console.debug(msg);
+        document.getElementById('generic-message').innerHTML = msg;
+    }
+
+    // save the settings
+    const saveSettings = () => {
+        document.getElementById('generic-message').innerHTML = '';
+        const checks = document.getElementsByClassName('calendar-check');
+        const calendarSettings = [];
+        for (let check of checks) {
+            if (!check.checked) {
+                continue;
+            }
+            calendarSettings.push({
+                name: check.name,
+                id: check.value,
+                sync: check.checked
+            });
+        }
+
+        const settings = {};
+        settings.calendarSettings = calendarSettings;
+        settings.syncFrom = document.getElementById('sync-from').value;
+        settings.syncTo = document.getElementById('sync-to').value;
+        settings.isUpdateCalendarItemTitle = document.getElementById('is-update-calendar-item-title').checked;
+        if (settings.isUpdateCalendarItemTitle) {
+            settings.isUseCategoriesAsCalendarItemTitle = document.getElementById('is-use-categories-as-item-title').checked;
+        }
+        if (!settings.isUpdateCalendarItemTitle) {
+            settings.isUseCategoriesAsCalendarItemTitle = false;
+        }
+
+        settings.isUpdateCalendarItemDescription = document.getElementById('is-update-calendar-item-description').checked;
+        console.debug(settings)
+
+        google.script.run
+            .withFailureHandler(onFailure)
+            .withSuccessHandler(onSuccessSaveSettings)
+            .saveSettings(settings);
+    }
+
+    // get the initial settings
+    google.script.run
+        .withFailureHandler(onFailure)
+        .withSuccessHandler(onSuccessGetSettings)
+        .getSettings();
+</script>
+
+</html>

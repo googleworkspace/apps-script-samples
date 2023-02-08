@@ -13,101 +13,120 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_gmail_label]
+// [START gmail_label]
 /**
  * Lists the user's labels, including name, type,
  * ID and visibility information.
  */
 function listLabelInfo() {
-  var response =
-    Gmail.Users.Labels.list('me');
-  for (var i = 0; i < response.labels.length; i++) {
-    var label = response.labels[i];
-    Logger.log(JSON.stringify(label));
+  try {
+    const response =
+      Gmail.Users.Labels.list('me');
+    for (let i = 0; i < response.labels.length; i++) {
+      const label = response.labels[i];
+      console.log(JSON.stringify(label));
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
-// [END apps_script_gmail_label]
+// [END gmail_label]
 
-// [START apps_script_gmail_inbox_snippets]
+// [START gmail_inbox_snippets]
 /**
  * Lists, for each thread in the user's Inbox, a
  * snippet associated with that thread.
  */
 function listInboxSnippets() {
-  var pageToken;
-  do {
-    var threadList = Gmail.Users.Threads.list('me', {
-      q: 'label:inbox',
-      pageToken: pageToken
-    });
-    if (threadList.threads && threadList.threads.length > 0) {
-      threadList.threads.forEach(function(thread) {
-        Logger.log('Snippet: %s', thread.snippet);
+  try {
+    let pageToken;
+    do {
+      const threadList = Gmail.Users.Threads.list('me', {
+        q: 'label:inbox',
+        pageToken: pageToken
       });
-    }
-    pageToken = threadList.nextPageToken;
-  } while (pageToken);
+      if (threadList.threads && threadList.threads.length > 0) {
+        threadList.threads.forEach(function(thread) {
+          console.log('Snippet: %s', thread.snippet);
+        });
+      }
+      pageToken = threadList.nextPageToken;
+    } while (pageToken);
+  } catch (err) {
+    console.log(err);
+  }
 }
-// [END apps_script_gmail_inbox_snippets]
+// [END gmail_inbox_snippets]
 
 
-// [START apps_script_gmail_history]
+// [START gmail_history]
 /**
  * Gets a history record ID associated with the most
  * recently sent message, then logs all the message IDs
  * that have changed since that message was sent.
  */
 function logRecentHistory() {
-  // Get the history ID associated with the most recent
-  // sent message.
-  var sent = Gmail.Users.Threads.list('me', {
+  try {
+    // Get the history ID associated with the most recent
+    // sent message.
+    const sent = Gmail.Users.Threads.list('me', {
       q: 'label:sent',
       maxResults: 1
-  });
-  if (!sent.threads || !sent.threads[0]) {
-    Logger.log('No sent threads found.');
-    return;
-  }
-  var historyId = sent.threads[0].historyId;
-
-  // Log the ID of each message changed since the most
-  // recent message was sent.
-  var pageToken;
-  var changed = [];
-  do {
-    var recordList = Gmail.Users.History.list('me', {
-      startHistoryId: historyId,
-      pageToken: pageToken
     });
-    var history = recordList.history;
-    if (history && history.length > 0) {
-      history.forEach(function(record) {
-        record.messages.forEach(function(message) {
-          if (changed.indexOf(message.id) === -1) {
-            changed.push(message.id);
-          }
-        });
-      });
+    if (!sent.threads || !sent.threads[0]) {
+      console.log('No sent threads found.');
+      return;
     }
-    pageToken = recordList.nextPageToken;
-  } while (pageToken);
+    const historyId = sent.threads[0].historyId;
 
-  changed.forEach(function(id) {
-    Logger.log('Message Changed: %s', id);
-  });
+    // Log the ID of each message changed since the most
+    // recent message was sent.
+    let pageToken;
+    const changed = [];
+    do {
+      const recordList = Gmail.Users.History.list('me', {
+        startHistoryId: historyId,
+        pageToken: pageToken
+      });
+      const history = recordList.history;
+      if (history && history.length > 0) {
+        history.forEach(function(record) {
+          record.messages.forEach(function(message) {
+            if (changed.indexOf(message.id) === -1) {
+              changed.push(message.id);
+            }
+          });
+        });
+      }
+      pageToken = recordList.nextPageToken;
+    } while (pageToken);
+
+    changed.forEach(function(id) {
+      console.log('Message Changed: %s', id);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
-// [END apps_script_gmail_history]
+// [END gmail_history]
 
-// [START apps_script_gmail_raw]
+// [START gmail_raw]
+/**
+ * Logs the raw message content for the most recent message in gmail.
+ */
 function getRawMessage() {
-  var messageId = Gmail.Users.Messages.list('me').messages[0].id;
-  console.log(messageId);
-  var message = Gmail.Users.Messages.get('me', messageId, {
-    'format': 'raw'
-  });
+  try {
+    const messageId = Gmail.Users.Messages.list('me').messages[0].id;
+    console.log(messageId);
+    const message = Gmail.Users.Messages.get('me', messageId, {
+      'format': 'raw'
+    });
 
-  // Get raw content as base64url encoded string.
-  var encodedMessage = Utilities.base64Encode(message.raw);
-  console.log(encodedMessage);
+    // Get raw content as base64url encoded string.
+    const encodedMessage = Utilities.base64Encode(message.raw);
+    console.log(encodedMessage);
+  } catch (err) {
+    console.log(err);
+  }
 }
-// [END apps_script_gmail_raw]
+// [END gmail_raw]

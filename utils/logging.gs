@@ -1,4 +1,20 @@
-// [START apps_script_logging]
+/**
+ * Copyright Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// [START apps_script_logging_execution_time]
 /**
  * Logs the time taken to execute 'myFunction'.
  */
@@ -9,14 +25,13 @@ function measuringExecutionTime() {
   // Log a JSON object at a DEBUG level. The log is labeled
   // with the message string in the log viewer, and the JSON content
   // is displayed in the expanded log structure under "jsonPayload".
-  var parameters = {
-      isValid: true,
-      content: 'some string',
-      timestamp: new Date()
+  const parameters = {
+    isValid: true,
+    content: 'some string',
+    timestamp: new Date()
   };
   console.log({message: 'Function Input', initialData: parameters});
-
-  var label = 'myFunction() time'; // Labels the timing log entry.
+  const label = 'myFunction() time'; // Labels the timing log entry.
   console.time(label); // Starts the timer.
   try {
     myFunction(parameters); // Function to time.
@@ -26,9 +41,9 @@ function measuringExecutionTime() {
   }
   console.timeEnd(label); // Stops the timer, logs execution duration.
 }
-// [END apps_script_logging]
+// [END apps_script_logging_execution_time]
 
-// [START apps_script_logging_2]
+// [START apps_script_logging_sheet_information]
 /**
  * Logs Google Sheet information.
  * @param {number} rowNumber The spreadsheet row number.
@@ -36,12 +51,15 @@ function measuringExecutionTime() {
  */
 function emailDataRow(rowNumber, email) {
   console.log('Emailing data row ' + rowNumber + ' to ' + email);
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var data = sheet.getDataRange().getValues();
-  var rowData = data[rowNumber-1].join(" ");
-  console.log('Row ' + rowNumber + ' data: ' + rowData);
-  MailApp.sendEmail(email,
-                    'Data in row ' + rowNumber,
-                    rowData);
+  try {
+    const sheet = SpreadsheetApp.getActiveSheet();
+    const data = sheet.getDataRange().getValues();
+    const rowData = data[rowNumber - 1].join(' ');
+    console.log('Row ' + rowNumber + ' data: ' + rowData);
+    MailApp.sendEmail(email, 'Data in row ' + rowNumber, rowData);
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', err.message);
+  }
 }
-// [END apps_script_logging_2]
+// [END apps_script_logging_sheet_information]

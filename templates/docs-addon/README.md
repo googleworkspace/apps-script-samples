@@ -19,5 +19,5 @@ and manipulate the (sometimes complex)
 Finally, note that this template must be added to a container-bound
 script attached to a Google Doc in order to function. Developed
 add-ons must go through a
-[publishing process](https://developers.google.com/apps-script/add-ons/publish) 
+[publishing process](https://developers.google.com/apps-script/add-ons/publish)
 before they can be made available publicly.

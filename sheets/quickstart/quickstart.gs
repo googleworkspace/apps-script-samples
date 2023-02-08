@@ -18,19 +18,27 @@
  * Creates a Sheets API service object and prints the names and majors of
  * students in a sample spreadsheet:
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
  */
 function logNamesAndMajors() {
-  var spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
-  var rangeName = 'Class Data!A2:E';
-  var values = Sheets.Spreadsheets.Values.get(spreadsheetId, rangeName).values;
-  if (!values) {
-    Logger.log('No data found.');
-  } else {
-    Logger.log('Name, Major:');
-    for (var row = 0; row < values.length; row++) {
-      // Print columns A and E, which correspond to indices 0 and 4.
-      Logger.log(' - %s, %s', values[row][0], values[row][4]);
+  const spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
+  const rangeName = 'Class Data!A2:E';
+  try {
+    // Get the values from the spreadsheet using spreadsheetId and range.
+    const values = Sheets.Spreadsheets.Values.get(spreadsheetId, rangeName).values;
+    //  Print the values from spreadsheet if values are available.
+    if (!values) {
+      console.log('No data found.');
+      return;
     }
+    console.log('Name, Major:');
+    for (const row in values) {
+      // Print columns A and E, which correspond to indices 0 and 4.
+      console.log(' - %s, %s', values[row][0], values[row][4]);
+    }
+  } catch (err) {
+    // TODO (developer) - Handle Values.get() exception from Sheet API
+    console.log(err.message);
   }
 }
 // [END sheets_quickstart]

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Global constants. Customize as needed.
-const formsAPIUrl = 'https://forms.googleapis.com/v1beta/forms/';
+const formsAPIUrl = 'https://forms.googleapis.com/v1/forms/';
 const formId = '<YOUR_FORM_ID>';
 const topicName = 'projects/<YOUR_TOPIC_PATH>';
 
@@ -22,7 +22,7 @@ const topicName = 'projects/<YOUR_TOPIC_PATH>';
 
 /**
  * Forms API Method: forms.create
- * POST https://forms.googleapis.com/v1beta/forms
+ * POST https://forms.googleapis.com/v1/forms
  */
 function create(title) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -41,16 +41,16 @@ function create(title) {
     'payload': jsonTitle
   };
 
-  Logger.log('Forms API POST options was: ' + JSON.stringify(options));
+  console.log('Forms API POST options was: ' + JSON.stringify(options));
   let response = UrlFetchApp.fetch(formsAPIUrl, options);
-  Logger.log('Response from Forms API was: ' + JSON.stringify(response));
+  console.log('Response from Forms API was: ' + JSON.stringify(response));
 
   return ('' + response);
 }
 
 /**
  * Forms API Method: forms.get
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses/{responseId}
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
  */
 function get(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -65,10 +65,10 @@ function get(formId) {
 
   try {
     let response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
-    Logger.log('Response from Forms API was: ' + response);
+    console.log('Response from Forms API was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e) +
       '<br/><br/>Unable to find Form with formId:<br/>' + formId);
   }
@@ -76,7 +76,7 @@ function get(formId) {
 
 /**
  * Forms API Method: forms.batchUpdate
- * POST https://forms.googleapis.com/v1beta/forms/{formId}:batchUpdate
+ * POST https://forms.googleapis.com/v1/forms/{formId}:batchUpdate
  */
 function batchUpdate(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -105,13 +105,13 @@ function batchUpdate(formId) {
 
   let response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
     options);
-  Logger.log('Response code from API: ' + response.getResponseCode());
+  console.log('Response code from API: ' + response.getResponseCode());
   return (response.getResponseCode());
 }
 
 /**
  * Forms API Method: forms.responses.get
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses/{responseId}
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
  */
 function responsesGet(formId, responseId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -127,17 +127,17 @@ function responsesGet(formId, responseId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
       responseId, options);
-    Logger.log('Response from Forms.responses.get was: ' + response);
+    console.log('Response from Forms.responses.get was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e))
   }
 }
 
 /**
  * Forms API Method: forms.responses.list
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/responses
+ * GET https://forms.googleapis.com/v1/forms/{formId}/responses
  */
 function responsesList(formId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -153,17 +153,17 @@ function responsesList(formId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
       options);
-    Logger.log('Response from Forms.responses was: ' + response);
+    console.log('Response from Forms.responses was: ' + response);
     return ('' + response);
   } catch (e) {
-    Logger.log(JSON.stringify(e));
+    console.log(JSON.stringify(e));
     return ('Error:' + JSON.stringify(e))
   }
 }
 
 /**
  * Forms API Method: forms.watches.create
- * POST https://forms.googleapis.com/v1beta/forms/{formId}/watches
+ * POST https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function createWatch(formId) {
   let accessToken = ScriptApp.getOAuthToken();
@@ -178,7 +178,7 @@ function createWatch(formId) {
       'eventType': 'RESPONSES',
     }
   };
-  Logger.log('myWatch is: ' + JSON.stringify(myWatch));
+  console.log('myWatch is: ' + JSON.stringify(myWatch));
 
   var options = {
     'headers': {
@@ -189,23 +189,23 @@ function createWatch(formId) {
     'payload': JSON.stringify(myWatch),
     'muteHttpExceptions': false,
   };
-  Logger.log('options are: ' + JSON.stringify(options));
-  Logger.log('formsAPIURL was: ' + formsAPIUrl);
+  console.log('options are: ' + JSON.stringify(options));
+  console.log('formsAPIURL was: ' + formsAPIUrl);
 
   var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
     options);
-  Logger.log(response);
+  console.log(response);
   return ('' + response);
 }
 
 /**
  * Forms API Method: forms.watches.delete
- * DELETE https://forms.googleapis.com/v1beta/forms/{formId}/watches/{watchId}
+ * DELETE https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}
  */
 function deleteWatch(formId, watchId) {
   let accessToken = ScriptApp.getOAuthToken();
 
-  Logger.log('formsAPIUrl is: ' + formsAPIUrl);
+  console.log('formsAPIUrl is: ' + formsAPIUrl);
 
   var options = {
     'headers': {
@@ -219,10 +219,10 @@ function deleteWatch(formId, watchId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId, options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 
@@ -230,10 +230,10 @@ function deleteWatch(formId, watchId) {
 
 /** 
  * Forms API Method: forms.watches.list
- * GET https://forms.googleapis.com/v1beta/forms/{formId}/watches
+ * GET https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function watchesList(formId) {
-  Logger.log('formId is: ' + formId);
+  console.log('formId is: ' + formId);
   let accessToken = ScriptApp.getOAuthToken();
   var options = {
     'headers': {
@@ -245,17 +245,17 @@ function watchesList(formId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
       options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 }
 
 /**
  * Forms API Method: forms.watches.renew
- * POST https://forms.googleapis.com/v1beta/forms/{formId}/watches/{watchId}:renew
+ * POST https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}:renew
  */
 function renewWatch(formId, watchId) {
   let accessToken = ScriptApp.getOAuthToken();
@@ -271,10 +271,10 @@ function renewWatch(formId, watchId) {
   try {
     var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId + ':renew', options);
-    Logger.log(response);
+    console.log(response);
     return ('' + response);
   } catch (e) {
-    Logger.log('API Error: ' + JSON.stringify(e));
+    console.log('API Error: ' + JSON.stringify(e));
     return (JSON.stringify(e));
   }
 }
