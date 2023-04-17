@@ -28,7 +28,7 @@ align="left"
 width="96px"/>
 ### Calendar
 - [List upcoming events](calendar/quickstart)
-- [Create a vacation calendar](calendar/vacationCalendar)
+- [Create a vacation calendar](solutions/automations/vacation-calendar/Code.js)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/classroom_96dp.png"
