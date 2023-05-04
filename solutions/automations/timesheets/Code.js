@@ -212,7 +212,7 @@ function setUpForm() {
   form.addTextItem().setTitle('Wednesday Hours:').setRequired(true);
   form.addTextItem().setTitle('Thursday Hours:').setRequired(true);
   form.addTextItem().setTitle('Friday Hours:').setRequired(true);
-  form.addTextItem().setTitle('HourlyWage:').setRequired(true);
+  form.addTextItem().setTitle('Hourly Wage:').setRequired(true);
  
   // Set up on form submit trigger.
   ScriptApp.newTrigger('onFormSubmit')
@@ -232,7 +232,7 @@ function onFormSubmit(event) {
   // Load form responses into a new row.
   let row = ['New',
     '',
-    response['Emoloyee Email:'],
+    response['Employee Email:'],
     response['Employee Name:'],
     response['Monday Hours:'],
     response['Tuesday Hours:'],
