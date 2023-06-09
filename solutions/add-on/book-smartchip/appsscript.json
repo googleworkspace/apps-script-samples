@@ -1,0 +1,40 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/workspace.linkpreview",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Preview Books Add-on",
+      "logoUrl": "https://developers.google.com/workspace/add-ons/images/library-icon.png",
+      "layoutProperties": {
+        "primaryColor": "#dd4b39"
+      }
+    },
+    "docs": {
+      "linkPreviewTriggers": [
+        {
+          "runFunction": "bookLinkPreview",
+          "patterns": [
+            {
+              "hostPattern": "*.google.*",
+              "pathPrefix": "books"
+            },
+            {
+              "hostPattern": "*.google.*",
+              "pathPrefix": "books/edition"
+            }
+          ],
+          "labelText": "Book",
+          "logoUrl": "https://developers.google.com/workspace/add-ons/images/book-icon.png",
+          "localizedLabelText": {
+            "es": "Libros"
+          }
+        }
+      ]
+    }
+  }
+}
