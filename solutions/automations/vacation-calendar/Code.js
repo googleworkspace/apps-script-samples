@@ -65,7 +65,7 @@ function sync() {
   } else if (Array.isArray(GROUP_EMAIL)) {
     users = getUsersFromGroups(GROUP_EMAIL);
   }
-  
+
   // For each user, finds events having one or more of the keywords in the event
   // summary in the specified date range. Imports each of those to the team
   // calendar.
