@@ -59,13 +59,13 @@ function sync() {
   lastRun = lastRun ? new Date(lastRun) : null;
 
   // Gets the list of users in the Google Group.
-  if (ONLY_DIRECT_MEMBERS)
-    let users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
-  else if (Array.isArray(GROUP_EMAIL))
-    let users = getUsersFromGroups(GROUP_EMAIL);
-  else
-    let users = getAllMembers(GROUP_EMAIL);
-
+  if (ONLY_DIRECT_MEMBERS){
+  let users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
+  } else if (Array.isArray(GROUP_EMAIL)) {
+  let users = getUsersFromGroups(GROUP_EMAIL);
+  } else {
+  let users = getAllMembers(GROUP_EMAIL);
+  }
   // For each user, finds events having one or more of the keywords in the event
   // summary in the specified date range. Imports each of those to the team
   // calendar.
