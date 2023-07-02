@@ -14,56 +14,57 @@
  * limitations under the License.
  */
 
-// [START apps_script_gmail_send_emails]
+// [START gmail_send_emails]
 /**
  * Sends emails with data from the current spreadsheet.
  */
 function sendEmails() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var startRow = 2; // First row of data to process
-  var numRows = 2; // Number of rows to process
-  // Fetch the range of cells A2:B3
-  var dataRange = sheet.getRange(startRow, 1, numRows, 2);
-  // Fetch values for each row in the Range.
-  var data = dataRange.getValues();
-  for (var i in data) {
-    var row = data[i];
-    var emailAddress = row[0]; // First column
-    var message = row[1]; // Second column
-    var subject = 'Sending emails from a Spreadsheet';
-    MailApp.sendEmail(emailAddress, subject, message);
+  try {
+    const sheet = SpreadsheetApp.getActiveSheet(); // Get the active sheet in spreadsheet
+    const startRow = 2; // First row of data to process
+    const numRows = 2; // Number of rows to process
+    const dataRange = sheet.getRange(startRow, 1, numRows, 2); // Fetch the range of cells A2:B3
+    const data = dataRange.getValues(); // Fetch values for each row in the Range.
+    for (const row of data) {
+      const emailAddress = row[0]; // First column
+      const message = row[1]; // Second column
+      const subject = 'Sending emails from a Spreadsheet';
+      MailApp.sendEmail(emailAddress, subject, message); // Send emails to emailAddresses which are presents in First column
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
-// [END apps_script_gmail_send_emails]
+// [END gmail_send_emails]
 
-// [START apps_script_gmail_send_emails_2]
-// This constant is written in column C for rows for which an email
-// has been sent successfully.
-var EMAIL_SENT = 'EMAIL_SENT';
-
+// [START gmail_send_non_duplicate_emails]
 /**
  * Sends non-duplicate emails with data from the current spreadsheet.
  */
-function sendEmails2() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var startRow = 2; // First row of data to process
-  var numRows = 2; // Number of rows to process
-  // Fetch the range of cells A2:B3
-  var dataRange = sheet.getRange(startRow, 1, numRows, 3);
-  // Fetch values for each row in the Range.
-  var data = dataRange.getValues();
-  for (var i = 0; i < data.length; ++i) {
-    var row = data[i];
-    var emailAddress = row[0]; // First column
-    var message = row[1]; // Second column
-    var emailSent = row[2]; // Third column
-    if (emailSent !== EMAIL_SENT) { // Prevents sending duplicates
-      var subject = 'Sending emails from a Spreadsheet';
-      MailApp.sendEmail(emailAddress, subject, message);
+function sendNonDuplicateEmails() {
+  const EMAIL_SENT = 'email sent'; //This constant is used to write the message in Column C of Sheet
+  try {
+    const sheet = SpreadsheetApp.getActiveSheet(); // Get the active sheet in spreadsheet
+    const startRow = 2; // First row of data to process
+    const numRows = 2; // Number of rows to process
+    const dataRange = sheet.getRange(startRow, 1, numRows, 3); // Fetch the range of cells A2:B3
+    const data = dataRange.getValues(); // Fetch values for each row in the Range.
+    for (let i = 0; i < data.length; ++i) {
+      const row = data[i];
+      const emailAddress = row[0]; // First column
+      const message = row[1]; // Second column
+      const emailSent = row[2]; // Third column
+      if (emailSent === EMAIL_SENT) {
+        console.log('Email already sent');
+        return;
+      }
+      const subject = 'Sending emails from a Spreadsheet';
+      MailApp.sendEmail(emailAddress, subject, message);// Send emails to emailAddresses which are presents in First column
       sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
-      // Make sure the cell is updated right away in case the script is interrupted
-      SpreadsheetApp.flush();
+      SpreadsheetApp.flush(); // Make sure the cell is updated right away in case the script is interrupted
     }
+  } catch (err) {
+    console.log(err);
   }
 }
-// [END apps_script_gmail_send_emails_2]
+// [END gmail_send_non_duplicate_emails]

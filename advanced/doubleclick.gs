@@ -19,15 +19,20 @@
  */
 function listUserProfiles() {
   // Retrieve the list of available user profiles
-  var profiles = DoubleClickCampaigns.UserProfiles.list();
+  try {
+    const profiles = DoubleClickCampaigns.UserProfiles.list();
 
-  if (profiles.items) {
-    // Print out the user ID and name of each
-    for (var i = 0; i < profiles.items.length; i++) {
-    var profile = profiles.items[i];
-    Logger.log('Found profile with ID %s and name "%s".',
-        profile.profileId, profile.userName);
+    if (profiles.items) {
+      // Print out the user ID and name of each
+      for (let i = 0; i < profiles.items.length; i++) {
+        const profile = profiles.items[i];
+        console.log('Found profile with ID %s and name "%s".',
+            profile.profileId, profile.userName);
+      }
     }
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_doubleclick_list_user_profiles]
@@ -38,25 +43,30 @@ function listUserProfiles() {
  * Note the use of paging tokens to retrieve the whole list.
  */
 function listActiveCampaigns() {
-  var profileId = '1234567'; // Replace with your profile ID.
-  var fields = 'nextPageToken,campaigns(id,name)';
-  var result;
-  var pageToken;
-  do {
-    result = DoubleClickCampaigns.Campaigns.list(profileId, {
-      'archived': false,
-      'fields': fields,
-      'pageToken': pageToken
-    });
-    if (result.campaigns) {
-      for (var i = 0; i < result.campaigns.length; i++) {
-        var campaign = result.campaigns[i];
-        Logger.log('Found campaign with ID %s and name "%s".',
-            campaign.id, campaign.name);
+  const profileId = '1234567'; // Replace with your profile ID.
+  const fields = 'nextPageToken,campaigns(id,name)';
+  let result;
+  let pageToken;
+  try {
+    do {
+      result = DoubleClickCampaigns.Campaigns.list(profileId, {
+        'archived': false,
+        'fields': fields,
+        'pageToken': pageToken
+      });
+      if (result.campaigns) {
+        for (let i = 0; i < result.campaigns.length; i++) {
+          const campaign = result.campaigns[i];
+          console.log('Found campaign with ID %s and name "%s".',
+              campaign.id, campaign.name);
+        }
       }
-    }
-    pageToken = result.nextPageToken;
-  } while (pageToken);
+      pageToken = result.nextPageToken;
+    } while (pageToken);
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
+  }
 }
 // [END apps_script_doubleclick_list_active_campaigns]
 
@@ -66,36 +76,42 @@ function listActiveCampaigns() {
  * The campaign is set to last for one month.
  */
 function createAdvertiserAndCampaign() {
-  var profileId = '1234567'; // Replace with your profile ID.
+  const profileId = '1234567'; // Replace with your profile ID.
 
-  var advertiser = {
+  const advertiser = {
     name: 'Example Advertiser',
     status: 'APPROVED'
   };
-  var advertiserId = DoubleClickCampaigns.Advertisers
-      .insert(advertiser, profileId).id;
 
-  var landingPage = {
-    advertiserId: advertiserId,
-    archived: false,
-    name: 'Example landing page',
-    url: 'https://www.google.com'
-  };
-  var landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
-      .insert(landingPage, profileId).id;
+  try {
+    const advertiserId = DoubleClickCampaigns.Advertisers
+        .insert(advertiser, profileId).id;
 
-  var campaignStart = new Date();
-  // End campaign after 1 month.
-  var campaignEnd = new Date();
-  campaignEnd.setMonth(campaignEnd.getMonth() + 1);
+    const landingPage = {
+      advertiserId: advertiserId,
+      archived: false,
+      name: 'Example landing page',
+      url: 'https://www.google.com'
+    };
+    const landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
+        .insert(landingPage, profileId).id;
 
-  var campaign = {
-    advertiserId: advertiserId,
-    defaultLandingPageId: landingPageId,
-    name: 'Example campaign',
-    startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
-    endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
-  };
-  DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
+    const campaignStart = new Date();
+    // End campaign after 1 month.
+    const campaignEnd = new Date();
+    campaignEnd.setMonth(campaignEnd.getMonth() + 1);
+
+    const campaign = {
+      advertiserId: advertiserId,
+      defaultLandingPageId: landingPageId,
+      name: 'Example campaign',
+      startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
+      endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
+    };
+    DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
+  }
 }
 // [END apps_script_doubleclick_create_advertiser_and_campaign]

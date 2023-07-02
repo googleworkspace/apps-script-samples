@@ -20,17 +20,23 @@
 function runQuery() {
   // Replace this value with the project ID listed in the Google
   // Cloud Platform project.
-  var projectId = 'XXXXXXXX';
+  const projectId = 'XXXXXXXX';
 
-  var request = {
-    query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
-      'FROM publicdata:samples.shakespeare WHERE LENGTH(word) > 10;'
+  const request = {
+    // TODO (developer) - Replace query with yours
+    query: 'SELECT refresh_date AS Day, term AS Top_Term, rank ' +
+      'FROM `bigquery-public-data.google_trends.top_terms` ' +
+      'WHERE rank = 1 ' +
+      'AND refresh_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK) ' +
+      'GROUP BY Day, Top_Term, rank ' +
+      'ORDER BY Day DESC;',
+    useLegacySql: false
   };
-  var queryResults = BigQuery.Jobs.query(request, projectId);
-  var jobId = queryResults.jobReference.jobId;
+  let queryResults = BigQuery.Jobs.query(request, projectId);
+  const jobId = queryResults.jobReference.jobId;
 
   // Check on status of the Query Job.
-  var sleepTimeMs = 500;
+  let sleepTimeMs = 500;
   while (!queryResults.jobComplete) {
     Utilities.sleep(sleepTimeMs);
     sleepTimeMs *= 2;
@@ -38,7 +44,7 @@ function runQuery() {
   }
 
   // Get all the rows of results.
-  var rows = queryResults.rows;
+  let rows = queryResults.rows;
   while (queryResults.pageToken) {
     queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId, {
       pageToken: queryResults.pageToken
@@ -46,32 +52,31 @@ function runQuery() {
     rows = rows.concat(queryResults.rows);
   }
 
-  if (rows) {
-    var spreadsheet = SpreadsheetApp.create('BiqQuery Results');
-    var sheet = spreadsheet.getActiveSheet();
-
-    // Append the headers.
-    var headers = queryResults.schema.fields.map(function(field) {
-      return field.name;
-    });
-    sheet.appendRow(headers);
-
-    // Append the results.
-    var data = new Array(rows.length);
-    for (var i = 0; i < rows.length; i++) {
-      var cols = rows[i].f;
-      data[i] = new Array(cols.length);
-      for (var j = 0; j < cols.length; j++) {
-        data[i][j] = cols[j].v;
-      }
-    }
-    sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
-
-    Logger.log('Results spreadsheet created: %s',
-        spreadsheet.getUrl());
-  } else {
-    Logger.log('No rows returned.');
+  if (!rows) {
+    console.log('No rows returned.');
+    return;
   }
+  const spreadsheet = SpreadsheetApp.create('BigQuery Results');
+  const sheet = spreadsheet.getActiveSheet();
+
+  // Append the headers.
+  const headers = queryResults.schema.fields.map(function(field) {
+    return field.name;
+  });
+  sheet.appendRow(headers);
+
+  // Append the results.
+  const data = new Array(rows.length);
+  for (let i = 0; i < rows.length; i++) {
+    const cols = rows[i].f;
+    data[i] = new Array(cols.length);
+    for (let j = 0; j < cols.length; j++) {
+      data[i][j] = cols[j].v;
+    }
+  }
+  sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
+
+  console.log('Results spreadsheet created: %s', spreadsheet.getUrl());
 }
 // [END apps_script_bigquery_run_query]
 
@@ -82,17 +87,17 @@ function runQuery() {
 function loadCsv() {
   // Replace this value with the project ID listed in the Google
   // Cloud Platform project.
-  var projectId = 'XXXXXXXX';
+  const projectId = 'XXXXXXXX';
   // Create a dataset in the BigQuery UI (https://bigquery.cloud.google.com)
   // and enter its ID below.
-  var datasetId = 'YYYYYYYY';
+  const datasetId = 'YYYYYYYY';
   // Sample CSV file of Google Trends data conforming to the schema below.
   // https://docs.google.com/file/d/0BwzA1Orbvy5WMXFLaTR1Z1p2UDg/edit
-  var csvFileId = '0BwzA1Orbvy5WMXFLaTR1Z1p2UDg';
+  const csvFileId = '0BwzA1Orbvy5WMXFLaTR1Z1p2UDg';
 
   // Create the table.
-  var tableId = 'pets_' + new Date().getTime();
-  var table = {
+  const tableId = 'pets_' + new Date().getTime();
+  let table = {
     tableReference: {
       projectId: projectId,
       datasetId: datasetId,
@@ -107,15 +112,18 @@ function loadCsv() {
       ]
     }
   };
-  table = BigQuery.Tables.insert(table, projectId, datasetId);
-  Logger.log('Table created: %s', table.id);
-
+  try {
+    table = BigQuery.Tables.insert(table, projectId, datasetId);
+    console.log('Table created: %s', table.id);
+  } catch (err) {
+    console.log('unable to create table');
+  }
   // Load CSV data from Drive and convert to the correct format for upload.
-  var file = DriveApp.getFileById(csvFileId);
-  var data = file.getBlob().setContentType('application/octet-stream');
+  const file = DriveApp.getFileById(csvFileId);
+  const data = file.getBlob().setContentType('application/octet-stream');
 
   // Create the data upload job.
-  var job = {
+  const job = {
     configuration: {
       load: {
         destinationTable: {
@@ -127,8 +135,11 @@ function loadCsv() {
       }
     }
   };
-  job = BigQuery.Jobs.insert(job, projectId, data);
-  Logger.log('Load job started. Check on the status of it here: ' +
-      'https://bigquery.cloud.google.com/jobs/%s', projectId);
+  try {
+    const jobResult = BigQuery.Jobs.insert(job, projectId, data);
+    console.log(`Load job started. Status: ${jobResult.status.state}`);
+  } catch (err) {
+    console.log('unable to insert job');
+  }
 }
 // [END apps_script_bigquery_load_csv]

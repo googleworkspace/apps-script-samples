@@ -1,0 +1,28 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/script.projects"
+  ],
+    "urlFetchWhitelist": [
+    "https://script.googleapis.com/"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Share Macro",
+      "logoUrl": "https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png",
+      "layoutProperties": {
+        "primaryColor": "#188038",
+        "secondaryColor": "#34a853"
+      },
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      }
+    },
+    "sheets": {}
+  }
+}

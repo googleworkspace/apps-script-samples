@@ -14,59 +14,74 @@
  * limitations under the License.
  */
 
-// [START apps_script_docs_create_document]
+// [START docs_create_document]
 /**
  * Create a new document.
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/create
+ * @return {string} documentId
  */
 function createDocument() {
-  var document = Docs.Documents.create({'title': 'My New Document'});
-  Logger.log('Created document with ID: ' + document.documentId);
+  try {
+    // Create document with title
+    const document = Docs.Documents.create({'title': 'My New Document'});
+    console.log('Created document with ID: ' + document.documentId);
+    return document.documentId;
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_docs_create_document]
+// [END docs_create_document]
 
-// [START apps_script_docs_find_and_replace]
+// [START docs_find_and_replace_text]
 /**
  * Performs "replace all".
- * @param {string} documentId The document to perform the replace text
- *     operations on.
- * @param {Object} findTextToReplacementMap A map from the "find text" to the
- *     "replace text".
+ * @param {string} documentId The document to perform the replace text operations on.
+ * @param {Object} findTextToReplacementMap A map from the "find text" to the "replace text".
+ * @return {Object} replies
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function findAndReplace(documentId, findTextToReplacementMap) {
-  var requests = [];
-  for (var findText in findTextToReplacementMap) {
-    var replaceText = findTextToReplacementMap[findText];
-    var request = {
+  const requests = [];
+  for (const findText in findTextToReplacementMap) {
+    const replaceText = findTextToReplacementMap[findText];
+    const request = {
       replaceAllText: {
         containsText: {
           text: findText,
-          matchCase: true,
+          matchCase: true
         },
         replaceText: replaceText
       }
     };
     requests.push(request);
   }
-
-  var response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
-  var replies = response.replies;
-  for (var i = 0; i < replies.length; i++) {
-    var reply = replies[i];
-    var numReplacements = reply.replaceAllText.occurrencesChanged || 0;
-    Logger.log('Request %s performed %s replacements.', i, numReplacements);
+  try {
+    const response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    const replies = response.replies;
+    for (const [index] of replies.entries()) {
+      const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
+      console.log('Request %s performed %s replacements.', index, numReplacements);
+    }
+    return replies;
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error : %s', e.message);
   }
 }
-// [END apps_script_docs_find_and_replace]
+// [END docs_find_and_replace_text]
 
-// [START apps_script_docs_insert_and_style_text]
+// [START docs_insert_and_style_text]
 /**
  * Insert text at the beginning of the document and then style the inserted
  * text.
  * @param {string} documentId The document the text is inserted into.
  * @param {string} text The text to insert into the document.
+ * @return {Object} replies
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function insertAndStyleText(documentId, text) {
-  var requests = [{
+  const requests = [{
     insertText: {
       location: {
         index: 1
@@ -80,7 +95,7 @@ function insertAndStyleText(documentId, text) {
         startIndex: 1,
         endIndex: text.length + 1
       },
-      text_style: {
+      textStyle: {
         fontSize: {
           magnitude: 12,
           unit: 'PT'
@@ -92,35 +107,48 @@ function insertAndStyleText(documentId, text) {
       fields: 'weightedFontFamily, fontSize'
     }
   }];
-  Docs.Documents.batchUpdate({'requests': requests}, documentId);
-}
-// [END apps_script_docs_insert_and_style_text]
-
-// [START apps_script_docs_read_first_paragraph]
- /**
- * Read the first paragraph of the body of a document.
- * @param {string} documentId The ID of the document to read.
- */
-function readFirstParagraph(documentId) {
-  var document = Docs.Documents.get(documentId);
-  var bodyElements = document.body.content;
-
-  for (var i = 0; i < bodyElements.length; i++) {
-    var structuralElement = bodyElements[i];
-    if (structuralElement.paragraph !== null) {
-      var paragraphElements = structuralElement.paragraph.elements;
-      var paragraphText = '';
-
-      for (var j = 0; j < paragraphElements.length; j++) {
-        var paragraphElement = paragraphElements[j];
-        if (paragraphElement.textRun !== null) {
-          paragraphText += paragraphElement.textRun.content;
-        }
-      }
-
-      Logger.log(paragraphText);
-      return;
-    }
+  try {
+    const response =Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    return response.replies;
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with an error %s', e.message);
   }
 }
-// [END apps_script_docs_read_first_paragraph]
+// [END docs_insert_and_style_text]
+
+// [START docs_read_first_paragraph]
+/**
+ * Read the first paragraph of the body of a document.
+ * @param {string} documentId The ID of the document to read.
+ * @return {Object} paragraphText
+ * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
+ */
+function readFirstParagraph(documentId) {
+  try {
+    // Get the document using document ID
+    const document = Docs.Documents.get(documentId);
+    const bodyElements = document.body.content;
+    for (let i = 0; i < bodyElements.length; i++) {
+      const structuralElement = bodyElements[i];
+      // Print the first paragraph text present in document
+      if (structuralElement.paragraph) {
+        const paragraphElements = structuralElement.paragraph.elements;
+        let paragraphText = '';
+
+        for (let j = 0; j < paragraphElements.length; j++) {
+          const paragraphElement = paragraphElements[j];
+          if (paragraphElement.textRun !== null) {
+            paragraphText += paragraphElement.textRun.content;
+          }
+        }
+        console.log(paragraphText);
+        return paragraphText;
+      }
+    }
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
+}
+// [END docs_read_first_paragraph]

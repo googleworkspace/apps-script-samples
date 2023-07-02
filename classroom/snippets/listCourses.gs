@@ -15,29 +15,31 @@
  */
 // [START classroom_list_courses]
 /**
- * Lists all course names and ids. 
+ * Lists all course names and ids.
+ * @see https://developers.google.com/classroom/reference/rest/v1/courses/list
  */
 function listCourses() {
-  var courses = [];
-  var pageToken = null;
-  var optionalArgs = {
+  let courses = [];
+  const pageToken = null;
+  const optionalArgs = {
     pageToken: pageToken,
     pageSize: 100
   };
-  while (true) {
-    var response = Classroom.Courses.list(optionalArgs);
-    var courses = response.courses;
-    if (!pageToken) {
-       break;
+  try {
+    const response = Classroom.Courses.list(optionalArgs);
+    courses = response.courses;
+    if (courses.length === 0) {
+      console.log('No courses found.');
+      return;
     }
-  }
-  if (courses.length === 0) {
-    Logger.log("No courses found.");
-  } else {
-    Logger.log("Courses:");
-    for (course in courses) {
-      Logger.log('%s (%s)', courses[course].name, courses[course].id);
+    // Print the courses available in classroom
+    console.log('Courses:');
+    for ( const course in courses) {
+      console.log('%s (%s)', courses[course].name, courses[course].id);
     }
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END classroom_list_courses]

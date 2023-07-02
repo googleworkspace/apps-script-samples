@@ -39,6 +39,6 @@ function getUsersActivity() {
     }
     pageToken = result.nextPageToken;
   } while (pageToken);
-  Logger.log(Object.keys(users));
+  console.log(Object.keys(users));
 }
 // [END apps_script_drive_activity_get_users_activity]

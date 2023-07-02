@@ -15,15 +15,18 @@
  */
 // [START classroom_get_course]
 /**
- * Retrieves course by id. 
+ * Retrieves course by id.
+ * @param {string} courseId
+ * @see https://developers.google.com/classroom/reference/rest/v1/courses/get
  */
-function getCourse() {
-  var courseId = '123456';
+function getCourse(courseId) {
   try {
-    var course = Classroom.Courses.get(courseId);
-    Logger.log('Course "%s" found. ', course.name);
+    // Get the course details using course id
+    const course = Classroom.Courses.get(courseId);
+    console.log('Course "%s" found. ', course.name);
   } catch (err) {
-    Logger.log("Course with id "%s" not found", courseId);
+    // TODO (developer) - Handle Courses.get() exception of Handle Classroom API
+    console.log('Failed to found course %s with error %s ', courseId, err.message);
   }
 }
 // [END classroom_get_course]
