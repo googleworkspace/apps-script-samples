@@ -136,8 +136,9 @@ function loadCsv() {
     }
   };
   try {
-    const jobResult = BigQuery.Jobs.insert(job, projectId, data);
-    console.log(`Load job started. Status: ${jobResult.status.state}`);
+    BigQuery.Jobs.insert(job, projectId, data);
+    console.log('Load job started. Check on the status of it here: ' +
+      'https://bigquery.cloud.google.com/jobs/%s', projectId);
   } catch (err) {
     console.log('unable to insert job');
   }
