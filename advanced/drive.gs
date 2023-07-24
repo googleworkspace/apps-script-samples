@@ -96,8 +96,7 @@ function addCustomProperty(fileId) {
 /**
  * Lists the revisions of a given file. Note that some properties of revisions
  * are only available for certain file types. For example, Google Workspace
- * application files do not consume space in Google Drive and thus list a file
- * size of 0.
+ * application files contain links to export the file to different formats.
  * @param {string} fileId The ID of the file to list revisions for.
  */
 function listRevisions(fileId) {
