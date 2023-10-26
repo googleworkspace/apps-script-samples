@@ -21,7 +21,7 @@
  */
 function postMessageWithUserCredentials(spaceName) {
   try {
-    const message = { 'text': 'Hello world!' };
+    const message = {'text': 'Hello world!'};
     Chat.Spaces.Messages.create(message, spaceName);
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -40,13 +40,13 @@ function postMessageWithAppCredentials(spaceName) {
     // See https://developers.google.com/chat/api/guides/auth/service-accounts
     // for details on how to obtain a service account OAuth token.
     const appToken = getToken_();
-    const message = { 'text': 'Hello world!' };
+    const message = {'text': 'Hello world!'};
     Chat.Spaces.Messages.create(
-      message,
-      spaceName,
-      {},
-      // Authenticate with the service account token.
-      { 'Authorization': 'Bearer ' + appToken });
+        message,
+        spaceName,
+        {},
+        // Authenticate with the service account token.
+        {'Authorization': 'Bearer ' + appToken});
   } catch (err) {
     // TODO (developer) - Handle exception
     console.log('Failed to create message with error %s', err.message);
@@ -77,7 +77,7 @@ function getSpace(spaceName) {
  */
 function createSpace() {
   try {
-    const space = { 'displayName': 'New Space', 'spaceType': 'SPACE' };
+    const space = {'displayName': 'New Space', 'spaceType': 'SPACE'};
     Chat.Spaces.create(space);
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -94,28 +94,23 @@ function createSpace() {
 function listMemberships(spaceName) {
   let response;
   let pageToken = null;
-  do {
-    try {
-      response = Chat.Spaces.Members.list(spaceName, {
-        pageSize: 10,
-        pageToken: pageToken
-      });
-      if (!response.memberships || response.memberships.length === 0) {
-        console.log('No memberships found.');
-        return;
-      }
-      for (let i = 0; i < response.memberships.length; i++) {
-        const membership = response.memberships[i];
-        console.log(
-          'Member resource name: %s (type: %s)',
-          membership.name,
-          membership.member.type);
-      }
+  try {
+    response = Chat.Spaces.Members.list(spaceName, {
+      pageSize: 10,
+      pageToken: pageToken
+    });
+    if (!response.memberships || response.memberships.length === 0) {
       pageToken = response.nextPageToken;
-    } catch (err) {
-      // TODO (developer) - Handle exception
-      console.log('Failed with error %s', err.message);
+      continue;
     }
-  } while (pageToken);
+    response.memberships.forEach(member => console.log(
+      'Member resource name: %s (type: %s)',
+      membership.name,
+      membership.member.type);
+    pageToken = response.nextPageToken;
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', err.message);
+  }
 }
 // [END chat_list_memberships]
