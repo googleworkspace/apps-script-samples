@@ -104,7 +104,7 @@ function listMemberships(spaceName) {
         pageToken = response.nextPageToken;
         continue;
       }
-      response.memberships.forEach(member => console.log(
+      response.memberships.forEach(membership => console.log(
         'Member resource name: %s (type: %s)',
         membership.name,
         membership.member.type);
