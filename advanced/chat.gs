@@ -95,19 +95,21 @@ function listMemberships(spaceName) {
   let response;
   let pageToken = null;
   try {
-    response = Chat.Spaces.Members.list(spaceName, {
-      pageSize: 10,
-      pageToken: pageToken
-    });
-    if (!response.memberships || response.memberships.length === 0) {
+    do {
+      response = Chat.Spaces.Members.list(spaceName, {
+        pageSize: 10,
+        pageToken: pageToken
+      });
+      if (!response.memberships || response.memberships.length === 0) {
+        pageToken = response.nextPageToken;
+        continue;
+      }
+      response.memberships.forEach(member => console.log(
+        'Member resource name: %s (type: %s)',
+        membership.name,
+        membership.member.type);
       pageToken = response.nextPageToken;
-      continue;
-    }
-    response.memberships.forEach(member => console.log(
-      'Member resource name: %s (type: %s)',
-      membership.name,
-      membership.member.type);
-    pageToken = response.nextPageToken;
+    } while (pageToken);
   } catch (err) {
     // TODO (developer) - Handle exception
     console.log('Failed with error %s', err.message);
