@@ -117,7 +117,7 @@ function listNext10Events() {
       // All-day event.
       const start = new Date(event.start.date);
       console.log('%s (%s)', event.summary, start.toLocaleDateString());
-      return;
+      continue;
     }
     const start = new Date(event.start.dateTime);
     console.log('%s (%s)', event.summary, start.toLocaleString());
