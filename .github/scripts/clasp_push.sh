@@ -29,7 +29,7 @@ function contains_changes() {
 changed_files=$(echo "${@:1}" | xargs realpath | xargs -I {} dirname {}| sort -u | uniq)
 dirs=()
 
-IFS=$'\n' read -r -d '' -a dirs < <( find . -name '.clasp.json' -exec dirname '{}' \; | sort -u | xargs realpath )
+IFS=$'\n' read -r -d '' -a dirs < <( find . -name '.clasp.google-only.json' -exec dirname '{}' \; | sort -u | xargs realpath )
 
 exit_code=0
 
@@ -37,6 +37,7 @@ for dir in "${dirs[@]}"; do
   pushd "${dir}" > /dev/null || exit
   contains_changes "$dir" "${changed_files[@]}" || continue
   echo "Publishing ${dir}"
+  mv ./.clasp.google-only.json ./.clasp.json
   clasp push -f
   status=$?
   if [ $status -ne 0 ]; then
