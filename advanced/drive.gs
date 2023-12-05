@@ -119,6 +119,7 @@ function listRevisions(fileId) {
         console.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
             revision.size);
       }
+      pageToken = revisions.nextPageToken;
     } catch (err) {
       // TODO (developer) - Handle exception
       console.log('Failed with error %s', err.message);
