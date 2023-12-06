@@ -27,7 +27,7 @@ function uploadFile() {
       mimeType: 'image/png'
     };
     // Create a file in the user's Drive.
-    file = Drive.Files.create(file, image, {"fields": "id,size"});
+    file = Drive.Files.create(file, image, {'fields': 'id,size'});
     console.log('ID: %s, File size (bytes): %s', file.id, file.size);
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -84,11 +84,11 @@ function addAppProperty(fileId) {
       }
     };
     // Updates a file to add an app property.
-    file = Drive.Files.update(file, fileId, null, {"fields": "id,appProperties"});
+    file = Drive.Files.update(file, fileId, null, {'fields': 'id,appProperties'});
     console.log(
-      'ID: %s, appProperties: %s',
-      file.id,
-      JSON.stringify(file.appProperties, null, 2));
+        'ID: %s, appProperties: %s',
+        file.id,
+        JSON.stringify(file.appProperties, null, 2));
   } catch (err) {
     // TODO (developer) - Handle exception
     console.log('Failed with error %s', err.message);
@@ -103,12 +103,12 @@ function addAppProperty(fileId) {
  */
 function listRevisions(fileId) {
   let revisions;
-  let pageToken = null;
+  const pageToken = null;
   do {
     try {
       revisions = Drive.Revisions.list(
-        fileId,
-        {"fields": "revisions(modifiedTime,size),nextPageToken"});
+          fileId,
+          {"fields": "revisions(modifiedTime,size),nextPageToken"});
       if (!revisions.revisions || revisions.revisions.length === 0) {
         console.log('All revisions found.');
         return;
