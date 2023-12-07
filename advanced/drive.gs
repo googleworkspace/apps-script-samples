@@ -108,7 +108,7 @@ function listRevisions(fileId) {
     try {
       revisions = Drive.Revisions.list(
           fileId,
-          {"fields": "revisions(modifiedTime,size),nextPageToken"});
+          {'fields': 'revisions(modifiedTime,size),nextPageToken'});
       if (!revisions.revisions || revisions.revisions.length === 0) {
         console.log('All revisions found.');
         return;
