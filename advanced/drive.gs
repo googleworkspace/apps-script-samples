@@ -52,20 +52,20 @@ function listRootFolders() {
         pageSize: 100,
         pageToken: pageToken
       });
+      pageToken = folders.nextPageToken;
       if (!folders.files || folders.files.length === 0) {
-        console.log('All folders found.');
-        return;
+        continue;
       }
       for (let i = 0; i < folders.files.length; i++) {
         const folder = folders.files[i];
         console.log('%s (ID: %s)', folder.name, folder.id);
       }
-      pageToken = folders.nextPageToken;
     } catch (err) {
       // TODO (developer) - Handle exception
       console.log('Failed with error %s', err.message);
     }
   } while (pageToken);
+  console.log('All folders found.');
 }
 // [END drive_list_root_folders]
 
@@ -109,9 +109,9 @@ function listRevisions(fileId) {
       revisions = Drive.Revisions.list(
           fileId,
           {'fields': 'revisions(modifiedTime,size),nextPageToken'});
+      pageToken = revisions.nextPageToken;
       if (!revisions.revisions || revisions.revisions.length === 0) {
-        console.log('All revisions found.');
-        return;
+        continue;
       }
       for (let i = 0; i < revisions.revisions.length; i++) {
         const revision = revisions.revisions[i];
@@ -119,12 +119,12 @@ function listRevisions(fileId) {
         console.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
             revision.size);
       }
-      pageToken = revisions.nextPageToken;
     } catch (err) {
       // TODO (developer) - Handle exception
       console.log('Failed with error %s', err.message);
     }
   } while (pageToken);
+  console.log('All revisions found.');
 }
 
 // [END drive_list_revisions]
