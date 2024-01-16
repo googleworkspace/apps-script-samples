@@ -28,10 +28,10 @@ function listDriveActivity() {
     const response = DriveActivity.Activity.query(request);
     const activities = response.activities;
     if (!activities || activities.length === 0) {
-      Logger.log('No activity.');
+      console.log('No activity.');
       return;
     }
-    Logger.log('Recent activity:');
+    console.log('Recent activity:');
     for (const activity of activities) {
       // get time information of activity.
       const time = getTimeInfo(activity);
@@ -42,11 +42,11 @@ function listDriveActivity() {
       // get target information of activity.
       const targets = activity.targets.map(getTargetInfo);
       // print the time,actor,action and targets of drive activity.
-      Logger.log('%s: %s, %s, %s', time, actors, action, targets);
+      console.log('%s: %s, %s, %s', time, actors, action, targets);
     }
   } catch (err) {
     // TODO (developer) - Handle error from drive activity API
-    Logger.log('Failed with an error %s', err.message);
+    console.log('Failed with an error %s', err.message);
   }
 }
 

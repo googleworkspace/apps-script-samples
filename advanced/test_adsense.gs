@@ -22,7 +22,7 @@ const clientName = 'ad client name';
  * Tests listAccounts function of adsense.gs
  */
 function itShouldListAccounts() {
-  Logger.log('> itShouldListAccounts');
+  console.log('> itShouldListAccounts');
   listAccounts();
 }
 
@@ -30,7 +30,7 @@ function itShouldListAccounts() {
  * Tests listAdClients function of adsense.gs
  */
 function itShouldListAdClients() {
-  Logger.log('> itShouldListAdClients');
+  console.log('> itShouldListAdClients');
   listAdClients(accountName);
 }
 
@@ -38,7 +38,7 @@ function itShouldListAdClients() {
  * Tests listAdUnits function of adsense.gs
  */
 function itShouldListAdUnits() {
-  Logger.log('> itShouldListAdUnits');
+  console.log('> itShouldListAdUnits');
   listAdUnits(clientName);
 }
 

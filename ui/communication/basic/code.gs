@@ -3,5 +3,5 @@ function doGet() {
 }
 
 function doSomething() {
-  Logger.log('I was called!');
+  console.log('I was called!');
 }

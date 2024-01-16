@@ -24,8 +24,12 @@ function runQuery() {
 
   const request = {
     // TODO (developer) - Replace query with yours
-    query: 'SELECT TOP(word, 300) AS word, COUNT(*) AS word_count ' +
-      'FROM `publicdata.samples.shakespeare` WHERE LENGTH(word) > 10;',
+    query: 'SELECT refresh_date AS Day, term AS Top_Term, rank ' +
+      'FROM `bigquery-public-data.google_trends.top_terms` ' +
+      'WHERE rank = 1 ' +
+      'AND refresh_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK) ' +
+      'GROUP BY Day, Top_Term, rank ' +
+      'ORDER BY Day DESC;',
     useLegacySql: false
   };
   let queryResults = BigQuery.Jobs.query(request, projectId);
@@ -49,10 +53,10 @@ function runQuery() {
   }
 
   if (!rows) {
-    Logger.log('No rows returned.');
+    console.log('No rows returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('BiqQuery Results');
+  const spreadsheet = SpreadsheetApp.create('BigQuery Results');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -72,8 +76,7 @@ function runQuery() {
   }
   sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
 
-  Logger.log('Results spreadsheet created: %s',
-      spreadsheet.getUrl());
+  console.log('Results spreadsheet created: %s', spreadsheet.getUrl());
 }
 // [END apps_script_bigquery_run_query]
 
@@ -111,9 +114,9 @@ function loadCsv() {
   };
   try {
     table = BigQuery.Tables.insert(table, projectId, datasetId);
-    Logger.log('Table created: %s', table.id);
+    console.log('Table created: %s', table.id);
   } catch (err) {
-    Logger.log('unable to create table');
+    console.log('unable to create table');
   }
   // Load CSV data from Drive and convert to the correct format for upload.
   const file = DriveApp.getFileById(csvFileId);
@@ -133,11 +136,10 @@ function loadCsv() {
     }
   };
   try {
-    BigQuery.Jobs.insert(job, projectId, data);
-    Logger.log('Load job started. Check on the status of it here: ' +
-      'https://bigquery.cloud.google.com/jobs/%s', projectId);
+    const jobResult = BigQuery.Jobs.insert(job, projectId, data);
+    console.log(`Load job started. Status: ${jobResult.status.state}`);
   } catch (err) {
-    Logger.log('unable to insert job');
+    console.log('unable to insert job');
   }
 }
 // [END apps_script_bigquery_load_csv]

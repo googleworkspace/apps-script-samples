@@ -15,7 +15,7 @@
  */
 // [START admin_sdk_directory_quickstart]
 /**
- * Lists users in a G Suite domain.
+ * Lists users in a Google Workspace domain.
  * @see https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list
  */
 function listUsers() {
@@ -28,17 +28,17 @@ function listUsers() {
     const response = AdminDirectory.Users.list(optionalArgs);
     const users = response.users;
     if (!users || users.length === 0) {
-      Logger.log('No users found.');
+      console.log('No users found.');
       return;
     }
     // Print the list of user's full name and email
-    Logger.log('Users:');
+    console.log('Users:');
     for (const user of users) {
-      Logger.log('%s (%s)', user.primaryEmail, user.name.fullName);
+      console.log('%s (%s)', user.primaryEmail, user.name.fullName);
     }
   } catch (err) {
     // TODO (developer)- Handle exception from the Directory API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END admin_sdk_directory_quickstart]

@@ -23,15 +23,15 @@ function uploadFile() {
     // Makes a request to fetch a URL.
     const image = UrlFetchApp.fetch('http://goo.gl/nd7zjB').getBlob();
     let file = {
-      title: 'google_logo.png',
+      name: 'google_logo.png',
       mimeType: 'image/png'
     };
-    // Insert new files to user's Drive
-    file = Drive.Files.insert(file, image);
-    Logger.log('ID: %s, File size (bytes): %s', file.id, file.fileSize);
+    // Create a file in the user's Drive.
+    file = Drive.Files.create(file, image, {'fields': 'id,size'});
+    console.log('ID: %s, File size (bytes): %s', file.id, file.size);
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed to upload file with error %s', err.message);
+    console.log('Failed to upload file with error %s', err.message);
   }
 }
 // [END drive_upload_file]
@@ -49,21 +49,21 @@ function listRootFolders() {
     try {
       folders = Drive.Files.list({
         q: query,
-        maxResults: 100,
+        pageSize: 100,
         pageToken: pageToken
       });
-      if (!folders.items || folders.items.length === 0) {
-        Logger.log('No folders found.');
+      if (!folders.files || folders.files.length === 0) {
+        console.log('All folders found.');
         return;
       }
-      for (let i = 0; i < folders.items.length; i++) {
-        const folder = folders.items[i];
-        Logger.log('%s (ID: %s)', folder.title, folder.id);
+      for (let i = 0; i < folders.files.length; i++) {
+        const folder = folders.files[i];
+        console.log('%s (ID: %s)', folder.name, folder.id);
       }
       pageToken = folders.nextPageToken;
     } catch (err) {
       // TODO (developer) - Handle exception
-      Logger.log('Failed with error %s', err.message);
+      console.log('Failed with error %s', err.message);
     }
   } while (pageToken);
 }
@@ -71,51 +71,60 @@ function listRootFolders() {
 
 // [START drive_add_custom_property]
 /**
- * Adds a custom property to a file. Unlike Apps Script's DocumentProperties,
+ * Adds a custom app property to a file. Unlike Apps Script's DocumentProperties,
  * Drive's custom file properties can be accessed outside of Apps Script and
- * by other applications (if the visibility is set to PUBLIC).
- * @param {string} fileId The ID of the file to add the property to.
+ * by other applications; however, appProperties are only visible to the script.
+ * @param {string} fileId The ID of the file to add the app property to.
  */
-function addCustomProperty(fileId) {
+function addAppProperty(fileId) {
   try {
-    const property = {
-      key: 'department',
-      value: 'Sales',
-      visibility: 'PUBLIC'
+    let file = {
+      'appProperties': {
+        'department': 'Sales'
+      }
     };
-    // Adds a property to a file
-    Drive.Properties.insert(property, fileId);
+    // Updates a file to add an app property.
+    file = Drive.Files.update(file, fileId, null, {'fields': 'id,appProperties'});
+    console.log(
+        'ID: %s, appProperties: %s',
+        file.id,
+        JSON.stringify(file.appProperties, null, 2));
   } catch (err) {
     // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END drive_add_custom_property]
 
 // [START drive_list_revisions]
 /**
- * Lists the revisions of a given file. Note that some properties of revisions
- * are only available for certain file types. For example, G Suite application
- * files do not consume space in Google Drive and thus list a file size of 0.
+ * Lists the revisions of a given file.
  * @param {string} fileId The ID of the file to list revisions for.
  */
 function listRevisions(fileId) {
-  try {
-    const revisions = Drive.Revisions.list(fileId);
-    if (!revisions.items || revisions.items.length === 0) {
-      Logger.log('No revisions found.');
-      return;
+  let revisions;
+  const pageToken = null;
+  do {
+    try {
+      revisions = Drive.Revisions.list(
+          fileId,
+          {'fields': 'revisions(modifiedTime,size),nextPageToken'});
+      if (!revisions.revisions || revisions.revisions.length === 0) {
+        console.log('All revisions found.');
+        return;
+      }
+      for (let i = 0; i < revisions.revisions.length; i++) {
+        const revision = revisions.revisions[i];
+        const date = new Date(revision.modifiedTime);
+        console.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
+            revision.size);
+      }
+      pageToken = revisions.nextPageToken;
+    } catch (err) {
+      // TODO (developer) - Handle exception
+      console.log('Failed with error %s', err.message);
     }
-    for (let i = 0; i < revisions.items.length; i++) {
-      const revision = revisions.items[i];
-      const date = new Date(revision.modifiedDate);
-      Logger.log('Date: %s, File size (bytes): %s', date.toLocaleString(),
-          revision.fileSize);
-    }
-  } catch (err) {
-    // TODO (developer) - Handle exception
-    Logger.log('Failed with error %s', err.message);
-  }
+  } while (pageToken);
 }
 
 // [END drive_list_revisions]

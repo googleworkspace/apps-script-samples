@@ -37,7 +37,7 @@ for dir in "${dirs[@]}"; do
   pushd "${dir}" > /dev/null || exit
   contains_changes "$dir" "${changed_files[@]}" || continue
   echo "Publishing ${dir}"
-  echo clasp push -f
+  clasp push -f
   status=$?
   if [ $status -ne 0 ]; then
     exit_code=$status

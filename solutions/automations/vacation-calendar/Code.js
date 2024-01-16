@@ -22,7 +22,11 @@ limitations under the License.
 let TEAM_CALENDAR_ID = 'ENTER_TEAM_CALENDAR_ID_HERE';
 // Set the email address of the Google Group that contains everyone in the team.
 // Ensure the group has less than 500 members to avoid timeouts.
+// Change to an array in order to add indirect members frrm multiple groups, for example:
+// let GROUP_EMAIL = ['ENTER_GOOGLE_GROUP_EMAIL_HERE', 'ENTER_ANOTHER_GOOGLE_GROUP_EMAIL_HERE'];
 let GROUP_EMAIL = 'ENTER_GOOGLE_GROUP_EMAIL_HERE';
+
+let ONLY_DIRECT_MEMBERS = false;
 
 let KEYWORDS = ['vacation', 'ooo', 'out of office', 'offline'];
 let MONTHS_IN_ADVANCE = 3;
@@ -55,7 +59,12 @@ function sync() {
   lastRun = lastRun ? new Date(lastRun) : null;
 
   // Gets the list of users in the Google Group.
-  let users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
+  let users = getAllMembers(GROUP_EMAIL);
+  if (ONLY_DIRECT_MEMBERS){
+    users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
+  } else if (Array.isArray(GROUP_EMAIL)) {
+    users = getUsersFromGroups(GROUP_EMAIL);
+  }
 
   // For each user, finds events having one or more of the keywords in the event
   // summary in the specified date range. Imports each of those to the team
@@ -88,6 +97,15 @@ function importEvent(username, event) {
     id: TEAM_CALENDAR_ID,
   };
   event.attendees = [];
+
+  // If the event is not of type 'default', it can't be imported, so it needs
+  // to be changed.
+  if (event.eventType != 'default') {
+    event.eventType = 'default';
+    delete event.outOfOfficeProperties;
+    delete event.focusTimeProperties;
+  }
+
   console.log('Importing: %s', event.summary);
   try {
     Calendar.Events.import(event, TEAM_CALENDAR_ID);
@@ -134,7 +152,7 @@ function findEvents(user, keyword, start, end, optSince) {
       continue;
     }
     events = events.concat(response.items.filter(function(item) {
-      return shoudImportEvent(user, keyword, item);
+      return shouldImportEvent(user, keyword, item);
     }));
     pageToken = response.nextPageToken;
   } while (pageToken);
@@ -149,7 +167,7 @@ function findEvents(user, keyword, start, end, optSince) {
  * @param {Calendar.Event} event The event being considered.
  * @return {boolean} True if the event should be imported.
  */
-function shoudImportEvent(user, keyword, event) {
+function shouldImportEvent(user, keyword, event) {
   // Filters out events where the keyword did not appear in the summary
   // (that is, the keyword appeared in a different field, and are thus
   // is not likely to be relevant).
@@ -176,4 +194,48 @@ function shoudImportEvent(user, keyword, event) {
  */
 function formatDateAsRFC3339(date) {
   return Utilities.formatDate(date, 'UTC', 'yyyy-MM-dd\'T\'HH:mm:ssZ');
+}
+
+/**
+* Get both direct and indirect members (and delete duplicates).
+* @param {string} the e-mail address of the group.
+* @return {object} direct and indirect members.
+*/
+function getAllMembers(groupEmail) {
+  var group = GroupsApp.getGroupByEmail(groupEmail);
+  var users = group.getUsers();
+  var childGroups = group.getGroups();
+  for (var i = 0; i < childGroups.length; i++) {
+    var childGroup = childGroups[i];
+    users = users.concat(getAllMembers(childGroup.getEmail()));
+  }
+  // Remove duplicate members
+  var uniqueUsers = [];
+  var userEmails = {};
+  for (var i = 0; i < users.length; i++) {
+    var user = users[i];
+    if (!userEmails[user.getEmail()]) {
+      uniqueUsers.push(user);
+      userEmails[user.getEmail()] = true;
+    }
+  }
+  return uniqueUsers;
+}
+
+/**
+* Get indirect members from multiple groups (and delete duplicates).
+* @param {array} the e-mail addresses of multiple groups.
+* @return {object} indirect members of multiple groups.
+*/
+function getUsersFromGroups(groupEmails) {
+  let users = [];
+  for (let groupEmail of groupEmails) {
+    let groupUsers = GroupsApp.getGroupByEmail(groupEmail).getUsers();
+    for (let user of groupUsers) {
+      if (!users.some(u => u.getEmail() === user.getEmail())) {
+        users.push(user);
+      }
+    }
+  }
+  return users;
 }

@@ -28,17 +28,17 @@ function logNamesAndMajors() {
     const values = Sheets.Spreadsheets.Values.get(spreadsheetId, rangeName).values;
     //  Print the values from spreadsheet if values are available.
     if (!values) {
-      Logger.log('No data found.');
+      console.log('No data found.');
       return;
     }
-    Logger.log('Name, Major:');
+    console.log('Name, Major:');
     for (const row in values) {
       // Print columns A and E, which correspond to indices 0 and 4.
-      Logger.log(' - %s, %s', values[row][0], values[row][4]);
+      console.log(' - %s, %s', values[row][0], values[row][4]);
     }
   } catch (err) {
     // TODO (developer) - Handle Values.get() exception from Sheet API
-    Logger.log(err.message);
+    console.log(err.message);
   }
 }
 // [END sheets_quickstart]

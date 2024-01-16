@@ -30,12 +30,12 @@ function listAllUsers() {
     });
     const users = page.users;
     if (!users) {
-      Logger.log('No users found.');
+      console.log('No users found.');
       return;
     }
     // Print the user's full name and email.
     for (const user of users) {
-      Logger.log('%s (%s)', user.name.fullName, user.primaryEmail);
+      console.log('%s (%s)', user.name.fullName, user.primaryEmail);
     }
     pageToken = page.nextPageToken;
   } while (pageToken);
@@ -52,10 +52,10 @@ function getUser() {
   const userEmail = 'liz@example.com';
   try {
     const user = AdminDirectory.Users.get(userEmail);
-    Logger.log('User data:\n %s', JSON.stringify(user, null, 2));
+    console.log('User data:\n %s', JSON.stringify(user, null, 2));
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_get_users]
@@ -79,10 +79,10 @@ function addUser() {
   };
   try {
     user = AdminDirectory.Users.insert(user);
-    Logger.log('User %s created with ID %s.', user.primaryEmail, user.id);
+    console.log('User %s created with ID %s.', user.primaryEmail, user.id);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_add_user]
@@ -100,10 +100,10 @@ function createAlias() {
   };
   try {
     alias = AdminDirectory.Users.Aliases.insert(alias, userEmail);
-    Logger.log('Created alias %s for user %s.', alias.alias, userEmail);
+    console.log('Created alias %s for user %s.', alias.alias, userEmail);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_create_alias]
@@ -124,12 +124,12 @@ function listAllGroups() {
     });
     const groups = page.groups;
     if (!groups) {
-      Logger.log('No groups found.');
+      console.log('No groups found.');
       return;
     }
     // Print group name and email.
     for (const group of groups) {
-      Logger.log('%s (%s)', group.name, group.email);
+      console.log('%s (%s)', group.name, group.email);
     }
     pageToken = page.nextPageToken;
   } while (pageToken);
@@ -152,10 +152,10 @@ function addGroupMember() {
   };
   try {
     AdminDirectory.Members.insert(member, groupEmail);
-    Logger.log('User %s added as a member of group %s.', userEmail, groupEmail);
+    console.log('User %s added as a member of group %s.', userEmail, groupEmail);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_add_group_member]
@@ -209,10 +209,10 @@ function getGroupSettings() {
   const groupId = 'exampleGroup@example.com';
   try {
     const group = AdminGroupsSettings.Groups.get(groupId);
-    Logger.log(JSON.stringify(group, null, 2));
+    console.log(JSON.stringify(group, null, 2));
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_get_group_setting]
@@ -231,7 +231,7 @@ function updateGroupSettings() {
     AdminGroupsSettings.Groups.patch(group, groupId);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_admin_sdk_update_group_setting]
@@ -257,7 +257,7 @@ function getLicenseAssignments() {
   } while (pageToken);
   // Print the productId and skuId
   for (const assignment of assignments) {
-    Logger.log('userId: %s, productId: %s, skuId: %s',
+    console.log('userId: %s, productId: %s, skuId: %s',
         assignment.userId, assignment.productId, assignment.skuId);
   }
 }
@@ -277,10 +277,10 @@ function insertLicenseAssignment() {
   try {
     const results = AdminLicenseManager.LicenseAssignments
         .insert({userId: userId}, productId, skuId);
-    Logger.log(results);
+    console.log(results);
   } catch (e) {
     // TODO (developer) - Handle exception.
-    Logger.log('Failed with an error %s ', e.message);
+    console.log('Failed with an error %s ', e.message);
   }
 }
 // [END apps_script_admin_sdk_insert_license_assignment]
@@ -322,10 +322,10 @@ function generateLoginActivityReport() {
   } while (pageToken);
 
   if (rows.length === 0) {
-    Logger.log('No results returned.');
+    console.log('No results returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('G Suite Login Report');
+  const spreadsheet = SpreadsheetApp.create('Google Workspace Login Report');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -335,7 +335,7 @@ function generateLoginActivityReport() {
   // Append the results.
   sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
 
-  Logger.log('Report spreadsheet created: %s', spreadsheet.getUrl());
+  console.log('Report spreadsheet created: %s', spreadsheet.getUrl());
 }
 // [END apps_script_admin_sdk_generate_login_activity_report]
 
@@ -368,7 +368,7 @@ function generateUserUsageReport() {
     });
     if (page.warnings) {
       for (const warning of page.warnings) {
-        Logger.log(warning.message);
+        console.log(warning.message);
       }
     }
     const reports = page.usageReports;
@@ -389,10 +389,10 @@ function generateUserUsageReport() {
   } while (pageToken);
 
   if (rows.length === 0) {
-    Logger.log('No results returned.');
+    console.log('No results returned.');
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('G Suite User Usage Report');
+  const spreadsheet = SpreadsheetApp.create('Google Workspace User Usage Report');
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -403,7 +403,7 @@ function generateUserUsageReport() {
   // Append the results.
   sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
 
-  Logger.log('Report spreadsheet created: %s', spreadsheet.getUrl());
+  console.log('Report spreadsheet created: %s', spreadsheet.getUrl());
 }
 
 /**
@@ -447,7 +447,7 @@ function getSubscriptions() {
     for (const sub of result.subscriptions) {
       const creationDate = new Date();
       creationDate.setUTCSeconds(sub.creationTime);
-      Logger.log('customer ID: %s, date created: %s, plan name: %s, sku id: %s',
+      console.log('customer ID: %s, date created: %s, plan name: %s, sku id: %s',
           sub.customerId, creationDate.toDateString(), sub.plan.planName,
           sub.skuId);
     }

@@ -21,17 +21,17 @@ function listAccounts() {
   try {
     accounts = AnalyticsAdmin.Accounts.list();
     if (!accounts.items || !accounts.items.length) {
-      Logger.log('No accounts found.');
+      console.log('No accounts found.');
       return;
     }
 
     for (let i = 0; i < accounts.items.length; i++) {
       const account = accounts.items[i];
-      Logger.log('Account: name "%s", displayName "%s".', account.name, account.displayName);
+      console.log('Account: name "%s", displayName "%s".', account.name, account.displayName);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    Logger.log('Failed with error: %s', e.error);
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analyticsadmin]

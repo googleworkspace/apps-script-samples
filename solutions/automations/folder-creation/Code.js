@@ -1,5 +1,3 @@
-// To learn how to use this script, refer to the video: https://youtu.be/Utl57R7I2Cs
-
 /*
 Copyright 2022 Google LLC
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +11,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 /* 
 This function will create a new folder in the defined Shard Drive.
 You define the Shared Drive by adding its ID on line number 26.
@@ -22,12 +19,15 @@ Please watch this video tutorial to see how to use this script: https://youtu.be
 */
 
 function createNewFolder(project) {
-    const newFolderId = Drive.Files.insert({
-      parents: [{id: [ADD YOUR SHARED DRIVE FOLDER ID HERE]}],
+  const folder = Drive.Files.insert(
+    {
+      parents: [{ id: 'ADD YOUR SHARED DRIVE FOLDER ID HERE' }],
       title: project,
-      mimeType: 'application/vnd.google-apps.folder'
-    }, null, {supportsAllDrives: true}).id;
-  
-    return `https://drive.google.com/drive/folders/${newFolderId}?usp=share_link`;
-  }
-  
+      mimeType: "application/vnd.google-apps.folder",
+    },
+    null,
+    { supportsAllDrives: true }
+  );
+
+  return folder.alternateLink;
+}

@@ -28,12 +28,12 @@ function listCalendars() {
 
     });
     if (!calendars.items || calendars.items.length === 0) {
-      Logger.log('No calendars found.');
+      console.log('No calendars found.');
       return;
     }
     // Print the calendar id and calendar summary
     for (const calendar of calendars.items) {
-      Logger.log('%s (ID: %s)', calendar.summary, calendar.id);
+      console.log('%s (ID: %s)', calendar.summary, calendar.id);
     }
     pageToken = calendars.nextPageToken;
   } while (pageToken);
@@ -70,9 +70,9 @@ function createEvent() {
   try {
     // call method to insert/create new event in provided calandar
     event = Calendar.Events.insert(event, calendarId);
-    Logger.log('Event ID: ' + event.id);
+    console.log('Event ID: ' + event.id);
   } catch (err) {
-    Logger.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', err.message);
   }
 }
 
@@ -109,18 +109,18 @@ function listNext10Events() {
     maxResults: 10
   });
   if (!events.items || events.items.length === 0) {
-    Logger.log('No events found.');
+    console.log('No events found.');
     return;
   }
   for (const event of events.items) {
     if (event.start.date) {
       // All-day event.
       const start = new Date(event.start.date);
-      Logger.log('%s (%s)', event.summary, start.toLocaleDateString());
-      return;
+      console.log('%s (%s)', event.summary, start.toLocaleDateString());
+      continue;
     }
     const start = new Date(event.start.dateTime);
-    Logger.log('%s (%s)', event.summary, start.toLocaleString());
+    console.log('%s (%s)', event.summary, start.toLocaleString());
   }
 }
 // [END calendar_list_events]
@@ -165,22 +165,22 @@ function logSyncedEvents(calendarId, fullSync) {
       throw new Error(e.message);
     }
     if (events.items && events.items.length === 0) {
-      Logger.log('No events found.');
+      console.log('No events found.');
       return;
     }
     for (const event of events.items) {
       if (event.status === 'cancelled') {
-        Logger.log('Event id %s was cancelled.', event.id);
+        console.log('Event id %s was cancelled.', event.id);
         return;
       }
       if (event.start.date) {
         const start = new Date(event.start.date);
-        Logger.log('%s (%s)', event.summary, start.toLocaleDateString());
+        console.log('%s (%s)', event.summary, start.toLocaleDateString());
         return;
       }
       // Events that don't last all day; they have defined start times.
       const start = new Date(event.start.dateTime);
-      Logger.log('%s (%s)', event.summary, start.toLocaleString());
+      console.log('%s (%s)', event.summary, start.toLocaleString());
     }
     pageToken = events.nextPageToken;
   } while (pageToken);
@@ -221,7 +221,7 @@ function conditionalUpdate() {
     colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
-  Logger.log('Event ID: ' + event.getId());
+  console.log('Event ID: ' + event.getId());
   // Wait 30 seconds to see if the event has been updated outside this script.
   Utilities.sleep(30 * 1000);
   // Try to update the event, on the condition that the event state has not
@@ -235,9 +235,9 @@ function conditionalUpdate() {
         {},
         {'If-Match': event.etag}
     );
-    Logger.log('Successfully updated event: ' + event.id);
+    console.log('Successfully updated event: ' + event.id);
   } catch (e) {
-    Logger.log('Fetch threw an exception: ' + e);
+    console.log('Fetch threw an exception: ' + e);
   }
 }
 // [END calendar_conditional_update]
@@ -275,15 +275,15 @@ function conditionalFetch() {
   try {
     // insert event
     event = Calendar.Events.insert(event, calendarId);
-    Logger.log('Event ID: ' + event.getId());
+    console.log('Event ID: ' + event.getId());
     // Re-fetch the event each second, but only get a result if it has changed.
     for (let i = 0; i < 30; i++) {
       Utilities.sleep(1000);
       event = Calendar.Events.get(calendarId, event.id, {}, {'If-None-Match': event.etag});
-      Logger.log('New event description: ' + event.start.dateTime);
+      console.log('New event description: ' + event.start.dateTime);
     }
   } catch (e) {
-    Logger.log('Fetch threw an exception: ' + e);
+    console.log('Fetch threw an exception: ' + e);
   }
 }
 // [END calendar_conditional_fetch]

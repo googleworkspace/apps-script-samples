@@ -18,7 +18,7 @@
  * Tests listAllUsers function of adminSDK.gs
  */
 function itShouldListAllUsers() {
-  Logger.log('> itShouldListAllUsers');
+  console.log('> itShouldListAllUsers');
   listAllUsers();
 }
 
@@ -26,7 +26,7 @@ function itShouldListAllUsers() {
  * Tests getUser function of adminSDK.gs
  */
 function itShouldGetUser() {
-  Logger.log('> itShouldGetUser');
+  console.log('> itShouldGetUser');
   getUser();
 }
 
@@ -34,7 +34,7 @@ function itShouldGetUser() {
  * Tests addUser function of adminSDK.gs
  */
 function itShouldAddUser() {
-  Logger.log('> itShouldAddUser');
+  console.log('> itShouldAddUser');
   addUser();
 }
 
@@ -42,7 +42,7 @@ function itShouldAddUser() {
  * Tests createAlias function of adminSDK.gs
  */
 function itShouldCreateAlias() {
-  Logger.log('> itShouldCreateAlias');
+  console.log('> itShouldCreateAlias');
   createAlias();
 }
 
@@ -50,7 +50,7 @@ function itShouldCreateAlias() {
  * Tests listAllGroups function of adminSDK.gs
  */
 function itShouldListAllGroups() {
-  Logger.log('> itShouldListAllGroups');
+  console.log('> itShouldListAllGroups');
   listAllGroups();
 }
 
@@ -58,7 +58,7 @@ function itShouldListAllGroups() {
  * Tests addGroupMember function of adminSDK.gs
  */
 function itShouldAddGroupMember() {
-  Logger.log('> itShouldAddGroupMember');
+  console.log('> itShouldAddGroupMember');
   addGroupMember();
 }
 
@@ -66,7 +66,7 @@ function itShouldAddGroupMember() {
  * Tests migrateMessages function of adminSDK.gs
  */
 function itShouldMigrateMessages() {
-  Logger.log('> itShouldMigrateMessages');
+  console.log('> itShouldMigrateMessages');
   migrateMessages();
 }
 
@@ -74,7 +74,7 @@ function itShouldMigrateMessages() {
  * Tests getGroupSettings function of adminSDK.gs
  */
 function itShouldGetGroupSettings() {
-  Logger.log('> itShouldGetGroupSettings');
+  console.log('> itShouldGetGroupSettings');
   getGroupSettings();
 }
 
@@ -82,7 +82,7 @@ function itShouldGetGroupSettings() {
  * Tests updateGroupSettings function of adminSDK.gs
  */
 function itShouldUpdateGroupSettings() {
-  Logger.log('> itShouldUpdateGroupSettings');
+  console.log('> itShouldUpdateGroupSettings');
   updateGroupSettings();
 }
 
@@ -90,7 +90,7 @@ function itShouldUpdateGroupSettings() {
  * Tests getLicenseAssignments function of adminSDK.gs
  */
 function itShouldGetLicenseAssignments() {
-  Logger.log('> itShouldGetLicenseAssignments');
+  console.log('> itShouldGetLicenseAssignments');
   getLicenseAssignments();
 }
 
@@ -98,7 +98,7 @@ function itShouldGetLicenseAssignments() {
  * Tests insertLicenseAssignment function of adminSDK.gs
  */
 function itShouldInsertLicenseAssignment() {
-  Logger.log('> itShouldInsertLicenseAssignment');
+  console.log('> itShouldInsertLicenseAssignment');
   insertLicenseAssignment();
 }
 
@@ -106,7 +106,7 @@ function itShouldInsertLicenseAssignment() {
  * Tests generateLoginActivityReport function of adminSDK.gs
  */
 function itShouldGenerateLoginActivityReport() {
-  Logger.log('> itShouldGenerateLoginActivityReport');
+  console.log('> itShouldGenerateLoginActivityReport');
   generateLoginActivityReport();
 }
 
@@ -114,7 +114,7 @@ function itShouldGenerateLoginActivityReport() {
  * Tests generateUserUsageReport function of adminSDK.gs
  */
 function itShouldGenerateUserUsageReport() {
-  Logger.log('> itShouldGenerateUserUsageReport');
+  console.log('> itShouldGenerateUserUsageReport');
   generateUserUsageReport();
 }
 
@@ -122,7 +122,7 @@ function itShouldGenerateUserUsageReport() {
  * Tests getSubscriptions function of adminSDK.gs
  */
 function itShouldGetSubscriptions() {
-  Logger.log('> itShouldGetSubscriptions');
+  console.log('> itShouldGetSubscriptions');
   getSubscriptions();
 }
 
