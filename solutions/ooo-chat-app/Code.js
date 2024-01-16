@@ -132,19 +132,17 @@ function setAutoReply() {
 }
 
 
-const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
 
 /**
  * Creates an out of office event in the user's Calendar.
  */
 function blockOutCalendar() {
-
-/**
- * Helper function to get a the current date and set the time for the start and end of the event.
- * @param {number} hour The hour of the day for the new date.
- * @param {number} minutes The minutes of the day for the new date.
- * @return {Date} The new date.
- */
+  /**
+   * Helper function to get a the current date and set the time for the start and end of the event.
+   * @param {number} hour The hour of the day for the new date.
+   * @param {number} minutes The minutes of the day for the new date.
+   * @return {Date} The new date.
+   */
   function getDateAndHours(hour, minutes) {
     const date = new Date();
     date.setHours(hour);
@@ -170,7 +168,6 @@ function blockOutCalendar() {
 /**
  * Declines all meetings for the day.
  */
-
 function cancelMeetings() {
   const events = CalendarApp.getEventsForDay(new Date());
 
@@ -185,6 +182,7 @@ function cancelMeetings() {
  * Turns on the user's vacation response for today in Gmail.
  */
 function turnOnAutoResponder() {
+  const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
   const currentTime = (new Date()).getTime();
   Gmail.Users.Settings.updateVacation({
     enableAutoReply: true,
