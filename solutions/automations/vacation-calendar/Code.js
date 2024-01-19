@@ -59,12 +59,12 @@ function sync() {
   lastRun = lastRun ? new Date(lastRun) : null;
 
   // Gets the list of users in the Google Group.
-  if (ONLY_DIRECT_MEMBERS)
-    let users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
-  else if (Array.isArray(GROUP_EMAIL))
-    let users = getUsersFromGroups(GROUP_EMAIL);
-  else
-    let users = getAllMembers(GROUP_EMAIL);
+  let users = getAllMembers(GROUP_EMAIL);
+  if (ONLY_DIRECT_MEMBERS){
+    users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
+  } else if (Array.isArray(GROUP_EMAIL)) {
+    users = getUsersFromGroups(GROUP_EMAIL);
+  }
 
   // For each user, finds events having one or more of the keywords in the event
   // summary in the specified date range. Imports each of those to the team
@@ -97,6 +97,15 @@ function importEvent(username, event) {
     id: TEAM_CALENDAR_ID,
   };
   event.attendees = [];
+
+  // If the event is not of type 'default', it can't be imported, so it needs
+  // to be changed.
+  if (event.eventType != 'default') {
+    event.eventType = 'default';
+    delete event.outOfOfficeProperties;
+    delete event.focusTimeProperties;
+  }
+
   console.log('Importing: %s', event.summary);
   try {
     Calendar.Events.import(event, TEAM_CALENDAR_ID);
