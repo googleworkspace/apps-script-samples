@@ -1,0 +1,17 @@
+[package]
+name = "example"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.57"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = { version = "0.2.91", features = [] }
+
+[dev-dependencies]
+wasm-bindgen-cli = "0.2.91"
+
+[profile.release]
+opt-level = 's'
