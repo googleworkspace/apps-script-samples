@@ -90,13 +90,13 @@ function createSlide(presentationId, pageId) {
       requests: requests
     }, presentationId);
     console.log('Created slide with ID: %s', createSlideResponse.replies[0].createSlide.objectId);
-    // [END slides_create_slide]
     return createSlideResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
     console.log('Failed with error: %s', err.error);
   }
 };
+// [END slides_create_slide]
 
 // [START slides_create_textbox_with_text]
 /**
