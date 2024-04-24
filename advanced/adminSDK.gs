@@ -455,3 +455,30 @@ function getSubscriptions() {
   } while (pageToken);
 }
 // [END apps_script_admin_sdk_get_subscriptions]
+
+/**
+ * Lists all the users in a domain sorted by first name.
+ * @see https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list
+ */
+function listAllUsers() {
+  let pageToken;
+  let page;
+  do {
+    page = AdminDirectory.Users.list({
+      domain: 'example.com',
+      orderBy: 'givenName',
+      maxResults: 100,
+      pageToken: pageToken
+    });
+    const users = page.users;
+    if (!users) {
+      console.log('No users found.');
+      return;
+    }
+    // Print the user's full name and email.
+    for (const user of users) {
+      console.log('%s (%s)', user.name.fullName, user.primaryEmail);
+    }
+    pageToken = page.nextPageToken;
+  } while (pageToken);
+}745530https://docs.google.com/spreadsheets/d/1IonwnCST3LzS4SE0FNFNYHpJKePwX6eprfmozQa6E1Q/edit?usp=drivesdkcodespace-urban-space-zebra-v66pv759rv94cxv7vtmp-memory-bugzbrown/memory-thresholdzk-evm_depszbrown/in-memory-rayon
