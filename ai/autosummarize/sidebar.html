@@ -1,0 +1,357 @@
+<!-- 
+Copyright 2024 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <style>
+    <!--
+    div.container {
+      padding: 10px;
+      font-family: Google Sans, Roboto, Arial, Sans-serif;
+    }
+
+    h1 {
+      font-size: 1.4em;
+      margin-top: 0;
+    }
+
+    img.logo {
+      height: 35px;
+    }
+
+    div.note {
+      background: #fff2cc;
+      background-image: url("https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/error/default/24px.svg");
+      background-position-x: 10px;
+      background-position-y: 10px;
+      background-repeat: no-repeat;
+      border-radius: 10px;
+      font-size: 0.9em;
+      padding: 10px 10px 10px 40px;
+      margin: 0 0 8px 0;
+    }
+
+    div.customPrompts>div {
+      margin-top: 5px;
+    }
+
+    div.customPrompts>div>label {
+      color: #8f8f8f;
+      font-size: 0.8em;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    div.customPrompts>div>textarea {
+      border: 1px #8f8f8f solid;
+      border-radius: 10px;
+      font-family: Google Sans, Roboto, Arial, Sans-serif;
+      height: 50px;
+      padding: 8px;
+      width: 92%;
+    }
+
+    li {
+      margin-top: 8px;
+      font-size: 0.9em;
+    }
+
+    div#status {
+      color: #aaa;
+      font-size: 0.9em;
+      font-style: italic;
+      margin: 20px auto 8px auto;
+      text-align: center;
+    }
+
+    div#wip {
+      width: 80px;
+      margin: 0 auto;
+      display: none;
+    }
+
+    div#wip>img {
+      height: 15px;
+    }
+
+    button {
+      -webkit-appearance: none;
+      margin-top: 10px;
+      border-width: 0px;
+      border-radius: 0.3em;
+      width: auto;
+      height: 36px;
+      padding: 0px 24px;
+      font-family: 'Google Sans';
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button#run {
+      background-color: #1A73E8;
+      color: #fff;
+    }
+
+    button#help {
+      background-color: #fff;
+      border-color: #1A73E8;
+      color: #1A73E8;
+    }
+
+
+    button#settings {
+      background-color: #fff;
+      border-color: #1A73E8;
+      color: #302b2b;
+    }
+
+    button.disabledButton,
+    button.disabledButton:hover {
+      background-color: #ccc;
+      pointer-events: none;
+    }
+
+    button:hover {
+      background-color: #6ca6cd;
+      box-shadow: 0 2px 1px -1px rgba(26, 115, 232, 0.2), 0 1px 1px 0 rgba(26, 115, 232, 0.14), 0 1px 3px 0 rgba(26, 115, 232, 0.12);
+    }
+
+    .tooltip {
+      position: relative;
+      /* Needed for absolute positioning of tooltip */
+      display: inline-block;
+      /* Keep element on one line */
+    }
+
+    .tooltiptext {
+      visibility: hidden;
+      /* Hide the tooltip text by default */
+      background-color: #aad5ff;
+      color: black;
+      font-size: 14px;
+      text-align: left;
+      padding: 8px;
+      border-radius: 6px;
+      width: 255px;
+      line-height: 1.5;
+
+      position: absolute;
+      /* Position the tooltip absolutely */
+      z-index: 1;
+      /* Ensure tooltip appears above other content */
+      bottom: 125%;
+      /* Place below the main text */
+      left: 50%;
+      /* Center the tooltip */
+      margin-left: -150px;
+      /* Adjust centering if needed */
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      /* Show the tooltip text on hover */
+    }
+    -->
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>
+      <img src="https://storage.cloud.google.com/demos-workspace-next24/AutoSummarizeLogo.png" class="logo" />
+        AutoSummarize AI
+    </h1>
+
+
+    <!-- Instructions -->
+
+    <p id="instructions" onClick="divToggle('divInstructions', this, 'How to Use...')"><small>&#9660</small>&nbsp;How to
+      Use...</p>
+
+    <div id="divInstructions" class="customPrompts" style="display: none;">
+      <ol>
+        <li>In a column of this sheet, select up to 50 links to Google Slides or Google Docs files.</li>
+        <li>(Optional) Add your own <b>custom prompts</b> to get even more insights from each file.</li>
+        <li>Click <b>Get summaries</b>.</li>
+        <li>A new sheet is populated with summaries and custom prompt responses for selected links, authored by Gemini
+          AI.
+        </li>
+      </ol>
+      <div class="note">
+        <b>Note:</b> Smart chips aren't supported just yet.
+        <p />
+        <div style="font-size: 0.8em;">Use Data Extraction on smart chips (e.g. =A1.url) to access the underlying url
+        </div>
+      </div>
+      <p>
+        <hr>
+      <p>
+
+    </div>
+
+    <!-- Custom Prompts -->
+
+    <p id="custom" onClick="divToggle('divCustom', this, 'Custom Prompts')"><small>&#9650</small>&nbsp;Custom
+      Prompts </p>
+
+    <div id="divCustom" class="customPrompts" style="display: block;">
+      <div>
+        <label>Prompt One [Optional]</label>
+        <textarea id="customPrompt1" placeholder="e.g. What are the key takeaways for developers from this content?"></textarea>
+      </div>
+      <div>
+        <label>Prompt Two [Optional]</label>
+        <textarea id="customPrompt2" placeholder="e.g. Summarize the challenges discussed in this document."></textarea>
+      </div>
+      <p>
+        <hr>
+      <p>
+
+    </div>
+
+    <!-- Prompt Settings -->
+
+    <p id="settings" onClick="divToggle('divSettings', this, 'Prompt Settings')"><small>&#9660</small>&nbsp;Prompt
+      Settings</p>
+
+    <div id="divSettings" style="display: none;">
+      <p>Temperature&emsp;&emsp;&emsp;
+        <span class="tooltip">&#x2753;<span class="tooltiptext"><b>Temperature</b> controls the degree of randomness in token selection. <br><br><b>Lower temperatures</b> are good for prompts that expect a true or correct response, while <b>higher temperatures</b> can lead to more diverse or unexpected results. <br><br>With a <b>temperature of 0</b> the highest probability token is always selected.</span></span>
+      </p>
+      0 <input id = "sliderTemperature" type="range" value="10" min="1" max="100"  class="slider" onchange="tempSync(this.id)"> 1 &nbsp;&nbsp;&nbsp;
+      <input id = "textTemperature" type="text" value="0.1" min ="0" max= "1" class="temp" size="2" oninput="tempSync(this.id)">
+
+      <p>Output token limit
+        <span class="tooltip">&#x2753;<span class="tooltiptext"><b>Output token limit</b> determines the maximum amount of text output from one prompt. A token is approximately four characters. <br><br>If you need a larger output token limit, contact your friendly developer to use the Gemini API .</span></span>
+      </p>
+      1 <input id = "sliderTokens" type="range" min="1" max="2048" value="2048" class="slider" onchange="tokenSync(this.value)"> 2048 &nbsp;
+      <input id = "textTokens" type="text"  min ="1" max= "2048" value="2048" class="temp" size="4" oninput="tokenSync(this.value)">
+
+
+
+      <p>
+        <hr>
+      <p>
+    </div>
+
+
+    <!-- Footer  -->
+
+
+    <div>
+      <button id="run">Get summaries</button>
+      <button id="help" onClick="window.open('https://docs.google.com/document/d/1z5wjws0vHNN5evVxEw73tvHdLY2QYKV_W-mCzDZDi8M/')">Help</button>
+
+      <div id="status"></div>
+      <div id="wip">
+        <img src="https://storage.cloud.google.com/demos-workspace-next24/AutoSummarizeProcess.gif" />
+      </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+      /**
+       * On document load, assign click handlers to each button and try to load the
+       * user's origin and destination language preferences if previously set.
+       */
+      $(function() {
+        $('#run').click(runScript);
+      });
+
+      /**
+       * Runs a server-side function to translate the user-selected text and update
+       * the sidebar UI with the resulting translation.
+       */
+      function runScript() {
+        $('#run').toggleClass("disabledButton");
+        $('#status').text("Creating sheet...");
+        $('#wip').show();
+        let statusUpdates = setTimeout(function changeText1() {
+          $('#status').text("Reticulating splines...");
+          statusUpdates = setTimeout(function changeText2() {
+            $('#status').text("Talking to Gemini AI...");
+            statusUpdates = setTimeout(function changeText3() {
+              $('#status').text("Gemini AI is reading...");
+              statusUpdates = setTimeout(function changeText4() {
+                $('#status').text("Gemini AI is writing...");
+                  statusUpdates = setTimeout(function changeText5() {
+                    $('#status').text("Preparing delivery...");
+                  }, 10000);
+              }, 6000);
+            }, 8000);
+          }, 3000);
+        }, 3000);
+        let customPrompt1 = document.getElementById("customPrompt1").value;
+        let customPrompt2 = document.getElementById("customPrompt2").value;
+        let temperature = document.getElementById("sliderTemperature").value / 100;
+        let tokens = document.getElementById("sliderTokens").value;
+        google.script.run
+            .withSuccessHandler(
+                    function(response) {
+                      clearTimeout(statusUpdates);
+                      $('#wip').hide();
+                      $('#status').text("Your AI summaries are here! \u{1F389}");
+                      $('#run').toggleClass("disabledButton");
+                    })
+            .withFailureHandler(
+                    function(err) {
+                      $('#wip').hide();
+                      $('#status').text("Something didn't quite work right. " + err);
+                      $('#run').toggleClass("disabledButton");
+                    })
+            .doAutoSummarizeAI(customPrompt1,customPrompt2,temperature,tokens);
+      }
+
+    function divToggle(element,caller, text) {
+      var x = document.getElementById(element);
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          caller.innerHTML = "<small>&#9650</small>&nbsp;" + text
+      } else {
+        x.style.display = "none";
+          caller.innerHTML = "<small>&#9660</small>&nbsp;" + text
+      }
+    }
+    
+
+function tempSync(element) {
+
+  var x = document.getElementById(element)
+  var val = x.value
+
+  if (x.id === "sliderTemperature") {
+    val = (val / 100).toFixed(1)
+    document.getElementById("textTemperature").value = val
+  } else {
+    val = (val * 100).toFixed(1)
+    document.getElementById("sliderTemperature").value = val
+  }
+}
+
+function tokenSync(val) {
+
+    document.getElementById("sliderTokens").value = val
+    document.getElementById("textTokens").value = val
+}
+
+
+    </script>
+</body>
+
+</html>
