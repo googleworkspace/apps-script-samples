@@ -12,7 +12,7 @@ Google Sheets Custom Function to be used as a bound Apps Script project with a G
 
 1. Create a Cloud Project
    1. Enable the Vertex AI API
-   1. Create a Service Account and grant the role Service Account Token Creator Role
+   1. Create a Service Account and grant the role `Vertex AI User`
    1. Create a private key with type JSON. This will download the JSON file for use in the next section.
 1. Open an Apps Script Project bound to a Google Sheets Spreadsheet
    1. From Project Settings, change project to GCP project number of Cloud Project from step 1
