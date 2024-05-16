@@ -17,7 +17,7 @@ Google Sheets Custom Function to be used as a bound Apps Script project with a G
 1. Open an Apps Script Project bound to a Google Sheets Spreadsheet
    1. From Project Settings, change project to GCP project number of Cloud Project from step 1
    1. Add a Script Property. Enter `model_id` as the property name and `gemini-pro` as the value. 
-   1. Add a Script Property. Enter `project_location` as the property name and `us-central-1` as the value. 
+   1. Add a Script Property. Enter `project_location` as the property name and `us-central1` as the value. 
    1. Add a Script Property. Enter `service_account_key` as the property name and paste the JSON key from the service account as the value. 
 1. Add OAuth2 v43 Apps Script Library using the ID `1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF`.
 1. Add the project code to Apps Script
