@@ -14,7 +14,7 @@ Google Workspace Add-on for Google Drive, which uses AI to recommend new names f
    1. Enable the Vertex AI API
    1. Enable Google Drive API
    1. Configure OAuth consent screen
-   1. Create a Service Account and grant the role Service Account Token Creator Role
+   1. Create a Service Account and grant the role Service `Vertex AI User` role
    1. Create a private key with type JSON. This will download the JSON file for use in the next section.
 1. Open a standalone Apps Script project.
    1. From Project Settings, change project to GCP project number of Cloud Project from step 1
