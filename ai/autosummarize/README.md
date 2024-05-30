@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Google Workspace Editor Add-on for Google Sheets that uses AI to create AI summaries in bulk for a listing of Google Docs, Sheets, and Slides files.
+Google Workspace Editor Add-on for Google Sheets that uses AI to create AI summaries in bulk for a listing of Google Docs and Slides files.
 
 
 ## Prerequisites
@@ -29,7 +29,7 @@ Google Workspace Editor Add-on for Google Sheets that uses AI to create AI summa
 
 ## Usage
 
-1. Insert one or more links to any Google Doc, Sheet, or Slides files in a column.
+1. Insert one or more links to any Google Doc or Slides files in a column.
 1. Select one or more of the links in the sheet.
 1. From the `Sheets` menu, select `Extensions > AutoSummarize AI > Open AutoSummarize AI`
 1. Click Get summaries button.
