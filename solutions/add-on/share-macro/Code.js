@@ -23,7 +23,6 @@ limitations under the License.
  * 
  * @param {string} sourceScriptId - Script ID of the source project.
  * @param {string} targetSpreadsheetUrl - URL if the target spreadsheet.
- * @return {Card[]} - Card indicating successful copy.
  */
 function shareMacro_(sourceScriptId, targetSpreadsheetUrl) {
 
