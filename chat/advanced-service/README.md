@@ -1,6 +1,6 @@
 # Google Chat API - Advanced Service samples
 
-## Setup
+## Set up
 
 1. Follow the Google Chat app quickstart for Apps Script
    https://developers.google.com/workspace/chat/quickstart/apps-script-app and
@@ -18,5 +18,6 @@
 
 ## Run
 
-Select the file `Main.gs` in your Apps Script project then select and run the
-code sample function.
+In the `Main.gs` file, each function contains a sample that calls a Chat API method
+using either app or user authentication. To run one of the samples, select the name
+of the function from the dropdown menu and click `Run`.
