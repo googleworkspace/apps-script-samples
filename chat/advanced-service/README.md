@@ -9,12 +9,13 @@
 1. Override the Apps Script project contents with the files `appsscript.json`,
    `AppAuthenticationUtils.gs`, and `Main.gs` from this code sample directory.
 
-1. Set the value of the constant `SERVICE_ACCOUNT` in the script
-   `AppAuthenticationUtils.gs` to the service account private key's JSON.
+1. To run samples that use app credentials:
 
-   It's only required for code samples that use app credentials, please refer to
-   https://developers.google.com/workspace/chat/authenticate-authorize-chat-app
-   to learn more.
+   1. Create a service account. For steps, see
+      [Authenticate as a Google Chat app](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+
+   1. Open `AppAuthenticationUtils.gs` and set the value of the constant `SERVICE_ACCOUNT` to
+      the private key's JSON of the service account that you created in the previous step.
 
 ## Run
 
