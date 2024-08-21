@@ -99,7 +99,7 @@ function createMessageAppCred() {
         imageUrl: 'https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/info/default/24px.svg'
       },
       sections: [{
-        header: "Contents",
+        header: 'Contents',
         widgets: [{ textParagraph: {
             text: '🔡 <b>Text</b> which can include ' +
                   'hyperlinks 🔗, emojis 😄🎉, and @mentions 🗣️.'
@@ -128,7 +128,7 @@ function createMessageAppCred() {
     accessoryWidgets: [{ buttonList: { buttons: [{
       text: 'View documentation',
       icon: { materialIcon: { name: 'link' }},
-      onClick: { "openLink": {
+      onClick: { openLink: {
         url: 'https://developers.google.com/workspace/chat/create-messages'
       }}
     }]}}]
