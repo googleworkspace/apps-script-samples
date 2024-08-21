@@ -91,7 +91,47 @@ function createMessageAppCred() {
   // TODO(developer): Replace SPACE_NAME here.
   const parent = 'spaces/SPACE_NAME';
   const message = {
-    text: 'Hello with app credential!'
+    text: '👋🌎 Hello world! I created this message by calling ' +
+          'the Chat API\'s `messages.create()` method.',
+    cardsV2 : [{ card: {
+      header: {
+        title: 'About this message',
+        imageUrl: 'https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/info/default/24px.svg'
+      },
+      sections: [{
+        header: "Contents",
+        widgets: [{ textParagraph: {
+            text: '🔡 <b>Text</b> which can include ' +
+                  'hyperlinks 🔗, emojis 😄🎉, and @mentions 🗣️.'
+          }}, { textParagraph: {
+            text: '🖼️ A <b>card</b> to display visual elements' +
+                  'and request information such as text 🔤, ' +
+                  'dates and times 📅, and selections ☑️.'
+          }}, { textParagraph: {
+            text: '👉🔘 An <b>accessory widget</b> which adds ' +
+                  'a button to the bottom of a message.'
+          }}
+        ]}, {
+          header: "What's next",
+          collapsible: true,
+          widgets: [{ textParagraph: {
+              text: "❤️ <a href='https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.reactions/create'>Add a reaction</a>."
+            }}, { textParagraph: {
+              text: "🔄 <a href='https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/patch'>Update</a> " +
+                    "or ❌ <a href='https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/delete'>delete</a> " +
+                    "the message."
+            }
+          }]
+        }
+      ]
+    }}],
+    accessoryWidgets: [{ buttonList: { buttons: [{
+      text: 'View documentation',
+      icon: { materialIcon: { name: 'link' }},
+      onClick: { "openLink": {
+        url: 'https://developers.google.com/workspace/chat/create-messages'
+      }}
+    }]}}]
   };
   const parameters = {};
 
@@ -105,40 +145,6 @@ function createMessageAppCred() {
 }
 // [END chat_create_message_app_cred]
 
-// [START chat_create_message_app_cred_with_cards]
-/**
- * This sample shows how to create message with a card attached with app credential
- * 
- * It relies on the OAuth2 scope 'https://www.googleapis.com/auth/chat.bot'
- * used by service accounts.
- */
-function createMessageAppCredWithCards() {
-  // Initialize request argument(s)
-  // TODO(developer): Replace SPACE_NAME here.
-  const parent = 'spaces/SPACE_NAME';
-  const message = {
-    text: 'Hello with app credential!',
-    cardsV2: [{
-      cardId: 'card-id',
-      card: {
-        header: {
-          title: 'And with a card!',
-        }
-      }
-    }]
-  };
-  const parameters = {};
-
-  // Make the request
-  const response = Chat.Spaces.Messages.create(
-    message, parent, parameters, getHeaderWithAppCredentials()
-  );
-
-  // Handle the response
-  console.log(response);
-}
-// [END chat_create_message_app_cred_with_cards]
-
 // [START chat_create_message_user_cred]
 /**
  * This sample shows how to create message with user credential
@@ -151,7 +157,14 @@ function createMessageUserCred() {
   // TODO(developer): Replace SPACE_NAME here.
   const parent = 'spaces/SPACE_NAME';
   const message = {
-    text: 'Hello with user credential!'
+    text: '👋🌎 Hello world!' +
+          'Text messages can contain things like:\n\n' +
+          '* Hyperlinks 🔗\n' +
+          '* Emojis 😄🎉\n' +
+          '* Mentions of other Chat users `@` \n\n' +
+          'For details, see the ' +
+          '<https://developers.google.com/workspace/chat/format-messages' +
+          '|Chat API developer documentation>.'
   };
 
   // Make the request
