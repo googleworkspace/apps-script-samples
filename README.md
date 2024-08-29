@@ -135,7 +135,7 @@ Codelab tutorials combine detailed explanation, coding exercises, and documented
 - [BigQuery + Sheets + Slides](http://g.co/codelabs/bigquery-sheets-slides)
 - [Docs Add-on + Cloud Natural Language API](http://g.co/codelabs/nlp-docs)
 - [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
-- [Hangouts Chat Bots](http://g.co/codelabs/chat-apps-script)
+- [Google Chat Apps](https://developers.google.com/codelabs/chat-apps-script)
 
 ## Clone using the `clasp` command-line tool
 
