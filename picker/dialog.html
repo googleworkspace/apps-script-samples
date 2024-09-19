@@ -18,9 +18,10 @@ limitations under the License.
   <script>
     // IMPORTANT: Replace the value for DEVELOPER_KEY with the API key obtained
     // from the Google Developers Console.
-    var DEVELOPER_KEY = 'ABC123 ... ';
-    var DIALOG_DIMENSIONS = {width: 600, height: 425};
-    var pickerApiLoaded = false;
+    const DEVELOPER_KEY = 'AIza...';
+    const CLOUD_PROJECT_NUMBER = '1234567890';
+    const DIALOG_DIMENSIONS = {width: 600, height: 425};
+    let pickerApiLoaded = false;
 
     /**
      * Loads the Google Picker API.
@@ -53,7 +54,7 @@ limitations under the License.
      */
     function createPicker(token) {
       if (pickerApiLoaded && token) {
-        var picker = new google.picker.PickerBuilder()
+        const picker = new google.picker.PickerBuilder()
             // Instruct Picker to display only spreadsheets in Drive. For other
             // views, see https://developers.google.com/picker/docs/#otherviews
             .addView(google.picker.ViewId.SPREADSHEETS)
@@ -63,6 +64,7 @@ limitations under the License.
             .hideTitleBar()
             .setOAuthToken(token)
             .setDeveloperKey(DEVELOPER_KEY)
+            .setAppId(CLOUD_PROJECT_NUMBER)
             .setCallback(pickerCallback)
             .setOrigin(google.script.host.origin)
             // Instruct Picker to fill the dialog, minus 2 pixels for the border.
@@ -83,7 +85,7 @@ limitations under the License.
      * @param {object} data The response object.
      */
     function pickerCallback(data) {
-      var action = data[google.picker.Response.ACTION];
+      const action = data[google.picker.Response.ACTION];
       if (action == google.picker.Action.PICKED) {
         var doc = data[google.picker.Response.DOCUMENTS][0];
         var id = doc[google.picker.Document.ID];
