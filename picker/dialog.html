@@ -13,106 +13,175 @@ limitations under the License.
 <!-- [START picker_html] -->
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
-  <script>
-    // IMPORTANT: Replace the value for DEVELOPER_KEY with the API key obtained
-    // from the Google Developers Console.
-    var DEVELOPER_KEY = 'ABC123 ... ';
-    var DIALOG_DIMENSIONS = {width: 600, height: 425};
-    var pickerApiLoaded = false;
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://ssl.gstatic.com/docs/script/css/add-ons.css"
+    />
+    <style>
+      #result {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25em;
+      }
 
-    /**
-     * Loads the Google Picker API.
-     */
-    function onApiLoad() {
-      gapi.load('picker', {'callback': function() {
-        pickerApiLoaded = true;
-      }});
-     }
+      pre {
+        font-size: x-small;
+        max-height: 25vh;
+        overflow-y: scroll;
+        background: #eeeeee;
+        padding: 1em;
+        border: 1px solid #cccccc;
+      }
+    </style>
+    <script>
+      // TODO: Replace the value for DEVELOPER_KEY with the API key obtained
+      // from the Google Developers Console.
+      const DEVELOPER_KEY = "AIza...";
+      // TODO: Replace the value for CLOUD_PROJECT_NUMBER with the project
+      // number obtained from the Google Developers Console.
+      const CLOUD_PROJECT_NUMBER = "1234567890";
 
-    /**
-     * Gets the user's OAuth 2.0 access token from the server-side script so that
-     * it can be passed to Picker. This technique keeps Picker from needing to
-     * show its own authorization dialog, but is only possible if the OAuth scope
-     * that Picker needs is available in Apps Script. Otherwise, your Picker code
-     * will need to declare its own OAuth scopes.
-     */
-    function getOAuthToken() {
-      google.script.run.withSuccessHandler(createPicker)
-          .withFailureHandler(showError).getOAuthToken();
-    }
+      let pickerApiLoaded = false;
+      let oauthToken;
 
-    /**
-     * Creates a Picker that can access the user's spreadsheets. This function
-     * uses advanced options to hide the Picker's left navigation panel and
-     * default title bar.
-     *
-     * @param {string} token An OAuth 2.0 access token that lets Picker access the
-     *     file type specified in the addView call.
-     */
-    function createPicker(token) {
-      if (pickerApiLoaded && token) {
-        var picker = new google.picker.PickerBuilder()
+      /**
+       * Loads the Google Picker API.
+       */
+      function onApiLoad() {
+        gapi.load("picker", {
+          callback: function () {
+            pickerApiLoaded = true;
+          },
+        });
+      }
+
+      /**
+       * Gets the user's OAuth 2.0 access token from the server-side script so that
+       * it can be passed to Picker. This technique keeps Picker from needing to
+       * show its own authorization dialog, but is only possible if the OAuth scope
+       * that Picker needs is available in Apps Script. Otherwise, your Picker code
+       * will need to declare its own OAuth scopes.
+       */
+      function getOAuthToken() {
+        google.script.run
+          .withSuccessHandler((token) => {
+            oauthToken = token;
+            createPicker(token);
+          })
+          .withFailureHandler(showError)
+          .getOAuthToken();
+      }
+
+      /**
+       * Creates a Picker that can access the user's spreadsheets. This function
+       * uses advanced options to hide the Picker's left navigation panel and
+       * default title bar.
+       *
+       * @param {string} token An OAuth 2.0 access token that lets Picker access the
+       *     file type specified in the addView call.
+       */
+      function createPicker(token) {
+        document.getElementById("result").innerHTML = "";
+
+        if (pickerApiLoaded && token) {
+          const picker = new google.picker.PickerBuilder()
             // Instruct Picker to display only spreadsheets in Drive. For other
-            // views, see https://developers.google.com/picker/docs/#otherviews
-            .addView(google.picker.ViewId.SPREADSHEETS)
+            // views, see https://developers.google.com/picker/reference/picker.viewid
+            .addView(
+              new google.picker.DocsView(
+                google.picker.ViewId.SPREADSHEETS
+              ).setOwnedByMe(true)
+            )
             // Hide the navigation panel so that Picker fills more of the dialog.
             .enableFeature(google.picker.Feature.NAV_HIDDEN)
             // Hide the title bar since an Apps Script dialog already has a title.
             .hideTitleBar()
             .setOAuthToken(token)
             .setDeveloperKey(DEVELOPER_KEY)
+            .setAppId(CLOUD_PROJECT_NUMBER)
             .setCallback(pickerCallback)
             .setOrigin(google.script.host.origin)
-            // Instruct Picker to fill the dialog, minus 2 pixels for the border.
-            .setSize(DIALOG_DIMENSIONS.width - 2,
-                DIALOG_DIMENSIONS.height - 2)
             .build();
-        picker.setVisible(true);
-      } else {
-        showError('Unable to load the file picker.');
+          picker.setVisible(true);
+        } else {
+          showError("Unable to load the file picker.");
+        }
       }
-    }
 
-    /**
-     * A callback function that extracts the chosen document's metadata from the
-     * response object. For details on the response object, see
-     * https://developers.google.com/picker/docs/result
-     *
-     * @param {object} data The response object.
-     */
-    function pickerCallback(data) {
-      var action = data[google.picker.Response.ACTION];
-      if (action == google.picker.Action.PICKED) {
-        var doc = data[google.picker.Response.DOCUMENTS][0];
-        var id = doc[google.picker.Document.ID];
-        var url = doc[google.picker.Document.URL];
-        var title = doc[google.picker.Document.NAME];
-        document.getElementById('result').innerHTML =
-            '<b>You chose:</b><br>Name: <a href="' + url + '">' + title +
-            '</a><br>ID: ' + id;
-      } else if (action == google.picker.Action.CANCEL) {
-        document.getElementById('result').innerHTML = 'Picker canceled.';
+      /**
+       * A callback function that extracts the chosen document's metadata from the
+       * response object. For details on the response object, see
+       * https://developers.google.com/picker/reference/picker.responseobject
+       *
+       * @param {object} data The response object.
+       */
+      function pickerCallback(data) {
+        const action = data[google.picker.Response.ACTION];
+        if (action == google.picker.Action.PICKED) {
+          handlePicked(data);
+        } else if (action == google.picker.Action.CANCEL) {
+          document.getElementById("result").innerHTML = "Picker canceled.";
+        }
       }
-    }
 
-    /**
-     * Displays an error message within the #result element.
-     *
-     * @param {string} message The error message to display.
-     */
-    function showError(message) {
-      document.getElementById('result').innerHTML = 'Error: ' + message;
-    }
-  </script>
-</head>
-<body>
-  <div>
-    <button onclick="getOAuthToken()">Select a file</button>
-    <p id="result"></p>
-  </div>
-  <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
-</body>
+      /**
+       * Handles `"PICKED"` responsed from the Google Picker.
+       *
+       * @param {object} data The response object.
+       */
+      function handlePicked(data) {
+        const doc = data[google.picker.Response.DOCUMENTS][0];
+        const id = doc[google.picker.Document.ID];
+
+        google.script.run
+          .withSuccessHandler((driveFilesGetResponse) => {
+            // Render the response from Picker and the Drive.Files.Get API.
+            const resultElement = document.getElementById("result");
+            resultElement.innerHTML = "";
+
+            for (const response of [
+              {
+                title: "Picker response",
+                content: JSON.stringify(data, null, 2),
+              },
+              {
+                title: `Drive.Files.Get response`,
+                content: JSON.stringify(driveFilesGetResponse, null, 2),
+              },
+            ]) {
+              const titleElement = document.createElement("h3");
+              titleElement.appendChild(document.createTextNode(response.title));
+              resultElement.appendChild(titleElement);
+
+              const contentElement = document.createElement("pre");
+              contentElement.appendChild(
+                document.createTextNode(response.content)
+              );
+              resultElement.appendChild(contentElement);
+            }
+          })
+          .withFailureHandler(showError)
+          .getFile(data[google.picker.Response.DOCUMENTS][0].id);
+      }
+
+      /**
+       * Displays an error message within the #result element.
+       *
+       * @param {string} message The error message to display.
+       */
+      function showError(message) {
+        document.getElementById("result").innerHTML = "Error: " + message;
+      }
+    </script>
+  </head>
+
+  <body>
+    <div>
+      <button onclick="getOAuthToken()">Select a file</button>
+      <div id="result"></div>
+    </div>
+    <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+  </body>
 </html>
 <!-- [END picker_html] -->
