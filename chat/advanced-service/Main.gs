@@ -79,6 +79,33 @@ function createMembershipUserCredForApp() {
 }
 // [END chat_create_membership_user_cred_for_app]
 
+// [START chat_create_membership_user_cred_for_group]
+/**
+ * This sample shows how to create membership with user credential for a group
+ * 
+ * It relies on the OAuth2 scope 'https://www.googleapis.com/auth/chat.memberships'
+ * referenced in the manifest file (appsscript.json).
+ */
+function createMembershipUserCredForGroup() {
+  // Initialize request argument(s)
+  // TODO(developer): Replace SPACE_NAME here.
+  const parent = 'spaces/SPACE_NAME';
+  const membership = {
+    groupMember: {
+      // TODO(developer): Replace GROUP_NAME here
+      name: 'groups/GROUP_NAME'
+    }
+  };
+
+  // Make the request
+  const response = Chat.Spaces.Members.create(membership, parent);
+
+  // Handle the response
+  console.log(response);
+}
+// [END chat_create_membership_user_cred_for_group]
+
+
 // [START chat_create_message_app_cred]
 /**
  * This sample shows how to create message with app credential
