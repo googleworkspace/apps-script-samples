@@ -345,6 +345,29 @@ function createMessageUserCredThreadName() {
 }
 // [END chat_create_message_user_cred_thread_name]
 
+// [START chat_create_space_user_cred]
+/**
+ * This sample shows how to create space with user credential
+ * 
+ * It relies on the OAuth2 scope 'https://www.googleapis.com/auth/chat.spaces.create'
+ * referenced in the manifest file (appsscript.json).
+ */
+function createSpaceUserCred() {
+  // Initialize request argument(s)
+  const space = {
+    spaceType: 'SPACE',
+    // TODO(developer): Replace DISPLAY_NAME here
+    displayName: 'DISPLAY_NAME'
+  };
+
+  // Make the request
+  const response = Chat.Spaces.create(space);
+
+  // Handle the response
+  console.log(response);
+}
+// [END chat_create_space_user_cred]
+
 // [START chat_delete_message_app_cred]
 /**
  * This sample shows how to delete a message with app credential
@@ -673,6 +696,38 @@ function listSpacesUserCred() {
   } while (pageToken);
 }
 // [END chat_list_spaces_user_cred]
+
+// [START chat_set_up_space_user_cred]
+/**
+ * This sample shows how to set up a named space with one initial member with
+ * user credential.
+ * 
+ * It relies on the OAuth2 scope 'https://www.googleapis.com/auth/chat.spaces.create'
+ * referenced in the manifest file (appsscript.json).
+ */
+function setUpSpaceUserCred() {
+  // Initialize request argument(s)
+  const space = {
+    spaceType: 'SPACE',
+    // TODO(developer): Replace DISPLAY_NAME here
+    displayName: 'DISPLAY_NAME'
+  };
+  const memberships = [{
+    member: {
+      // TODO(developer): Replace USER_NAME here
+      name: 'users/USER_NAME',
+      // User type for the membership
+      type: 'HUMAN'
+    }
+  }];
+
+  // Make the request
+  const response = Chat.Spaces.setup({ space: space, memberships: memberships });
+
+  // Handle the response
+  console.log(response);
+}
+// [END chat_set_up_space_user_cred]
 
 // [START chat_update_message_app_cred]
 /**
