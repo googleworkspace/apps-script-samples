@@ -103,14 +103,10 @@ function getVideoDetails(videoId) {
 
 /**
  * Extracts YouTube video ID from url.
- * (h/t https://stackoverflow.com/a/3452617)
  */
 function extractVideoIdFromUrl(url) {
-  let videoId = url.split('v=')[1];
-  let ampersandPosition = videoId.indexOf('&');
-  if (ampersandPosition != -1) {
-    videoId = videoId.substring(0, ampersandPosition);
-  }   
+  var regExp = '(?:v=|be/|shorts/)([a-zA-Z0-9_-]+)';
+  var videoId = url.match(regExp)[1];
  return videoId;
 }
 
