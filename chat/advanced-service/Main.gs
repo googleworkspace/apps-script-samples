@@ -741,11 +741,15 @@ function updateMessageAppCred() {
   // TODO(developer): Replace SPACE_NAME and MESSAGE_NAME here
   const name = 'spaces/SPACE_NAME/messages/MESSAGE_NAME';
   const message = {
-    text: 'Updated with app credential!'
+    text: 'Text updated with app credential!',
+    cardsV2 : [{ card: { header: {
+      title: 'Card updated with app credential!',
+      imageUrl: 'https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/info/default/24px.svg'
+    }}}]
   };
   // The field paths to update. Separate multiple values with commas or use
   // `*` to update all field paths.
-  const updateMask = 'text';
+  const updateMask = 'text,cardsV2';
 
   // Make the request
   const response = Chat.Spaces.Messages.patch(message, name, {
