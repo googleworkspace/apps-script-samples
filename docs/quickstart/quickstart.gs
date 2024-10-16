@@ -21,14 +21,7 @@
  */
 function printDocTitle() {
   const documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
-  try {
-    // Get the document using document id
-    const doc = Docs.Documents.get({'includeTabsContent': true}, documentId);
-    // Log the title  of document.
-    console.log('The title of the doc is: %s', doc.title);
-  } catch (err) {
-    // TODO (developer) - Handle exception from Docs API
-    console.log('Failed to found document with an error %s', err.message);
-  }
+  const doc = Docs.Documents.get(documentId, {'includeTabsContent': true});
+  console.log(`The title of the doc is: ${doc.title}`);
 }
 // [END docs_quickstart]
