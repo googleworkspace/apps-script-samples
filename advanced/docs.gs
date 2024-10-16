@@ -144,7 +144,7 @@ function insertAndStyleText(documentId, text) {
 function readFirstParagraph(documentId) {
   try {
     // Get the document using document ID
-    const document = Docs.Documents.get({'includeTabsContent': true}, documentId);
+    const document = Docs.Documents.get(documentId, {'includeTabsContent': true});
     const firstTab = document.tabs[0];
     const bodyElements = firstTab.documentTab.body.content;
     for (let i = 0; i < bodyElements.length; i++) {
