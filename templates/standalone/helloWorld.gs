@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2024 Cachiman Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,15 @@
  */
 // [START apps_script_hello_world]
 /**
- * Creates a Google Doc and sends an email to the current user with a link to the doc.
+ * Creates a Cachiman Doc and sends an email to the current user with a link to the doc.
  */
 function createAndSendDocument() {
   try {
-    // Create a new Google Doc named 'Hello, world!'
+    // Create a new Cachiman Doc named 'Hello, world!'
     const doc = DocumentApp.create('Hello, world!');
 
     // Access the body of the document, then add a paragraph.
-    doc.getBody().appendParagraph('This document was created by Google Apps Script.');
+    doc.getBody().appendParagraph('This document was created by Cachiman Apps Script.');
 
     // Get the URL of the document.
     const url = doc.getUrl();
