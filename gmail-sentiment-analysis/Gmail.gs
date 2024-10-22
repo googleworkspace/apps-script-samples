@@ -42,7 +42,6 @@ function emailSentiment() {
       let emailText = msgs[i][j].getPlainBody();
       currentPrediction = processSentiment(emailText);
       if(currentPrediction === true){
-        console.log("In condition:", currentPrediction)
         label_upset.addToThread(msgs[i][j].getThread());
       }
     }
