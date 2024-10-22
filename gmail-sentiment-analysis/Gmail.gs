@@ -28,21 +28,21 @@ function analyzeSentiment(){
  * Gets the last 10 threads in the inbox and the corresponding messages.
  * Fetches the label that should be applied to negative messages.
  * The processSentiment is called on each message 
- * and testet with RegExp to check for a negative answer from the model
+ * and tested with RegExp to check for a negative answer from the model
  */
 
 function emailSentiment() {
   const threads = GmailApp.getInboxThreads(0, 10);
   const msgs = GmailApp.getMessagesForThreads(threads);
   const label_upset = GmailApp.getUserLabelByName("UPSET TONE 😡");
-  const regex = new RegExp('N');
   let currentPrediction;
 
   for (let i = 0 ; i < msgs.length; i++) {
     for (let j = 0; j < msgs[i].length; j++) {
       let emailText = msgs[i][j].getPlainBody();
       currentPrediction = processSentiment(emailText);
-      if(regex.test(currentPrediction)){
+      if(currentPrediction === true){
+        console.log("In condition:", currentPrediction)
         label_upset.addToThread(msgs[i][j].getThread());
       }
     }

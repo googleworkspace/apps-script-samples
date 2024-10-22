@@ -19,7 +19,6 @@ limitations under the License.
  * @return {CardService.Card} The card to show to the user.
  */
 function onHomepage(e) {
-  if(e.hostApp =="gmail"){
-    return buildCard_GmailHome();
-  }
+  return buildCard_GmailHome();
 }
+

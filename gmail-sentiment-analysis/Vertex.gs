@@ -16,30 +16,33 @@ limitations under the License.
 
 const PROJECT_ID = [ADD YOUR GCP PROJECT ID HERE];
 const VERTEX_AI_LOCATION = 'europe-west2';
-const MODEL_ID = 'text-bison';
+const MODEL_ID = 'gemini-1.5-pro-002';
 const SERVICE_ACCOUNT_KEY = PropertiesService.getScriptProperties().getProperty('service_account_key');
 
 /**
  * Packages prompt and necessary settings, then sends a request to
- * Vertex API. Returns the response as an JSON object extracted from the
- * Vertex API response object.
+ * Vertex API. 
+ * A check is performed to see if the response from Vertex AI contains FALSE as a value.
+ * Returns the outcome of that check which is a boolean. 
  *
  * @param emailText - Email message that is sent to the model.
  */
 
 function processSentiment(emailText) {
-  const prompt = `Analyze the following message: ${emailText}. If the sentiment of this message is negative, answer with NEGATIVE. If the sentiment of this message is neutral or positive, answer with OK. Do not use any other words than the ones requested in this prompt as a response!`;
+  const prompt = `Analyze the following message: ${emailText}. If the sentiment of this message is negative, answer with FALSE. If the sentiment of this message is neutral or positive, answer with TRUE. Do not use any other words than the ones requested in this prompt as a response!`;
+
   const request = {
-    "instances": [{
-      "prompt":  prompt
+    "contents": [{
+      "role": "user",
+      "parts": [{
+        "text": prompt
+      }]
     }],
-    "parameters": {
+    "generationConfig": {
       "temperature": 0.9,
       "maxOutputTokens": 1024,
-      "topK": 1,
-      "topP": 1
-    },
-    
+      
+    }
   };
 
   const credentials = credentialsForVertexAI();
@@ -55,13 +58,15 @@ function processSentiment(emailText) {
   }
 
   const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/`
-  + `locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:predict`
+  + `locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
 
   const response = UrlFetchApp.fetch(url, fetchOptions);
   const payload = JSON.parse(response.getContentText());
-  console.log(payload.predictions[0].content);
 
-  return payload.predictions[0].content;
+  const regex = /FALSE/;
+
+  return regex.test(payload.candidates[0].content.parts[0].text);
+
 }
 
 /**
