@@ -20,8 +20,8 @@ limitations under the License.
  * @return {CardService.Card} The card to show to the user.
  */
 
-function buildCard_GmailHome(notifyOk=false){
-  const imageUrl ='https://icons.iconarchive.com/icons/roundicons/100-free-solid/48/spy-icon.png'; 
+function buildCard_GmailHome(notifyOk = false) {
+  const imageUrl = 'https://icons.iconarchive.com/icons/roundicons/100-free-solid/48/spy-icon.png';
   const image = CardService.newImage()
     .setImageUrl(imageUrl);
 
@@ -29,7 +29,7 @@ function buildCard_GmailHome(notifyOk=false){
     .setImageUrl(imageUrl)
     .setImageStyle(CardService.ImageStyle.CIRCLE)
     .setTitle("Analyze your GMail");
-  
+
   const action = CardService.newAction()
     .setFunctionName('analyzeSentiment');
   const button = CardService.newTextButton()
@@ -47,21 +47,21 @@ function buildCard_GmailHome(notifyOk=false){
     .setHeader(cardHeader)
     .addSection(section);
 
-/**
- * This builds the card that contains the footer that informs
- * the user about the successful execution of the Add-on.
- */
+  /**
+   * This builds the card that contains the footer that informs
+   * the user about the successful execution of the Add-on.
+   */
 
-if(notifyOk==true){
-  let fixedFooter = CardService.newFixedFooter()
-    .setPrimaryButton(
-      CardService.newTextButton()
-        .setText("Analysis complete")
-        .setOnClickAction(
-          CardService.newAction()
-            .setFunctionName(
-              "buildCard_GmailHome")));
-    card.setFixedFooter(fixedFooter);  
-}
+  if (notifyOk == true) {
+    let fixedFooter = CardService.newFixedFooter()
+      .setPrimaryButton(
+        CardService.newTextButton()
+          .setText("Analysis complete")
+          .setOnClickAction(
+            CardService.newAction()
+              .setFunctionName(
+                "buildCard_GmailHome")));
+    card.setFixedFooter(fixedFooter);
+  }
   return card.build();
 }

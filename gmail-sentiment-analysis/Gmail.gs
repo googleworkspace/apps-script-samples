@@ -19,7 +19,7 @@ limitations under the License.
  * @return {CardService.Card} The card to show to the user.
  */
 
-function analyzeSentiment(){
+function analyzeSentiment() {
   emailSentiment();
   return buildCard_GmailHome(true);
 }
@@ -37,11 +37,11 @@ function emailSentiment() {
   const label_upset = GmailApp.getUserLabelByName("UPSET TONE 😡");
   let currentPrediction;
 
-  for (let i = 0 ; i < msgs.length; i++) {
+  for (let i = 0; i < msgs.length; i++) {
     for (let j = 0; j < msgs[i].length; j++) {
       let emailText = msgs[i][j].getPlainBody();
       currentPrediction = processSentiment(emailText);
-      if(currentPrediction === true){
+      if (currentPrediction === true) {
         label_upset.addToThread(msgs[i][j].getThread());
       }
     }
