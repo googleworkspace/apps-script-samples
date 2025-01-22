@@ -5,14 +5,13 @@
     "https://www.googleapis.com/auth/cloud-platform",
     "https://www.googleapis.com/auth/script.locale",
     "https://www.googleapis.com/auth/gmail.addons.execute",
-    "https://mail.google.com/",
     "https://www.googleapis.com/auth/gmail.labels",
     "https://www.googleapis.com/auth/gmail.modify"
   ],
   "addOns": {
     "common": {
       "name": "Productivity toolbox",
-      "logoUrl": "https://icons.iconarchive.com/icons/roundicons/100-free-solid/64/spy-icon.png",
+      "logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/dynamic_feed/v6/black-24dp/1x/gm_dynamic_feed_black_24dp.png",
       "useLocaleFromApp": true
     },
     "gmail": {
