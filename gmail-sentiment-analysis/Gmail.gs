@@ -20,30 +20,46 @@ limitations under the License.
  */
 
 function analyzeSentiment() {
-  emailSentiment();
+  analyzeAndLabelEmailSentiment();
   return buildCard_GmailHome(true);
 }
 
 /**
- * Gets the last 10 threads in the inbox and the corresponding messages.
- * Fetches the label that should be applied to negative messages.
- * The processSentiment is called on each message 
- * and tested with RegExp to check for a negative answer from the model
+ * Analyzes the sentiment of recent emails in the inbox and labels threads with
+ * negative sentiment as "UPSET TONE 😡".
  */
+function analyzeAndLabelEmailSentiment() {
+  const labelName = "UPSET TONE 😡";
+  const maxThreads = 10;
 
-function emailSentiment() {
-  const threads = GmailApp.getInboxThreads(0, 10);
-  const msgs = GmailApp.getMessagesForThreads(threads);
-  const label_upset = GmailApp.getUserLabelByName("UPSET TONE 😡");
-  let currentPrediction;
+  // Get the label, or create it if it doesn't exist.
+  const label = GmailApp.getUserLabelByName(labelName) || GmailApp.createLabel(labelName);
 
-  for (let i = 0; i < msgs.length; i++) {
-    for (let j = 0; j < msgs[i].length; j++) {
-      let emailText = msgs[i][j].getPlainBody();
-      currentPrediction = processSentiment(emailText);
-      if (currentPrediction === true) {
-        label_upset.addToThread(msgs[i][j].getThread());
+  // Get the first 'maxThreads' threads from the inbox.
+  const threads = GmailApp.getInboxThreads(0, maxThreads);
+
+  // Process each thread.
+  for (const thread of threads) {
+    const messages = thread.getMessages();
+
+    // Process each message within the thread.
+    for (const message of messages) {
+      const emailText = message.getPlainBody();
+      const isUpset = isNegativeSentiment(emailText);
+
+      if (isUpset) {
+        label.addToThread(thread);
       }
     }
   }
+}
+
+/**
+ * Determines if the given text has a negative sentiment.
+ * 
+ * @param {string} text - The text to analyze.
+ * @returns {boolean} True if the sentiment is negative, false otherwise.
+ */
+function isNegativeSentiment(text) {
+  return processSentiment(text);
 }

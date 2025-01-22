@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
-const VERTEX_AI_LOCATION = 'europe-west2';
+const PROJECT_ID = 'qwiklabs-gcp-01-e6ca251b4715';
+const VERTEX_AI_LOCATION = 'us-central1';
 const MODEL_ID = 'gemini-1.5-pro-002';
 
 /**
@@ -28,11 +28,7 @@ const MODEL_ID = 'gemini-1.5-pro-002';
  */
 
 function processSentiment(emailText) {
-  const prompt = `
-  Analyze the following message: ${emailText}.
-  If the sentiment of this message is negative, answer with FALSE.
-  If the sentiment of this message is neutral or positive, answer with TRUE.
-  Do not use any other words than the ones requested in this prompt as a response!`;
+  const prompt = `Analyze the sentiment of the following message: ${emailText}`;
 
   const request = {
     "contents": [{
@@ -44,6 +40,20 @@ function processSentiment(emailText) {
     "generationConfig": {
       "temperature": 0.9,
       "maxOutputTokens": 1024,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "negative",
+              "neutral",
+            ]
+          }
+        }
+      }
     }
   };
 
@@ -62,8 +72,7 @@ function processSentiment(emailText) {
 
   const response = UrlFetchApp.fetch(url, fetchOptions);
   const payload = JSON.parse(response.getContentText());
+  const text = JSON.parse(payload.candidates[0].content.parts[0].text);
 
-  const regex = /FALSE/;
-
-  return regex.test(payload.candidates[0].content.parts[0].text);
+  return text.response === 'negative';
 }
