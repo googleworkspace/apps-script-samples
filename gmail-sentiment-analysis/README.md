@@ -20,6 +20,8 @@ Google Workspace Add-on that extends Gmail and adds sentiment analysis capabilit
 1. Add OAuth2 v43 Apps Script Library using the ID `1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF`.
 1. Add the project code to Apps Script
 
+Alternatively, make a copy of this [Apps Script project](https://script.google.com/corp/home/projects/1Z2gfvr0oYn68ppDtQbv0qIuKKVWhvwOTr-gCE0GFKVjNk8NDlpfJAGAr)
+
 ## Usage
 
 1. Create a label in Gmail with this exact text and emojy (case sensitive!): UPSET TONE 😡
