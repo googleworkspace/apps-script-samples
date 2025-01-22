@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const PROJECT_ID = 'qwiklabs-gcp-01-e6ca251b4715';
+const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
 const VERTEX_AI_LOCATION = 'us-central1';
 const MODEL_ID = 'gemini-1.5-pro-002';
 
@@ -74,5 +74,5 @@ function processSentiment(emailText) {
   const payload = JSON.parse(response.getContentText());
   const text = JSON.parse(payload.candidates[0].content.parts[0].text);
 
-  return text.response === 'negative';
+  return text.response;
 }

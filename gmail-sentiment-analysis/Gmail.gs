@@ -61,5 +61,5 @@ function analyzeAndLabelEmailSentiment() {
  * @returns {boolean} True if the sentiment is negative, false otherwise.
  */
 function isNegativeSentiment(text) {
-  return processSentiment(text);
+  return processSentiment(text) === 'negative';
 }
