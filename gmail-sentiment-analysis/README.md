@@ -1,33 +1,103 @@
-# Gmail sentiment analysis with Vertex AI
+# Gmail Sentiment Analysis with Gemini and Vertex AI
 
-## Project Description
+This project guides you through building a Google Workspace Add-on that
+leverages Gemini and Vertex AI for conducting sentiment analysis on emails in
+Gmail. The add-on automatically identifies emails with a negative tone and
+labels them accordingly, helping prioritize customer service responses or
+identify potentially sensitive emails.
 
-Google Workspace Add-on that extends Gmail and adds sentiment analysis capabilities.
+## What you'll learn
 
-## Prerequisites
+* Build a Google Workspace Add-on
+* Integrate Vertex AI with Google Workspace
+* Implement OAuth2 authentication
+* Apply sentiment analysis
+* Utilize Apps Script
 
-* Google Cloud Project (aka Standard Cloud Project for Apps Script) with billing enabled
+## Setup and Requirements
 
-## Set up your environment
+* **Web Browser:** Chrome (recommended)
+* **Dedicated Time:** Set aside uninterrupted time.
+* **Incognito/Private Window:**  **Important:** Use an incognito or private browsing window to prevent conflicts with your personal accounts.
 
-1. Create a Cloud Project
-   1. Enable the Vertex AI API
-   1. Create a Service Account and grant the role `Vertex AI User`
-   1. Create a private key with type JSON. This will download the JSON file for use in the next section.
-1. Open an Apps Script Project bound to a Google Sheets Spreadsheet
-   1. From Project Settings, change project to GCP project number of Cloud Project from step 1
-   1. Add a Script Property. Enter `service_account_key` as the property name and paste the JSON key from the service account as the value. 
-1. Add OAuth2 v43 Apps Script Library using the ID `1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF`.
-1. Add the project code to Apps Script
+## Lab Steps
 
-Alternatively, make a copy of this [Apps Script project](https://script.google.com/corp/home/projects/1Z2gfvr0oYn68ppDtQbv0qIuKKVWhvwOTr-gCE0GFKVjNk8NDlpfJAGAr)
+### Task 1: Accessing Your Lab Environment
 
-## Usage
+1. Click **Start lab** (in your [Qwiklabs environment](https://explore.qwiklabs.com/classrooms/16701)). This generates temporary credentials.
+2. Open the provided **Gmail URL** in your incognito window.
+3. Enter the provided **Username** and **Password**.
+4. Accept terms and conditions.
+5. Click **Get started** in Gmail and close any informational windows.
 
-1. Create a label in Gmail with this exact text and emojy (case sensitive!): UPSET TONE 😡
-1. In Gmail, click on the Productivity toolbox icon (icon of a spy) in the sidepanel.
-1. The sidepanel will open up. Grant the Add-on autorization to run.
-1. The Add-on will load. Click on the blue button "Identify angry customers."
-1. Close the Add-on by clicking on the X in the top right corner.
-1. It can take a couple of minutes until the label is applied to the messages that have a negative tone.
-1. If you don't want to wait until the labels are added, you can refresh the browser.
+### Task 2: Set up Cloud Console
+
+1. Open the provided **Cloud Console URL** in your incognito window.
+2. Check **I agree** and click **AGREE AND CONTINUE**.
+
+### Enable Vertex AI API
+
+1. Open the provided link to enable the Vertex AI API.
+2. Click **Next** to confirm the project.
+3. Click **Enable**.
+
+
+### Task 3: Set Up the Apps Script Project
+
+1. Open the provided **Apps Script link** in a new incognito tab.
+2. Click **New project**.
+3. Rename the project to "Gmail Sentiment Analysis with Gemini and Vertex AI".
+4. In Project Settings (gear icon), select "Show 'appsscript.json' manifest file in editor".
+5. In Project Settings, under Google Cloud Platform (GCP) Project, click **Change project**.
+6. Copy the **Project number** (numerical value, not Project ID) from Cloud Console.
+7. Paste the Project number into the Apps Script project settings and click **Set project**.
+8. Click the **OAuth Consent details** link in the error message.
+9. Click **CONFIGURE CONSENT SCREEN**.
+10. Select **Internal** for User Type and click **CREATE**.
+11. Set the App name to "Gmail Sentiment Analysis with Gemini and Vertex AI".
+12. Set the User support email and Developer contact information using the provided email.
+13. Click **SAVE AND CONTINUE** twice.
+14. Return to the Apps Script tab and set the project.
+
+
+### Task 4: Make a copy of the Apps Script project
+
+1. Make a copy of this
+[Apps Script project](https://script.google.com/corp/home/projects/1Z2gfvr0oYn68ppDtQbv0qIuKKVWhvwOTr-gCE0GFKVjNk8NDlpfJAGAr).
+1. Rename the Apps Script project to `Gmail Sentiment Analysis with Gemini and Vertex AI`.
+1. Make sure to replace `[ADD YOUR GCP PROJECT ID HERE]` in `Vertex.gs` with your actual **Project ID**.
+1. Click **Save**.
+
+
+### Task 5: Deploy the Add-on
+
+1. Click **Deploy > Test deployments**.
+2. Confirm **Gmail** is listed under Application(s) and click **Install**.
+3. Click **Done**.
+
+### Task 6: Verify Installation
+
+Refresh the Gmail tab. You should see a new add-on icon in the right side panel.
+
+**Troubleshooting:**
+
+* Refresh the browser if the add-on isn't visible.
+* Uninstall and reinstall the add-on from the Test deployments window if it's still missing.
+
+
+### Task 7: Run the Add-on
+
+1. **Open the Add-on:** Click the add-on icon in the Gmail side panel.
+2. **Authorize the Add-on:** Click **Authorize access**. Select your email and click **Allow** in the consent screen.
+3. **Generate sample emails:** Click the green "Generate sample emails" button.
+4. **Wait for emails:** Wait for the sample emails to appear in your inbox, or refresh.
+5. **Start the analysis:** Click the red "Analyze emails" button.
+6. **Wait for labels:** Wait for the "UPSET TONE 😡" label to appear on negative emails, or refresh.
+7. **Close the Add-on:** Click the X in the top right corner of the side panel.
+
+
+## Congratulations!
+
+You've completed the Gmail Sentiment Analysis with Gemini and Vertex AI lab!
+You now have a functional Gmail add-on for prioritizing emails. Experiment
+further by customizing the sentiment analysis or adding new features!
