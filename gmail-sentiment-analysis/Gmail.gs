@@ -26,14 +26,18 @@ function analyzeSentiment() {
 
 /**
  * Analyzes the sentiment of recent emails in the inbox and labels threads with
- * negative sentiment as "UPSET TONE 😡".
+ * the appropriate sentiment label.
  */
 function analyzeAndLabelEmailSentiment() {
-  const labelName = "UPSET TONE 😡";
+  const positiveLabelName = "HAPPY TONE 😊";
+  const neutralLabelName = "NEUTRAL TONE 😐";
+  const negativeLabelName = "UPSET TONE 😡";
   const maxThreads = 10;
 
   // Get the label, or create it if it doesn't exist.
-  const label = GmailApp.getUserLabelByName(labelName) || GmailApp.createLabel(labelName);
+  const positiveLabel = GmailApp.getUserLabelByName(positiveLabelName) || GmailApp.createLabel(positiveLabelName);
+  const neutralLabel = GmailApp.getUserLabelByName(neutralLabelName) || GmailApp.createLabel(neutralLabelName);
+  const negativeLabel = GmailApp.getUserLabelByName(negativeLabelName) || GmailApp.createLabel(negativeLabelName);
 
   // Get the first 'maxThreads' threads from the inbox.
   const threads = GmailApp.getInboxThreads(0, maxThreads);
@@ -45,23 +49,23 @@ function analyzeAndLabelEmailSentiment() {
     // Process each message within the thread.
     for (const message of messages) {
       const emailText = message.getPlainBody();
-      const isUpset = isNegativeSentiment(emailText);
+      const sentiment = processSentiment(emailText);
 
-      if (isUpset) {
-        thread.addLabel(label);
+      switch (sentiment) {
+        case 'positive':
+          thread.addLabel(positiveLabel);
+          break;
+        case 'neutral':
+          thread.addLabel(neutralLabel);
+          break;
+        case 'negative':
+          thread.addLabel(negativeLabel);
+          break;
+        default:
+          break;
       }
     }
   }
-}
-
-/**
- * Determines if the given text has a negative sentiment.
- * 
- * @param {string} text - The text to analyze.
- * @returns {boolean} True if the sentiment is negative, false otherwise.
- */
-function isNegativeSentiment(text) {
-  return processSentiment(text) === 'negative';
 }
 
 /**
