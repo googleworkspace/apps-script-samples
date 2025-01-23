@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Google LLC
+Copyright 2024-2025 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ limitations under the License.
 
 function analyzeSentiment() {
   analyzeAndLabelEmailSentiment();
-  return buildCard_GmailHome(true);
+  return buildNotificationResponse("Successfully completed sentiment analysis");
 }
 
 /**
@@ -62,4 +62,42 @@ function analyzeAndLabelEmailSentiment() {
  */
 function isNegativeSentiment(text) {
   return processSentiment(text) === 'negative';
+}
+
+/**
+ * Create sample emails
+ */
+function generateSampleEmails() {
+  // Get active user's email
+  const userEmail = Session.getActiveUser().getEmail();
+
+  // Send emails
+  GmailApp.sendEmail(
+    userEmail,
+    "Thank you for amazing service!",
+    "Hi, I really enjoyed working with you. Thank you again!",
+    {
+      name: 'Customer A',
+    },
+  );
+
+  GmailApp.sendEmail(
+    userEmail,
+    "Request for information",
+    "Hello, I need more information on your recent product launch. Thank you.",
+    {
+      name: 'Customer B',
+    },
+  );
+
+  GmailApp.sendEmail(
+    userEmail,
+    "Complaint!",
+    "Hello, You are late in delivery, again. Please contact me ASAP before I cancel our subscription.",
+    {
+      name: 'Customer C',
+    },
+  );
+
+  return buildNotificationResponse("Successfully generated sample emails");
 }

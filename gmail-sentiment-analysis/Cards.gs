@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Google LLC
+Copyright 2024-2025 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,52 +20,46 @@ limitations under the License.
  * @return {CardService.Card} The card to show to the user.
  */
 
-function buildCard_GmailHome(notifyOk = false) {
+function buildHomepageCard() {
   const imageUrl = 'https://fonts.gstatic.com/s/i/googlematerialicons/dynamic_feed/v6/black-24dp/1x/gm_dynamic_feed_black_24dp.png';
 
   const cardHeader = CardService.newCardHeader()
     .setImageUrl(imageUrl)
     .setImageStyle(CardService.ImageStyle.CIRCLE)
-    .setTitle("Analyze your GMail");
+    .setTitle("Analyze your Gmail");
 
-  const action = CardService.newAction().setFunctionName('analyzeSentiment');
-  const button = CardService.newTextButton()
-    .setText('Identify angry customers')
-    .setOnClickAction(action)
-    .setTextButtonStyle(CardService.TextButtonStyle.FILLED);
+  const analyzeSentimentAction = CardService.newAction().setFunctionName('analyzeSentiment');
+  const analyzeSentimentBtn = CardService.newTextButton()
+    .setText('Analyze emails')
+    .setOnClickAction(analyzeSentimentAction)
+    .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
+    .setBackgroundColor('#FF0000');
 
-  const generateSampleEmailsAction = CardService.newAction()
-    .setFunctionName('generateSampleEmails');
+  const generateSampleEmailAction = CardService.newAction().setFunctionName('generateSampleEmails');
+
   const generateSampleEmailsBtn = CardService.newTextButton()
     .setText('Generate sample emails')
-    .setOnClickAction(generateSampleEmailsAction)
+    .setOnClickAction(generateSampleEmailAction)
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
     .setBackgroundColor('#34A853');
 
-  const buttonSet = CardService.newButtonSet().addButton(button).addButton(generateSampleEmailsBtn);
+  const buttonSet = CardService.newButtonSet().addButton(generateSampleEmailsBtn).addButton(analyzeSentimentBtn);
 
   const section = CardService.newCardSection()
-    .setHeader("Emails sentiment analysis")
     .addWidget(buttonSet);
 
   const card = CardService.newCardBuilder()
     .setHeader(cardHeader)
     .addSection(section);
 
-  /**
-   * This builds the card that contains the footer that informs
-   * the user about the successful execution of the Add-on.
-   */
-  if (notifyOk) {
-    const fixedFooter = CardService.newFixedFooter()
-      .setPrimaryButton(
-        CardService.newTextButton()
-          .setText("Analysis complete")
-          .setOnClickAction(
-            CardService.newAction()
-              .setFunctionName(
-                "buildCard_GmailHome")));
-    card.setFixedFooter(fixedFooter);
-  }
   return card.build();
+}
+
+function buildNotificationResponse(notificationText) {
+  const notification = CardService.newNotification().setText(notificationText);
+
+  const actionResponse = CardService.newActionResponseBuilder()
+    .setNotification(notification);
+
+  return actionResponse.build();
 }
