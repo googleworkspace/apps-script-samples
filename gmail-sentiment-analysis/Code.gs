@@ -18,6 +18,6 @@ limitations under the License.
  * Callback for rendering the homepage card.
  * @return {CardService.Card} The card to show to the user.
  */
-function onHomepage(e) {
-  return buildCard_GmailHome();
+function onHomepageTrigger(e) {
+  return buildHomepageCard();
 }

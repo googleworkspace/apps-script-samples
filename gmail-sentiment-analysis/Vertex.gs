@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Google LLC
+Copyright 2024-2025 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 
 const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
 const VERTEX_AI_LOCATION = 'us-central1';
-const MODEL_ID = 'gemini-1.5-pro-002';
+const MODEL_ID = 'gemini-1.5-flash';
 
 /**
  * Packages prompt and necessary settings, then sends a request to
@@ -67,12 +67,8 @@ function processSentiment(emailText) {
     payload: JSON.stringify(request),
   }
 
-  const url =
-    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/` +
-    `projects/${PROJECT_ID}/` +
-    `locations/${VERTEX_AI_LOCATION}/` +
-    `publishers/google/` +
-    `models/${MODEL_ID}:generateContent`;
+  const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/`
+    + `locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
 
   const response = UrlFetchApp.fetch(url, fetchOptions);
   const payload = JSON.parse(response.getContentText());
