@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const PROJECT_ID = 'qwiklabs-gcp-02-66afcfbf5a65';
+const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
 const VERTEX_AI_LOCATION = 'us-central1';
 const MODEL_ID = 'gemini-1.5-flash';
 
