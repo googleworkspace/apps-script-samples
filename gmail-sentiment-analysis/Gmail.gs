@@ -48,7 +48,7 @@ function analyzeAndLabelEmailSentiment() {
       const isUpset = isNegativeSentiment(emailText);
 
       if (isUpset) {
-        label.addToThread(thread);
+        thread.addLabel(label);
       }
     }
   }
