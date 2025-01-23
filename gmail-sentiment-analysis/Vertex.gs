@@ -67,8 +67,12 @@ function processSentiment(emailText) {
     payload: JSON.stringify(request),
   }
 
-  const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/`
-    + `locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
+  const url =
+    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/` +
+    `projects/${PROJECT_ID}/` +
+    `locations/${VERTEX_AI_LOCATION}/` +
+    `publishers/google/` +
+    `models/${MODEL_ID}:generateContent`;
 
   const response = UrlFetchApp.fetch(url, fetchOptions);
   const payload = JSON.parse(response.getContentText());

@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 /**
  * Builds the card to display in the side panel of gmail.
  * @return {CardService.Card} The card to show to the user.
@@ -28,14 +27,16 @@ function buildHomepageCard() {
     .setImageStyle(CardService.ImageStyle.CIRCLE)
     .setTitle("Analyze your Gmail");
 
-  const analyzeSentimentAction = CardService.newAction().setFunctionName('analyzeSentiment');
+  const analyzeSentimentAction = CardService.newAction()
+    .setFunctionName('analyzeSentiment');
   const analyzeSentimentBtn = CardService.newTextButton()
     .setText('Analyze emails')
     .setOnClickAction(analyzeSentimentAction)
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
     .setBackgroundColor('#FF0000');
 
-  const generateSampleEmailAction = CardService.newAction().setFunctionName('generateSampleEmails');
+  const generateSampleEmailAction = CardService.newAction()
+    .setFunctionName('generateSampleEmails');
 
   const generateSampleEmailsBtn = CardService.newTextButton()
     .setText('Generate sample emails')
@@ -43,7 +44,9 @@ function buildHomepageCard() {
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
     .setBackgroundColor('#34A853');
 
-  const buttonSet = CardService.newButtonSet().addButton(generateSampleEmailsBtn).addButton(analyzeSentimentBtn);
+  const buttonSet = CardService.newButtonSet()
+    .addButton(generateSampleEmailsBtn)
+    .addButton(analyzeSentimentBtn);
 
   const section = CardService.newCardSection()
     .addWidget(buttonSet);

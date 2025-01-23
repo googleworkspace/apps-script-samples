@@ -20,17 +20,10 @@ identify potentially sensitive emails.
 * **Dedicated Time:** Set aside uninterrupted time.
 * **Incognito/Private Window:**  **Important:** Use an incognito or private browsing window to prevent conflicts with your personal accounts.
 
-## Lab Steps
+## Steps
 
-### Task 1: Accessing Your Lab Environment
 
-1. Click **Start lab** (in your [Qwiklabs environment](https://explore.qwiklabs.com/classrooms/16701)). This generates temporary credentials.
-2. Open the provided **Gmail URL** in your incognito window.
-3. Enter the provided **Username** and **Password**.
-4. Accept terms and conditions.
-5. Click **Get started** in Gmail and close any informational windows.
-
-### Task 2: Set up Cloud Console
+### Set up Cloud Console
 
 1. Open the provided **Cloud Console URL** in your incognito window.
 2. Check **I agree** and click **AGREE AND CONTINUE**.
@@ -42,7 +35,7 @@ identify potentially sensitive emails.
 3. Click **Enable**.
 
 
-### Task 3: Set Up the Apps Script Project
+### Set Up the Apps Script Project
 
 1. Open the provided **Apps Script link** in a new incognito tab.
 2. Click **New project**.
@@ -60,7 +53,7 @@ identify potentially sensitive emails.
 14. Return to the Apps Script tab and set the project.
 
 
-### Task 4: Make a copy of the Apps Script project
+### Make a copy of the Apps Script project
 
 1. Make a copy of this
 [Apps Script project](https://script.google.com/corp/home/projects/1Z2gfvr0oYn68ppDtQbv0qIuKKVWhvwOTr-gCE0GFKVjNk8NDlpfJAGAr).
@@ -69,13 +62,13 @@ identify potentially sensitive emails.
 1. Click **Save**.
 
 
-### Task 5: Deploy the Add-on
+### Deploy the Add-on
 
 1. Click **Deploy > Test deployments**.
 2. Confirm **Gmail** is listed under Application(s) and click **Install**.
 3. Click **Done**.
 
-### Task 6: Verify Installation
+### Verify Installation
 
 Refresh the Gmail tab. You should see a new add-on icon in the right side panel.
 
@@ -85,7 +78,7 @@ Refresh the Gmail tab. You should see a new add-on icon in the right side panel.
 * Uninstall and reinstall the add-on from the Test deployments window if it's still missing.
 
 
-### Task 7: Run the Add-on
+### Run the Add-on
 
 1. **Open the Add-on:** Click the add-on icon in the Gmail side panel.
 2. **Authorize the Add-on:** Click **Authorize access**. Select your email and click **Allow** in the consent screen.
