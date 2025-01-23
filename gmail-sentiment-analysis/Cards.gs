@@ -16,7 +16,7 @@ limitations under the License.
 
 
 /**
- * Builds the card to display in the sidepanel of gmail.
+ * Builds the card to display in the side panel of gmail.
  * @return {CardService.Card} The card to show to the user.
  */
 
@@ -33,7 +33,16 @@ function buildCard_GmailHome(notifyOk = false) {
     .setText('Identify angry customers')
     .setOnClickAction(action)
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED);
-  const buttonSet = CardService.newButtonSet().addButton(button);
+
+  const generateSampleEmailsAction = CardService.newAction()
+    .setFunctionName('generateSampleEmails');
+  const generateSampleEmailsBtn = CardService.newTextButton()
+    .setText('Generate sample emails')
+    .setOnClickAction(generateSampleEmailsAction)
+    .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
+    .setBackgroundColor('#34A853');
+
+  const buttonSet = CardService.newButtonSet().addButton(button).addButton(generateSampleEmailsBtn);
 
   const section = CardService.newCardSection()
     .setHeader("Emails sentiment analysis")
@@ -47,7 +56,7 @@ function buildCard_GmailHome(notifyOk = false) {
    * This builds the card that contains the footer that informs
    * the user about the successful execution of the Add-on.
    */
-  if (notifyOk == true) {
+  if (notifyOk) {
     const fixedFooter = CardService.newFixedFooter()
       .setPrimaryButton(
         CardService.newTextButton()
