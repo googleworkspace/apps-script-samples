@@ -74,8 +74,8 @@ function generateSampleEmails() {
   // Send emails
   GmailApp.sendEmail(
     userEmail,
-    "Thank you for amazing service!",
-    "Hi, I really enjoyed working with you. Thank you again!",
+    'Thank you for amazing service!',
+    'Hi, I really enjoyed working with you. Thank you again!',
     {
       name: 'Customer A',
     },
@@ -83,8 +83,8 @@ function generateSampleEmails() {
 
   GmailApp.sendEmail(
     userEmail,
-    "Request for information",
-    "Hello, I need more information on your recent product launch. Thank you.",
+    'Request for information',
+    'Hello, I need more information on your recent product launch. Thank you.',
     {
       name: 'Customer B',
     },
@@ -92,10 +92,12 @@ function generateSampleEmails() {
 
   GmailApp.sendEmail(
     userEmail,
-    "Complaint!",
-    "Hello, You are late in delivery, again. Please contact me ASAP before I cancel our subscription.",
+    'Complaint!',
+    '',
     {
       name: 'Customer C',
+      htmlBody: `<p>Hello, You are late in delivery, again.</p>
+      <p>Please contact me ASAP before I cancel our subscription.</p>`,
     },
   );
 
