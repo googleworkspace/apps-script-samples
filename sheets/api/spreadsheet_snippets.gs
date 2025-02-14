@@ -231,11 +231,11 @@ Snippets.prototype.batchUpdateValues =
 /**
  * Appends values to the specified range
  * @param {string} spreadsheetId spreadsheet's ID
- * @param {string} range range of cells in the spreadsheet
+ * @param {string} range The A1 notation of a range to search for a logical table of data.
  * @param valueInputOption determines how the input should be interpreted
  * @see
  * https://developers.google.com/sheets/api/reference/rest/v4/ValueInputOption
- * @param {list<string>} _values list of rows of values to input
+ * @param {*[][]} _values list of rows of values to input
  * @returns {*} spreadsheet with appended values
  */
 Snippets.prototype.appendValues = (spreadsheetId, range,
@@ -255,10 +255,14 @@ Snippets.prototype.appendValues = (spreadsheetId, range,
 
     let appendRequest = Sheets.newAppendCellsRequest();
     appendRequest.sheetId = spreadsheetId;
-    appendRequest.rows = [valueRange];
+    appendRequest.rows = valueRange;
 
-    const result = Sheets.Spreadsheets.Values.append(valueRange, spreadsheetId,
-      range, {valueInputOption: valueInputOption});
+    const result = Sheets.Spreadsheets.Values.append(
+      appendRequest.rows, 
+      appendRequest.sheetId, 
+      range, 
+      { valueInputOption: valueInputOption }
+    );
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
