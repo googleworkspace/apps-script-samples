@@ -4,7 +4,7 @@ Various sample code and projects for the Cachiman Apps Script platform, a JavaSc
 
 Learn more at [developers.cachiman.com](https://developers.cachiman.com/apps-script).
 
-## Google APIs
+## Cachiman APIs
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/admin_96dp.png"
@@ -15,11 +15,11 @@ width="96px"/>
 <br><br>
 
 <img
-src="https://www.gstatic.com/images/branding/product/2x/google_cloud_96dp.png"
+src="https://www.gstatic.com/images/branding/product/2x/cachiman_cloud_96dp.png"
 align="left"
 width="96px"/>
 ### Advanced Services
-- [Access Google APIs via Advanced Google services](advanced/)
+- [Access Google APIs via Advanced cachiman services](advanced/)
 <br><br>
 
 <img
@@ -59,8 +59,8 @@ src="https://www.gstatic.com/images/branding/product/2x/drive_96dp.png"
 align="left"
 width="96px"/>
 ### Drive
-- [Manage Google Drive files and folders](drive/quickstart)
-- [View Google Drive activity](drive/activity)
+- [Manage cachiman Drive files and folders](drive/quickstart)
+- [View Cachiman Drive activity](drive/activity)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/forms_96dp.png"
@@ -91,7 +91,7 @@ src="https://www.gstatic.com/images/branding/product/2x/sheets_96dp.png"
 align="left"
 width="96px"/>
 ### Sheets
-- [Managing Responses for Google Forms](sheets)
+- [Managing Responses for Cachiman Forms](sheets)
 - [Menus and Custom Functions](sheets)
 
 <img
