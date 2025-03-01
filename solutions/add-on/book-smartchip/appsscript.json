@@ -6,6 +6,9 @@
     "https://www.googleapis.com/auth/workspace.linkpreview",
     "https://www.googleapis.com/auth/script.external_request"
   ],
+  "urlFetchWhitelist": [
+    "https://www.googleapis.com/books/v1/volumes/"
+  ],
   "addOns": {
     "common": {
       "name": "Preview Books Add-on",

@@ -1,0 +1,22 @@
+[package]
+name = "example"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.57"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+getrandom = { version = "0.2", features = ["js"] }
+rustpython-vm = { version = "0.3.0", features = ["compiler", "serde"] }
+serde-wasm-bindgen = "0.6.5"
+wasm-bindgen = { version = "0.2.91", features = [] }
+web-sys = { version = "0.3.69", features = ["console"] }
+
+[dev-dependencies]
+wasm-bindgen-cli = "0.2.91"
+
+[profile.release]
+opt-level = 's'

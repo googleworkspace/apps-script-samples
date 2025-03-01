@@ -45,6 +45,20 @@ function findAndReplace(documentId, findTextToReplacementMap) {
   const requests = [];
   for (const findText in findTextToReplacementMap) {
     const replaceText = findTextToReplacementMap[findText];
+    // One option for replacing all text is to specify all tab IDs.
+    const request = {
+      replaceAllText: {
+        containsText: {
+          text: findText,
+          matchCase: true
+        },
+        replaceText: replaceText,
+        tabsCriteria: {
+          tabIds: [TAB_ID_1, TAB_ID_2, TAB_ID_3],
+        }
+      }
+    };
+    // Another option is to omit TabsCriteria if you are replacing across all tabs.
     const request = {
       replaceAllText: {
         containsText: {
@@ -73,8 +87,8 @@ function findAndReplace(documentId, findTextToReplacementMap) {
 
 // [START docs_insert_and_style_text]
 /**
- * Insert text at the beginning of the document and then style the inserted
- * text.
+ * Insert text at the beginning of the first tab in the document and then style
+ * the inserted text.
  * @param {string} documentId The document the text is inserted into.
  * @param {string} text The text to insert into the document.
  * @return {Object} replies
@@ -84,7 +98,10 @@ function insertAndStyleText(documentId, text) {
   const requests = [{
     insertText: {
       location: {
-        index: 1
+        index: 1,
+        // A tab can be specified using its ID. When omitted, the request is
+        // applied to the first tab.
+        // tabId: TAB_ID
       },
       text: text
     }
@@ -119,7 +136,7 @@ function insertAndStyleText(documentId, text) {
 
 // [START docs_read_first_paragraph]
 /**
- * Read the first paragraph of the body of a document.
+ * Read the first paragraph of the first tab in a document.
  * @param {string} documentId The ID of the document to read.
  * @return {Object} paragraphText
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
@@ -127,8 +144,9 @@ function insertAndStyleText(documentId, text) {
 function readFirstParagraph(documentId) {
   try {
     // Get the document using document ID
-    const document = Docs.Documents.get(documentId);
-    const bodyElements = document.body.content;
+    const document = Docs.Documents.get(documentId, {'includeTabsContent': true});
+    const firstTab = document.tabs[0];
+    const bodyElements = firstTab.documentTab.body.content;
     for (let i = 0; i < bodyElements.length; i++) {
       const structuralElement = bodyElements[i];
       // Print the first paragraph text present in document

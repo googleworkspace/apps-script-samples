@@ -1,0 +1,35 @@
+{
+  "timeZone": "America/Denver",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Drive",
+        "version": "v3",
+        "serviceId": "drive"
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "addOns": {
+    "common": {
+      "logoUrl": "https://ssl.gstatic.com/docs/script/images/logo/script-64.png",
+      "name": "Drive Image Compress Add-on",
+      "universalActions": []
+    },
+    "drive": {
+      "homepageTrigger": {
+        "runFunction": "onHomePageTrigger",
+        "enabled": true
+      },
+      "onItemsSelectedTrigger": {
+        "runFunction": "onItemsSelectedTrigger"
+      }
+    }
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.locale",
+    "https://www.googleapis.com/auth/drive.addons.metadata.readonly",
+    "https://www.googleapis.com/auth/drive"
+  ]
+}

@@ -97,6 +97,15 @@ function importEvent(username, event) {
     id: TEAM_CALENDAR_ID,
   };
   event.attendees = [];
+
+  // If the event is not of type 'default', it can't be imported, so it needs
+  // to be changed.
+  if (event.eventType != 'default') {
+    event.eventType = 'default';
+    delete event.outOfOfficeProperties;
+    delete event.focusTimeProperties;
+  }
+
   console.log('Importing: %s', event.summary);
   try {
     Calendar.Events.import(event, TEAM_CALENDAR_ID);

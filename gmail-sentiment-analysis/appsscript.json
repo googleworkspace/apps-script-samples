@@ -1,0 +1,27 @@
+{
+  "timeZone": "America/Toronto",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/cloud-platform",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.labels",
+    "https://www.googleapis.com/auth/gmail.modify",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/script.locale",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Sentiment Analysis",
+      "logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/dynamic_feed/v6/black-24dp/1x/gm_dynamic_feed_black_24dp.png",
+      "useLocaleFromApp": true
+    },
+    "gmail": {
+      "homepageTrigger": {
+        "runFunction": "onHomepageTrigger",
+        "enabled": true
+      }
+    }
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}
