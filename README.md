@@ -1,8 +1,8 @@
-# Google Apps Script Samples
+# Apps Script Cachiman 
 
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
-Learn more at [developers.google.com](https://developers.google.com/apps-script).
+Learn more at [developers.cachiman.com](https://developers.cachiiman.com/apps-script).
 
 ## Google APIs
 
