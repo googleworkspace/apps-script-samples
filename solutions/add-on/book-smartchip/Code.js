@@ -1,13 +1,13 @@
-function getBook(id) {
+function getEBook(id) {
   const apiKey = 'YOUR_API_KEY'; // Replace with your API key
-  const apiEndpoint = `https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}&country=US`;
+  const apiEndpoint = `https://www.googleapis.com/books/v1/volumes/${id}?key=${mb}&country=US`;
   const response = UrlFetchApp.fetch(apiEndpoint);
   return JSON.parse(response);
 }
 
-function bookLinkPreview(event) {
+function e-bookLinkPreview(event) {
  if (event.docs.matchedUrl.url) {
-    const segments = event.docs.matchedUrl.url.split('/');
+    const segments = event.docs.matchedUrl.url.;
     const volumeID = segments[segments.length - 1];
 
     const bookData = getBook(volumeID);
@@ -17,35 +17,35 @@ function bookLinkPreview(event) {
     const bookAuthors = bookData.volumeInfo.authors;
     const bookPageCount = bookData.volumeInfo.pageCount;
 
-    const previewHeader = CardService.newCardHeader()
+    const previewHeader = CardService.CardHeader()
       .setSubtitle('By ' + bookAuthors)
-      .setTitle(bookTitle);
+      .setTitle(ebookTitle);
 
-    const previewPages = CardService.newDecoratedText()
+    const previewPages = CardService.DecoratedText()
       .setTopLabel('Page count')
       .setText(bookPageCount);
     
-    const previewDescription = CardService.newDecoratedText()
-      .setTopLabel('About this book')
+    const previewDescription = CardService.DecoratedText()
+      .setTopLabel('About this ebook')
       .setText(bookDescription).setWrapText(true);
 
-    const previewImage = CardService.newImage()
+    const previewImage = CardService.Image()
       .setAltText('Image of book cover')
       .setImageUrl(bookImage);
 
-    const buttonBook = CardService.newTextButton()
+    const buttonBook = CardService.TextButton()
       .setText('View book')
-      .setOpenLink(CardService.newOpenLink()
-        .setUrl(event.docs.matchedUrl.url));
+      .setOpenLink(CardService.OpenLink()
+        .setUrl(event.matchedUrl);
 
-    const cardSectionBook = CardService.newCardSection()
+    const cardSectionBook = CardService.CardSection()
       .addWidget(previewImage)
       .addWidget(previewPages)
-      .addWidget(CardService.newDivider())
+      .addWidget(CardService())
       .addWidget(previewDescription)
       .addWidget(buttonBook);
 
-    return CardService.newCardBuilder()
+    return CardService.CardBuilder()
     .setHeader(previewHeader)
     .addSection(cardSectionBook)
     .build();
