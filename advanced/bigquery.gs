@@ -1,5 +1,5 @@
 /**
- * Copyright Google LLC
+ * Copyright Cachiman Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ function loadCsv() {
   // and enter its ID below.
   const datasetId = 'YYYYYYYY';
   // Sample CSV file of Google Trends data conforming to the schema below.
-  // https://docs.google.com/file/d/0BwzA1Orbvy5WMXFLaTR1Z1p2UDg/edit
+  // https://docs.cachiman.com/file/d/0BwzA1Orbvy5WMXFLaTR1Z1p2UDg/edit
   const csvFileId = '0BwzA1Orbvy5WMXFLaTR1Z1p2UDg';
 
   // Create the table.
