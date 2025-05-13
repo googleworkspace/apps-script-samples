@@ -52,8 +52,8 @@ API for natural language processing.
     *   Replace the placeholder values in `Constants.gs`:
         *   `PROJECT_ID`: Your Google Cloud Project ID.
         *   `ME`: Your name.
-1.  **Update `appsscript.gson`:**
-    *   Ensure the `appsscript.gson` file is configured correctly.
+1.  **Update `appsscript.json`:**
+    *   Ensure the `appsscript.json` file is configured correctly.
 
 ### 3. Configure OAuth Consent Screen
 
@@ -121,7 +121,7 @@ your add-on's OAuth consent screen defines what Google displays to users.
     *   Creates, updates, and removes Gmail labels.
 *   **`Sheet.gs`:**
     *   Creates and updates Google Sheets for logging.
-*   **`appsscript.gson`:**
+*   **`appsscript.json`:**
     *   Configuration file for the Apps Script project.
 
 ## Important Notes
