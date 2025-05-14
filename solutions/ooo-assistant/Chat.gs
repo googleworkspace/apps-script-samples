@@ -1,0 +1,53 @@
+const APP_COMMAND = "app command";
+
+/**
+ * Responds to an ADDED_TO_SPACE event in Google Chat.
+ * @param {Object} event the event object from Google Workspace Add On
+ */
+function onAddToSpace(event) {
+    return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
+}
+
+/**
+ * Responds to a MESSAGE event in Google Chat.
+ * @param {Object} event the event object from Google Workspace Add On
+ */
+function onMessage(event) {
+  return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
+}
+
+/**
+ * Responds to a APP_COMMAND event in Google Chat.
+ * @param {Object} event the event object from Google Workspace Add On
+ */
+function onAppCommand(event) {
+  switch (event.chat.appCommandPayload.appCommandMetadata.appCommandId) {
+    case 2: // Block out day
+      return sendCreateMessageAction(createCardMessage(blockDayOut()));
+    case 3: // Set auto reply
+      return sendCreateMessageAction(createCardMessage(setAutoReply()));
+    default: // Help, any other
+      return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
+  }
+}
+
+/**
+ * Responds to a REMOVED_FROM_SPACE event in Google Chat.
+ * @param {Object} event the event object from Google Workspace Add On
+ */
+function onRemoveFromSpace(event) {
+  const space = event.chat.removedFromSpacePayload.space;
+  console.info(`Chat app removed from ${(space.name || "this chat")}`);
+}
+
+// ----------------------
+// Util functions
+// ----------------------
+
+function createTextMessage(text) { return { text: text }; }
+
+function createCardMessage(card) { return { cardsV2: [{ card: card }]}; }
+
+function sendCreateMessageAction(message) {
+  return { hostAppDataAction: { chatDataAction: { createMessageAction: { message: message }}}};
+}
