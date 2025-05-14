@@ -38,6 +38,6 @@ jobs:
           CLASP_CREDENTIALS: ${{secrets.CLASP_CREDENTIALS}}
       - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
       - run: npm install -g @google/clasp
       - run: ./.github/scripts/clasp_push.sh ${{ steps.changed-files.outputs.all_changed_files }}
