@@ -1,0 +1,40 @@
+{
+  "timeZone": "America/New_York",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dependencies": {
+    "enabledAdvancedServices": [{
+      "userSymbol": "Gmail",
+      "version": "v1",
+      "serviceId": "gmail"
+    },
+    {
+      "userSymbol": "Calendar",
+      "version": "v3",
+      "serviceId": "calendar"
+    }]
+  },
+  "addOns": {
+    "common": {
+    "name": "OOO Assistant",
+    "logoUrl": "https://goo.gle/3SfMkjb",
+    "homepageTrigger": {
+      "runFunction": "onHomepage"
+    },
+    "universalActions": [{
+      "label": "Block day out",
+      "runFunction": "blockDayOut"
+    }, {
+      "label": "Set auto reply",
+      "runFunction": "setAutoReply"
+    }]
+    },
+    "chat": {},
+    "calendar": {},
+    "gmail": {},
+    "drive": {},
+    "docs": {},
+    "sheets": {},
+    "slides": {}
+  }
+}
