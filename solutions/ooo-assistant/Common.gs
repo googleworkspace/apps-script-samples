@@ -5,7 +5,7 @@ const UNIVERSAL_ACTION = "universal action";
 // ----------------------
 
 /**
- * Responds to any homepage load request in Google Workspace UIs.
+ * Responds to homepage load request.
  */
 function onHomepage() {
   return help();
