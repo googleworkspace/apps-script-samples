@@ -20,7 +20,7 @@ const APP_COMMAND = "app command";
  * Responds to an ADDED_TO_SPACE event in Google Chat.
  * @param {Object} event the event object from Google Workspace Add On
  */
-function onAddToSpace(event) {
+function onAddedToSpace(event) {
     return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
 }
 
@@ -51,7 +51,7 @@ function onAppCommand(event) {
  * Responds to a REMOVED_FROM_SPACE event in Google Chat.
  * @param {Object} event the event object from Google Workspace Add On
  */
-function onRemoveFromSpace(event) {
+function onRemovedFromSpace(event) {
   const space = event.chat.removedFromSpacePayload.space;
   console.info(`Chat app removed from ${(space.name || "this chat")}`);
 }
