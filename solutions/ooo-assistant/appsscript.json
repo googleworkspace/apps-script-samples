@@ -16,18 +16,18 @@
   },
   "addOns": {
     "common": {
-    "name": "OOO Assistant",
-    "logoUrl": "https://goo.gle/3SfMkjb",
-    "homepageTrigger": {
-      "runFunction": "onHomepage"
-    },
-    "universalActions": [{
-      "label": "Block day out",
-      "runFunction": "blockDayOut"
-    }, {
-      "label": "Set auto reply",
-      "runFunction": "setAutoReply"
-    }]
+      "name": "OOO Assistant",
+      "logoUrl": "https://goo.gle/3SfMkjb",
+      "homepageTrigger": {
+        "runFunction": "onHomepage"
+      },
+      "universalActions": [{
+        "label": "Block day out",
+        "runFunction": "blockDayOut"
+      }, {
+        "label": "Set auto reply",
+        "runFunction": "setAutoReply"
+      }]
     },
     "chat": {},
     "calendar": {},
