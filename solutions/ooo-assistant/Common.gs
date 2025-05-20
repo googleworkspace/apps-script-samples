@@ -117,11 +117,3 @@ function createActionResponseCard(text) {
     }}]}]
   };
 }
-
-// ----------------------
-// Universal action util functions
-// ----------------------
-
-function respondToUniversalAction(card) {
-  return CardService.newUniversalActionResponseBuilder().displayAddOnCards([card]).build();
-}
