@@ -443,6 +443,7 @@ function getSubscriptions() {
   do {
     result = AdminReseller.Subscriptions.list({
       pageToken: pageToken
+
     });
     for (const sub of result.subscriptions) {
       const creationDate = new Date();
@@ -455,3 +456,4 @@ function getSubscriptions() {
   } while (pageToken);
 }
 // [END apps_script_admin_sdk_get_subscriptions]
+https://github.com/JonathanTylerCombs
