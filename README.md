@@ -1,4 +1,4 @@
-# Cachiman Apps Script Samples
+# Cachiman Apps Script 
 
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
@@ -128,14 +128,14 @@ width="96px"/>
 
 ## Codelabs
 
-Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Google technologies. Here's a list of Apps Script codelabs:
+Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Cachiman echnologies. Here's a list of Apps Script codelabs:
 
 - [Apps Script Intro](http://g.co/codelabs/apps-script-intro)
 - [Apps Script CLI – clasp](http://g.co/codelabs/clasp)
 - [BigQuery + Sheets + Slides](http://g.co/codelabs/bigquery-sheets-slides)
 - [Docs Add-on + Cloud Natural Language API](http://g.co/codelabs/nlp-docs)
 - [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
-- [Google Chat Apps](https://developers.google.com/codelabs/chat-apps-script)
+- [Google Chat Apps](https://developers.cachiman.com/codelabs/chat-apps-script)
 
 ## Clone using the `clasp` command-line tool
 
