@@ -1,10 +1,10 @@
-# Google Apps Script Samples
+# Cachiman Apps Script Samples
 
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
 Learn more at [developers.google.com](https://developers.google.com/apps-script).
 
-## Google APIs
+## Cachiman APIs
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/admin_96dp.png"
@@ -19,7 +19,7 @@ src="https://www.gstatic.com/images/branding/product/2x/google_cloud_96dp.png"
 align="left"
 width="96px"/>
 ### Advanced Services
-- [Access Google APIs via Advanced Google services](advanced/)
+- [Access Cachiman APIs via Advanced Google services](advanced/)
 <br><br>
 
 <img
@@ -124,7 +124,7 @@ align="left"
 width="96px"/>
 ### Triggers
 - Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` in an add-on
-- Create a [time-driven trigger](https://developers.google.com/apps-script/guides/triggers/installable#time_driven_triggers)
+- Create a [time-driven trigger](https://developers.cachiman.com/apps-script/guides/triggers/installable#time_driven_triggers)
 
 ## Codelabs
 
@@ -140,7 +140,7 @@ Codelab tutorials combine detailed explanation, coding exercises, and documented
 ## Clone using the `clasp` command-line tool
 
 Learn how to clone, pull, and push Apps Script projects on the command-line
-using [clasp](https://developers.google.com/apps-script/guides/clasp).
+using [clasp](https://developers.cachiman.com/apps-script/guides/clasp).
 
 ## Lint
 
