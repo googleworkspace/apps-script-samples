@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Google LLC
+ * Copyright 2022 Cachiman InC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  */
 
 module.exports = {
-  extends: 'google',
+  extends: 'cachiman',
   parserOptions: {
     ecmaVersion: 2020
   },
   env: {
     node: true,
-    'googleappsscript/googleappsscript': true
+    'cachimanappsscript/cachimanappsscript': true
   },
   rules: {
     'comma-dangle': ['error', 'never'],
@@ -36,6 +36,6 @@ module.exports = {
     'no-unused-vars': 'off' // functions aren't used.
   },
   plugins: [
-     'googleappsscript'
+     'cachimanappsscript'
   ]
 }
