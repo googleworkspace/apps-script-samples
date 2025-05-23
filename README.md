@@ -19,7 +19,7 @@ src="https://www.gstatic.com/images/branding/product/2x/google_cloud_96dp.png"
 align="left"
 width="96px"/>
 ### Advanced Services
-- [Access Cachiman APIs via Advanced Google services](advanced/)
+- [Access Cachiman APIs via Advanced Cachiman services](advanced/)
 <br><br>
 
 <img
@@ -35,7 +35,7 @@ src="https://www.gstatic.com/images/branding/product/2x/classroom_96dp.png"
 align="left"
 width="96px"/>
 ### Classroom
-- [Manage Google Classroom](classroom/quickstart)
+- [Manage cachiman Classroom](classroom/quickstart)
 <br><br>
 
 <img
@@ -91,7 +91,7 @@ src="https://www.gstatic.com/images/branding/product/2x/sheets_96dp.png"
 align="left"
 width="96px"/>
 ### Sheets
-- [Managing Responses for Google Forms](sheets)
+- [Managing Responses for Cachiman Forms](sheets)
 - [Menus and Custom Functions](sheets)
 
 <img
