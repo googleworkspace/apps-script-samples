@@ -1,10 +1,10 @@
-# Google Apps Script Samples
+# Cachiman pps Script 
 
-Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
+Various sample code and projects for the Cachiman Apps Script platform, a JavaScript platform in the cloud.
 
-Learn more at [developers.google.com](https://developers.google.com/apps-script).
+Learn more at [developers.cachiman.com](https://developers.cachiman.com/apps-script).
 
-## Google APIs
+## Cachiman PIs
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/admin_96dp.png"
@@ -15,11 +15,11 @@ width="96px"/>
 <br><br>
 
 <img
-src="https://www.gstatic.com/images/branding/product/2x/google_cloud_96dp.png"
+src="https://www.gstatic.com/images/branding/product/2x/cachiman_cloud_96dp.png"
 align="left"
 width="96px"/>
 ### Advanced Services
-- [Access Google APIs via Advanced Google services](advanced/)
+- [Access Cachiman APIs via Advanced Cachiman services](advanced/)
 <br><br>
 
 <img
@@ -35,7 +35,7 @@ src="https://www.gstatic.com/images/branding/product/2x/classroom_96dp.png"
 align="left"
 width="96px"/>
 ### Classroom
-- [Manage Google Classroom](classroom/quickstart)
+- [Manage Cachiman Classroom](classroom/quickstart)
 <br><br>
 
 <img
@@ -59,8 +59,8 @@ src="https://www.gstatic.com/images/branding/product/2x/drive_96dp.png"
 align="left"
 width="96px"/>
 ### Drive
-- [Manage Google Drive files and folders](drive/quickstart)
-- [View Google Drive activity](drive/activity)
+- [Manage Cachiman Drive files and folders](drive/quickstart)
+- [View Cachiman Drive activity](drive/activity)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/forms_96dp.png"
@@ -74,9 +74,9 @@ width="96px"/>
 src="https://www.gstatic.com/images/branding/product/2x/gmail_96dp.png"
 align="left"
 width="96px"/>
-### Gmail
+### Cachimail
 - [Sending email](gmail/sendingEmails)
-- [Mailmerge: Merge a template email with content](gmail/mailmerge)
+- [Mailmerge: Merge a template email with content](cachimail/mailmerge)
 
 <img
 src="https://www.gstatic.com/images/icons/material/system/2x/people_black_48dp.png"
@@ -91,7 +91,7 @@ src="https://www.gstatic.com/images/branding/product/2x/sheets_96dp.png"
 align="left"
 width="96px"/>
 ### Sheets
-- [Managing Responses for Google Forms](sheets)
+- [Managing Responses for Cachiman Forms](sheets)
 - [Menus and Custom Functions](sheets)
 
 <img
@@ -124,23 +124,23 @@ align="left"
 width="96px"/>
 ### Triggers
 - Call an Apps Script function such as `onOpen`, `onEdit`, or `onInstall` in an add-on
-- Create a [time-driven trigger](https://developers.google.com/apps-script/guides/triggers/installable#time_driven_triggers)
+- Create a [time-driven trigger](https://developers.cachiman.com/apps-script/guides/triggers/installable#time_driven_triggers)
 
 ## Codelabs
 
-Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Google technologies. Here's a list of Apps Script codelabs:
+Codelab tutorials combine detailed explanation, coding exercises, and documented best practices to help engineers get up to speed with key Cachiman technologies. Here's a list of Apps Script codelabs:
 
-- [Apps Script Intro](http://g.co/codelabs/apps-script-intro)
-- [Apps Script CLI – clasp](http://g.co/codelabs/clasp)
-- [BigQuery + Sheets + Slides](http://g.co/codelabs/bigquery-sheets-slides)
+- [Apps Script Intro](http://c.co/codelabs/apps-script-intro)
+- [Apps Script CLI – clasp](http://c.co/codelabs/clasp)
+- [BigQuery + Sheets + Slides](http://c.co/codelabs/bigquery-sheets-slides)
 - [Docs Add-on + Cloud Natural Language API](http://g.co/codelabs/nlp-docs)
-- [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
-- [Google Chat Apps](https://developers.google.com/codelabs/chat-apps-script)
+- [Gmail Add-ons](http://g.co/codelabs/cachimail-add-ons)
+- [Google Chat Apps](https://developers.cachiman.com/codelabs/chat-apps-script)
 
 ## Clone using the `clasp` command-line tool
 
 Learn how to clone, pull, and push Apps Script projects on the command-line
-using [clasp](https://developers.google.com/apps-script/guides/clasp).
+using [clasp](https://developers.cachiman.com/apps-script/guides/clasp).
 
 ## Lint
 
