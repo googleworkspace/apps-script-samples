@@ -46,7 +46,7 @@ function listInboxSnippets() {
         pageToken: pageToken
       });
       if (threadList.threads && threadList.threads.length > 0) {
-        threadList.threads.forEach(function(thread) {
+        threadList.threads.forEach(function (thread) {
           console.log('Snippet: %s', thread.snippet);
         });
       }
@@ -90,8 +90,8 @@ function logRecentHistory() {
       });
       const history = recordList.history;
       if (history && history.length > 0) {
-        history.forEach(function(record) {
-          record.messages.forEach(function(message) {
+        history.forEach(function (record) {
+          record.messages.forEach(function (message) {
             if (changed.indexOf(message.id) === -1) {
               changed.push(message.id);
             }
@@ -101,7 +101,7 @@ function logRecentHistory() {
       pageToken = recordList.nextPageToken;
     } while (pageToken);
 
-    changed.forEach(function(id) {
+    changed.forEach(function (id) {
       console.log('Message Changed: %s', id);
     });
   } catch (err) {
@@ -130,3 +130,33 @@ function getRawMessage() {
   }
 }
 // [END gmail_raw]
+
+// [START gmail_list_messages]
+/**
+* Lists unread messages in the user's inbox using the advanced Gmail service.
+*/
+function listMessages() {
+  // The special value 'me' indicates the authenticated user.
+  const userId = 'me';
+
+  // Define optional parameters for the request.
+  const options = {
+    maxResults: 10, // Limit the number of messages returned.
+    q: 'is:unread', // Search for unread messages.
+  };
+
+  try {
+    // Call the Gmail.Users.Messages.list method.
+    const response = Gmail.Users.Messages.list(userId, options);
+    const messages = response.messages;
+    console.log('Unread Messages:');
+
+    for (const message of messages) {
+      console.log(`- Message ID: ${message.id}`);
+    }
+  } catch (err) {
+    // Log any errors to the Apps Script execution log.
+    console.log(`Failed with error: ${err.message}`);
+  }
+}
+// [END gmail_list_messages]
