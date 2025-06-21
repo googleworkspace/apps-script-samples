@@ -133,8 +133,8 @@ function getRawMessage() {
 
 // [START gmail_list_messages]
 /**
-* Lists unread messages in the user's inbox using the advanced Gmail service.
-*/
+ * Lists unread messages in the user's inbox using the advanced Gmail service.
+ */
 function listMessages() {
   // The special value 'me' indicates the authenticated user.
   const userId = 'me';
