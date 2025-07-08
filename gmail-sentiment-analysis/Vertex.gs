@@ -14,69 +14,72 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Replace with your project ID
 const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
+
+// Location for your Vertex AI model
 const VERTEX_AI_LOCATION = 'us-central1';
-const MODEL_ID = 'gemini-1.5-flash';
+
+// Model ID to use for sentiment analysis
+const MODEL_ID = 'gemini-2.5-flash';
 
 /**
- * Packages prompt and necessary settings, then sends a request to
- * Vertex API. 
- * A check is performed to see if the response from Vertex AI contains FALSE as a value.
- * Returns the outcome of that check which is a boolean. 
+ * Sends the email text to Vertex AI for sentiment analysis.
  *
- * @param emailText - Email message that is sent to the model.
+ * @param {string} emailText - The text of the email to analyze.
+ * @returns {string} - The sentiment of the email ('positive', 'negative', or 'neutral').
  */
-
 function processSentiment(emailText) {
-  const prompt = `Analyze the sentiment of the following message: ${emailText}`;
+  // Construct the API endpoint URL
+  const apiUrl = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
 
-  const request = {
-    "contents": [{
-      "role": "user",
-      "parts": [{
-        "text": prompt,
-      }]
-    }],
-    "generationConfig": {
-      "temperature": 0.9,
-      "maxOutputTokens": 1024,
-      "responseMimeType": "application/json",
-      "responseSchema": {
-        "type": "object",
-        "properties": {
-          "response": {
-            "type": "string",
-            "enum": [
-              "positive",
-              "negative",
-              "neutral",
-            ]
+  // Prepare the request payload
+  const payload = {
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Analyze the sentiment of the following message: ${emailText}`
+          }
+        ]
+      }
+    ],
+    generationConfig: {
+      temperature: 0.9,
+      maxOutputTokens: 1024,
+      responseMimeType: "application/json",
+      // Expected response format for simpler parsing.
+      responseSchema: {
+        type: "object",
+        properties: {
+          response: {
+            type: "string",
+            enum: ["positive", "negative", "neutral"]
           }
         }
       }
     }
   };
 
-  const fetchOptions = {
+  // Prepare the request options
+  const options = {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${ScriptApp.getOAuthToken()}`
     },
     contentType: 'application/json',
-    muteHttpExceptions: true,
-    payload: JSON.stringify(request),
-  }
+    muteHttpExceptions: true, // Set to true to inspect the error response
+    payload: JSON.stringify(payload)
+  };
 
-  const url =
-    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/` +
-    `projects/${PROJECT_ID}/` +
-    `locations/${VERTEX_AI_LOCATION}/` +
-    `publishers/google/` +
-    `models/${MODEL_ID}:generateContent`;
+  // Make the API request
+  const response = UrlFetchApp.fetch(apiUrl, options);
 
-  const response = UrlFetchApp.fetch(url, fetchOptions);
-  const payload = JSON.parse(response.getContentText());
-  const text = JSON.parse(payload.candidates[0].content.parts[0].text);
+  // Parse the response. There are two levels of JSON responses to parse.
+  const parsedResponse = JSON.parse(response.getContentText());
+  const sentimentResponse = JSON.parse(parsedResponse.candidates[0].content.parts[0].text).response;
 
-  return text.response;
+  // Return the sentiment
+  return sentimentResponse;
 }

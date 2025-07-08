@@ -15,54 +15,93 @@ limitations under the License.
 */
 
 /**
- * Builds the card to display in the side panel of gmail.
- * @return {CardService.Card} The card to show to the user.
+ * Builds the main card displayed on the Gmail homepage.
+ *
+ * @returns {Card} - The homepage card.
  */
-
 function buildHomepageCard() {
-  const imageUrl = 'https://fonts.gstatic.com/s/i/googlematerialicons/dynamic_feed/v6/black-24dp/1x/gm_dynamic_feed_black_24dp.png';
+  // Create a new card builder
+  const cardBuilder = CardService.newCardBuilder();
 
-  const cardHeader = CardService.newCardHeader()
-    .setImageUrl(imageUrl)
-    .setImageStyle(CardService.ImageStyle.CIRCLE)
-    .setTitle("Analyze your Gmail");
+  // Create a card header
+  const cardHeader = CardService.newCardHeader();
+  cardHeader.setImageUrl('https://fonts.gstatic.com/s/i/googlematerialicons/mail/v6/black-24dp/1x/gm_mail_black_24dp.png');
+  cardHeader.setImageStyle(CardService.ImageStyle.CIRCLE);
+  cardHeader.setTitle("Analyze your Gmail");
 
-  const analyzeSentimentAction = CardService.newAction()
-    .setFunctionName('analyzeSentiment');
-  const analyzeSentimentBtn = CardService.newTextButton()
-    .setText('Analyze emails')
-    .setOnClickAction(analyzeSentimentAction)
-    .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
-    .setBackgroundColor('#FF0000');
+  // Add the header to the card
+  cardBuilder.setHeader(cardHeader);
 
-  const generateSampleEmailAction = CardService.newAction()
-    .setFunctionName('generateSampleEmails');
+  // Create a card section
+  const cardSection = CardService.newCardSection();
 
-  const generateSampleEmailsBtn = CardService.newTextButton()
-    .setText('Generate sample emails')
-    .setOnClickAction(generateSampleEmailAction)
-    .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
-    .setBackgroundColor('#34A853');
+  // Create buttons for generating sample emails and analyzing sentiment
+  const buttonSet = CardService.newButtonSet();
 
-  const buttonSet = CardService.newButtonSet()
-    .addButton(generateSampleEmailsBtn)
-    .addButton(analyzeSentimentBtn);
+  // Create "Generate sample emails" button
+  const generateButton = createFilledButton('Generate sample emails', 'generateSampleEmails', '#34A853');
+  buttonSet.addButton(generateButton);
 
-  const section = CardService.newCardSection()
-    .addWidget(buttonSet);
+  // Create "Analyze emails" button
+  const analyzeButton = createFilledButton('Analyze emails', 'analyzeSentiment', '#FF0000');
+  buttonSet.addButton(analyzeButton);
 
-  const card = CardService.newCardBuilder()
-    .setHeader(cardHeader)
-    .addSection(section);
+  // Add the button set to the section
+  cardSection.addWidget(buttonSet);
 
-  return card.build();
+  // Add the section to the card
+  cardBuilder.addSection(cardSection);
+
+  // Build and return the card
+  return cardBuilder.build();
 }
 
+/**
+ * Creates a filled text button with the specified text, function, and color.
+ *
+ * @param {string} text - The text to display on the button.
+ * @param {string} functionName - The name of the function to call when the button is clicked.
+ * @param {string} color - The background color of the button.
+ * @returns {TextButton} - The created text button.
+ */
+function createFilledButton(text, functionName, color) {
+  // Create a new text button
+  const textButton = CardService.newTextButton();
+
+  // Set the button text
+  textButton.setText(text);
+
+  // Set the action to perform when the button is clicked
+  const action = CardService.newAction();
+  action.setFunctionName(functionName);
+  textButton.setOnClickAction(action);
+
+  // Set the button style to filled
+  textButton.setTextButtonStyle(CardService.TextButtonStyle.FILLED);
+
+  // Set the background color
+  textButton.setBackgroundColor(color);
+
+  return textButton;
+}
+
+/**
+ * Creates a notification response with the specified text.
+ *
+ * @param {string} notificationText - The text to display in the notification.
+ * @returns {ActionResponse} - The created action response.
+ */
 function buildNotificationResponse(notificationText) {
-  const notification = CardService.newNotification().setText(notificationText);
+  // Create a new notification
+  const notification = CardService.newNotification();
+  notification.setText(notificationText);
 
-  const actionResponse = CardService.newActionResponseBuilder()
-    .setNotification(notification);
+  // Create a new action response builder
+  const actionResponseBuilder = CardService.newActionResponseBuilder();
 
-  return actionResponse.build();
+  // Set the notification for the action response
+  actionResponseBuilder.setNotification(notification);
+
+  // Build and return the action response
+  return actionResponseBuilder.build();
 }
