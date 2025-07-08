@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 /**
- * Callback for rendering the homepage card.
- * @return {CardService.Card} The card to show to the user.
+ * Triggered when the add-on is opened from the Gmail homepage.
+ *
+ * @param {Object} e - The event object.
+ * @returns {Card} - The homepage card.
  */
 function onHomepageTrigger(e) {
   return buildHomepageCard();
