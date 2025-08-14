@@ -35,9 +35,9 @@ function listQueries() {
     console.log('Failed with error: %s', e.error);
   }
 }
-// [END apps_script_dbcm_list_queries]
+// [END apps_script_dcbm_list_queries]
 
-// [START apps_script_dbcm_create_and_run_query]
+// [START apps_script_dcbm_create_and_run_query]
 /**
  * Create and run a new DBM Query
  */
@@ -93,9 +93,9 @@ function createAndRunQuery() {
     console.log('Failed with error: %s', e.error);
   }
 }
-// [END apps_script_dbcm_create_and_run_query]
+// [END apps_script_dcbm_create_and_run_query]
 
-// [START apps_script_dbcm_fetch_report]
+// [START apps_script_dcbm_fetch_report]
 /**
  * Fetches a report file
  */
@@ -123,4 +123,4 @@ function fetchReport() {
     console.log('Failed with error: %s', e.error);
   }
 }
-// [END apps_script_dbcm_fetch_report]
+// [END apps_script_dcbm_fetch_report]
