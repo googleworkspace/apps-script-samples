@@ -1,5 +1,5 @@
 // To learn how to use this script, refer to the documentation:
-// https://developers.google.com/apps-script/samples/chat-bots/schedule-meetings
+// https://developers.google.com/apps-script/samples/chat-apps/schedule-meetings
 
 /*
 Copyright 2022 Google LLC
@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 // Application constants
-const BOTNAME = 'Chat Meeting Scheduler';
+const APPNAME = 'Chat Meeting Scheduler';
 const SLASHCOMMAND = {
   HELP: 1, // /help
   DIALOG: 2, // /schedule_Meeting
@@ -26,16 +26,16 @@ const SLASHCOMMAND = {
 
 /**
  * Responds to an ADDED_TO_SPACE event in Google Chat.
- * Called when the bot is added to a space. The bot can either be directly added to the space
- * or added by a @mention. If the bot is added by a @mention, the event object includes a message property. 
- * Returns a Message object, which is usually a welcome message informing users about the bot.
+ * Called when the Chat app is added to a space. The Chat app can either be directly added to the space
+ * or added by a @mention. If the Chat app is added by a @mention, the event object includes a message property. 
+ * Returns a Message object, which is usually a welcome message informing users about the Chat app.
  *
  * @param {Object} event The event object from Google Chat
  */
 function onAddToSpace(event) {
   let message = '';
 
-  // Personalizes the message depending on how the bot is called.
+  // Personalizes the message depending on how the Chat app is called.
   if (event.space.singleUserBotDm) {
     message = `Hi ${event.user.displayName}!`;
   } else {
@@ -53,8 +53,8 @@ function onAddToSpace(event) {
 
 /**
  * Responds to a MESSAGE event triggered in Chat.
- * Called when the bot is already in the space and the user invokes it via @mention or / command.
- * Returns a message object containing the bot's response. For this bot, the response is either the
+ * Called when the Chat app is already in the space and the user invokes it via @mention or / command.
+ * Returns a message object containing the Chat app's response. For this Chat app, the response is either the
  * help text or the dialog to schedule a meeting.
  * 
  * @param {object} event The event object from Google Chat
@@ -176,15 +176,15 @@ function onCardClick(event) {
 }
 
 /**
- * Responds with help text about this chat bot.
+ * Responds with help text about this Chat app.
  * @return {string} The help text as seen below
  */
 function getHelpTextResponse_() {
-  const help = `*${BOTNAME}* lets you quickly create meetings from Google Chat. Here\'s a list of all its commands:
+  const help = `*${APPNAME}* lets you quickly create meetings from Google Chat. Here\'s a list of all its commands:
   \`/schedule_Meeting\`  Opens a dialog with editable, preset parameters to create a meeting event
   \`/help\`  Displays this help message
   
-  Learn more about creating Google Chat bots at https://developers.google.com/chat.`
+  Learn more about creating Google Chat apps at https://developers.google.com/chat.`
 
   return { 'text': help }
 }

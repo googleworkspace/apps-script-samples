@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "formatter": {
+    "indentStyle": "space"
+  },
+  "files": {
+    "ignore": ["node_modules", "dist", "target", "pkg"]
+  }
+}

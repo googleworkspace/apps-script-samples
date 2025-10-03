@@ -69,9 +69,9 @@ function listLabelsOnDriveItem(fileId) {
   try {
     const appliedLabels = Drive.Files.listLabels(fileId);
 
-    console.log('%d label(s) are applied to this file', appliedLabels.items.length);
+    console.log('%d label(s) are applied to this file', appliedLabels.labels.length);
 
-    appliedLabels.items.forEach((appliedLabel) => {
+    appliedLabels.labels.forEach((appliedLabel) => {
       // Resource name of the label at the applied revision.
       const labelName = 'labels/' + appliedLabel.id + '@' + appliedLabel.revisionId;
 

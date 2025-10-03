@@ -1,0 +1,21 @@
+[package]
+name = "example"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.57"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+base64 = "0.22.0"
+console_error_panic_hook = "0.1.7"
+image = {version = "0.24.9", features = ["jpeg"]}
+js-sys = "0.3.69"
+wasm-bindgen = { version = "0.2.91", features = [] }
+
+[dev-dependencies]
+wasm-bindgen-cli = "0.2.91"
+
+[profile.release]
+opt-level = 's'
