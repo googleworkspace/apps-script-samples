@@ -42,25 +42,25 @@ function onOpen(e) {
  * with the speaker notes for each slide.
  */
 function generateSlidesScript() {
-  var presentation = SlidesApp.getActivePresentation();
-  var docTitle = presentation.getName() + ' Script';
-  var slides = presentation.getSlides();
+  const presentation = SlidesApp.getActivePresentation();
+  const docTitle = presentation.getName() + ' Script';
+  const slides = presentation.getSlides();
 
   // Creates a document in the user's home Drive directory.
-  var speakerNotesDoc = DocumentApp.create(docTitle);
+  const speakerNotesDoc = DocumentApp.create(docTitle);
   console.log('Created document with id %s', speakerNotesDoc.getId());
 
-  var docBody = speakerNotesDoc.getBody();
-  var header = docBody.appendParagraph(docTitle);
+  const docBody = speakerNotesDoc.getBody();
+  const header = docBody.appendParagraph(docTitle);
   header.setHeading(DocumentApp.ParagraphHeading.HEADING1);
 
   // Iterate through each slide and extract the speaker notes
   // into the document body.
-  for (var i = 0; i < slides.length; i++) {
-    var section = docBody.appendParagraph('Slide ' + (i + 1))
+  for (let i = 0; i < slides.length; i++) {
+    const section = docBody.appendParagraph('Slide ' + (i + 1))
         .setHeading(DocumentApp.ParagraphHeading.HEADING2);
 
-    var notes = slides[i].getNotesPage().getSpeakerNotesShape().getText().asString();
+    const notes = slides[i].getNotesPage().getSpeakerNotesShape().getText().asString();
     docBody.appendParagraph(notes)
         .appendHorizontalRule();
   }

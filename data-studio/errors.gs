@@ -57,7 +57,7 @@ function throwConnectorError(message, userSafe) {
  *    the log entry.
  */
 function logConnectorError(originalError, message) {
-  var logEntry = [
+  const logEntry = [
     'Original error (Message): ',
     originalError,
     '(', message, ')'
