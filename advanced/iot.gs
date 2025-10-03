@@ -18,12 +18,12 @@
  * Lists the registries for the configured project and region.
  */
 function listRegistries() {
-  console.log(response);
-  var projectId = 'your-project-id';
-  var cloudRegion = 'us-central1';
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const projectId = 'your-project-id';
+  const cloudRegion = 'us-central1';
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
-  var response = CloudIoT.Projects.Locations.Registries.list(parent);
+  const response = CloudIoT.Projects.Locations.Registries.list(parent);
+  console.log(response);
   if (response.deviceRegistries) {
     response.deviceRegistries.forEach(
         function(registry) {
@@ -38,23 +38,23 @@ function listRegistries() {
  * Creates a registry.
  */
 function createRegistry() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-registry-name';
-  var projectId = 'your-project-id';
-  var topic = 'your-pubsub-topic';
+  const cloudRegion = 'us-central1';
+  const name = 'your-registry-name';
+  const projectId = 'your-project-id';
+  const topic = 'your-pubsub-topic';
 
-  var pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
+  const pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
 
-  var registry = {
+  const registry = {
     'eventNotificationConfigs': [{
       // From - https://console.cloud.google.com/cloudpubsub
       pubsubTopicName: pubsubTopic
     }],
     'id': name
   };
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
 
-  var response = CloudIoT.Projects.Locations.Registries.create(registry, parent);
+  const response = CloudIoT.Projects.Locations.Registries.create(registry, parent);
   console.log('Created registry: ' + response.id);
 }
 // [END apps_script_iot_create_registry]
@@ -64,14 +64,14 @@ function createRegistry() {
  * Describes a registry.
  */
 function getRegistry() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-registry-name';
-  var projectId = 'your-project-id';
+  const cloudRegion = 'us-central1';
+  const name = 'your-registry-name';
+  const projectId = 'your-project-id';
 
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  var registryName = parent + '/registries/' + name;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const registryName = parent + '/registries/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.get(registryName);
+  const response = CloudIoT.Projects.Locations.Registries.get(registryName);
   console.log('Retrieved registry: ' + response.id);
 }
 // [END apps_script_iot_get_registry]
@@ -81,14 +81,14 @@ function getRegistry() {
  * Deletes a registry.
  */
 function deleteRegistry() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-registry-name';
-  var projectId = 'your-project-id';
+  const cloudRegion = 'us-central1';
+  const name = 'your-registry-name';
+  const projectId = 'your-project-id';
 
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  var registryName = parent + '/registries/' + name;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const registryName = parent + '/registries/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.remove(registryName);
+  const response = CloudIoT.Projects.Locations.Registries.remove(registryName);
   // Successfully removed registry if exception was not thrown.
   console.log('Deleted registry: ' + name);
 }
@@ -99,14 +99,14 @@ function deleteRegistry() {
  * Lists the devices in the given registry.
  */
 function listDevicesForRegistry() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-registry-name';
-  var projectId = 'your-project-id';
+  const cloudRegion = 'us-central1';
+  const name = 'your-registry-name';
+  const projectId = 'your-project-id';
 
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  var registryName = parent + '/registries/' + name;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const registryName = parent + '/registries/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
 
   console.log('Registry contains the following devices: ');
   if (response.devices) {
@@ -123,15 +123,15 @@ function listDevicesForRegistry() {
  * Creates a device without credentials.
  */
 function createDevice() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-device-name';
-  var projectId = 'your-project-id';
-  var registry = 'your-registry-name';
+  const cloudRegion = 'us-central1';
+  const name = 'your-device-name';
+  const projectId = 'your-project-id';
+  const registry = 'your-registry-name';
 
   console.log('Creating device: ' + name + ' in Registry: ' + registry);
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
 
-  var device = {
+  const device = {
     id: name,
     gatewayConfig: {
       gatewayType: 'NON_GATEWAY',
@@ -139,7 +139,7 @@ function createDevice() {
     }
   };
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
   console.log('Created device:' + response.name);
 }
 // [END apps_script_iot_create_unauth_device]
@@ -153,21 +153,21 @@ function createRsaDevice() {
   //    openssl req -x509 -newkey rsa:2048 -days 3650 -keyout rsa_private.pem \
   //      -nodes -out rsa_cert.pem -subj "/CN=unused"
   //
-  // **NOTE** Be sure to insert the newline charaters in the string varant.
-  var cert =
+  // **NOTE** Be sure to insert the newline charaters in the string constant.
+  const cert =
       '-----BEGIN CERTIFICATE-----\n' +
       'your-PUBLIC-certificate-b64-bytes\n' +
       '...\n' +
       'more-PUBLIC-certificate-b64-bytes==\n' +
       '-----END CERTIFICATE-----\n';
 
-  var cloudRegion = 'us-central1';
-  var name = 'your-device-name';
-  var projectId = 'your-project-id';
-  var registry = 'your-registry-name';
+  const cloudRegion = 'us-central1';
+  const name = 'your-device-name';
+  const projectId = 'your-project-id';
+  const registry = 'your-registry-name';
 
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
-  var device = {
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  const device = {
     id: name,
     gatewayConfig: {
       gatewayType: 'NON_GATEWAY',
@@ -181,7 +181,7 @@ function createRsaDevice() {
     }]
   };
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
   console.log('Created device:' + response.name);
 }
 // [END apps_script_iot_create_rsa_device]
@@ -191,15 +191,15 @@ function createRsaDevice() {
  * Deletes a device from the given registry.
  */
 function deleteDevice() {
-  var cloudRegion = 'us-central1';
-  var name = 'your-device-name';
-  var projectId = 'your-project-id';
-  var registry = 'your-registry-name';
+  const cloudRegion = 'us-central1';
+  const name = 'your-device-name';
+  const projectId = 'your-project-id';
+  const registry = 'your-registry-name';
 
-  var parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
-  var deviceName = parent + '/devices/' + name;
+  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  const deviceName = parent + '/devices/' + name;
 
-  var response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
   // If no exception thrown, device was successfully removed
   console.log('Successfully deleted device: ' + deviceName);
 }

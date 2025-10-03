@@ -15,7 +15,7 @@
  */
 
 // [START apps_script_data_studio_manual]
-var schema = [
+const schema = [
   {
     'name': 'Income',
     'label': 'Income (in USD)',

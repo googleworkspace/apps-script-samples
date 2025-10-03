@@ -19,21 +19,21 @@
  * unique users that performed the activity.
  */
 function getUsersActivity() {
-  var fileId = 'YOUR_FILE_ID_HERE';
+  const fileId = 'YOUR_FILE_ID_HERE';
 
-  var pageToken;
-  var users = {};
+  let pageToken;
+  const users = {};
   do {
-    var result = AppsActivity.Activities.list({
+    let result = AppsActivity.Activities.list({
       'drive.fileId': fileId,
       'source': 'drive.google.com',
       'pageToken': pageToken
     });
-    var activities = result.activities;
-    for (var i = 0; i < activities.length; i++) {
-      var events = activities[i].singleEvents;
-      for (var j = 0; j < events.length; j++) {
-        var event = events[j];
+    const activities = result.activities;
+    for (let i = 0; i < activities.length; i++) {
+      const events = activities[i].singleEvents;
+      for (let j = 0; j < events.length; j++) {
+        const event = events[j];
         users[event.user.name] = true;
       }
     }

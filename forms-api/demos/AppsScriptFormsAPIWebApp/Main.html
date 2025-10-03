@@ -97,9 +97,9 @@
     }
 
     function create() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Creating new form...";
-      var newFormTitle = document.getElementById('newFormTitle');
+      const newFormTitle = document.getElementById('newFormTitle');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -119,9 +119,9 @@
     }
 
     function get() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Get form by id...";
-      var formId = document.getElementById('globalFormId');
+      const formId = document.getElementById('globalFormId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -135,9 +135,9 @@
     }
 
     function batchUpdate() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Batch update...";
-      var formId = document.getElementById('globalFormId');
+      const formId = document.getElementById('globalFormId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -153,9 +153,9 @@
 
 
     function responsesList() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Get form by id...";
-      var formId = document.getElementById('globalFormId');
+      const formId = document.getElementById('globalFormId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -169,10 +169,10 @@
     }
 
     function responsesGet() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Get response by id...";
-      var formId = document.getElementById('globalFormId');
-      var respId = document.getElementById('responseId');
+      const formId = document.getElementById('globalFormId');
+      const respId = document.getElementById('responseId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -186,9 +186,9 @@
     }
 
     function watchesList() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Get watches ...";
-      var formId = document.getElementById('globalFormId');
+      const formId = document.getElementById('globalFormId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -202,9 +202,9 @@
     }
 
     function createWatch() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Create watch ...";
-      var formId = document.getElementById('globalFormId');
+      const formId = document.getElementById('globalFormId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -218,10 +218,10 @@
     }
 
     function deleteWatch() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Delete watch ...";
-      var formId = document.getElementById('globalFormId');
-      var watchId = document.getElementById('watchId');
+      const formId = document.getElementById('globalFormId');
+      const watchId = document.getElementById('watchId');
 
       google.script.run
         .withFailureHandler(function(error) {
@@ -235,10 +235,10 @@
     }
 
     function renewWatch() {
-      var status = document.getElementById('status');
+      const status = document.getElementById('status');
       status.innerHTML = "Renew watch ...";
-      var formId = document.getElementById('globalFormId');
-      var watchId = document.getElementById('renewWatchId');
+      const formId = document.getElementById('globalFormId');
+      const watchId = document.getElementById('renewWatchId');
 
       google.script.run
         .withFailureHandler(function(error) {

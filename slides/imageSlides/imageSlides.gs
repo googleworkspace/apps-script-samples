@@ -15,8 +15,8 @@
  */
 
 // [START apps_script_slides_image_create]
-var NAME = 'My favorite images';
-var deck = SlidesApp.create(NAME);
+const NAME = 'My favorite images';
+const deck = SlidesApp.create(NAME);
 // [END apps_script_slides_image_create]
 
 // [START apps_script_slides_image_add_image]
@@ -26,8 +26,8 @@ var deck = SlidesApp.create(NAME);
  * @param {number} index The slide index to add the image to
  */
  function addImageSlide(imageUrl, index) {
-  var slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
-  var image = slide.insertImage(imageUrl);
+  const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+  const image = slide.insertImage(imageUrl);
  }
 // [END apps_script_slides_image_add_image]
 
@@ -36,14 +36,14 @@ var deck = SlidesApp.create(NAME);
  * Adds images to a slides presentation.
  */
 function main() {
-  var images = [
+  const images = [
     'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
     'http://www.google.com/services/images/phone-animation-results_2x.png',
     'http://www.google.com/services/images/section-work-card-img_2x.jpg',
     'http://gsuite.google.com/img/icons/product-lockup.png',
     'http://gsuite.google.com/img/home-hero_2x.jpg'
   ];
-  var [title, subtitle] = deck.getSlides()[0].getPageElements();
+  const [title, subtitle] = deck.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);
   subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
   images.forEach(addImageSlide);
@@ -58,22 +58,22 @@ function main() {
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
-    var slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
-    var image = slide.insertImage(imageUrl);
-    var imgWidth = image.getWidth();
-    var imgHeight = image.getHeight();
-    var pageWidth = deck.getPageWidth();
-    var pageHeight = deck.getPageHeight();
-    var newX = pageWidth/2. - imgWidth/2.;
-    var newY = pageHeight/2. - imgHeight/2.;
+    const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+    const image = slide.insertImage(imageUrl);
+    const imgWidth = image.getWidth();
+    const imgHeight = image.getHeight();
+    const pageWidth = deck.getPageWidth();
+    const pageHeight = deck.getPageHeight();
+    const newX = pageWidth/2. - imgWidth/2.;
+    const newY = pageHeight/2. - imgHeight/2.;
     image.setLeft(newX).setTop(newY);
 }
 // [END apps_script_slides_image_add_image_slide]
 
 
 // [START apps_script_slides_image_full_script]
-var NAME = 'My favorite images';
-var presentation = SlidesApp.create(NAME);
+const NAME = 'My favorite images';
+const presentation = SlidesApp.create(NAME);
 
 /**
  * Creates a single slide using the image from the given link;
@@ -82,14 +82,14 @@ var presentation = SlidesApp.create(NAME);
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
-    var slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
-    var image = slide.insertImage(imageUrl);
-    var imgWidth = image.getWidth();
-    var imgHeight = image.getHeight();
-    var pageWidth = presentation.getPageWidth();
-    var pageHeight = presentation.getPageHeight();
-    var newX = pageWidth/2. - imgWidth/2.;
-    var newY = pageHeight/2. - imgHeight/2.;
+    const slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+    const image = slide.insertImage(imageUrl);
+    const imgWidth = image.getWidth();
+    const imgHeight = image.getHeight();
+    const pageWidth = presentation.getPageWidth();
+    const pageHeight = presentation.getPageHeight();
+    const newX = pageWidth/2. - imgWidth/2.;
+    const newY = pageHeight/2. - imgHeight/2.;
     image.setLeft(newX).setTop(newY);
 }
 
@@ -98,14 +98,14 @@ function addImageSlide(imageUrl, index) {
  * main title & subtitle, and creation of individual slides for each image.
  */
 function main() {
-  var images = [
+  const images = [
     'http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
     'http://www.google.com/services/images/phone-animation-results_2x.png',
     'http://www.google.com/services/images/section-work-card-img_2x.jpg',
     'http://gsuite.google.com/img/icons/product-lockup.png',
     'http://gsuite.google.com/img/home-hero_2x.jpg'
   ];
-  var [title, subtitle] = presentation.getSlides()[0].getPageElements();
+  const [title, subtitle] = presentation.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);
   subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
   images.forEach(addImageSlide);
