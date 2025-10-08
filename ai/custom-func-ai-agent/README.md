@@ -4,6 +4,11 @@ A [Vertex AI](https://cloud.google.com/vertex-ai) agent-powered **fact checker**
 
 ![](./images/showcase.png)
 
+## Tutorial
+
+For detailed instructions to deploy and run this samples, follow the
+[dedicated tutorial](https://developers.google.com/apps-script/samples/custom-functions/fact-check).
+
 ## Overview
 
 The **Google Sheets custom function** named `FACT_CHECK` integrates the sophisticated, multi-tool, multi-step reasoning capabilities of a **Vertex AI Agent Engine (ADK Agent)** directly into your Google Sheets spreadsheets.
