@@ -6,7 +6,7 @@ A [Vertex AI](https://cloud.google.com/vertex-ai) agent-powered **fact checker**
 
 ## Tutorial
 
-For detailed instructions to deploy and run this samples, follow the
+For detailed instructions to deploy and run this sample, follow the
 [dedicated tutorial](https://developers.google.com/apps-script/samples/custom-functions/fact-check).
 
 ## Overview
