@@ -28,7 +28,7 @@ let GROUP_EMAIL = 'ENTER_GOOGLE_GROUP_EMAIL_HERE';
 
 let ONLY_DIRECT_MEMBERS = false;
 
-let KEYWORDS = ['vacation', 'ooo', 'out of office', 'offline'];
+let KEYWORDS = ['vacation', 'ooo', 'out of office', 'offline', 'annual leave', 'holiday', 'time off'];
 let MONTHS_IN_ADVANCE = 3;
 
 /**
