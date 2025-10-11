@@ -35,7 +35,7 @@ let REJECTED_EMAIL_SUBJECT = 'Weekly Timesheet NOT APPROVED';
 let APPROVED_EMAIL_MESSAGE = 'Your timesheet has been approved.';
 let REJECTED_EMAIL_MESSAGE = 'Your timesheet has not been approved.';
 
-/** 
+/**
  * Creates the menu item "Timesheets" for user to run scripts on drop-down.
  */
 function onOpen() {
@@ -47,10 +47,10 @@ function onOpen() {
       .addToUi();
 }
 
-/** 
- * Adds "WEEKLY PAY" column with calculated values using array formulas. 
- * Adds an "APPROVAL" column at the end of the sheet, containing 
- * drop-down menus to either approve/disapprove employee timesheets.  
+/**
+ * Adds "WEEKLY PAY" column with calculated values using array formulas.
+ * Adds an "APPROVAL" column at the end of the sheet, containing
+ * drop-down menus to either approve/disapprove employee timesheets.
  * Adds a "NOTIFIED STATUS" column indicating whether or not an
  * employee has yet been e mailed.
  */
@@ -129,7 +129,7 @@ function addNotifiedColumn(sheet, beginningRow, numRows) {
   rule = SpreadsheetApp.newDataValidation().requireValueInList(dropdownValues)
       .build();
   notifiedColumnRange.setDataValidation(rule);
-  notifiedColumnRange.setValue('PENDING');  
+  notifiedColumnRange.setValue('PENDING');
 }
 
 /**
@@ -147,7 +147,7 @@ function updateNotifiedStatus(sheet, notifiedValues, i, beginningRow) {
   sheet.getRange(i + beginningRow, COLUMN_NUMBER.NOTIFY).setValue('NOTIFIED');
 }
 
-/** 
+/**
  * Checks the approval status of every employee, and calls helper functions
  * to notify employees via email & update their notification status.
  */
@@ -185,12 +185,12 @@ function checkApprovedStatusToNotify() {
     } else if (approvalValue == 'NOT APPROVED') {
       MailApp.sendEmail(emailAddress,REJECTED_EMAIL_SUBJECT, REJECTED_EMAIL_MESSAGE);
       updateNotifiedStatus(sheet, notifiedValues, i, beginningRow);
-    }  
+    }
   }
 }
 
-/** 
- * Set up the Timesheets Responses form, & link the form's trigger to 
+/**
+ * Set up the Timesheets Responses form, & link the form's trigger to
  * send manager an email when a new request is submitted.
  */
 function setUpForm() {
@@ -200,7 +200,7 @@ function setUpForm() {
     SpreadsheetApp.getUi().alert(msg);
     return;
   }
-  
+
   // Create the form.
   let form = FormApp.create('Weekly Timesheets')
       .setCollectEmail(true)
@@ -212,13 +212,13 @@ function setUpForm() {
   form.addTextItem().setTitle('Wednesday Hours:').setRequired(true);
   form.addTextItem().setTitle('Thursday Hours:').setRequired(true);
   form.addTextItem().setTitle('Friday Hours:').setRequired(true);
-  form.addTextItem().setTitle('HourlyWage:').setRequired(true);
- 
+  form.addTextItem().setTitle('Hourly Wage:').setRequired(true);
+
   // Set up on form submit trigger.
   ScriptApp.newTrigger('onFormSubmit')
       .forForm(form)
       .onFormSubmit()
-      .create(); 
+      .create();
 }
 
 /**
@@ -228,11 +228,11 @@ function setUpForm() {
  */
 function onFormSubmit(event) {
   let response = getResponsesByName(event.response);
-  
+
   // Load form responses into a new row.
   let row = ['New',
     '',
-    response['Emoloyee Email:'],
+    response['Emolpyee Email:'],
     response['Employee Name:'],
     response['Monday Hours:'],
     response['Tuesday Hours:'],
