@@ -1,47 +1,57 @@
 /**
- * Copyright 2018 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * تشغيل هذه الدالة لإنشاء نموذج Google Forms مع Google Sheet مرتبط
+ * ثم سيتم طباعة روابط النموذج والجدول في سجل التنفيذ (Logger.log).
  */
-// [START apps_script_hello_world]
-/**
- * Creates a Google Doc and sends an email to the current user with a link to the doc.
- */
-function createAndSendDocument() {
-  try {
-    // Create a new Google Doc named 'Hello, world!'
-    const doc = DocumentApp.create('Hello, world!');
+function createForm() {
+  // اسم النموذج
+  var formTitle = "نموذج تسجيل البيانات";
+  var form = FormApp.create(formTitle);
+  
+  // اسألنا عن الحقول اللي بعثتهم — إضافة العناصر:
+  form.addTextItem().setTitle("الاسم الثلاثي").setRequired(true);
+  form.addTextItem().setTitle("اسم الاب").setRequired(true);
+  form.addTextItem().setTitle("اسم الأم").setRequired(true);
+  form.addTextItem().setTitle("مكان وتاريخ الولادة").setRequired(true);
+  form.addTextItem().setTitle("السكن السابق").setRequired(true);
+  form.addTextItem().setTitle("السكن الحالي").setRequired(true);
+  form.addTextItem().setTitle("العمل قبل الثورة").setRequired(false);
+  form.addTextItem().setTitle("العمل بعد الثورة").setRequired(false);
 
-    // Access the body of the document, then add a paragraph.
-    doc.getBody().appendParagraph('This document was created by Google Apps Script.');
+  // الشهادة العلمية — خيارات
+  var eduItem = form.addMultipleChoiceItem();
+  eduItem.setTitle("الشهاده العلميه").setRequired(false);
+  eduItem.setChoices([
+    eduItem.createChoice("ابتدائي"),
+    eduItem.createChoice("اعدادي"),
+    eduItem.createChoice("تعليم اساسي"),
+    eduItem.createChoice("ثانوي"),
+    eduItem.createChoice("معهد متوسط"),
+    eduItem.createChoice("اجازه"),
+    eduItem.createChoice("اخرى")
+  ]);
 
-    // Get the URL of the document.
-    const url = doc.getUrl();
+  form.addTextItem().setTitle("الحاله الاجتماعيه").setRequired(false);
+  form.addTextItem().setTitle("عدد الزوجات").setRequired(false);
+  form.addTextItem().setTitle("اسم الزوجة").setRequired(false);
+  form.addTextItem().setTitle("عدد الولاد").setRequired(false);
+  form.addTextItem().setTitle("رقم البطاقة الشخصية").setRequired(true);
+  form.addTextItem().setTitle("زمرة الدم").setRequired(true);
+  form.addTextItem().setTitle("رقم واتس أب").setRequired(true);
+  form.addTextItem().setTitle("حساب شام كاش").setRequired(true);
+  form.addTextItem().setTitle("نوع السلاح").setRequired(true);
+  form.addTextItem().setTitle("رقم السلاح").setRequired(true);
 
-    // Get the email address of the active user - that's you.
-    const email = Session.getActiveUser().getEmail();
+  // إضافة فاصل أو وصف بسيط
+  form.addSectionHeaderItem().setTitle("ملاحظة");
+  form.addParagraphTextItem().setTitle("ملاحظات إضافية (اختياري)").setRequired(false);
 
-    // Get the name of the document to use as an email subject line.
-    const subject = doc.getName();
+  // ربط النموذج مع Google Sheets جديد
+  var sheetName = formTitle + " - ردود";
+  var ss = SpreadsheetApp.create(sheetName);
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
 
-    // Append a new string to the "url" variable to use as an email body.
-    const body = 'Link to your doc: ' + url;
-
-    // Send yourself an email with a link to the document.
-    GmailApp.sendEmail(email, subject, body);
-  } catch (err) {
-    // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
-  }
+  // طباعة الروابط في السجل لتسهيل الوصول
+  Logger.log("رابط النموذج: " + form.getPublishedUrl());
+  Logger.log("رابط التعديل للنموذج (edit): " + form.getEditUrl());
+  Logger.log("رابط Google Sheet المرتبط: " + ss.getUrl());
 }
-// [END apps_script_hello_world]
