@@ -72,13 +72,11 @@ function sync() {
   let count = 0;
   users.forEach(function(user) {
     let username = user.getEmail().split('@')[0];
-    KEYWORDS.forEach(function(keyword) {
-      let events = findEvents(user, keyword, today, maxDate, lastRun);
-      events.forEach(function(event) {
-        importEvent(username, event);
-        count++;
-      }); // End foreach event.
-    }); // End foreach keyword.
+    let events = findEvents(user, today, maxDate, lastRun);
+    events.forEach(function(event) {
+      importEvent(username, event);
+      count++;
+    }); // End foreach event.
   }); // End foreach user.
 
   PropertiesService.getScriptProperties().setProperty('lastRun', today);
@@ -126,9 +124,9 @@ function importEvent(username, event) {
  * @param {Date} optSince A date indicating the last time this script was run.
  * @return {Calendar.Event[]} An array of calendar events.
  */
-function findEvents(user, keyword, start, end, optSince) {
+function findEvents(user, start, end, optSince) {
   let params = {
-    q: keyword,
+    eventTypes: "outOfOffice",
     timeMin: formatDateAsRFC3339(start),
     timeMax: formatDateAsRFC3339(end),
     showDeleted: true,
@@ -151,39 +149,10 @@ function findEvents(user, keyword, start, end, optSince) {
           user, keyword, e.toString());
       continue;
     }
-    events = events.concat(response.items.filter(function(item) {
-      return shouldImportEvent(user, keyword, item);
-    }));
+    events = events.concat(response.items);
     pageToken = response.nextPageToken;
   } while (pageToken);
   return events;
-}
-
-/**
- * Determines if the given event should be imported into the shared team
- * calendar.
- * @param {Session.User} user The user that is attending the event.
- * @param {string} keyword The keyword being searched for.
- * @param {Calendar.Event} event The event being considered.
- * @return {boolean} True if the event should be imported.
- */
-function shouldImportEvent(user, keyword, event) {
-  // Filters out events where the keyword did not appear in the summary
-  // (that is, the keyword appeared in a different field, and are thus
-  // is not likely to be relevant).
-  if (event.summary.toLowerCase().indexOf(keyword) < 0) {
-    return false;
-  }
-  if (!event.organizer || event.organizer.email == user.getEmail()) {
-    // If the user is the creator of the event, always imports it.
-    return true;
-  }
-  // Only imports events the user has accepted.
-  if (!event.attendees) return false;
-  let matching = event.attendees.filter(function(attendee) {
-    return attendee.self;
-  });
-  return matching.length > 0 && matching[0].responseStatus == 'accepted';
 }
 
 /**
