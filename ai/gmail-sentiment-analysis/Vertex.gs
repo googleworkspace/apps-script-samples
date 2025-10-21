@@ -16,7 +16,7 @@ limitations under the License.
 
 const PROJECT_ID = [ADD YOUR GCP PROJECT ID HERE];
 const VERTEX_AI_LOCATION = 'europe-west2';
-const MODEL_ID = 'gemini-1.5-pro-002';
+const MODEL_ID = 'gemini-2.5-pro';
 const SERVICE_ACCOUNT_KEY = PropertiesService.getScriptProperties().getProperty('service_account_key');
 
 /**

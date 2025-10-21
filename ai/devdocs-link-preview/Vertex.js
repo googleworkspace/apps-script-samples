@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 const VERTEX_AI_LOCATION = scriptPropertyWithDefault('project_location', 'us-central1');
-const MODEL_ID = scriptPropertyWithDefault('model_id', 'gemini-1.5-flash-preview-0514');
+const MODEL_ID = scriptPropertyWithDefault('model_id', 'gemini-2.5-flash');
 const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault('service_account_key');
 
 /**
