@@ -42,7 +42,7 @@ function create(title) {
   };
 
   console.log('Forms API POST options was: ' + JSON.stringify(options));
-  let response = UrlFetchApp.fetch(formsAPIUrl, options);
+  const response = UrlFetchApp.fetch(formsAPIUrl, options);
   console.log('Response from Forms API was: ' + JSON.stringify(response));
 
   return ('' + response);
@@ -64,7 +64,7 @@ function get(formId) {
   };
 
   try {
-    let response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
     console.log('Response from Forms API was: ' + response);
     return ('' + response);
   } catch (e) {
@@ -103,7 +103,7 @@ function batchUpdate(formId) {
     'muteHttpExceptions': true,
   };
 
-  let response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
+  const response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
     options);
   console.log('Response code from API: ' + response.getResponseCode());
   return (response.getResponseCode());
@@ -116,7 +116,7 @@ function batchUpdate(formId) {
 function responsesGet(formId, responseId) {
   const accessToken = ScriptApp.getOAuthToken();
 
-  var options = {
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken,
       Accept: 'application/json'
@@ -125,7 +125,7 @@ function responsesGet(formId, responseId) {
   };
 
   try {
-    var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
       responseId, options);
     console.log('Response from Forms.responses.get was: ' + response);
     return ('' + response);
@@ -142,7 +142,7 @@ function responsesGet(formId, responseId) {
 function responsesList(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
-  var options = {
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken,
       Accept: 'application/json'
@@ -151,7 +151,7 @@ function responsesList(formId) {
   };
 
   try {
-    var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
       options);
     console.log('Response from Forms.responses was: ' + response);
     return ('' + response);
@@ -166,9 +166,9 @@ function responsesList(formId) {
  * POST https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function createWatch(formId) {
-  let accessToken = ScriptApp.getOAuthToken();
+  const accessToken = ScriptApp.getOAuthToken();
 
-  var myWatch = {
+  const myWatch = {
     'watch': {
       'target': {
         'topic': {
@@ -180,7 +180,7 @@ function createWatch(formId) {
   };
   console.log('myWatch is: ' + JSON.stringify(myWatch));
 
-  var options = {
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken
     },
@@ -192,7 +192,7 @@ function createWatch(formId) {
   console.log('options are: ' + JSON.stringify(options));
   console.log('formsAPIURL was: ' + formsAPIUrl);
 
-  var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
+  const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
     options);
   console.log(response);
   return ('' + response);
@@ -203,11 +203,11 @@ function createWatch(formId) {
  * DELETE https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}
  */
 function deleteWatch(formId, watchId) {
-  let accessToken = ScriptApp.getOAuthToken();
+  const accessToken = ScriptApp.getOAuthToken();
 
   console.log('formsAPIUrl is: ' + formsAPIUrl);
 
-  var options = {
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken,
       Accept: 'application/json'
@@ -217,7 +217,7 @@ function deleteWatch(formId, watchId) {
   };
 
   try {
-    var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId, options);
     console.log(response);
     return ('' + response);
@@ -234,8 +234,8 @@ function deleteWatch(formId, watchId) {
  */
 function watchesList(formId) {
   console.log('formId is: ' + formId);
-  let accessToken = ScriptApp.getOAuthToken();
-  var options = {
+  const accessToken = ScriptApp.getOAuthToken();
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken,
       Accept: 'application/json'
@@ -243,7 +243,7 @@ function watchesList(formId) {
     'method': 'get'
   };
   try {
-    var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
       options);
     console.log(response);
     return ('' + response);
@@ -258,9 +258,9 @@ function watchesList(formId) {
  * POST https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}:renew
  */
 function renewWatch(formId, watchId) {
-  let accessToken = ScriptApp.getOAuthToken();
+  const accessToken = ScriptApp.getOAuthToken();
 
-  var options = {
+  const options = {
     'headers': {
       Authorization: 'Bearer ' + accessToken,
       Accept: 'application/json'
@@ -269,7 +269,7 @@ function renewWatch(formId, watchId) {
   };
 
   try {
-    var response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
+    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
       watchId + ':renew', options);
     console.log(response);
     return ('' + response);

@@ -15,21 +15,21 @@
  # [START forms_retrieve_all_responses]
  function callFormsAPI() {
   console.log('Calling the Forms API!');
-  var formId = '<YOUR_FORM_ID>';
+  const formId = '<YOUR_FORM_ID>';
 
   // Get OAuth Token
- var OAuthToken = ScriptApp.getOAuthToken();
+ const OAuthToken = ScriptApp.getOAuthToken();
  console.log('OAuth token is: ' + OAuthToken);
- var formsAPIUrl = 'https://forms.googleapis.com/v1/forms/' + formId + '/' + 'responses';
+ const formsAPIUrl = 'https://forms.googleapis.com/v1/forms/' + formId + '/' + 'responses';
  console.log('formsAPIUrl is: ' + formsAPIUrl);
- var options = {
+ const options = {
     'headers': {
       Authorization: 'Bearer ' + OAuthToken,
       Accept: 'application/json'
     },
     'method': 'get'
   };  
-var response = UrlFetchApp.fetch(formsAPIUrl, options);
+const response = UrlFetchApp.fetch(formsAPIUrl, options);
  console.log('Response from forms.responses was: ' + response);
 }
 # [END forms_retrieve_all_responses]

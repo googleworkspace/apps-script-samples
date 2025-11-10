@@ -21,8 +21,8 @@
  * @see https://developers.google.com/apps-script/reference/data-studio/config
  */
 function getConfig() {
-  var cc = DataStudioApp.createCommunityConnector();
-  var config = cc.getConfig();
+  const cc = DataStudioApp.createCommunityConnector();
+  const config = cc.getConfig();
 
   config.newInfo()
       .setId('instructions')
@@ -48,10 +48,10 @@ function getConfig() {
  * @see https://developers.google.com/apps-script/reference/data-studio/fields
  */
 function getFields() {
-  var cc = DataStudioApp.createCommunityConnector();
-  var fields = cc.getFields();
-  var types = cc.FieldType;
-  var aggregations = cc.AggregationType;
+  const cc = DataStudioApp.createCommunityConnector();
+  const fields = cc.getFields();
+  const types = cc.FieldType;
+  const aggregations = cc.AggregationType;
 
   fields.newDimension()
       .setId('packageName')
@@ -78,7 +78,7 @@ function getFields() {
  * @return {object} The schema.
  */
 function getSchema(request) {
-  var fields = getFields().build();
+  const fields = getFields().build();
   return {'schema': fields};
 }
 // [END apps_script_data_studio_build_get_fields]
@@ -94,7 +94,7 @@ function getSchema(request) {
 function responseToRows(requestedFields, response, packageName) {
   // Transform parsed data and filter for requested fields
   return response.map(function(dailyDownload) {
-    var row = [];
+    let row = [];
     requestedFields.asArray().forEach(function(field) {
       switch (field.getId()) {
         case 'day':
@@ -117,13 +117,13 @@ function responseToRows(requestedFields, response, packageName) {
  * @return {object} The data.
  */
 function getData(request) {
-  var requestedFieldIds = request.fields.map(function(field) {
+  const requestedFieldIds = request.fields.map(function(field) {
     return field.name;
   });
-  var requestedFields = getFields().forIds(requestedFieldIds);
+  const requestedFields = getFields().forIds(requestedFieldIds);
 
   // Fetch and parse data from API
-  var url = [
+  const url = [
     'https://api.npmjs.org/downloads/range/',
     request.dateRange.startDate,
     ':',
@@ -131,9 +131,9 @@ function getData(request) {
     '/',
     request.configParams.package
   ];
-  var response = UrlFetchApp.fetch(url.join(''));
-  var parsedResponse = JSON.parse(response).downloads;
-  var rows = responseToRows(requestedFields, parsedResponse, request.configParams.package);
+  const response = UrlFetchApp.fetch(url.join(''));
+  const parsedResponse = JSON.parse(response).downloads;
+  const rows = responseToRows(requestedFields, parsedResponse, request.configParams.package);
 
   return {
     schema: requestedFields.build(),
@@ -148,7 +148,7 @@ function getData(request) {
  * @return {object} The auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.NONE)
       .build();

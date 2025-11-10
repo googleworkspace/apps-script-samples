@@ -20,7 +20,7 @@
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.OAUTH2)
       .build();
@@ -33,7 +33,7 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.PATH_USER_PASS)
       .setHelpUrl('https://www.example.org/connector-auth-help')
@@ -47,7 +47,7 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.USER_PASS)
       .setHelpUrl('https://www.example.org/connector-auth-help')
@@ -61,7 +61,7 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.USER_TOKEN)
       .setHelpUrl('https://www.example.org/connector-auth-help')
@@ -75,7 +75,7 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.KEY)
       .setHelpUrl('https://www.example.org/connector-auth-help')
@@ -89,7 +89,7 @@ function getAuthType() {
  * @return {object} The Auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse()
       .setAuthType(cc.AuthType.NONE)
       .build();
@@ -110,7 +110,7 @@ function resetAuth() {
  * Resets the auth service.
  */
 function resetAuth() {
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty('dscc.path');
   userProperties.deleteProperty('dscc.username');
   userProperties.deleteProperty('dscc.password');
@@ -122,7 +122,7 @@ function resetAuth() {
  * Resets the auth service.
  */
 function resetAuth() {
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty('dscc.username');
   userProperties.deleteProperty('dscc.password');
 }
@@ -133,7 +133,7 @@ function resetAuth() {
  * Resets the auth service.
  */
 function resetAuth() {
-  var userTokenProperties = PropertiesService.getUserProperties();
+  const userTokenProperties = PropertiesService.getUserProperties();
   userTokenProperties.deleteProperty('dscc.username');
   userTokenProperties.deleteProperty('dscc.password');
 }
@@ -144,7 +144,7 @@ function resetAuth() {
  * Resets the auth service.
  */
 function resetAuth() {
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty('dscc.key');
 }
 // [END apps_script_data_studio_auth_reset_key]
@@ -165,10 +165,10 @@ function isAuthValid() {
  * @return {boolean} True if the auth service has access.
  */
 function isAuthValid() {
-  var userProperties = PropertiesService.getUserProperties();
-  var path = userProperties.getProperty('dscc.path');
-  var userName = userProperties.getProperty('dscc.username');
-  var password = userProperties.getProperty('dscc.password');
+  const userProperties = PropertiesService.getUserProperties();
+  const path = userProperties.getProperty('dscc.path');
+  const userName = userProperties.getProperty('dscc.username');
+  const password = userProperties.getProperty('dscc.password');
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(path, userName, password);
@@ -181,9 +181,9 @@ function isAuthValid() {
  * @return {boolean} True if the auth service has access.
  */
 function isAuthValid() {
-  var userProperties = PropertiesService.getUserProperties();
-  var userName = userProperties.getProperty('dscc.username');
-  var password = userProperties.getProperty('dscc.password');
+  const userProperties = PropertiesService.getUserProperties();
+  const userName = userProperties.getProperty('dscc.username');
+  const password = userProperties.getProperty('dscc.password');
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(userName, password);
@@ -196,9 +196,9 @@ function isAuthValid() {
  * @return {boolean} True if the auth service has access.
  */
 function isAuthValid() {
-  var userProperties = PropertiesService.getUserProperties();
-  var userName = userProperties.getProperty('dscc.username');
-  var token = userProperties.getProperty('dscc.token');
+  const userProperties = PropertiesService.getUserProperties();
+  const userName = userProperties.getProperty('dscc.username');
+  const token = userProperties.getProperty('dscc.token');
   // This assumes you have a validateCredentials function that
   // can validate if the userName and token are correct.
   return validateCredentials(userName, token);
@@ -211,8 +211,8 @@ function isAuthValid() {
  * @return {boolean} True if the auth service has access.
  */
 function isAuthValid() {
-  var userProperties = PropertiesService.getUserProperties();
-  var key = userProperties.getProperty('dscc.key');
+  const userProperties = PropertiesService.getUserProperties();
+  const key = userProperties.getProperty('dscc.key');
   // This assumes you have a validateKey function that can validate
   // if the key is valid.
   return validateKey(key);
@@ -243,7 +243,7 @@ function getOAuthService() {
  * @return {HtmlOutput} The HTML output to show to the user.
  */
 function authCallback(request) {
-  var authorized = getOAuthService().handleCallback(request);
+  const authorized = getOAuthService().handleCallback(request);
   if (authorized) {
     return HtmlService.createHtmlOutput('Success! You can close this tab.');
   } else {
@@ -270,22 +270,22 @@ function get3PAuthorizationUrls() {
  * @return {object} An object with an errorCode.
  */
 function setCredentials(request) {
-  var creds = request.userPass;
-  var path = creds.path;
-  var username = creds.username;
-  var password = creds.password;
+  const creds = request.userPass;
+  const path = creds.path;
+  const username = creds.username;
+  const password = creds.password;
 
   // Optional
   // Check if the provided path, username and password are valid through
   // a call to your service. You would have to have a `checkForValidCreds`
   // function defined for this to work.
-  var validCreds = checkForValidCreds(path, username, password);
+  const validCreds = checkForValidCreds(path, username, password);
   if (!validCreds) {
     return {
       errorCode: 'INVALID_CREDENTIALS'
     };
   }
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.setProperty('dscc.path', path);
   userProperties.setProperty('dscc.username', username);
   userProperties.setProperty('dscc.password', password);
@@ -302,21 +302,21 @@ function setCredentials(request) {
  * @return {object} An object with an errorCode.
  */
 function setCredentials(request) {
-  var creds = request.userPass;
-  var username = creds.username;
-  var password = creds.password;
+  const creds = request.userPass;
+  const username = creds.username;
+  const password = creds.password;
 
   // Optional
   // Check if the provided username and password are valid through a
   // call to your service. You would have to have a `checkForValidCreds`
   // function defined for this to work.
-  var validCreds = checkForValidCreds(username, password);
+  const validCreds = checkForValidCreds(username, password);
   if (!validCreds) {
     return {
       errorCode: 'INVALID_CREDENTIALS'
     };
   }
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.setProperty('dscc.username', username);
   userProperties.setProperty('dscc.password', password);
   return {
@@ -332,21 +332,21 @@ function setCredentials(request) {
  * @return {object} An object with an errorCode.
  */
 function setCredentials(request) {
-  var creds = request.userToken;
-  var username = creds.username;
-  var token = creds.token;
+  const creds = request.userToken;
+  const username = creds.username;
+  const token = creds.token;
 
   // Optional
   // Check if the provided username and token are valid through a
   // call to your service. You would have to have a `checkForValidCreds`
   // function defined for this to work.
-  var validCreds = checkForValidCreds(username, token);
+  const validCreds = checkForValidCreds(username, token);
   if (!validCreds) {
     return {
       errorCode: 'INVALID_CREDENTIALS'
     };
   }
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.setProperty('dscc.username', username);
   userProperties.setProperty('dscc.token', token);
   return {
@@ -362,19 +362,19 @@ function setCredentials(request) {
  * @return {object} An object with an errorCode.
  */
 function setCredentials(request) {
-  var key = request.key;
+  const key = request.key;
 
   // Optional
   // Check if the provided key is valid through a call to your service.
   // You would have to have a `checkForValidKey` function defined for
   // this to work.
-  var validKey = checkForValidKey(key);
+  const validKey = checkForValidKey(key);
   if (!validKey) {
     return {
       errorCode: 'INVALID_CREDENTIALS'
     };
   }
-  var userProperties = PropertiesService.getUserProperties();
+  const userProperties = PropertiesService.getUserProperties();
   userProperties.setProperty('dscc.key', key);
   return {
     errorCode: 'NONE'
