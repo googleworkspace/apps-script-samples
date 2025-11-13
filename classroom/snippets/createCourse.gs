@@ -16,18 +16,28 @@
 // [START classroom_create_course]
 /**
  * Creates 10th Grade Biology Course.
+ * @see https://developers.google.com/classroom/reference/rest/v1/courses/create
+ * return {string} Id of created course
  */
 function createCourse() {
-  var course = {
+  let course = {
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: "We'll be learning about about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!",
+    description: 'We\'ll be learning about the structure of living creatures from a combination ' +
+      'of textbooks, guest lectures, and lab work. Expect to be excited!',
     room: '301',
     ownerId: 'me',
     courseState: 'PROVISIONED'
   };
-  var course = Classroom.Courses.create(course);
-  Logger.log('Course created: %s (%s)', course.name, course.id)
+  try {
+    // Create the course using course details.
+    course = Classroom.Courses.create(course);
+    console.log('Course created: %s (%s)', course.name, course.id);
+    return course.id;
+  } catch (err) {
+    // TODO (developer) - Handle Courses.create() exception
+    console.log('Failed to create course %s with an error %s', course.name, err.message);
+  }
 }
 // [END classroom_create_course]

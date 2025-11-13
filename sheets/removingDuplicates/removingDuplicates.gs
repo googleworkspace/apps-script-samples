@@ -20,28 +20,21 @@
  */
 function removeDuplicates() {
   // [START apps_script_sheets_sheet]
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var data = sheet.getDataRange().getValues();
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const data = sheet.getDataRange().getValues();
   // [END apps_script_sheets_sheet]
-  // [START apps_script_sheets_new_data]
-  var newData = [];
-  // [END apps_script_sheets_new_data]
-  for (var i in data) {
-    var row = data[i];
-    var duplicate = false;
-    for (var j in newData) {
-      if (row.join() == newData[j].join()) {
-        duplicate = true;
-      }
-    }
+  const uniqueData = {};
+  for (let row of data) {
+    const key = row.join();
     // [START apps_script_sheets_duplicate]
-    if (!duplicate) {
-      newData.push(row);
-    }
+    uniqueData[key] = uniqueData[key] || row;
     // [END apps_script_sheets_duplicate]
   }
   // [START apps_script_sheets_clear]
   sheet.clearContents();
+  // [START apps_script_sheets_new_data]
+  const newData = Object.values(uniqueData);
+  // [END apps_script_sheets_new_data]
   sheet.getRange(1, 1, newData.length, newData[0].length).setValues(newData);
   // [END apps_script_sheets_clear]
 }

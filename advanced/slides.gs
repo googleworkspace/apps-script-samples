@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var presentationId = '1K0Wd9BWgfy1doB0da_vRYmaYTUavEYVKJV_EygSiiMY';
-var pageId = 'p';
-var shapeId = 'MyTextBoxId';
 
 // [START apps_script_slides_create_presentation]
 /**
  * Create a new presentation.
+ * @return {string} presentation Id.
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/create
  */
 function createPresentation() {
-  var presentation =
+  try {
+    const presentation =
       Slides.Presentations.create({'title': 'MyNewPresentation'});
-  Logger.log('Created presentation with ID: ' + presentation.presentationId);
+    console.log('Created presentation with ID: ' + presentation.presentationId);
+    return presentation.presentationId;
+  } catch (e) {
+    // TODO (developer) - Handle exception
+    console.log('Failed with error %s', e.message);
+  }
 }
 // [END apps_script_slides_create_presentation]
 
@@ -32,12 +37,14 @@ function createPresentation() {
 /**
  * Create a new slide.
  * @param {string} presentationId The presentation to add the slide to.
+ * @return {Object} slide
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function createSlide(presentationId) {
   // You can specify the ID to use for the slide, as long as it's unique.
-  var pageId = Utilities.getUuid();
+  const pageId = Utilities.getUuid();
 
-  var requests = [{
+  const requests = [{
     'createSlide': {
       'objectId': pageId,
       'insertionIndex': 1,
@@ -46,9 +53,15 @@ function createSlide(presentationId) {
       }
     }
   }];
-  var slide =
+  try {
+    const slide =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-  Logger.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
+    console.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
+    return slide;
+  } catch (e) {
+    // TODO (developer) - Handle Exception
+    console.log('Failed with error %s', e.message);
+  }
 }
 // [END apps_script_slides_create_slide]
 
@@ -57,13 +70,21 @@ function createSlide(presentationId) {
  * Read page element IDs.
  * @param {string} presentationId The presentation to read from.
  * @param {string} pageId The page to read from.
+ * @return {Object} response
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations.pages/get
  */
 function readPageElementIds(presentationId, pageId) {
   // You can use a field mask to limit the data the API retrieves
   // in a get request, or what fields are updated in an batchUpdate.
-  var response = Slides.Presentations.Pages.get(
-      presentationId, pageId, {'fields': 'pageElements.objectId'});
-  Logger.log(response);
+  try {
+    const response = Slides.Presentations.Pages.get(
+        presentationId, pageId, {'fields': 'pageElements.objectId'});
+    console.log(response);
+    return response;
+  } catch (e) {
+    // TODO (developer) - Handle Exception
+    console.log('Failed with error %s', e.message);
+  }
 }
 // [END apps_script_slides_read_page]
 
@@ -72,13 +93,15 @@ function readPageElementIds(presentationId, pageId) {
  * Add a new text box with text to a page.
  * @param {string} presentationId The presentation ID.
  * @param {string} pageId The page ID.
+ * @return {Object} response
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function addTextBox(presentationId, pageId) {
   // You can specify the ID to use for elements you create,
   // as long as the ID is unique.
-  var pageElementId = Utilities.getUuid();
+  const pageElementId = Utilities.getUuid();
 
-  var requests = [{
+  const requests = [{
     'createShape': {
       'objectId': pageElementId,
       'shapeType': 'TEXT_BOX',
@@ -110,10 +133,16 @@ function addTextBox(presentationId, pageId) {
       'insertionIndex': 0
     }
   }];
-  var response =
+  try {
+    const response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-  Logger.log('Created Textbox with ID: ' +
+    console.log('Created Textbox with ID: ' +
       response.replies[0].createShape.objectId);
+    return response;
+  } catch (e) {
+    // TODO (developer) - Handle Exception
+    console.log('Failed with error %s', e.message);
+  }
 }
 // [END apps_script_slides_add_text_box]
 
@@ -122,9 +151,11 @@ function addTextBox(presentationId, pageId) {
  * Format the text in a shape.
  * @param {string} presentationId The presentation ID.
  * @param {string} shapeId The shape ID.
+ * @return {Object} replies
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function formatShapeText(presentationId, shapeId) {
-  var requests = [{
+  const requests = [{
     'updateTextStyle': {
       'objectId': shapeId,
       'fields': 'foregroundColor,bold,italic,fontFamily,fontSize,underline',
@@ -148,25 +179,40 @@ function formatShapeText(presentationId, shapeId) {
       }
     }
   }];
-  var response =
+  try {
+    const response =
       Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
+    return response.replies;
+  } catch (e) {
+    // TODO (developer) - Handle Exception
+    console.log('Failed with error %s', e.message);
+  }
 }
 // [END apps_script_slides_format_shape_text]
 
-// [START apps_script_slides_thumbnail]
+// [START apps_script_slides_save_thumbnail]
 /**
  * Saves a thumbnail image of the current Google Slide presentation in Google Drive.
  * Logs the image URL.
  * @param {number} i The zero-based slide index. 0 is the first slide.
  * @example saveThumbnailImage(0)
+ * @see https://developers.google.com/slides/api/reference/rest/v1/presentations.pages/getThumbnail
  */
 function saveThumbnailImage(i) {
-  var presentation = SlidesApp.getActivePresentation();
-  var thumbnail = Slides.Presentations.Pages.getThumbnail(
-    presentation.getId(), presentation.getSlides()[i].getObjectId());
-  var response = UrlFetchApp.fetch(thumbnail.contentUrl);
-  var image = response.getBlob();
-  var file = DriveApp.createFile(image);
-  Logger.log(file.getUrl());
+  try {
+    const presentation = SlidesApp.getActivePresentation();
+    // Get the thumbnail of specified page
+    const thumbnail = Slides.Presentations.Pages.getThumbnail(
+        presentation.getId(), presentation.getSlides()[i].getObjectId());
+    // fetch the  URL to the thumbnail image.
+    const response = UrlFetchApp.fetch(thumbnail.contentUrl);
+    const image = response.getBlob();
+    // Creates a file in the root of the user's Drive from a given Blob of arbitrary data.
+    const file = DriveApp.createFile(image);
+    console.log(file.getUrl());
+  } catch (e) {
+    // TODO (developer) - Handle Exception
+    console.log('Failed with error %s', e.message);
+  }
 }
-// [END apps_script_slides_thumbnail]
+// [END apps_script_slides_save_thumbnail]

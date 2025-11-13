@@ -1,0 +1,41 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# .github/sync-repo-settings.yaml
+# See https://github.com/googleapis/repo-automation-bots/tree/main/packages/sync-repo-settings for app options.
+rebaseMergeAllowed: true
+squashMergeAllowed: true
+mergeCommitAllowed: false
+deleteBranchOnMerge: true
+branchProtectionRules:
+  - pattern: main
+    isAdminEnforced: false
+    requiresStrictStatusChecks: false
+    requiredStatusCheckContexts:
+      # .github/workflows/test.yml with a job called "test"
+      - "test"
+      # .github/workflows/lint.yml with a job called "lint"
+      - "lint"
+      # Google bots below
+      - "cla/google"
+      - "snippet-bot check"
+      - "header-check"
+      - "conventionalcommits.org"
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+permissionRules:
+  - team: workspace-devrel-dpe
+    permission: admin
+  - team: workspace-devrel
+    permission: push

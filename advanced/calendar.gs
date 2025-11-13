@@ -13,40 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_calendar_list_calendars]
+// [START calendar_list_calendars]
 /**
  * Lists the calendars shown in the user's calendar list.
+ * @see https://developers.google.com/calendar/api/v3/reference/calendarList/list
  */
 function listCalendars() {
-  var calendars;
-  var pageToken;
+  let calendars;
+  let pageToken;
   do {
     calendars = Calendar.CalendarList.list({
       maxResults: 100,
       pageToken: pageToken
+
     });
-    if (calendars.items && calendars.items.length > 0) {
-      for (var i = 0; i < calendars.items.length; i++) {
-        var calendar = calendars.items[i];
-        Logger.log('%s (ID: %s)', calendar.summary, calendar.id);
-      }
-    } else {
-      Logger.log('No calendars found.');
+    if (!calendars.items || calendars.items.length === 0) {
+      console.log('No calendars found.');
+      return;
+    }
+    // Print the calendar id and calendar summary
+    for (const calendar of calendars.items) {
+      console.log('%s (ID: %s)', calendar.summary, calendar.id);
     }
     pageToken = calendars.nextPageToken;
   } while (pageToken);
 }
-// [END apps_script_calendar_list_calendars]
+// [END calendar_list_calendars]
 
-// [START apps_script_calendar_create_event]
+// [START calendar_create_event]
 /**
  * Creates an event in the user's default calendar.
+ * @see https://developers.google.com/calendar/api/v3/reference/events/insert
  */
 function createEvent() {
-  var calendarId = 'primary';
-  var start = getRelativeDate(1, 12);
-  var end = getRelativeDate(1, 13);
-  var event = {
+  const calendarId = 'primary';
+  const start = getRelativeDate(1, 12);
+  const end = getRelativeDate(1, 13);
+  // event details for creating event.
+  let event = {
     summary: 'Lunch Meeting',
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
@@ -57,14 +61,19 @@ function createEvent() {
       dateTime: end.toISOString()
     },
     attendees: [
-      {email: 'alice@example.com'},
-      {email: 'bob@example.com'}
+      {email: 'gduser1@workspacesample.dev'},
+      {email: 'gduser2@workspacesample.dev'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
     colorId: 11
   };
-  event = Calendar.Events.insert(event, calendarId);
-  Logger.log('Event ID: ' + event.id);
+  try {
+    // call method to insert/create new event in provided calandar
+    event = Calendar.Events.insert(event, calendarId);
+    console.log('Event ID: ' + event.id);
+  } catch (err) {
+    console.log('Failed with error %s', err.message);
+  }
 }
 
 /**
@@ -75,7 +84,7 @@ function createEvent() {
  * @return {Date} The new date.
  */
 function getRelativeDate(daysOffset, hour) {
-  var date = new Date();
+  const date = new Date();
   date.setDate(date.getDate() + daysOffset);
   date.setHours(hour);
   date.setMinutes(0);
@@ -83,40 +92,40 @@ function getRelativeDate(daysOffset, hour) {
   date.setMilliseconds(0);
   return date;
 }
-// [END apps_script_calendar_create_event]
+// [END calendar_create_event]
 
-// [START apps_script_calendar_list_events]
+// [START calendar_list_events]
 /**
  * Lists the next 10 upcoming events in the user's default calendar.
+ * @see https://developers.google.com/calendar/api/v3/reference/events/list
  */
 function listNext10Events() {
-  var calendarId = 'primary';
-  var now = new Date();
-  var events = Calendar.Events.list(calendarId, {
+  const calendarId = 'primary';
+  const now = new Date();
+  const events = Calendar.Events.list(calendarId, {
     timeMin: now.toISOString(),
     singleEvents: true,
     orderBy: 'startTime',
     maxResults: 10
   });
-  if (events.items && events.items.length > 0) {
-    for (var i = 0; i < events.items.length; i++) {
-      var event = events.items[i];
-      if (event.start.date) {
-        // All-day event.
-        var start = new Date(event.start.date);
-        Logger.log('%s (%s)', event.summary, start.toLocaleDateString());
-      } else {
-        var start = new Date(event.start.dateTime);
-        Logger.log('%s (%s)', event.summary, start.toLocaleString());
-      }
+  if (!events.items || events.items.length === 0) {
+    console.log('No events found.');
+    return;
+  }
+  for (const event of events.items) {
+    if (event.start.date) {
+      // All-day event.
+      const start = new Date(event.start.date);
+      console.log('%s (%s)', event.summary, start.toLocaleDateString());
+      return;
     }
-  } else {
-    Logger.log('No events found.');
+    const start = new Date(event.start.dateTime);
+    console.log('%s (%s)', event.summary, start.toLocaleString());
   }
 }
-// [END apps_script_calendar_list_events]
+// [END calendar_list_events]
 
-// [START apps_script_calendar_log_synced_events]
+// [START calendar_log_synced_events]
 /**
  * Retrieve and log events from the given calendar that have been modified
  * since the last sync. If the sync token is missing or invalid, log all
@@ -127,21 +136,20 @@ function listNext10Events() {
  *        perform a full sync; if false, use the existing sync token if possible.
  */
 function logSyncedEvents(calendarId, fullSync) {
-  var properties = PropertiesService.getUserProperties();
-  var options = {
+  const properties = PropertiesService.getUserProperties();
+  const options = {
     maxResults: 100
   };
-  var syncToken = properties.getProperty('syncToken');
+  const syncToken = properties.getProperty('syncToken');
   if (syncToken && !fullSync) {
     options.syncToken = syncToken;
   } else {
     // Sync events up to thirty days in the past.
     options.timeMin = getRelativeDate(-30, 0).toISOString();
   }
-
   // Retrieve events one page at a time.
-  var events;
-  var pageToken;
+  let events;
+  let pageToken;
   do {
     try {
       options.pageToken = pageToken;
@@ -153,38 +161,34 @@ function logSyncedEvents(calendarId, fullSync) {
         properties.deleteProperty('syncToken');
         logSyncedEvents(calendarId, true);
         return;
-      } else {
-        throw new Error(e.message);
       }
+      throw new Error(e.message);
     }
-
-    if (events.items && events.items.length > 0) {
-      for (var i = 0; i < events.items.length; i++) {
-         var event = events.items[i];
-         if (event.status === 'cancelled') {
-           console.log('Event id %s was cancelled.', event.id);
-         } else if (event.start.date) {
-           // All-day event.
-           var start = new Date(event.start.date);
-           console.log('%s (%s)', event.summary, start.toLocaleDateString());
-         } else {
-           // Events that don't last all day; they have defined start times.
-           var start = new Date(event.start.dateTime);
-           console.log('%s (%s)', event.summary, start.toLocaleString());
-         }
-      }
-    } else {
+    if (events.items && events.items.length === 0) {
       console.log('No events found.');
+      return;
     }
-
+    for (const event of events.items) {
+      if (event.status === 'cancelled') {
+        console.log('Event id %s was cancelled.', event.id);
+        return;
+      }
+      if (event.start.date) {
+        const start = new Date(event.start.date);
+        console.log('%s (%s)', event.summary, start.toLocaleDateString());
+        return;
+      }
+      // Events that don't last all day; they have defined start times.
+      const start = new Date(event.start.dateTime);
+      console.log('%s (%s)', event.summary, start.toLocaleString());
+    }
     pageToken = events.nextPageToken;
   } while (pageToken);
-
   properties.setProperty('syncToken', events.nextSyncToken);
 }
-// [END apps_script_calendar_log_synced_events]
+// [END calendar_log_synced_events]
 
-// [START apps_script_calendar_conditional_update]
+// [START calendar_conditional_update]
 /**
  * Creates an event in the user's default calendar, waits 30 seconds, then
  * attempts to update the event's location, on the condition that the event
@@ -196,10 +200,10 @@ function logSyncedEvents(calendarId, fullSync) {
  * to the etag of the new event when it was created.
  */
 function conditionalUpdate() {
-  var calendarId = 'primary';
-  var start = getRelativeDate(1, 12);
-  var end = getRelativeDate(1, 13);
-  var event = {
+  const calendarId = 'primary';
+  const start = getRelativeDate(1, 12);
+  const end = getRelativeDate(1, 13);
+  let event = {
     summary: 'Lunch Meeting',
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
@@ -210,14 +214,14 @@ function conditionalUpdate() {
       dateTime: end.toISOString()
     },
     attendees: [
-      {email: 'alice@example.com'},
-      {email: 'bob@example.com'}
+      {email: 'gduser1@workspacesample.dev'},
+      {email: 'gduser2@workspacesample.dev'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
     colorId: 11
   };
   event = Calendar.Events.insert(event, calendarId);
-  Logger.log('Event ID: ' + event.getId());
+  console.log('Event ID: ' + event.getId());
   // Wait 30 seconds to see if the event has been updated outside this script.
   Utilities.sleep(30 * 1000);
   // Try to update the event, on the condition that the event state has not
@@ -225,20 +229,20 @@ function conditionalUpdate() {
   event.location = 'The Coffee Shop';
   try {
     event = Calendar.Events.update(
-      event,
-      calendarId,
-      event.id,
-      {},
-      {'If-Match': event.etag}
+        event,
+        calendarId,
+        event.id,
+        {},
+        {'If-Match': event.etag}
     );
-    Logger.log('Successfully updated event: ' + event.id);
+    console.log('Successfully updated event: ' + event.id);
   } catch (e) {
-    Logger.log('Fetch threw an exception: ' + e);
+    console.log('Fetch threw an exception: ' + e);
   }
 }
-// [END apps_script_calendar_conditional_update]
+// [END calendar_conditional_update]
 
-// [START apps_script_calendar_conditional_fetch]
+// [START calendar_conditional_fetch]
 /**
  * Creates an event in the user's default calendar, then re-fetches the event
  * every second, on the condition that the event has changed since the last
@@ -248,10 +252,10 @@ function conditionalUpdate() {
  * to the etag of the last known state of the event.
  */
 function conditionalFetch() {
-  var calendarId = 'primary';
-  var start = getRelativeDate(1, 12);
-  var end = getRelativeDate(1, 13);
-  var event = {
+  const calendarId = 'primary';
+  const start = getRelativeDate(1, 12);
+  const end = getRelativeDate(1, 13);
+  let event = {
     summary: 'Lunch Meeting',
     location: 'The Deli',
     description: 'To discuss our plans for the presentation next week.',
@@ -262,23 +266,24 @@ function conditionalFetch() {
       dateTime: end.toISOString()
     },
     attendees: [
-      {email: 'alice@example.com'},
-      {email: 'bob@example.com'}
+      {email: 'gduser1@workspacesample.dev'},
+      {email: 'gduser2@workspacesample.dev'}
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
     colorId: 11
   };
-  event = Calendar.Events.insert(event, calendarId);
-  Logger.log('Event ID: ' + event.getId());
-  // Re-fetch the event each second, but only get a result if it has changed.
-  for (var i = 0; i < 30; i++) {
-    Utilities.sleep(1000);
-    try {
+  try {
+    // insert event
+    event = Calendar.Events.insert(event, calendarId);
+    console.log('Event ID: ' + event.getId());
+    // Re-fetch the event each second, but only get a result if it has changed.
+    for (let i = 0; i < 30; i++) {
+      Utilities.sleep(1000);
       event = Calendar.Events.get(calendarId, event.id, {}, {'If-None-Match': event.etag});
-      Logger.log('New event description: ' + event.description);
-    } catch (e) {
-      Logger.log('Fetch threw an exception: ' + e);
+      console.log('New event description: ' + event.start.dateTime);
     }
+  } catch (e) {
+    console.log('Fetch threw an exception: ' + e);
   }
 }
-// [END apps_script_calendar_conditional_fetch]
+// [END calendar_conditional_fetch]

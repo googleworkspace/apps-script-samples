@@ -9,3 +9,7 @@ This tutorial shows an easy way to collect information from different users in a
 ## [Sending Emails](https://developers.google.com/apps-script/articles/sending_emails)
 
 This tutorial shows how to use Spreadsheet data to send emails to different people.
+
+## [Inline Image](inlineimage/inlineimage.gs)
+
+This example shows how to send an HTML email that includes an inline image attachment.

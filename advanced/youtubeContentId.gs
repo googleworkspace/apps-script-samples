@@ -17,15 +17,16 @@
 /**
  * This function creates a partner-uploaded claim on a video with the specified
  * asset and policy rules.
+ * @see https://developers.google.com/youtube/partner/docs/v1/claims/insert
  */
 function claimYourVideoWithMonetizePolicy() {
   // The ID of the content owner that you are acting on behalf of.
-  var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
   // A YouTube video ID to claim. In this example, the video must be uploaded
   // to one of your onBehalfOfContentOwner's linked channels.
-  var videoId = 'replaceWithYourVideoID';
-  var assetId = 'replaceWithYourAssetID';
-  var claimToInsert = {
+  const videoId = 'replaceWithYourVideoID';
+  const assetId = 'replaceWithYourAssetID';
+  const claimToInsert = {
     'videoId': videoId,
     'assetId': assetId,
     'contentType': 'audiovisual',
@@ -37,12 +38,12 @@ function claimYourVideoWithMonetizePolicy() {
     'policy': {'rules': [{'action': 'monetize'}]}
   };
   try {
-    var claimInserted = YoutubeContentId.Claims.insert(claimToInsert,
+    const claimInserted = YouTubeContentId.Claims.insert(claimToInsert,
         {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Claim created on video %s: %s', videoId, claimInserted);
+    console.log('Claim created on video %s: %s', videoId, claimInserted);
   } catch (e) {
-    Logger.log('Failed to create claim on video %s, error: %s',
-               videoId, e.message);
+    console.log('Failed to create claim on video %s, error: %s',
+        videoId, e.message);
   }
 }
 // [END apps_script_youtube_claim]
@@ -51,12 +52,15 @@ function claimYourVideoWithMonetizePolicy() {
 /**
  * This function updates your onBehalfOfContentOwner's ownership on an existing
  * asset.
+ * @see https://developers.google.com/youtube/partner/docs/v1/ownership/update
  */
 function updateAssetOwnership() {
-  var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
-  var assetId = 'replaceWithYourAssetID';
+  // The ID of the content owner that you are acting on behalf of.
+  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  // Replace values with your asset id
+  const assetId = 'replaceWithYourAssetID';
   // The new ownership here would replace your existing ownership on the asset.
-  var myAssetOwnership = {
+  const myAssetOwnership = {
     'general': [
       {
         'ratio': 100,
@@ -70,12 +74,12 @@ function updateAssetOwnership() {
     ]
   };
   try {
-    var updatedOwnership = YoutubeContentId.Ownership.update(myAssetOwnership,
+    const updatedOwnership = YouTubeContentId.Ownership.update(myAssetOwnership,
         assetId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
+    console.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
   } catch (e) {
-    Logger.log('Ownership update failed on asset %s, error: %s',
-               assetId, e.message);
+    console.log('Ownership update failed on asset %s, error: %s',
+        assetId, e.message);
   }
 }
 // [END apps_script_youtube_update_asset_ownership]
@@ -84,21 +88,23 @@ function updateAssetOwnership() {
 /**
  * This function releases an existing claim your onBehalfOfContentOwner has
  * on a video.
+ * @see https://developers.google.com/youtube/partner/docs/v1/claims/patch
  */
 function releaseClaim() {
-  var onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  // The ID of the content owner that you are acting on behalf of.
+  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
   // The ID of the claim to be released.
-  var claimId = 'replaceWithYourClaimID';
+  const claimId = 'replaceWithYourClaimID';
   // To release the claim, change the resource's status to inactive.
-  var claimToBeReleased = {
+  const claimToBeReleased = {
     'status': 'inactive'
   };
   try {
-    var claimReleased = YoutubeContentId.Claims.patch(claimToBeReleased,
+    const claimReleased = YouTubeContentId.Claims.patch(claimToBeReleased,
         claimId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    Logger.log('Claim %s was released: %s', claimId, claimReleased);
+    console.log('Claim %s was released: %s', claimId, claimReleased);
   } catch (e) {
-    Logger.log('Failed to release claim %s, error: %s', claimId, e.message);
+    console.log('Failed to release claim %s, error: %s', claimId, e.message);
   }
 }
 // [END apps_script_youtube_release_claim]

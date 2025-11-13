@@ -18,9 +18,9 @@
  * Inserts a product into the products list. Logs the API response.
  */
 function productInsert() {
-  var merchantId = 123456; // Replace this with your Merchant Center ID.
+  const merchantId = 123456; // Replace this with your Merchant Center ID.
   // Create a product resource and insert it
-  var productResource = {
+  const productResource = {
     'offerId': 'book123',
     'title': 'A Tale of Two Cities',
     'description': 'A classic novel about the French Revolution',
@@ -52,8 +52,14 @@ function productInsert() {
     }
   };
 
-  response = ShoppingContent.Products.insert(productResource, merchantId);
-  Logger.log(response); // RESTful insert returns the JSON object as a response.
+  try {
+    response = ShoppingContent.Products.insert(productResource, merchantId);
+    // RESTful insert returns the JSON object as a response.
+    console.log(response);
+  } catch (e) {
+    // TODO (Developer) - Handle exceptions
+    console.log('Failed with error: $s', e.error);
+  }
 }
 // [END apps_script_shopping_product_insert]
 
@@ -62,26 +68,31 @@ function productInsert() {
  * Lists the products for a given merchant.
  */
 function productList() {
-  var merchantId = 123456; // Replace this with your Merchant Center ID.
-  var pageToken;
-  var pageNum = 1;
-  var maxResults = 10;
-  do {
-    var products = ShoppingContent.Products.list(merchantId, {
-      pageToken: pageToken,
-      maxResults: maxResults
-    });
-    Logger.log('Page ' + pageNum);
-    if (products.resources) {
-      for (var i = 0; i < products.resources.length; i++) {
-        Logger.log('Item [' + i + '] ==> ' + products.resources[i]);
+  const merchantId = 123456; // Replace this with your Merchant Center ID.
+  let pageToken;
+  let pageNum = 1;
+  const maxResults = 10;
+  try {
+    do {
+      const products = ShoppingContent.Products.list(merchantId, {
+        pageToken: pageToken,
+        maxResults: maxResults
+      });
+      console.log('Page ' + pageNum);
+      if (products.resources) {
+        for (let i = 0; i < products.resources.length; i++) {
+          console.log('Item [' + i + '] ==> ' + products.resources[i]);
+        }
+      } else {
+        console.log('No more products in account ' + merchantId);
       }
-    } else {
-      Logger.log('No more products in account ' + merchantId);
-    }
-    pageToken = products.nextPageToken;
-    pageNum++;
-  } while (pageToken);
+      pageToken = products.nextPageToken;
+      pageNum++;
+    } while (pageToken);
+  } catch (e) {
+    // TODO (Developer) - Handle exceptions
+    console.log('Failed with error: $s', e.error);
+  }
 }
 // [END apps_script_shopping_product_list]
 
@@ -93,7 +104,7 @@ function productList() {
  * @param  {object} productResource3 The third product resource.
  */
 function custombatch(productResource1, productResource2, productResource3) {
-  var merchantId = 123456; // Replace this with your Merchant Center ID.
+  const merchantId = 123456; // Replace this with your Merchant Center ID.
   custombatchResource = {
     'entries': [
       {
@@ -119,8 +130,13 @@ function custombatch(productResource1, productResource2, productResource3) {
       }
     ]
   };
-  var response = ShoppingContent.Products.custombatch(custombatchResource);
-  Logger.log(response);
+  try {
+    const response = ShoppingContent.Products.custombatch(custombatchResource);
+    console.log(response);
+  } catch (e) {
+    // TODO (Developer) - Handle exceptions
+    console.log('Failed with error: $s', e.error);
+  }
 }
 // [END apps_script_shopping_product_batch_insert]
 
@@ -131,37 +147,43 @@ function custombatch(productResource1, productResource2, productResource3) {
  */
 function updateAccountTax() {
   // Replace this with your Merchant Center ID.
-  var merchantId = 123456;
+  const merchantId = 123456;
 
   // Replace this with the account that you are updating taxes for.
-  var accountId = 123456;
+  const accountId = 123456;
 
-  var accounttax = ShoppingContent.Accounttax.get(merchantId, accountId);
-  Logger.log(accounttax);
+  try {
+    const accounttax = ShoppingContent.Accounttax.get(merchantId, accountId);
+    console.log(accounttax);
 
-  var taxInfo = {
-    accountId: accountId,
-    rules: [
-      {
-        'useGlobalRate': true,
-        'locationId': 21135,
-        'shippingTaxed': true,
-        'country': 'US'
-      },
-      {
-        'ratePercent': 3,
-        'locationId': 21136,
-        'country': 'US'
-      },
-      {
-        'ratePercent': 2,
-        'locationId': 21160,
-        'shippingTaxed': true,
-        'country': 'US'
-      }
-    ]
-  };
+    const taxInfo = {
+      accountId: accountId,
+      rules: [
+        {
+          'useGlobalRate': true,
+          'locationId': 21135,
+          'shippingTaxed': true,
+          'country': 'US'
+        },
+        {
+          'ratePercent': 3,
+          'locationId': 21136,
+          'country': 'US'
+        },
+        {
+          'ratePercent': 2,
+          'locationId': 21160,
+          'shippingTaxed': true,
+          'country': 'US'
+        }
+      ]
+    };
 
-  Logger.log(ShoppingContent.Accounttax.update(taxInfo, merchantId, accountId));
+    console.log(ShoppingContent.Accounttax
+        .update(taxInfo, merchantId, accountId));
+  } catch (e) {
+    // TODO (Developer) - Handle exceptions
+    console.log('Failed with error: $s', e.error);
+  }
 }
 // [END apps_script_shopping_account_info]

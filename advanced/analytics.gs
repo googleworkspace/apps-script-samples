@@ -18,17 +18,23 @@
  * Lists Analytics accounts.
  */
 function listAccounts() {
-  var accounts = Analytics.Management.Accounts.list();
-  if (accounts.items && accounts.items.length) {
-    for (var i = 0; i < accounts.items.length; i++) {
-      var account = accounts.items[i];
-      Logger.log('Account: name "%s", id "%s".', account.name, account.id);
+  try {
+    const accounts = Analytics.Management.Accounts.list();
+    if (!accounts.items || !accounts.items.length) {
+      console.log('No accounts found.');
+      return;
+    }
+
+    for (let i = 0; i < accounts.items.length; i++) {
+      const account = accounts.items[i];
+      console.log('Account: name "%s", id "%s".', account.name, account.id);
 
       // List web properties in the account.
       listWebProperties(account.id);
     }
-  } else {
-    Logger.log('No accounts found.');
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -37,18 +43,23 @@ function listAccounts() {
  * @param  {string} accountId The account ID.
  */
 function listWebProperties(accountId) {
-  var webProperties = Analytics.Management.Webproperties.list(accountId);
-  if (webProperties.items && webProperties.items.length) {
-    for (var i = 0; i < webProperties.items.length; i++) {
-      var webProperty = webProperties.items[i];
-      Logger.log('\tWeb Property: name "%s", id "%s".', webProperty.name,
-          webProperty.id);
+  try {
+    const webProperties = Analytics.Management.Webproperties.list(accountId);
+    if (!webProperties.items || !webProperties.items.length) {
+      console.log('\tNo web properties found.');
+      return;
+    }
+    for (let i = 0; i < webProperties.items.length; i++) {
+      const webProperty = webProperties.items[i];
+      console.log('\tWeb Property: name "%s", id "%s".',
+          webProperty.name, webProperty.id);
 
       // List profiles in the web property.
       listProfiles(accountId, webProperty.id);
-      }
-  } else {
-    Logger.log('\tNo web properties found.');
+    }
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
   }
 }
 
@@ -61,17 +72,22 @@ function listProfiles(accountId, webPropertyId) {
   // Note: If you experience "Quota Error: User Rate Limit Exceeded" errors
   // due to the number of accounts or profiles you have, you may be able to
   // avoid it by adding a Utilities.sleep(1000) statement here.
+  try {
+    const profiles = Analytics.Management.Profiles.list(accountId,
+        webPropertyId);
 
-  var profiles = Analytics.Management.Profiles.list(accountId,
-      webPropertyId);
-  if (profiles.items && profiles.items.length) {
-    for (var i = 0; i < profiles.items.length; i++) {
-      var profile = profiles.items[i];
-      Logger.log('\t\tProfile: name "%s", id "%s".', profile.name,
+    if (!profiles.items || !profiles.items.length) {
+      console.log('\t\tNo web properties found.');
+      return;
+    }
+    for (let i = 0; i < profiles.items.length; i++) {
+      const profile = profiles.items[i];
+      console.log('\t\tProfile: name "%s", id "%s".', profile.name,
           profile.id);
     }
-  } else {
-    Logger.log('\t\tNo web properties found.');
+  } catch (e) {
+    // TODO (Developer) - Handle exception
+    console.log('Failed with error: %s', e.error);
   }
 }
 // [END apps_script_analytics_accounts]
@@ -82,43 +98,44 @@ function listProfiles(accountId, webPropertyId) {
  * @param  {string} profileId The profile ID.
  */
 function runReport(profileId) {
-  var today = new Date();
-  var oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const today = new Date();
+  const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-  var startDate = Utilities.formatDate(oneWeekAgo, Session.getScriptTimeZone(),
+  const startDate = Utilities.formatDate(oneWeekAgo, Session.getScriptTimeZone(),
       'yyyy-MM-dd');
-  var endDate = Utilities.formatDate(today, Session.getScriptTimeZone(),
+  const endDate = Utilities.formatDate(today, Session.getScriptTimeZone(),
       'yyyy-MM-dd');
 
-  var tableId = 'ga:' + profileId;
-  var metric = 'ga:visits';
-  var options = {
+  const tableId = 'ga:' + profileId;
+  const metric = 'ga:visits';
+  const options = {
     'dimensions': 'ga:source,ga:keyword',
     'sort': '-ga:visits,ga:source',
     'filters': 'ga:medium==organic',
     'max-results': 25
   };
-  var report = Analytics.Data.Ga.get(tableId, startDate, endDate, metric,
+  const report = Analytics.Data.Ga.get(tableId, startDate, endDate, metric,
       options);
 
-  if (report.rows) {
-    var spreadsheet = SpreadsheetApp.create('Google Analytics Report');
-    var sheet = spreadsheet.getActiveSheet();
-
-    // Append the headers.
-    var headers = report.columnHeaders.map(function(columnHeader) {
-      return columnHeader.name;
-    });
-    sheet.appendRow(headers);
-
-    // Append the results.
-    sheet.getRange(2, 1, report.rows.length, headers.length)
-        .setValues(report.rows);
-
-    Logger.log('Report spreadsheet created: %s',
-        spreadsheet.getUrl());
-  } else {
-    Logger.log('No rows returned.');
+  if (!report.rows) {
+    console.log('No rows returned.');
+    return;
   }
+
+  const spreadsheet = SpreadsheetApp.create('Google Analytics Report');
+  const sheet = spreadsheet.getActiveSheet();
+
+  // Append the headers.
+  const headers = report.columnHeaders.map((columnHeader) => {
+    return columnHeader.name;
+  });
+  sheet.appendRow(headers);
+
+  // Append the results.
+  sheet.getRange(2, 1, report.rows.length, headers.length)
+      .setValues(report.rows);
+
+  console.log('Report spreadsheet created: %s',
+      spreadsheet.getUrl());
 }
 // [END apps_script_analytics_reports]

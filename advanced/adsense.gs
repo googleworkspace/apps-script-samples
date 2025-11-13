@@ -17,17 +17,17 @@
 /**
  * Lists available AdSense accounts.
  */
-function listAccounts () {
+function listAccounts() {
   let pageToken;
   do {
-    const response = AdSense.Accounts.list({ pageToken: pageToken });
-    if (response.accounts) {
-      for (const account of response.accounts) {
-        Logger.log('Found account with resource name "%s" and display name "%s".',
+    const response = AdSense.Accounts.list({pageToken: pageToken});
+    if (!response.accounts) {
+      console.log('No accounts found.');
+      return;
+    }
+    for (const account of response.accounts) {
+      console.log('Found account with resource name "%s" and display name "%s".',
           account.name, account.displayName);
-      }
-    } else {
-      Logger.log('No accounts found.');
     }
     pageToken = response.nextPageToken;
   } while (pageToken);
@@ -38,23 +38,24 @@ function listAccounts () {
 /**
  * Logs available Ad clients for an account.
  *
- * @param {string} accountName The resource name of the account that owns the collection of ad clients.
+ * @param {string} accountName The resource name of the account that owns the
+ *     collection of ad clients.
  */
-function listAdClients (accountName) {
+function listAdClients(accountName) {
   let pageToken;
   do {
     const response = AdSense.Accounts.Adclients.list(accountName, {
       pageToken: pageToken
     });
-    if (response.adClients) {
-      for (const adClient of response.adClients) {
-        Logger.log('Found ad client for product "%s" with resource name "%s".',
+    if (!response.adClients) {
+      console.log('No ad clients found for this account.');
+      return;
+    }
+    for (const adClient of response.adClients) {
+      console.log('Found ad client for product "%s" with resource name "%s".',
           adClient.productCode, adClient.name);
-        Logger.log('Reporting dimension ID: %s',
+      console.log('Reporting dimension ID: %s',
           adClient.reportingDimensionId ?? 'None');
-      }
-    } else {
-      Logger.log('No ad clients found for this account.');
     }
     pageToken = response.nextPageToken;
   } while (pageToken);
@@ -64,22 +65,23 @@ function listAdClients (accountName) {
 // [START apps_script_adsense_list_ad_units]
 /**
  * Lists ad units.
- * @param {string} adClientName The resource name of the ad client that owns the collection of ad units.
+ * @param {string} adClientName The resource name of the ad client that owns the collection
+ *     of ad units.
  */
-function listAdUnits (adClientName) {
+function listAdUnits(adClientName) {
   let pageToken;
   do {
     const response = AdSense.Accounts.Adclients.Adunits.list(adClientName, {
       pageSize: 50,
       pageToken: pageToken
     });
-    if (response.adUnits) {
-      for (const adUnit of response.adUnits) {
-        Logger.log('Found ad unit with resource name "%s" and display name "%s".',
+    if (!response.adUnits) {
+      console.log('No ad units found for this ad client.');
+      return;
+    }
+    for (const adUnit of response.adUnits) {
+      console.log('Found ad unit with resource name "%s" and display name "%s".',
           adUnit.name, adUnit.displayName);
-      }
-    } else {
-      Logger.log('No ad units found for this ad client.');
     }
 
     pageToken = response.nextPageToken;
@@ -91,9 +93,10 @@ function listAdUnits (adClientName) {
 /**
  * Generates a spreadsheet report for a specific ad client in an account.
  * @param {string} accountName The resource name of the account.
- * @param {string} adClientName The reporting dimension ID of the ad client.
+ * @param {string} adClientReportingDimensionId The reporting dimension ID
+ *     of the ad client.
  */
-function generateReport (accountName, adClientReportingDimensionId) {
+function generateReport(accountName, adClientReportingDimensionId) {
   // Prepare report.
   const today = new Date();
   const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -111,22 +114,22 @@ function generateReport (accountName, adClientReportingDimensionId) {
     orderBy: ['+DATE']
   });
 
-  if (report.rows) {
-    const spreadsheet = SpreadsheetApp.create('AdSense Report');
-    const sheet = spreadsheet.getActiveSheet();
-
-    // Append the headers.
-    sheet.appendRow(report.headers.map(header => header.name));
-
-    // Append the results.
-    sheet.getRange(2, 1, report.rows.length, report.headers.length)
-      .setValues(report.rows.map(row => row.cells.map(cell => cell.value)));
-
-    Logger.log('Report spreadsheet created: %s',
-      spreadsheet.getUrl());
-  } else {
-    Logger.log('No rows returned.');
+  if (!report.rows) {
+    console.log('No rows returned.');
+    return;
   }
+  const spreadsheet = SpreadsheetApp.create('AdSense Report');
+  const sheet = spreadsheet.getActiveSheet();
+
+  // Append the headers.
+  sheet.appendRow(report.headers.map((header) => header.name));
+
+  // Append the results.
+  sheet.getRange(2, 1, report.rows.length, report.headers.length)
+      .setValues(report.rows.map((row) => row.cells.map((cell) => cell.value)));
+
+  console.log('Report spreadsheet created: %s',
+      spreadsheet.getUrl());
 }
 
 /**
@@ -134,7 +137,7 @@ function generateReport (accountName, adClientReportingDimensionId) {
  * @param {string} parameter The parameter to be escaped.
  * @return {string} The escaped parameter.
  */
-function escapeFilterParameter (parameter) {
+function escapeFilterParameter(parameter) {
   return parameter.replace('\\', '\\\\').replace(',', '\\,');
 }
 
@@ -143,8 +146,9 @@ function escapeFilterParameter (parameter) {
  *
  * @param {string} paramName the name of the date parameter
  * @param {Date} value the date
+ * @return {object} formatted date
  */
-function dateToJson (paramName, value) {
+function dateToJson(paramName, value) {
   return {
     [paramName + '.year']: value.getFullYear(),
     [paramName + '.month']: value.getMonth() + 1,

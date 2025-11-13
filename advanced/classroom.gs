@@ -18,18 +18,27 @@
  * Lists 10 course names and IDs.
  */
 function listCourses() {
-  var optionalArgs = {
+  /**
+   * @see https://developers.google.com/classroom/reference/rest/v1/courses/list
+   */
+  const optionalArgs = {
     pageSize: 10
+    // Use other query parameters here if needed.
   };
-  var response = Classroom.Courses.list(optionalArgs);
-  var courses = response.courses;
-  if (courses && courses.length > 0) {
-    for (i = 0; i < courses.length; i++) {
-      var course = courses[i];
-      Logger.log('%s (%s)', course.name, course.id);
+  try {
+    const response = Classroom.Courses.list(optionalArgs);
+    const courses = response.courses;
+    if (!courses || courses.length === 0) {
+      console.log('No courses found.');
+      return;
     }
-  } else {
-    Logger.log('No courses found.');
+    // Print the course names and IDs of the available courses.
+    for (const course in courses) {
+      console.log('%s (%s)', courses[course].name, courses[course].id);
+    }
+  } catch (err) {
+    // TODO (developer)- Handle Courses.list() exception from Classroom API
+    console.log('Failed with error %s', err.message);
   }
 }
 // [END apps_script_classroom_list_courses]

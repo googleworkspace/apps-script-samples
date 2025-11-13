@@ -1,8 +1,8 @@
-# Google Apps Script Samples [![Build Status](https://travis-ci.org/googleworkspace/apps-script-samples.svg?branch=master)](https://travis-ci.org/googleworkspace/apps-script-samples)
+# Google Apps Script Samples
 
 Various sample code and projects for the Google Apps Script platform, a JavaScript platform in the cloud.
 
-Learn more: https://developers.google.com/apps-script
+Learn more at [developers.google.com](https://developers.google.com/apps-script).
 
 ## Google APIs
 
@@ -28,7 +28,7 @@ align="left"
 width="96px"/>
 ### Calendar
 - [List upcoming events](calendar/quickstart)
-- [Create a vacation calendar](calendar/vacationCalendar)
+- [Create a vacation calendar](solutions/automations/vacation-calendar/Code.js)
 
 <img
 src="https://www.gstatic.com/images/branding/product/2x/classroom_96dp.png"
@@ -137,16 +137,16 @@ Codelab tutorials combine detailed explanation, coding exercises, and documented
 - [Gmail Add-ons](http://g.co/codelabs/gmail-add-ons)
 - [Hangouts Chat Bots](http://g.co/codelabs/chat-apps-script)
 
-## Clone using the `clasp` command line tool
+## Clone using the `clasp` command-line tool
 
-Learn how to clone, pull, and push Apps Script projects on the command line
+Learn how to clone, pull, and push Apps Script projects on the command-line
 using [clasp](https://developers.google.com/apps-script/guides/clasp).
 
 ## Lint
 
-Run ESLint over this whole repo with:
+Run ESLint over this whole repository with:
 
-```
+```shell
 npm run lint
 ```
 
