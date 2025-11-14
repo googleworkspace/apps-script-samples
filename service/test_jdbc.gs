@@ -56,11 +56,28 @@ function itShouldWriteManyRecords() {
 }
 
 /**
+ * Tests writeManyRecordsUsingExecuteBatch function of jdbc.gs
+ */
+function itShouldWriteManyRecordsUsingExecuteBatch() {
+  console.log('itShouldWriteManyRecordsUsingExecuteBatch');
+  writeManyRecordsUsingExecuteBatch();
+}
+
+
+/**
  * Tests readFromTable function of jdbc.gs
  */
 function itShouldReadFromTable() {
   console.log('itShouldReadFromTable');
   readFromTable();
+}
+
+/**
+ * Tests readFromTableUsingGetRows function of jdbc.gs
+ */
+function itShouldReadFromTableUsingGetRows() {
+  console.log('itShouldReadFromTableUsingGetRows');
+  readFromTableUsingGetRows();
 }
 
 /**
@@ -73,4 +90,6 @@ function RUN_ALL_TESTS() {
   itShouldWriteOneRecord();
   itShouldWriteManyRecords();
   itShouldReadFromTable();
+  itShouldReadFromTableUsingGetRows();
+  itShouldWriteManyRecordsUsingExecuteBatch();
 }
