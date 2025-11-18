@@ -125,6 +125,35 @@ function writeManyRecords() {
     console.log('Failed with an error %s', err.message);
   }
 }
+
+/**
+ * Write 500 rows of data to a table in a single batch.
+ * Recommended for faster writes
+ */
+function writeManyRecordsUsingExecuteBatch() {
+  try {
+    const conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
+    conn.setAutoCommit(false);
+
+    const start = new Date();
+    const stmt = conn.prepareStatement('INSERT INTO entries ' +
+      '(guestName, content) values (?, ?)');
+    const params = [];
+    for (let i = 0; i < 500; i++) {
+      params.push(['Name ' + i, 'Hello, world ' + i]);
+    }
+
+    const batch = stmt.executeBatch(params);
+    conn.commit();
+    conn.close();
+
+    const end = new Date();
+    console.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
+  } catch (err) {
+    // TODO(developer) - Handle exception from the API
+    console.log('Failed with an error %s', err.message);
+  }
+}
 // [END apps_script_jdbc_write]
 
 // [START apps_script_jdbc_read]
@@ -146,6 +175,38 @@ function readFromTable() {
         rowString += results.getString(col + 1) + '\t';
       }
       console.log(rowString);
+    }
+
+    results.close();
+    stmt.close();
+
+    const end = new Date();
+    console.log('Time elapsed: %sms', end - start);
+  } catch (err) {
+    // TODO(developer) - Handle exception from the API
+    console.log('Failed with an error %s', err.message);
+  }
+}
+
+/**
+ * Read up to 1000 rows of data from the table and log them.
+ * Recommended for faster reads
+ */
+function readFromTableUsingGetRows() {
+  try {
+    const conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
+    const start = new Date();
+    const stmt = conn.createStatement();
+    stmt.setMaxRows(1000);
+    const results = stmt.executeQuery('SELECT * FROM entries');
+    const numCols = results.getMetaData().getColumnCount();
+    const getRowArgs = [];
+    for (let col = 0; col < numCols; col++) {
+      getRowArgs.push(`getString(${col + 1})`);
+    }
+    const rows = results.getRows(getRowArgs.join(','));
+    for (let i = 0; i < rows.length; i++) {
+      console.log(rows[i].join('\t'));
     }
 
     results.close();
