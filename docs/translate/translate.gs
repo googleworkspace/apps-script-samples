@@ -87,7 +87,7 @@ function getSelectedText() {
         const element = elements[i].getElement();
         // Only translate elements that can be edited as text; skip images and
         // other non-text elements.
-        if (element.editAsText) {
+        if ((/** @type {any} */ (element)).editAsText) {
           const elementText = element.asText().getText();
           // This check is necessary to exclude images, which return a blank
           // text element.
@@ -190,10 +190,10 @@ function insertText(newText) {
         }
       } else {
         const element = elements[i].getElement();
-        if (!replaced && element.editAsText) {
+        if (!replaced && (/** @type {any} */ (element)).editAsText) {
           // Only translate elements that can be edited as text, removing other
           // elements.
-          element.clear();
+          (/** @type {any} */ (element)).clear();
           element.asText().setText(newText);
           replaced = true;
         } else {
@@ -202,30 +202,32 @@ function insertText(newText) {
           if (element.getNextSibling()) {
             element.removeFromParent();
           } else {
-            element.clear();
+            (/** @type {any} */ (element)).clear();
           }
         }
       }
     }
   } else {
     const cursor = DocumentApp.getActiveDocument().getCursor();
-    const surroundingText = cursor.getSurroundingText().getText();
-    const surroundingTextOffset = cursor.getSurroundingTextOffset();
+    if (cursor) {
+      const surroundingText = cursor.getSurroundingText().getText();
+      const surroundingTextOffset = cursor.getSurroundingTextOffset();
 
-    // If the cursor follows or preceds a non-space character, insert a space
-    // between the character and the translation. Otherwise, just insert the
-    // translation.
-    if (surroundingTextOffset > 0) {
-      if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
-        newText = ' ' + newText;
+      // If the cursor follows or preceds a non-space character, insert a space
+      // between the character and the translation. Otherwise, just insert the
+      // translation.
+      if (surroundingTextOffset > 0) {
+        if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
+          newText = ' ' + newText;
+        }
       }
-    }
-    if (surroundingTextOffset < surroundingText.length) {
-      if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
-        newText += ' ';
+      if (surroundingTextOffset < surroundingText.length) {
+        if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
+          newText += ' ';
+        }
       }
+      cursor.insertText(newText);
     }
-    cursor.insertText(newText);
   }
 }
 

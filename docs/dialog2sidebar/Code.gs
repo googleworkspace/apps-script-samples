@@ -38,7 +38,7 @@ function showSidebar() {
  * @return {string} The dialog ID.
  */
 function openDialog() {
-  var dialogId = Utilities.base64Encode(Math.random());
+  var dialogId = Utilities.base64Encode(String(Math.random()));
   var template = HtmlService.createTemplateFromFile('Dialog');
   template.dialogId = dialogId;
   var page = template.evaluate()
