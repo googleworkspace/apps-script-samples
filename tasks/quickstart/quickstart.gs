@@ -24,12 +24,8 @@ function listTaskLists() {
     maxResults: 10,
   };
 
-  if (!Tasks.Tasklists) {
-    // This check is necessary to prevent type errors. In a real application,
-    // the Tasks service should be enabled in the Apps Script project.
-    console.log(
-        'Tasks API has an issue. Please enable it in your Apps Script project.');
-    return;
+  if (!Tasks) {
+    throw new Error('Enable the Tasks Advanced Service.');
   }
   // Returns all the authenticated user's task lists.
   const response = Tasks.Tasklists.list(optionalArgs);

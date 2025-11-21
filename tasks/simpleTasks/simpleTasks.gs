@@ -44,6 +44,7 @@ function doGet() {
 /**
  * Returns the ID and name of every task list in the user's account.
  * @return {TaskListInfo[]} The task list data.
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasklists/list
  */
 function getTaskLists() {
   if (!Tasks.Tasklists) {
@@ -66,6 +67,7 @@ function getTaskLists() {
  * Returns information about the tasks within a given task list.
  * @param {string} taskListId The ID of the task list.
  * @return {TaskInfo[]} The task data.
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/list
  */
 function getTasks(taskListId) {
   if (!Tasks.Tasks) {
@@ -94,6 +96,8 @@ function getTasks(taskListId) {
  * @param {string} taskListId The ID of the task list.
  * @param {string} taskId The ID of the task.
  * @param {boolean} completed True if the task should be marked as complete, false otherwise.
+ * @see https://developers.google.com/apps-script/advanced/tasks
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/patch
  */
 function setCompleted(taskListId, taskId, completed) {
   const task = Tasks.newTask();
@@ -113,6 +117,8 @@ function setCompleted(taskListId, taskId, completed) {
  * Adds a new task to the task list.
  * @param {string} taskListId The ID of the task list.
  * @param {string} title The title of the new task.
+ * @see https://developers.google.com/apps-script/advanced/tasks
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/insert
  */
 function addTask(taskListId, title) {
   const task = Tasks.newTask();
