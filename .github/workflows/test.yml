@@ -21,6 +21,7 @@ on:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         folder:
           - adminSDK
