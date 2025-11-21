@@ -132,10 +132,10 @@ async function checkProject(project: Project, rootDir: string): Promise<CheckRes
   mkdirSync(projectTempDir, {recursive: true});
 
   for (const file of project.files) {
-    const relPath = project.path;
-    const destPath = join(projectTempDir, relPath.replace(/\.gs$/, '.js'));
+    const fileRelPath = relative(rootDir, file);
+    const destPath = join(projectTempDir, fileRelPath.replace(/\.gs$/, '.js'));
     const destDir = dirname(destPath);
-    if (!existsSync(destDir)) mkdirSync(destDir, {recursive: true});
+    mkdirSync(destDir, {recursive: true});
     copyFileSync(file, destPath);
   }
 
@@ -163,7 +163,10 @@ async function checkProject(project: Project, rootDir: string): Promise<CheckRes
     
     const rewritten = rawOutput.split('\n').map((line: string) => {
       if (line.includes(projectTempDir)) {
-        let newLine = line.split(projectTempDir + sep).join(project.path + sep);
+        let newLine = line.split(projectTempDir + sep).pop();
+        if (!newLine) {
+          return line;
+        }
         newLine = newLine.replace(/\.js(:|\()/g, '.gs$1');
         return newLine;
       }
