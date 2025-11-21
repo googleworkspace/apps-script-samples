@@ -38,7 +38,7 @@ function listLogins() {
     // Print login events
     console.log('Logins:');
     for (const activity of activities) {
-      if (activity.id && activity.actor && activity.events && activity.events.length > 0) {
+      if (activity.id?.time && activity.actor?.email && activity.events?.[0]?.name) {
         console.log('%s: %s (%s)', activity.id.time, activity.actor.email,
             activity.events[0].name);
       }
