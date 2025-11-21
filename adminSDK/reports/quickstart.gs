@@ -24,28 +24,23 @@ function listLogins() {
   const optionalArgs = {
     maxResults: 10
   };
-  try {
-    if (!AdminReports || !AdminReports.Activities) {
-      throw new Error('Enable the AdminReports Advanced Service.');
+  if (!AdminReports || !AdminReports.Activities) {
+    throw new Error('Enable the AdminReports Advanced Service.');
+  }
+  const response = AdminReports.Activities.list(
+      userKey, applicationName, optionalArgs);
+  const activities = response.items;
+  if (!activities || activities.length === 0) {
+    console.log('No logins found.');
+    return;
+  }
+  // Print login events
+  console.log('Logins:');
+  for (const activity of activities) {
+    if (activity.id?.time && activity.actor?.email && activity.events?.[0]?.name) {
+      console.log('%s: %s (%s)', activity.id.time, activity.actor.email,
+          activity.events[0].name);
     }
-    const response = AdminReports.Activities.list(
-        userKey, applicationName, optionalArgs);
-    const activities = response.items;
-    if (!activities || activities.length === 0) {
-      console.log('No logins found.');
-      return;
-    }
-    // Print login events
-    console.log('Logins:');
-    for (const activity of activities) {
-      if (activity.id?.time && activity.actor?.email && activity.events?.[0]?.name) {
-        console.log('%s: %s (%s)', activity.id.time, activity.actor.email,
-            activity.events[0].name);
-      }
-    }
-  } catch (err) {
-    // TODO (developer)- Handle exception from the Report  API
-    console.log('Failed with error %s', /** @type {Error} */ (err).message);
   }
 }
 // [END admin_sdk_reports_quickstart]
