@@ -16,33 +16,40 @@
 // [START people_quickstart]
 /**
  * @typedef {Object} EmailAddress
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
  * @property {string} value
+ * Note: This is a partial definition.
  */
 
 /**
  * @typedef {Object} Name
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
  * @property {string} displayName
+ * Note: This is a partial definition.
  */
 
 /**
  * @typedef {Object} Person
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
  * @property {Name[]} names
  * @property {EmailAddress[]} [emailAddresses]
+ * Note: This is a partial definition.
  */
 
 /**
  * @typedef {Object} Connection
+ * @see https://developers.google.com/people/api/rest/v1/people.connections/list
  * @property {Person[]} connections
+ * Note: This is a partial definition.
  */
 
 /**
  * Print the display name if available for 10 connections.
  */
 function listConnectionNames() {
-  // Poll the People API to list the connections of the logged in user.
+  // Use the People API to list the connections of the logged in user.
   // See: https://developers.google.com/people/api/rest/v1/people.connections/list
   if (!People || !People.People || !People.People.Connections) {
-    // See: https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services
     throw new Error('People service not enabled.');
   }
   const connections = People.People.Connections.list('people/me', {
