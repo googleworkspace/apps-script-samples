@@ -15,10 +15,27 @@
  */
 // [START calendar_quickstart]
 /**
+ * @typedef {Object} CalendarEventDateTime
+ * @property {string} [dateTime]
+ * @property {string} [date]
+ */
+
+/**
+ * @typedef {Object} CalendarEvent
+ * @property {string} summary
+ * @property {CalendarEventDateTime} start
+ */
+
+/**
  * Lists 10 upcoming events in the user's calendar.
+ * @return {void}
  * @see https://developers.google.com/calendar/api/v3/reference/events/list
  */
 function listUpcomingEvents() {
+  // Add a check for the Calendar advanced service.
+  if (!Calendar.Events) {
+    throw new Error('Please enable the Calendar advanced service.');
+  }
   const calendarId = 'primary';
   // Add query parameters in optionalArgs
   const optionalArgs = {
@@ -33,12 +50,15 @@ function listUpcomingEvents() {
     // call Events.list method to list the calendar events using calendarId optional query parameter
     const response = Calendar.Events.list(calendarId, optionalArgs);
     const events = response.items;
-    if (events.length === 0) {
+    if (!events || events.length === 0) {
       console.log('No upcoming events found');
       return;
     }
     // Print the calendar events
-    for (const event of events) {
+    for (const event of /** @type {CalendarEvent[]} */ (events)) {
+      if (!event.start) {
+        continue;
+      }
       let when = event.start.dateTime;
       if (!when) {
         when = event.start.date;
@@ -47,7 +67,7 @@ function listUpcomingEvents() {
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Calendar API
-    console.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', /** @type {Error} */ (err).message);
   }
 }
 // [END calendar_quickstart]
