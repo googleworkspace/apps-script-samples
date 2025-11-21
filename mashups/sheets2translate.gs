@@ -12,7 +12,7 @@ function onEdit() {
   var range = SpreadsheetApp.getActiveRange();
   var value = range.getValue();
   if (typeof value === 'string') {
-    var translated = LanguageApp.translate(value, null, 'en');
+    var translated = LanguageApp.translate(value, '', 'en');
     range.setNote(translated);
   }
 }

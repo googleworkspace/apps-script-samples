@@ -8,6 +8,7 @@ function sendEmailsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
   var ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
   var sheet = ss.getSheets()[0];
+  /** @type {string[][]} */
   var data = sheet.getDataRange().getValues();
 
   // Remove any frozen rows from the data, since they contain headers.
@@ -20,7 +21,7 @@ function sendEmailsFromSpreadsheet() {
     var emails = row[2];
 
     // Send the email.
-    GmailApp.sendEmail(emails, subject, null, {
+    GmailApp.sendEmail(emails, subject, '', {
       htmlBody: htmlMessage
     });
   });

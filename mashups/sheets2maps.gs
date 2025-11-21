@@ -16,7 +16,9 @@ function COUNTY(address) {
   if (!results || results.length === 0) {
     throw new Error('Unknown address');
   }
-  var counties = results[0].address_components.filter(function(component) {
+  /** @type {{long_name: string, types: string[]}[]} */
+  var addressComponents = results[0].address_components;
+  var counties = addressComponents.filter(function(component) {
     return component.types.indexOf('administrative_area_level_2') >= 0;
   });
   if (!counties.length) {

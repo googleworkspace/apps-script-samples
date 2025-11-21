@@ -1,4 +1,10 @@
 /**
+ * @typedef {Object} SheetEditEvent
+ * @property {string} oldValue The old value of the cell.
+ * @property {string} value The new value of the cell.
+ */
+
+/**
  * Posts a message to a Hangouts Chat room every time the spreadsheet is edited.
  * This script must be attached to the spreadsheet (created in Google Sheets under
  * "Tools > Script editor") and installed as a trigger:
@@ -8,7 +14,7 @@
  *   "From spreadsheet", "On edit".
  * - Click "Save".
  *
- * @param {Object} e The onEdit event object.
+ * @param {SheetEditEvent} e The onEdit event object.
  */
 function sendChatMessageOnEdit(e) {
   var range = SpreadsheetApp.getActiveRange();
