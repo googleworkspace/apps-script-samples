@@ -36,11 +36,18 @@ function showPicker() {
     .setSandboxMode(HtmlService.SandboxMode.IFRAME);
   SpreadsheetApp.getUi().showModalDialog(html, "Select a file");
 }
+// Ensure the Drive API is enabled.
+if (!Drive) {
+  throw new Error('Please enable the Drive advanced service.');
+}
+
 /**
  * Checks that the file can be accessed.
+ * @param {string} fileId The ID of the file.
+ * @return {Object} The file resource.
  */
 function getFile(fileId) {
-  return Drive.Files.get(fileId, { fields: "*" });
+  return Drive.Files.get(fileId, {fields: '*'});
 }
 
 /**

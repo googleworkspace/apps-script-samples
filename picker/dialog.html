@@ -110,11 +110,26 @@ limitations under the License.
       }
 
       /**
+       * @typedef {Object} PickerResponse
+       * @property {string} action
+       * @property {PickerDocument[]} docs
+       */
+
+      /**
+       * @typedef {Object} PickerDocument
+       * @property {string} id
+       * @property {string} name
+       * @property {string} mimeType
+       * @property {string} url
+       * @property {string} lastEditedUtc
+       */
+
+      /**
        * A callback function that extracts the chosen document's metadata from the
        * response object. For details on the response object, see
        * https://developers.google.com/picker/reference/picker.responseobject
        *
-       * @param {object} data The response object.
+       * @param {PickerResponse} data The response object.
        */
       function pickerCallback(data) {
         const action = data[google.picker.Response.ACTION];
@@ -128,7 +143,7 @@ limitations under the License.
       /**
        * Handles `"PICKED"` responsed from the Google Picker.
        *
-       * @param {object} data The response object.
+       * @param {PickerResponse} data The response object.
        */
       function handlePicked(data) {
         const doc = data[google.picker.Response.DOCUMENTS][0];
