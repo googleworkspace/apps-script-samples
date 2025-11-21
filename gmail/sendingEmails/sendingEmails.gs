@@ -19,20 +19,16 @@
  * Sends emails with data from the current spreadsheet.
  */
 function sendEmails() {
-  try {
-    const sheet = SpreadsheetApp.getActiveSheet(); // Get the active sheet in spreadsheet
-    const startRow = 2; // First row of data to process
-    const numRows = 2; // Number of rows to process
-    const dataRange = sheet.getRange(startRow, 1, numRows, 2); // Fetch the range of cells A2:B3
-    const data = dataRange.getValues(); // Fetch values for each row in the Range.
-    for (const row of data) {
-      const emailAddress = row[0]; // First column
-      const message = row[1]; // Second column
-      const subject = 'Sending emails from a Spreadsheet';
-      MailApp.sendEmail(emailAddress, subject, message); // Send emails to emailAddresses which are presents in First column
-    }
-  } catch (err) {
-    console.log(err);
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const startRow = 2;
+  const numRows = 2;
+  const dataRange = sheet.getRange(startRow, 1, numRows, 2);
+  const data = dataRange.getValues();
+  for (const row of data) {
+    const emailAddress = row[0];
+    const message = row[1];
+    const subject = 'Sending emails from a Spreadsheet';
+    MailApp.sendEmail(emailAddress, subject, message);
   }
 }
 // [END gmail_send_emails]
@@ -42,29 +38,25 @@ function sendEmails() {
  * Sends non-duplicate emails with data from the current spreadsheet.
  */
 function sendNonDuplicateEmails() {
-  const EMAIL_SENT = 'email sent'; //This constant is used to write the message in Column C of Sheet
-  try {
-    const sheet = SpreadsheetApp.getActiveSheet(); // Get the active sheet in spreadsheet
-    const startRow = 2; // First row of data to process
-    const numRows = 2; // Number of rows to process
-    const dataRange = sheet.getRange(startRow, 1, numRows, 3); // Fetch the range of cells A2:B3
-    const data = dataRange.getValues(); // Fetch values for each row in the Range.
-    for (let i = 0; i < data.length; ++i) {
-      const row = data[i];
-      const emailAddress = row[0]; // First column
-      const message = row[1]; // Second column
-      const emailSent = row[2]; // Third column
-      if (emailSent === EMAIL_SENT) {
-        console.log('Email already sent');
-        return;
-      }
-      const subject = 'Sending emails from a Spreadsheet';
-      MailApp.sendEmail(emailAddress, subject, message);// Send emails to emailAddresses which are presents in First column
-      sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
-      SpreadsheetApp.flush(); // Make sure the cell is updated right away in case the script is interrupted
+  const EMAIL_SENT = 'email sent';
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const startRow = 2;
+  const numRows = 2;
+  const dataRange = sheet.getRange(startRow, 1, numRows, 3);
+  const data = dataRange.getValues();
+  for (let i = 0; i < data.length; ++i) {
+    const row = data[i];
+    const emailAddress = row[0];
+    const message = row[1];
+    const emailSent = row[2];
+    if (emailSent === EMAIL_SENT) {
+      console.log('Email already sent');
+      return;
     }
-  } catch (err) {
-    console.log(err);
+    const subject = 'Sending emails from a Spreadsheet';
+    MailApp.sendEmail(emailAddress, subject, message);
+    sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
+    SpreadsheetApp.flush();
   }
 }
 // [END gmail_send_non_duplicate_emails]

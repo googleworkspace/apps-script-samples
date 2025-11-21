@@ -16,13 +16,26 @@
 
 // [START apps_script_gmail_quick_start]
 /**
+ * This is a partial definition of the a Gmail add-on event object.
+ * For the full list of properties, see:
+ * https://developers.google.com/workspace/add-ons/concepts/event-objects
+ *
+ * @typedef {Object} gmailEvent
+ * @property {Object} messageMetadata
+ * @property {string} messageMetadata.accessToken
+ * @property {string} messageMetadata.messageId
+ * @property {Object} formInputs
+ * @property {string[]} formInputs.labels
+ */
+
+/**
  * Returns the array of cards that should be rendered for the current
  * e-mail thread. The name of this function is specified in the
  * manifest 'onTriggerFunction' field, indicating that this function
  * runs every time the add-on is started.
  *
- * @param {Object} e The data provided by the Gmail UI.
- * @return {Card[]}
+ * @param {gmailEvent} e The data provided by the Gmail UI.
+ * @return {CardService.Card[]}
  */
 function buildAddOn(e) {
   // Activate temporary Gmail add-on scopes.
@@ -71,9 +84,9 @@ function buildAddOn(e) {
  * user selections. Runs via the OnChangeAction for
  * each CHECK_BOX created.
  *
- * @param {Object} e The data provided by the Gmail UI.
+ * @param {gmailEvent} e The data provided by the Gmail UI.
 */
-function toggleLabel(e){
+function toggleLabel(e) {
   var selected = e.formInputs.labels;
   
   // Activate temporary Gmail add-on scopes.
@@ -85,30 +98,29 @@ function toggleLabel(e){
   var thread = message.getThread();
   
   if (selected != null){
-     for each (var label in GmailApp.getUserLabels()) {
-       if(selected.indexOf(label.getName()) != -1){
-          thread.addLabel(label);
-       }
-       else {
-         thread.removeLabel(label);
-       }
-     }
-  }
-  else {
-    for each (var label in GmailApp.getUserLabels()) {
+    for (const label of GmailApp.getUserLabels()) {
+      if (selected.indexOf(label.getName()) != -1) {
+        thread.addLabel(label);
+      } else {
+        thread.removeLabel(label);
+      }
+    }
+  } else {
+    for (const label of GmailApp.getUserLabels()) {
       thread.removeLabel(label);
     }
   }
 }
 
+
 /**
- * Converts an GmailLabel object to a array of strings. 
+ * Converts a GmailLabel object to a array of strings.
  * Used for easy sorting and to determine if a value exists.
  *
- * @param {labelsObjects} A GmailLabel object array.
- * @return {lables[]} An array of labels names as strings.
+ * @param {GoogleAppsScript.Gmail.GmailLabel[]} labelsObjects
+ * @return {string[]} An array of labels names as strings.
 */
-function getLabelArray(labelsObjects){
+function getLabelArray(labelsObjects) {
   var labels = [];
   for(var i = 0; i < labelsObjects.length; i++) {
     labels[i] = labelsObjects[i].getName();

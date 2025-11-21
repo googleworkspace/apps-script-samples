@@ -20,22 +20,20 @@
  * @see https://developers.google.com/gmail/api/reference/rest/v1/users.labels/list
  */
 function listLabels() {
-  try {
-    // Gmail.Users.Labels.list() API returns the list of all Labels in user's mailbox
-    const response = Gmail.Users.Labels.list('me');
-    if (!response || response.labels.length === 0) {
-      // TODO (developer) - No labels are returned from the response
-      console.log('No labels found.');
-      return;
-    }
-    // Print the Labels that are available.
-    console.log('Labels:');
-    for (const label of response.labels ) {
-      console.log('- %s', label.name);
-    }
-  } catch (err) {
-    // TODO (developer) - Handle exception on Labels.list() API
-    console.log('Labels.list() API failed with error %s', err.toString());
+  // Add this check to use the Gmail advanced service.
+  if (!Gmail || !Gmail.Users || !Gmail.Users.Labels) {
+    throw new Error('Enable the Gmail Advanced Service.');
+  }
+  // Gmail.Users.Labels.list() API returns the list of all Labels in user's mailbox
+  const response = Gmail.Users.Labels.list('me');
+  if (!response || !response.labels || response.labels.length === 0) {
+    console.log('No labels found.');
+    return;
+  }
+  // Print the Labels that are available.
+  console.log('Labels:');
+  for (const label of response.labels) {
+    console.log('- %s', label.name);
   }
 }
 // [END gmail_quickstart]
