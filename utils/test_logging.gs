@@ -34,6 +34,7 @@ function populateValues(spreadsheetId) {
   const batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
   const repeatCellRequest = Sheets.newRepeatCellRequest();
 
+  /** @type {string[][]} */
   const values = [];
   for (let i = 0; i < 10; ++i) {
     values[i] = [];
@@ -54,7 +55,7 @@ function itShouldEmailDataRow() {
   const email = Session.getActiveUser().getEmail();
   const spreadsheetId = createTestSpreadsheet();
   populateValues(spreadsheetId);
-  const data = Spreadsheet.openById();
+  const data = SpreadsheetApp.openById(spreadsheetId);
   emailDataRow(1, email);
 }
 
