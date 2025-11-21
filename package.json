@@ -1,10 +1,9 @@
 {
-  "name": "gsuite-apps-script-samples",
+  "name": "googleworkspace-apps-script-samples",
   "version": "1.0.0",
-  "description": "Apps Script samples for [G Suite API](https://developers.google.com/gsuite/) docs.",
+  "description": "Apps Script samples for [Google Workspace](https://developers.google.com/apps-script/) docs.",
   "license": "MIT",
   "private": true,
-  "author": "Grant Timmerman",
   "keywords": [
     "Google Workspace",
     "Apps Script",
@@ -15,15 +14,25 @@
     "API"
   ],
   "devDependencies": {
+    "@types/google-apps-script": "^2.0.7",
+    "@types/node": "^24.10.1",
     "eslint": "8.18.0",
     "eslint-config-google": "0.14.0",
-    "eslint-plugin-googleappsscript": "1.0.4"
+    "eslint-plugin-googleappsscript": "1.0.4",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint **/*.gs",
-    "fix": "./node_modules/.bin/eslint **/*.gs --fix --quiet"
+    "fix": "./node_modules/.bin/eslint **/*.gs --fix --quiet",
+    "check": "tsx .github/scripts/check-gs.ts"
   },
   "eslintIgnore": [
     "**/node_modules/**"
-  ]
+  ],
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "engines": {
+    "node": ">=20"
+  }
 }
