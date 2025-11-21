@@ -22,21 +22,25 @@ function listSubscriptions() {
   const optionalArgs = {
     maxResults: 10
   };
-  try {
-    const response = AdminReseller.Subscriptions.list(optionalArgs);
-    const subscriptions = response.subscriptions;
-    if (!subscriptions || subscriptions.length === 0) {
-      console.log('No subscriptions found.');
-      return;
+  if (!AdminReseller || !AdminReseller.Subscriptions) {
+    throw new Error('Enable the AdminReseller Advanced Service.');
+  }
+  const response = AdminReseller.Subscriptions.list(optionalArgs);
+  const subscriptions = response.subscriptions;
+  if (!subscriptions || subscriptions.length === 0) {
+    console.log('No subscriptions found.');
+    return;
+  }
+  console.log('Subscriptions:');
+  for (const subscription of subscriptions) {
+    if (subscription.customerId && subscription.skuId) {
+      if (subscription.plan?.planName) {
+        console.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
+            subscription.plan.planName);
+      } else {
+        console.log('%s (%s)', subscription.customerId, subscription.skuId);
+      }
     }
-    console.log('Subscriptions:');
-    for (const subscription of subscriptions) {
-      console.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
-          subscription.plan.planName);
-    }
-  } catch (err) {
-    // TODO (developer)- Handle exception from the Reseller  API
-    console.log('Failed with error %s', err.message);
   }
 }
 // [END admin_sdk_reseller_quickstart]
