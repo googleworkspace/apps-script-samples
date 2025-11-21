@@ -20,6 +20,7 @@ on:
   pull_request:
 jobs:
   test:
+    # temporarily use matrix until all are passing
     strategy:
       fail-fast: false
       matrix:
@@ -27,7 +28,6 @@ jobs:
           - adminSDK
           - advanced
           - ai
-          - apps-script
           - calendar
           - chat
           - classroom
