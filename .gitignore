@@ -4,3 +4,4 @@ node_modules
 **/dist
 **/node_modules
 **/target
+**/.tsc_check

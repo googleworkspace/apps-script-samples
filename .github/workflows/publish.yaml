@@ -21,13 +21,16 @@ on:
 jobs:
   publish:
     concurrency:
-      group: ${{ github.head_ref || github.ref }}
-      cancel-in-progress: false
-    runs-on: ubuntu-24.04
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.head_ref || github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          fetch-depth: 0
+          cache: "pnpm"
+      - run: pnpm i
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v23.1
@@ -36,8 +39,5 @@ jobs:
           echo "${CLASP_CREDENTIALS}" > "${HOME}/.clasprc.json"
         env:
           CLASP_CREDENTIALS: ${{secrets.CLASP_CREDENTIALS}}
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - run: npm install -g @google/clasp
+      - run: pnpm install -g @google/clasp
       - run: ./.github/scripts/clasp_push.sh ${{ steps.changed-files.outputs.all_changed_files }}

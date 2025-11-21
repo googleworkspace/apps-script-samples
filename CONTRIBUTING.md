@@ -27,6 +27,7 @@ accept your pull requests.
 1. Fork the desired repository, develop and test your code changes.
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Ensure that your code has an appropriate set of unit tests which all pass.
+1. Run `pnpm check` to ensure there are no type errors or syntax issues in your `.gs` files.
 1. Submit a pull request!
 
 ## Style

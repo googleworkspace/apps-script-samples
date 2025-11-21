@@ -1,8 +1,17 @@
 {
-    "mcpServers": {
-        "workspace-developer": {
-            "httpUrl": "https://workspace-developer.goog/mcp",
-            "trust": true
-        }
-    }
+	"mcpServers": {
+		"workspace-developer": {
+			"httpUrl": "https://workspace-developer.goog/mcp",
+			"trust": true
+		}
+	},
+	"tools": {
+		"allowed": [
+			"run_shell_command(pnpm install)",
+			"run_shell_command(pnpm format)",
+			"run_shell_command(pnpm lint)",
+			"run_shell_command(pnpm check)",
+			"run_shell_command(pnpm test)"
+		]
+	}
 }

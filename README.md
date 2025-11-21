@@ -147,7 +147,17 @@ using [clasp](https://developers.google.com/apps-script/guides/clasp).
 Run ESLint over this whole repository with:
 
 ```shell
-npm run lint
+pnpm lint
 ```
 
 This command will fix simple errors.
+
+## Type Checking
+
+Run the TypeScript-based check over the repository with:
+
+```shell
+pnpm check
+```
+
+This command validates `.gs` files by temporarily converting them to `.js` and running `tsc`. It checks for syntax errors and type issues using JSDoc annotations.
