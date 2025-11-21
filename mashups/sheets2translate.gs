@@ -9,10 +9,10 @@
  * under "Tools > Script editor").
  */
 function onEdit() {
-  var range = SpreadsheetApp.getActiveRange();
-  var value = range.getValue();
+  const range = SpreadsheetApp.getActiveRange();
+  const value = range.getValue();
   if (typeof value === 'string') {
-    var translated = LanguageApp.translate(value, null, 'en');
+    const translated = LanguageApp.translate(value, '', 'en');
     range.setNote(translated);
   }
 }

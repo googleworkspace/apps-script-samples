@@ -6,21 +6,22 @@
  */
 function sendEmailsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  var ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
-  var sheet = ss.getSheets()[0];
-  var data = sheet.getDataRange().getValues();
+  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const sheet = ss.getSheets()[0];
+  /** @type {string[][]} */
+  const data = sheet.getDataRange().getValues();
 
   // Remove any frozen rows from the data, since they contain headers.
   data.splice(sheet.getFrozenRows());
 
   // Send an email for each row.
   data.forEach(function(row) {
-    var subject = row[0];
-    var htmlMessage = row[1];
-    var emails = row[2];
+    const subject = row[0];
+    const htmlMessage = row[1];
+    const emails = row[2];
 
     // Send the email.
-    GmailApp.sendEmail(emails, subject, null, {
+    GmailApp.sendEmail(emails, subject, '', {
       htmlBody: htmlMessage
     });
   });
