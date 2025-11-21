@@ -284,3 +284,10 @@ function find(id) { ... }
 
 - **"Property 'x' does not exist on type 'Object'"**: This usually means you are accessing a property on a generic object. Define a `@typedef` for that object structure.
 - **Implicit 'any'**: If you see "Parameter 'x' implicitly has an 'any' type", it means you forgot a JSDoc `@param` tag. Add it to fix the error.
+- **Advanced Services**: To fix errors with these globals, add a simple check and throw an error telling the developer to add the appropriate service. An example is below. Prefer this check at the global scope if used multiple times.
+
+   ```js
+   if (!AdminDirectory) {
+     throw new Error('Enable the AdminDirectory Advanced Service.');
+   }
+   ```
