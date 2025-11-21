@@ -15,30 +15,57 @@
  */
 // [START people_quickstart]
 /**
+ * @typedef {Object} EmailAddress
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
+ * @property {string} value
+ * Note: This is a partial definition.
+ */
+
+/**
+ * @typedef {Object} Name
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
+ * @property {string} displayName
+ * Note: This is a partial definition.
+ */
+
+/**
+ * @typedef {Object} Person
+ * @see https://developers.google.com/people/api/rest/v1/people#Person
+ * @property {Name[]} names
+ * @property {EmailAddress[]} [emailAddresses]
+ * Note: This is a partial definition.
+ */
+
+/**
+ * @typedef {Object} Connection
+ * @see https://developers.google.com/people/api/rest/v1/people.connections/list
+ * @property {Person[]} connections
+ * Note: This is a partial definition.
+ */
+
+/**
  * Print the display name if available for 10 connections.
  */
 function listConnectionNames() {
-  try {
-    /**
-     * List the 10 connections/contacts of user
-     * @see https://developers.google.com/people/api/rest/v1/people.connections/list
-     */
-    const connections = People.People.Connections.list('people/me', {
-      pageSize: 10,
-      personFields: 'names,emailAddresses'
-      // use other query parameter here if needed.
-    });
-    connections.connections.forEach((person) => {
-      // if contacts/connections is available, print the name of person.
-      if (person.names && person.names.length === 0) {
-        console.log('No display name found for connection.');
-        return;
-      }
-      console.log(person.names[0].displayName);
-    });
-  } catch (err) {
-    // TODO (developer) - Handle exception from People API
-    console.log('Failed with error %s', err.message);
+  // Use the People API to list the connections of the logged in user.
+  // See: https://developers.google.com/people/api/rest/v1/people.connections/list
+  if (!People || !People.People || !People.People.Connections) {
+    throw new Error('People service not enabled.');
   }
+  const connections = People.People.Connections.list('people/me', {
+    pageSize: 10,
+    personFields: 'names,emailAddresses',
+  });
+  if (!connections.connections) {
+    console.log('No connections found.');
+    return;
+  }
+  connections.connections.forEach((person) => {
+    if (person.names && person.names.length > 0 && person.names[0].displayName) {
+      console.log(person.names[0].displayName);
+    } else {
+      console.log('No display name found for connection.');
+    }
+  });
 }
 // [END people_quickstart]
