@@ -16,6 +16,14 @@
 
 // [START apps_script_logging_execution_time]
 /**
+ * A placeholder function to be timed.
+ * @param {Object} parameters
+ */
+function myFunction(parameters) {
+  // Placeholder for the function being timed.
+}
+
+/**
  * Logs the time taken to execute 'myFunction'.
  */
 function measuringExecutionTime() {
@@ -51,15 +59,10 @@ function measuringExecutionTime() {
  */
 function emailDataRow(rowNumber, email) {
   console.log('Emailing data row ' + rowNumber + ' to ' + email);
-  try {
-    const sheet = SpreadsheetApp.getActiveSheet();
-    const data = sheet.getDataRange().getValues();
-    const rowData = data[rowNumber - 1].join(' ');
-    console.log('Row ' + rowNumber + ' data: ' + rowData);
-    MailApp.sendEmail(email, 'Data in row ' + rowNumber, rowData);
-  } catch (err) {
-    // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
-  }
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const data = sheet.getDataRange().getValues();
+  const rowData = data[rowNumber - 1].join(' ');
+  console.log('Row ' + rowNumber + ' data: ' + rowData);
+  MailApp.sendEmail(email, 'Data in row ' + rowNumber, rowData);
 }
 // [END apps_script_logging_sheet_information]
