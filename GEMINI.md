@@ -2,9 +2,10 @@
 
 This guide outlines best practices for developing Google Apps Script projects, focusing on type safety and modern JavaScript features.
 
-## GitHub Action Configuration
+## Important
 
-For new sample directories, ensure the top-level folder is included in the [`test.yaml`](.github/workflows/test.yaml) GitHub workflow's matrix configuration.
+* For new sample directories, ensure the top-level folder is included in the [`test.yaml`](.github/workflows/test.yaml) GitHub workflow's matrix configuration.
+* Do not move or delete snippet tags: `[END apps_script_... ]` or `[END apps_script_... ]`.
 
 ## Apps Script Code Best Practices
 
