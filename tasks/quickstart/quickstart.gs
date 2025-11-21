@@ -24,7 +24,7 @@ function listTaskLists() {
     maxResults: 10,
   };
 
-  if (!Tasks) {
+  if (!Tasks || !Tasks.Tasklists) {
     throw new Error('Enable the Tasks Advanced Service.');
   }
   // Returns all the authenticated user's task lists.
