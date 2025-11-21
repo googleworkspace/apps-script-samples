@@ -16,27 +16,31 @@
 // [START tasks_quickstart]
 /**
  * Lists the user's tasks.
+ * @return {void}
  * @see https://developers.google.com/tasks/reference/rest/v1/tasklists/list
  */
 function listTaskLists() {
   const optionalArgs = {
-    maxResults: 10
+    maxResults: 10,
   };
-  try {
-    // Returns all the authenticated user's task lists.
-    const response = Tasks.Tasklists.list(optionalArgs);
-    const taskLists = response.items;
-    // Print task list of user if available.
-    if (!taskLists || taskLists.length === 0) {
-      console.log('No task lists found.');
-      return;
-    }
-    for (const taskList of taskLists) {
-      console.log('%s (%s)', taskList.title, taskList.id);
-    }
-  } catch (err) {
-    // TODO (developer) - Handle exception from Task API
-    console.log('Failed with error %s', err.message);
+
+  if (!Tasks.Tasklists) {
+    // This check is necessary to prevent type errors. In a real application,
+    // the Tasks service should be enabled in the Apps Script project.
+    console.log(
+        'Tasks API has an issue. Please enable it in your Apps Script project.');
+    return;
+  }
+  // Returns all the authenticated user's task lists.
+  const response = Tasks.Tasklists.list(optionalArgs);
+  const taskLists = response.items;
+  // Print task list of user if available.
+  if (!taskLists || taskLists.length === 0) {
+    console.log('No task lists found.');
+    return;
+  }
+  for (const taskList of taskLists) {
+    console.log('%s (%s)', taskList.title, taskList.id);
   }
 }
 // [END tasks_quickstart]
