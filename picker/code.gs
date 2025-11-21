@@ -44,7 +44,7 @@ if (!Drive) {
 /**
  * Checks that the file can be accessed.
  * @param {string} fileId The ID of the file.
- * @return {GoogleAppsScript.Drive_v3.Drive.V3.Schema.File} The file resource.
+ * @return {Object} The file resource.
  */
 function getFile(fileId) {
   return Drive.Files.get(fileId, {fields: '*'});
