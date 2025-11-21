@@ -87,7 +87,7 @@ function getSelectedText() {
         const element = elements[i].getElement();
         // Only translate elements that can be edited as text; skip images and
         // other non-text elements.
-        if ((/** @type {any} */ (element)).editAsText) {
+        if (element.getType() === DocumentApp.ElementType.TEXT) {
           const elementText = element.asText().getText();
           // This check is necessary to exclude images, which return a blank
           // text element.
@@ -190,19 +190,21 @@ function insertText(newText) {
         }
       } else {
         const element = elements[i].getElement();
-        if (!replaced && (/** @type {any} */ (element)).editAsText) {
-          // Only translate elements that can be edited as text, removing other
-          // elements.
-          (/** @type {any} */ (element)).clear();
-          element.asText().setText(newText);
+        // Only translate elements that can be edited as text; skip images and
+        // other non-text elements.
+        const type = element.getType();
+        if (!replaced && type === DocumentApp.ElementType.TEXT) {
+          const textElement = element.asText();
+          textElement.clear();
+          textElement.setText(newText);
           replaced = true;
         } else {
           // We cannot remove the last paragraph of a doc. If this is the case,
           // just clear the element.
           if (element.getNextSibling()) {
             element.removeFromParent();
-          } else {
-            (/** @type {any} */ (element)).clear();
+          } else if (type === DocumentApp.ElementType.TEXT) {
+            element.asText().clear();
           }
         }
       }
