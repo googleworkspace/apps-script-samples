@@ -37,7 +37,7 @@ function listUsers() {
     // Print the list of user's full name and email
     console.log('Users:');
     for (const user of users) {
-      if (user.name) {
+      if (user.name?.fullName) {
         console.log('%s (%s)', user.primaryEmail, user.name.fullName);
       } else {
         console.log('%s', user.primaryEmail);
