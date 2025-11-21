@@ -180,7 +180,8 @@ async function checkProject(project: Project, rootDir: string): Promise<CheckRes
 async function main() {
   try {
     const rootDir = resolve('.');
-    const searchArg = process.argv[2];
+    const args = process.argv.slice(2);
+    const searchArg = args.find(arg => arg !== '--');
     
     // 1. Discovery
     const projectRoots = findProjectRoots(rootDir);

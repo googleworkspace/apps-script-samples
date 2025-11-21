@@ -282,12 +282,35 @@ function find(id) { ... }
 
 ### Common Issues & Fixes
 
+- **TypeScript**: DO NOT REFERENCE GoogleAppsScript in JSDocs. Instead use a locally defined type definition and link to the appropriate reference documenation page if possible.
 - **"Property 'x' does not exist on type 'Object'"**: This usually means you are accessing a property on a generic object. Define a `@typedef` for that object structure.
 - **Implicit 'any'**: If you see "Parameter 'x' implicitly has an 'any' type", it means you forgot a JSDoc `@param` tag. Add it to fix the error.
-- **Advanced Services**: To fix errors with these globals, add a simple check and throw an error telling the developer to add the appropriate service. An example is below. Prefer this check at the global scope if used multiple times.
+- **Advanced Services**: To fix errors with these globals, check for existence. This helps TypeScript narrow the type and prevents runtime errors if the service is not enabled.
 
    ```js
    if (!AdminDirectory) {
-     throw new Error('Enable the AdminDirectory Advanced Service.');
+     console.log('AdminDirectory Advanced Service must be enabled.');
+     return;
    }
+   ```
+
+- **Optional Properties**: Use optional chaining (`?.`) when accessing properties that might be undefined in API responses. This is often the case when when using `fields` to limit the response.
+
+   ```js
+   // Safe access
+   console.log(user.name?.fullName);
+   ```
+
+- **Error Handling**: Avoid wrapping code in `try/catch` blocks if you are only logging the error message. Let the runtime handle the error reporting for cleaner sample code.
+
+   ```js
+   // Avoid this
+   try {
+     AdminDirectory.Users.list();
+   } catch (err) {
+     console.log(err.message);
+   }
+
+   // Prefer this
+   AdminDirectory.Users.list();
    ```
