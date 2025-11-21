@@ -3,17 +3,14 @@
  * Send an email with schemas in order to test email markup.
  */
 function testSchemas() {
-  try {
-    const htmlBody = HtmlService.createHtmlOutputFromFile('mail_template').getContent();
+  const htmlBody =
+      HtmlService.createHtmlOutputFromFile('mail_template').getContent();
 
-    MailApp.sendEmail({
-      to: Session.getActiveUser().getEmail(),
-      subject: 'Test Email markup - ' + new Date(),
-      htmlBody: htmlBody
-    });
-  } catch (err) {
-    console.log(err.message);
-  }
+  MailApp.sendEmail({
+    to: Session.getActiveUser().getEmail(),
+    subject: 'Test Email markup - ' + new Date(),
+    htmlBody: htmlBody,
+  });
 }
 // [END gmail_send_email_with_markup]
 
