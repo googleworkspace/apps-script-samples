@@ -6,30 +6,30 @@
  */
 function createPresentationsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  var ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
-  var sheet = ss.getSheets()[0];
+  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const sheet = ss.getSheets()[0];
   /** @type {string[][]} */
-  var data = sheet.getDataRange().getValues();
+  const data = sheet.getDataRange().getValues();
 
   // Remove any frozen rows from the data, since they contain headers.
   data.splice(sheet.getFrozenRows());
 
   // Create a presentation for each row.
   data.forEach(function(row) {
-    var title = row[0];
-    var content = row[1];
-    var emailsStr = row[2];
+    const title = row[0];
+    const content = row[1];
+    const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    var emails = emailsStr.split(',').map(function(email) {
+    const emails = emailsStr.split(',').map(function(email) {
       return email.trim();
     });
 
     // Create the presentation, insert a new slide at the start, append the content,
     // and share it out.
-    var presentation = SlidesApp.create(title);
-    var slide = presentation.insertSlide(0, SlidesApp.PredefinedLayout.MAIN_POINT);
-    var textBox = slide.getShapes()[0];
+    const presentation = SlidesApp.create(title);
+    const slide = presentation.insertSlide(0, SlidesApp.PredefinedLayout.MAIN_POINT);
+    const textBox = slide.getShapes()[0];
     textBox.getText().appendParagraph(content);
     presentation.addEditors(emails);
   });

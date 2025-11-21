@@ -12,13 +12,13 @@
  * @customFunction
  */
 function COUNTY(address) {
-  var results = Maps.newGeocoder().geocode(address).results;
+  const results = Maps.newGeocoder().geocode(address).results;
   if (!results || results.length === 0) {
     throw new Error('Unknown address');
   }
   /** @type {{long_name: string, types: string[]}[]} */
-  var addressComponents = results[0].address_components;
-  var counties = addressComponents.filter(function(component) {
+  const addressComponents = results[0].address_components;
+  const counties = addressComponents.filter(function(component) {
     return component.types.indexOf('administrative_area_level_2') >= 0;
   });
   if (!counties.length) {

@@ -5,18 +5,18 @@
  */
 function createContactsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  var ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
-  var sheet = ss.getSheets()[0];
-  var data = sheet.getDataRange().getValues();
+  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const sheet = ss.getSheets()[0];
+  const data = sheet.getDataRange().getValues();
 
   // Remove any frozen rows from the data, since they contain headers.
   data.splice(sheet.getFrozenRows());
 
   // Send a contact for each row.
   data.forEach(function(row) {
-    var firstName = row[0];
-    var lastName = row[1];
-    var email = row[2];
+    const firstName = row[0];
+    const lastName = row[1];
+    const email = row[2];
     ContactsApp.createContact(firstName, lastName, email);
   });
 }

@@ -17,13 +17,13 @@
  * @param {SheetEditEvent} e The onEdit event object.
  */
 function sendChatMessageOnEdit(e) {
-  var range = SpreadsheetApp.getActiveRange();
-  var value = range.getValue();
-  var oldValue = e.oldValue;
-  var ss = range.getSheet().getParent();
+  const range = SpreadsheetApp.getActiveRange();
+  const value = range.getValue();
+  const oldValue = e.oldValue;
+  const ss = range.getSheet().getParent();
 
   // Construct the message to send, based on the old and new value of the cell.
-  var changeMessage;
+  let changeMessage;
   if (oldValue && value) {
     changeMessage = Utilities.formatString('changed from "%s" to "%s"',
         oldValue, value);
@@ -32,17 +32,17 @@ function sendChatMessageOnEdit(e) {
   } else {
     changeMessage = 'cleared';
   }
-  var message = Utilities.formatString(
+  const message = Utilities.formatString(
       'The range %s was %s. <%s|Open spreadsheet>.',
       range.getA1Notation(), changeMessage, ss.getUrl());
 
   // Follow these steps to create an incomming webhook URL for your chat room:
   // https://developers.google.com/hangouts/chat/how-tos/webhooks#define_an_incoming_webhook
-  var webhookUrl = 'ENTER INCOMMING WEBHOOK URL HERE';
+  const webhookUrl = 'ENTER INCOMMING WEBHOOK URL HERE';
 
   // Use the spreadsheet's ID as a thread key, so that all messages go into the
   // same thread.
-  var url = webhookUrl + '&threadKey=' + ss.getId();
+  const url = webhookUrl + '&threadKey=' + ss.getId();
 
   // Send the message.
   UrlFetchApp.fetch(url, {
