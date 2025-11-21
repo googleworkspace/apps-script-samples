@@ -25,6 +25,9 @@ function listUsers() {
     orderBy: 'email'
   };
   try {
+    if (!AdminDirectory || !AdminDirectory.Users) {
+      throw new Error('Enable the AdminDirectory Advanced Service.');
+    }
     const response = AdminDirectory.Users.list(optionalArgs);
     const users = response.users;
     if (!users || users.length === 0) {
@@ -34,11 +37,15 @@ function listUsers() {
     // Print the list of user's full name and email
     console.log('Users:');
     for (const user of users) {
-      console.log('%s (%s)', user.primaryEmail, user.name.fullName);
+      if (user.name) {
+        console.log('%s (%s)', user.primaryEmail, user.name.fullName);
+      } else {
+        console.log('%s', user.primaryEmail);
+      }
     }
   } catch (err) {
     // TODO (developer)- Handle exception from the Directory API
-    console.log('Failed with error %s', err.message);
+    console.log('Failed with error %s', /** @type {Error} */ (err).message);
   }
 }
 // [END admin_sdk_directory_quickstart]
