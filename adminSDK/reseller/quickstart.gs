@@ -34,7 +34,7 @@ function listSubscriptions() {
     }
     console.log('Subscriptions:');
     for (const subscription of subscriptions) {
-      if (subscription.plan) {
+      if (subscription.plan?.planName) {
         console.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
             subscription.plan.planName);
       } else {
