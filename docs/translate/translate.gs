@@ -87,7 +87,7 @@ function getSelectedText() {
         const element = elements[i].getElement();
         // Only translate elements that can be edited as text; skip images and
         // other non-text elements.
-        if (element.editAsText) {
+        if (element.getType() === DocumentApp.ElementType.TEXT) {
           const elementText = element.asText().getText();
           // This check is necessary to exclude images, which return a blank
           // text element.
@@ -190,42 +190,46 @@ function insertText(newText) {
         }
       } else {
         const element = elements[i].getElement();
-        if (!replaced && element.editAsText) {
-          // Only translate elements that can be edited as text, removing other
-          // elements.
-          element.clear();
-          element.asText().setText(newText);
+        // Only translate elements that can be edited as text; skip images and
+        // other non-text elements.
+        const type = element.getType();
+        if (!replaced && type === DocumentApp.ElementType.TEXT) {
+          const textElement = element.asText();
+          textElement.clear();
+          textElement.setText(newText);
           replaced = true;
         } else {
           // We cannot remove the last paragraph of a doc. If this is the case,
           // just clear the element.
           if (element.getNextSibling()) {
             element.removeFromParent();
-          } else {
-            element.clear();
+          } else if (type === DocumentApp.ElementType.TEXT) {
+            element.asText().clear();
           }
         }
       }
     }
   } else {
     const cursor = DocumentApp.getActiveDocument().getCursor();
-    const surroundingText = cursor.getSurroundingText().getText();
-    const surroundingTextOffset = cursor.getSurroundingTextOffset();
+    if (cursor) {
+      const surroundingText = cursor.getSurroundingText().getText();
+      const surroundingTextOffset = cursor.getSurroundingTextOffset();
 
-    // If the cursor follows or preceds a non-space character, insert a space
-    // between the character and the translation. Otherwise, just insert the
-    // translation.
-    if (surroundingTextOffset > 0) {
-      if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
-        newText = ' ' + newText;
+      // If the cursor follows or preceds a non-space character, insert a space
+      // between the character and the translation. Otherwise, just insert the
+      // translation.
+      if (surroundingTextOffset > 0) {
+        if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
+          newText = ' ' + newText;
+        }
       }
-    }
-    if (surroundingTextOffset < surroundingText.length) {
-      if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
-        newText += ' ';
+      if (surroundingTextOffset < surroundingText.length) {
+        if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
+          newText += ' ';
+        }
       }
+      cursor.insertText(newText);
     }
-    cursor.insertText(newText);
   }
 }
 

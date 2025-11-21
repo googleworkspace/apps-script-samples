@@ -74,7 +74,7 @@ function getDocumentInfo() {
 
 /**
  * Gets information about a given element.
- * @param {Element} element The element.
+ * @param {Object} element The element.
  * @return {Object} The information.
  */
 function getElementInfo(element) {
