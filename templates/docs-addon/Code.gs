@@ -24,7 +24,7 @@ var SIDEBAR_TITLE = 'Example Sidebar';
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
  *
- * @param {Object} e The event parameter for a simple onOpen trigger.
+ * @param {any} e The event parameter for a simple onOpen trigger.
  */
 function onOpen(e) {
   DocumentApp.getUi()
@@ -38,7 +38,7 @@ function onOpen(e) {
  * Runs when the add-on is installed; calls onOpen() to ensure menu creation and
  * any other initializion work is done immediately.
  *
- * @param {Object} e The event parameter for a simple onInstall trigger.
+ * @param {any} e The event parameter for a simple onInstall trigger.
  */
 function onInstall(e) {
   onOpen(e);
@@ -70,7 +70,7 @@ function showDialog() {
 /**
  * Returns the existing footer text (if any).
  *
- * @return {String} existing document footer text (as a plain string).
+ * @return {string} existing document footer text (as a plain string).
  */
 function getFooterText() {
   // Retrieve and return the information requested by the sidebar.
@@ -80,7 +80,7 @@ function getFooterText() {
 /**
  * Replaces the current document footer with the given text.
  *
- * @param {String} footerText text collected from the client-side
+ * @param {string} footerText text collected from the client-side
  *     sidebar.
  */
 function setFooterText(footerText) {
@@ -91,7 +91,7 @@ function setFooterText(footerText) {
 /**
  * Returns the document title.
  *
- * @return {String} the current document title.
+ * @return {string} the current document title.
  */
 function getDocTitle() {
   // Retrieve and return the information requested by the dialog.
@@ -101,7 +101,7 @@ function getDocTitle() {
 /**
  * Changes the document title.
  *
- * @param {String} title the new title to use for the document.
+ * @param {string} title the new title to use for the document.
  */
 function setDocTitle(title) {
   // Use data collected from dialog to manipulate the document.

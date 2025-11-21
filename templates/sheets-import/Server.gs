@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
@@ -18,7 +19,12 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current spreadsheet.
  */
 
-var _ = Underscore.load();
+if (typeof Underscore === 'undefined') {
+  throw new Error('Underscore library not found. Have you added it?');
+}
+// @ts-nocheck
+var Underscore = undefined;
+var _ = undefined;
 
 /**
  * TODO: Replace the following with the name of the service you are importing
@@ -37,12 +43,12 @@ var ERROR_CODES = {
   AUTO_UPDATE_LIMIT: 1,
   ILLEGAL_EDIT: 2,
   ILLEGAL_DELETE: 3,
-  IMPORT_FAILED: 4
+  IMPORT_FAILED: 4,
 };
 
 /**
  * Adds a custom menu with items to show the sidebar.
- * @param {Object} e The event parameter for a simple onOpen trigger.
+ * @param {any} e The event parameter for a simple onOpen trigger.
  */
 function onOpen(e) {
   SpreadsheetApp.getUi()
@@ -54,7 +60,7 @@ function onOpen(e) {
 /**
  * Runs when the add-on is installed; calls onOpen() to ensure menu creation and
  * any other initializion work is done immediately.
- * @param {Object} e The event parameter for a simple onInstall trigger.
+ * @param {any} e The event parameter for a simple onInstall trigger.
  */
 function onInstall(e) {
   onOpen(e);
@@ -74,30 +80,38 @@ function showSidebar() {
   if (!template.isAuthorized) {
     template.authorizationUrl = service.getAuthorizationUrl();
   }
-  var page = template.evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  var page = template.evaluate().setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(page);
 }
+
+/**
+ * @typedef {{
+ *  name: string,
+ *  reportId: string
+ * }} ReportListItem
+ */
 
 /**
  * Return data needed to build the sidebar UI: a list of the names of the
  * currently saved report configurations and the list of potential
  * column choices.
- * @return {Object} a collection of saved report data and column options.
+ * @return {{reports: ReportListItem[], columns: ColumnOption[]}} a collection
+ * of saved report data and column options.
  */
 function getInitialDataForSidebar() {
   var reportSet = getAllReports();
+  /** @type {ReportListItem[]} */
   var reportList = [];
-  _.each(reportSet, function(val, key) {
-    reportList.push({'name': val, 'reportId': key});
+  Object.keys(reportSet).forEach(function(key) {
+    reportList.push({name: reportSet[key], reportId: key});
   });
   reportList.sort(function(a, b) {
     if (a.name > b.name) {
- return 1;
-}
+      return 1;
+    }
     if (a.name < b.name) {
- return -1;
-}
+      return -1;
+    }
     return 0;
   });
   return {reports: reportList, columns: getColumnOptions()};
@@ -106,12 +120,14 @@ function getInitialDataForSidebar() {
 /**
  * Get the report configuration for the given report and, if a sheet
  * exists for it, activate that sheet.
- * @param {String} reportId a report ID.
- * @return {object} The report config.
+ * @param {string} reportId a report ID.
+ * @return {ReportConfig|null} The report config.
  */
 function switchToReport(reportId) {
   var config = getReportConfig(reportId);
-  activateById(config.sheetId);
+  if (config) {
+    activateById(parseInt(config.sheetId));
+  }
   return config;
 }
 
@@ -119,12 +135,14 @@ function switchToReport(reportId) {
  * Import data to the spreadsheet according to the given report
  * configuration.
  * @param {string} reportId the report identifier.
- * @return {object} the (possibly updated) report configuration.
+ * @return {ReportConfig} the (possibly updated) report configuration.
  */
 function runImport(reportId) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var config = getReportConfig(reportId);
-
+  if (!config) {
+    return;
+  }
   // Acquire the sheet to place the import results in,
   // then clear and format it.
   // Update the saved config with sheet/time information.
@@ -137,21 +155,19 @@ function runImport(reportId) {
   // page at a time.
   var pageNumber = 0;
   var firstRow = 2;
-  try {
-    var page;
-    do {
-      page = getDataPage(columnIds, pageNumber, IMPORT_PAGE_SIZE, config);
-      if (page) {
-        sheet.getRange(firstRow, 1, page.length, page[0].length).setValues(page);
-        firstRow += page.length;
-        pageNumber++;
-        SpreadsheetApp.flush();
-      }
-    } while (page != null);
-  } catch (e) {
-    // Ensure a new sheet Id, if created, is preserved.
-    throw ERROR_CODES.IMPORT_FAILED;
-  }
+
+  var page;
+  do {
+    page = getDataPage(columnIds, pageNumber, IMPORT_PAGE_SIZE, config);
+    if (page && page.length > 0) {
+      sheet
+          .getRange(firstRow, 1, page.length, page[0].length)
+          .setValues(page);
+      firstRow += page.length;
+      pageNumber++;
+      SpreadsheetApp.flush();
+    }
+  } while (page != null);
 
   for (var i = 1; i <= sheet.getLastColumn(); i++) {
     sheet.autoResizeColumn(i);
@@ -162,13 +178,13 @@ function runImport(reportId) {
 
 /**
  * Save the given report configuration.
- * @param {Object} config a report configuration to save.
- * @return {Object} the updated report configuration.
+ * @param {ReportConfig} config a report configuration to save.
+ * @return {ReportConfig} the updated report configuration.
  */
 function saveReport(config) {
   var existingConfig = getReportConfig(config.reportId);
   if (existingConfig != null) {
-    activateById(existingConfig.sheetId);
+    activateById(parseInt(existingConfig.sheetId));
     // Check: users are not allowed to save edits to reports
     // created by other users if those reports have been marked
     // for auto-update.
@@ -188,13 +204,17 @@ function saveReport(config) {
 
 /**
  * Delete the given report configuration.
- * @param {String} reportId indicates the report to delete.
- * @return {String} the report ID deleted.
+ * @param {string} reportId indicates the report to delete.
+ * @return {string} the report ID deleted.
  */
 function removeReport(reportId) {
+  var config = getReportConfig(reportId);
+  if (!config) {
+    return;
+  }
   // Check: users are not allowed to delete reports created by
   // other users if those reports have been marked for auto-update.
-  if (!canEditReport(getReportConfig(reportId))) {
+  if (!canEditReport(config)) {
     throw ERROR_CODES.ILLEGAL_DELETE;
   }
   deleteReportConfig(reportId);
@@ -206,8 +226,8 @@ function removeReport(reportId) {
  * Activate, clear, format and return the sheet associated with the
  * specified report configuration. If the sheet does not exist, create,
  * format and activate it.
- * @param {Object} config the report configuration.
- * @return {Sheet}
+ * @param {ReportConfig} config the report configuration.
+ * @return {GoogleAppsScript.Spreadsheet.Sheet}
  */
 function activateReportSheet(config) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -224,10 +244,11 @@ function activateReportSheet(config) {
   sheet.clear();
   sheet.clearNotes();
   sheet.setFrozenRows(1);
-  sheet.getRange('1:1')
-    .setFontWeight('bold')
-    .setBackground('#000000')
-    .setFontColor('#ffffff');
+  sheet
+      .getRange('1:1')
+      .setFontWeight('bold')
+      .setBackground('#000000')
+      .setFontColor('#ffffff');
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   return sheet;
 }

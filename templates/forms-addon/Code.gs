@@ -24,7 +24,7 @@ var SIDEBAR_TITLE = 'Example Sidebar';
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
  *
- * @param {Object} e The event parameter for a simple onOpen trigger.
+ * @param {any} e The event parameter for a simple onOpen trigger.
  */
 function onOpen(e) {
   FormApp.getUi()
@@ -38,7 +38,7 @@ function onOpen(e) {
  * Runs when the add-on is installed; calls onOpen() to ensure menu creation and
  * any other initializion work is done immediately.
  *
- * @param {Object} e The event parameter for a simple onInstall trigger.
+ * @param {any} e The event parameter for a simple onInstall trigger.
  */
 function onInstall(e) {
   onOpen(e);
@@ -68,9 +68,16 @@ function showDialog() {
 }
 
 /**
+ * @typedef {{
+ *   type: string,
+ *   name: string,
+ * }} ItemData
+ */
+
+/**
  * Appends a new form item to the current form.
  *
- * @param {Object} itemData a collection of String data used to
+ * @param {ItemData} itemData a collection of String data used to
  *     determine the exact form item created.
  */
 function addFormItem(itemData) {
@@ -93,7 +100,7 @@ function addFormItem(itemData) {
  * Queries the form DocumentProperties to determine whether the formResponse
  * trigger is enabled or not.
  *
- * @return {Boolean} True if the form submit trigger is enabled; false
+ * @return {boolean} True if the form submit trigger is enabled; false
  *     otherwise.
  */
 function getTriggerState() {
@@ -105,7 +112,7 @@ function getTriggerState() {
 /**
  * Turns the form submit trigger on or off based on the given argument.
  *
- * @param {Boolean} enableTrigger whether to turn on the form submit
+ * @param {boolean} enableTrigger whether to turn on the form submit
  *     trigger or not
  */
 function adjustFormSubmitTrigger(enableTrigger) {
@@ -137,11 +144,17 @@ function adjustFormSubmitTrigger(enableTrigger) {
 }
 
 /**
+ * @typedef {{
+ *  response: GoogleAppsScript.Forms.FormResponse
+ * }} FormSubmitEvent
+ */
+
+/**
  * Responds to form submit events if a form summit trigger is enabled.
  * Collects some form information and sends it as an email to the form creator.
  *
- * @param {Object} e The event parameter created by a form
- *      submission; see
+ * @param {FormSubmitEvent} e The event parameter
+ *     created by a form submission.
  *      https://developers.google.com/apps-script/understanding_events
  */
 function respondToFormSubmit(e) {

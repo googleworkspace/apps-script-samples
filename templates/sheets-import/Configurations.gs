@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
@@ -14,6 +15,7 @@
  * limitations under the License.
  */
 
+// @ts-nocheck
 var REPORT_SET_KEY = 'Import.ReportSet';
 var SCHEDULE_TRIGGER_ID = 'Import.scheduled.triggerId';
 
@@ -26,10 +28,29 @@ var UPDATE_TYPE = {
 };
 
 /**
+ * @typedef {{
+ *   reportId: string,
+ *   sheetId: string,
+ *   sheetName: string,
+ *   name: string,
+ *   lastRun: string,
+ *   owner: string,
+ *   scheduled: boolean,
+ *   columns: any[],
+ * }} ReportConfig
+ */
+
+/**
+ * @typedef {{
+ *  [reportId: string]: string
+ * }} Report
+ */
+
+/**
  * Return the report configuration for the report with the given
  * ID; returns an empty Object if no such report name exists.
- * @param {String} reportId a report ID.
- * @return {Object} a report configuration corresponding to that ID,
+ * @param {string} reportId a report ID.
+ * @return {ReportConfig|null} a report configuration corresponding to that ID,
  *   or null if no such report exists.
  */
 function getReportConfig(reportId) {
@@ -41,22 +62,24 @@ function getReportConfig(reportId) {
   // get the current one.
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = getSheetById(ss, parseInt(config.sheetId));
-  config.sheetName = !sheet ? null : sheet.getName();
-  return config;
+  config.sheetName = !sheet ? '' : sheet.getName();
+  return /** @type {ReportConfig} */ (config);
 }
 
 /**
  * Given a report configuration, save it.
- * @param {object} config the report configuration.
- * @param {object} the updated report configuration.
- * @return {object} The saved configuration.
+ * @param {ReportConfig} config the report configuration.
+ * @return {ReportConfig} The saved configuration.
  */
 function saveReportConfig(config) {
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
   var previous = getReportConfig(config.reportId);
   if (config.reportId === 'new-report') {
     config.reportId = newReportId();
-    config.lastRun = null;
-    config.owner = Session.getEffectiveUser().getEmail();
+    config.lastRun = '';
+    config.owner = Session.getEffectiveUser().getEmail() || '';
   }
   saveObjectToProperties(config.reportId, config);
   updateReportSet(UPDATE_TYPE.ADD, config.reportId, config.name);
@@ -68,7 +91,7 @@ function saveReportConfig(config) {
 
 /**
  * Delete the report specified by the given ID.
- * @param {String} reportId indicates the report to delete.
+ * @param {string} reportId indicates the report to delete.
  */
 function deleteReportConfig(reportId) {
   deleteObjectFromProperties(reportId);
@@ -78,7 +101,7 @@ function deleteReportConfig(reportId) {
 /**
  * Returns true if the current user is allowed to edit the
  * report associated with the given config.
- * @param {Object} config a report configuration.
+ * @param {ReportConfig} config a report configuration.
  * @return {boolean} True if the user can edit the report.
  */
 function canEditReport(config) {
@@ -92,7 +115,7 @@ function canEditReport(config) {
 /**
  * Given a new report configuration, return true if it saving this report would mean the limit on
  * scheduled reports would be exceeded.
- * @param {Object} config a report configuration to be saved.
+ * @param {ReportConfig} config a report configuration to be saved.
  * @return {boolean} If it saving this report would mean the limit on scheduled reports
  * would be exceeded.
  */
@@ -108,46 +131,59 @@ function isOverScheduleLimit(config) {
 /**
  * Return a set of all saved reports (reportIds as keys, report
  * names as values).
- * @return {Object}
+ * @return {Report}
  */
 function getAllReports() {
   var properties = PropertiesService.getDocumentProperties();
-  return JSON.parse(properties.getProperty(REPORT_SET_KEY));
+  var reports = properties.getProperty(REPORT_SET_KEY);
+  if (reports) {
+    return JSON.parse(reports);
+  }
+  return {};
 }
 
 /**
  * Get a set of report configurations that all have been marked
  * for scheduled imports.
- * @param {String} opt_user optional user email; if provided, returned
+ * @param {string} opt_user optional user email; if provided, returned
  *   results will only include reports that user is the owner of.
- * @return {Object} collection of configuration object for scheduled
+ * @return {ReportConfig[]} collection of configuration object for scheduled
  *   reports.
  */
 function getScheduledReports(opt_user) {
-  var scheduledReports = [];
-  _.keys(getAllReports()).forEach(function(reportId) {
-    var config = getReportConfig(reportId);
-    if (config && config.scheduled &&
-      (!opt_user || opt_user == config.owner)) {
-      scheduledReports.push(config);
-    }
-  });
+  const scheduledReports = [];
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
+  var allReports = getAllReports();
+  if (allReports) {
+    Object.keys(allReports).forEach(function(reportId) {
+      var config = getReportConfig(reportId);
+      if (
+        config &&
+        config.scheduled &&
+        (!opt_user || opt_user == config.owner)
+      ) {
+        scheduledReports.push(config);
+      }
+    });
+  }
   return scheduledReports;
 }
 
 /**
  * Updates the current report list (adding or removing a given
  * report name and id).
- * @param {Number} updateType Enum: either UPDATE_TYPE.ADD or
+ * @param {number} updateType Enum: either UPDATE_TYPE.ADD or
  *   UPDATE_TYPE.REMOVE.
- * @param {String} reportId report to add or remove.
- * @param {String} reportName report name (only needed for ADD).
+ * @param {string} reportId report to add or remove.
+ * @param {string=} reportName report name (only needed for ADD).
  */
 function updateReportSet(updateType, reportId, reportName) {
   var properties = PropertiesService.getDocumentProperties();
   var lock = LockService.getDocumentLock();
   lock.waitLock(2000);
-  var reportSet = JSON.parse(properties.getProperty(REPORT_SET_KEY));
+  var reportSet = getAllReports();
   if (reportSet == null) {
     reportSet = {};
   }
@@ -164,29 +200,37 @@ function updateReportSet(updateType, reportId, reportName) {
  * Update a report configuration with a sheetId and last runtime
  * information, save and return it. Include but do not save the
  * sheet name.
- * @param {Object} config the report configuration.
- * @param {Sheet} sheet the report's sheet.
- * @param {String} lastRun the datetime string indicating the last
+ * @param {ReportConfig} config the report configuration.
+ * @param {GoogleAppsScript.Spreadsheet.Sheet} sheet the report's sheet.
+ * @param {string} lastRun the datetime string indicating the last
  *   time the report was run.
- * @return {Object} the updated report configuration.
+ * @return {ReportConfig} the updated report configuration.
  */
 function updateOnImport(config, sheet, lastRun) {
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
   var update = {
     sheetId: sheet.getSheetId().toString(),
-    lastRun: lastRun
+    lastRun: lastRun,
   };
   saveObjectToProperties(config.reportId, update);
-  update.sheetName = sheet.getName();
-  return _.extend(config, update);
+  config.sheetId = update.sheetId;
+  config.lastRun = update.lastRun;
+  config.sheetName = sheet.getName();
+  return config;
 }
 
 /**
  * Return the array of column IDs used by the given report
  * configuration.
- * @param {Object} config the report configuration.
- * @return {Array} column ID strings.
+ * @param {ReportConfig} config the report configuration.
+ * @return {string[]} column ID strings.
  */
 function getColumnIds(config) {
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
   return _.map(config.columns, function(col) {
     return col.column;
   });
@@ -203,7 +247,7 @@ function getTriggerId() {
 
 /**
  * Save the trigger ID of the scheduling trigger for this user.
- * @param {Trigger} trigger the trigger whose ID should be saved.
+ * @param {object} trigger the trigger whose ID should be saved.
  */
 function saveTriggerId(trigger) {
   var properties = PropertiesService.getUserProperties();

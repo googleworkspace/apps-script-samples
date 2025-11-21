@@ -24,7 +24,7 @@ var SIDEBAR_TITLE = 'Example Sidebar';
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
  *
- * @param {Object} e The event parameter for a simple onOpen trigger.
+ * @param {any} e The event parameter for a simple onOpen trigger.
  */
 function onOpen(e) {
   SpreadsheetApp.getUi()
@@ -38,7 +38,7 @@ function onOpen(e) {
  * Runs when the add-on is installed; calls onOpen() to ensure menu creation and
  * any other initializion work is done immediately.
  *
- * @param {Object} e The event parameter for a simple onInstall trigger.
+ * @param {any} e The event parameter for a simple onInstall trigger.
  */
 function onInstall(e) {
   onOpen(e);
@@ -70,7 +70,7 @@ function showDialog() {
 /**
  * Returns the value in the active cell.
  *
- * @return {String} The value of the active cell.
+ * @return {string} The value of the active cell.
  */
 function getActiveValue() {
   // Retrieve and return the information requested by the sidebar.
@@ -81,7 +81,7 @@ function getActiveValue() {
 /**
  * Replaces the active cell value with the given value.
  *
- * @param {Number} value A reference number to replace with.
+ * @param {number} value A reference number to replace with.
  */
 function setActiveValue(value) {
   // Use data collected from sidebar to manipulate the sheet.
@@ -93,7 +93,7 @@ function setActiveValue(value) {
  * Executes the specified action (create a new sheet, copy the active sheet, or
  * clear the current sheet).
  *
- * @param {String} action An identifier for the action to take.
+ * @param {string} action An identifier for the action to take.
  */
 function modifySheets(action) {
   // Use data collected from dialog to manipulate the spreadsheet.

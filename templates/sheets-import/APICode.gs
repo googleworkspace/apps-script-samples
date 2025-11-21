@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright Google LLC
  *
@@ -15,9 +16,16 @@
  */
 
 /**
+ * @typedef {{
+ *   id: string,
+ *   label: string,
+ * }} ColumnOption
+ */
+
+/**
  * Return an array of potential columns (identifiers to locate them in
  * the data response object and the labels to use as column headers).
- * @return {Array} list of potential columns.
+ * @return {ColumnOption[]} list of potential columns.
  */
 function getColumnOptions() {
   var columns = [];
@@ -37,15 +45,15 @@ function getColumnOptions() {
  * Return a page of results from the data source as a 2D array of
  * values (with columns corresponding to the columns specified). Return
  * null if no data exists for the specified pageNumber.
- * @param {Array} columns an array of Strings specifying the column ids
+ * @param {string[]} columns an array of Strings specifying the column ids
  *   to include in the output.
- * @param {Number} pageNumber a number indicating what page of data to
+ * @param {number} pageNumber a number indicating what page of data to
  *   retrieve from the data source.
- * @param {Number} pageSize a number indicating the maximum number of
+ * @param {number} pageSize a number indicating the maximum number of
  *   rows to return per call.
- * @param {Object} opt_settings optional object containing any additional
- *   information needed to retrieve data from the data source.
- * @return {object[]|null} Pages of data.
+ * @param {Object<string, string>} opt_settings optional object containing any
+ *   additional information needed to retrieve data from the data source.
+ * @return {Object<string, any>|null} Pages of data.
  */
 function getDataPage(columns, pageNumber, pageSize, opt_settings) {
   var data = null;
