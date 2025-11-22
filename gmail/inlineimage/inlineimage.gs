@@ -20,6 +20,9 @@ function sendEmailToMyself() {
   sendEmailWithInlineImage(Session.getActiveUser().getEmail());
 }
 
+/**
+ * @param {string} toAddress
+ */
 function sendEmailWithInlineImage(toAddress) {
   const options = {};
   const imageName = 'cat_emoji';
