@@ -15,6 +15,24 @@
  */
 
 /**
+ * @typedef {Object} TaskInfo
+ * @property {string} id
+ * @property {string} title
+ * @property {string} notes
+ * @property {boolean} completed
+ */
+
+/**
+ * @typedef {object} HtmlOutput
+ */
+
+/**
+ * @typedef {Object} TaskListInfo
+ * @property {string} id
+ * @property {string} name
+ */
+
+/**
  * Special function that handles HTTP GET requests to the published web app.
  * @return {HtmlOutput} The HTML page to be served.
  */
@@ -25,66 +43,88 @@ function doGet() {
 
 /**
  * Returns the ID and name of every task list in the user's account.
- * @return {Array.<Object>} The task list data.
+ * @return {TaskListInfo[]} The task list data.
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasklists/list
  */
 function getTaskLists() {
-  var taskLists = Tasks.Tasklists.list().getItems();
+  if (!Tasks.Tasklists) {
+    return [];
+  }
+  const taskLists = Tasks.Tasklists.list().items;
   if (!taskLists) {
     return [];
   }
-  return taskLists.map(function(taskList) {
-    return {
-      id: taskList.getId(),
-      name: taskList.getTitle()
-    };
-  });
+  const result = [];
+  for (const taskList of taskLists) {
+    if (taskList.id && taskList.title) {
+      result.push({id: taskList.id, name: taskList.title});
+    }
+  }
+  return result;
 }
 
 /**
  * Returns information about the tasks within a given task list.
- * @param {String} taskListId The ID of the task list.
- * @return {Array.<Object>} The task data.
+ * @param {string} taskListId The ID of the task list.
+ * @return {TaskInfo[]} The task data.
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/list
  */
 function getTasks(taskListId) {
-  var tasks = Tasks.Tasks.list(taskListId).getItems();
+  if (!Tasks.Tasks) {
+    return [];
+  }
+  const tasks = Tasks.Tasks.list(taskListId).items;
   if (!tasks) {
     return [];
   }
-  return tasks.map(function(task) {
-    return {
-      id: task.getId(),
-      title: task.getTitle(),
-      notes: task.getNotes(),
-      completed: Boolean(task.getCompleted())
-    };
-  }).filter(function(task) {
-    return task.title;
-  });
+  const result = [];
+  for (const task of tasks) {
+    if (task.id && task.title) {
+      result.push({
+        id: task.id,
+        title: task.title,
+        notes: task.notes ?? '',
+        completed: Boolean(task.completed),
+      });
+    }
+  }
+  return result;
 }
 
 /**
  * Sets the completed status of a given task.
- * @param {String} taskListId The ID of the task list.
- * @param {String} taskId The ID of the task.
- * @param {Boolean} completed True if the task should be marked as complete, false otherwise.
+ * @param {string} taskListId The ID of the task list.
+ * @param {string} taskId The ID of the task.
+ * @param {boolean} completed True if the task should be marked as complete, false otherwise.
+ * @see https://developers.google.com/apps-script/advanced/tasks
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/patch
  */
 function setCompleted(taskListId, taskId, completed) {
-  var task = Tasks.newTask();
+  const task = Tasks.newTask();
   if (completed) {
-    task.setStatus('completed');
+    task.status = 'completed';
   } else {
-    task.setStatus('needsAction');
-    task.setCompleted(null);
+    task.status = 'needsAction';
+    (/** @type {any} */ (task)).completed = null;
+  }
+  if (!Tasks.Tasks) {
+    return;
   }
   Tasks.Tasks.patch(task, taskListId, taskId);
 }
 
 /**
  * Adds a new task to the task list.
- * @param {String} taskListId The ID of the task list.
- * @param {String} title The title of the new task.
+ * @param {string} taskListId The ID of the task list.
+ * @param {string} title The title of the new task.
+ * @see https://developers.google.com/apps-script/advanced/tasks
+ * @see https://developers.google.com/workspace/tasks/reference/rest/v1/tasks/insert
  */
 function addTask(taskListId, title) {
-  var task = Tasks.newTask().setTitle(title);
+  const task = Tasks.newTask();
+  task.title = title;
+  if (!Tasks.Tasks) {
+    return;
+  }
   Tasks.Tasks.insert(task, taskListId);
 }
