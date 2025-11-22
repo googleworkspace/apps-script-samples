@@ -15,14 +15,22 @@
  */
 
 /**
+ * @typedef {{
+ *   parameter: {
+ *     folderId: string,
+ *   }
+ * }} AppsScriptEvent
+ */
+
+/**
  * Serves HTML of the application for HTTP GET requests.
  * If folderId is provided as a URL parameter, the web app will list
  * the contents of that folder (if permissions allow). Otherwise
  * the web app will list the contents of the root folder.
  *
- * @param {Object} e event parameter that can contain information
+ * @param {AppsScriptEvent} e event parameter that can contain information
  *     about any URL parameters provided.
- * @return {HTML} The web app's HTML.
+ * @return {object} The web app's HTML.
  */
 function doGet(e) {
   var template = HtmlService.createTemplateFromFile('Index');
@@ -35,24 +43,32 @@ function doGet(e) {
   }
 
   // Build and return HTML in IFRAME sandbox mode.
-  return template.evaluate()
-      .setTitle('Web App Window Title');
+  return template.evaluate().setTitle('Web App Window Title');
 }
+
+/**
+ * @typedef {{
+ *   children: string[],
+ *   rootName: string,
+ * }} FolderContents
+ */
 
 /**
  * Return an array of up to 20 filenames contained in the
  * folder previously specified (or the root folder by default).
  *
- * @param {String} folderId String ID of folder whose contents
+ * @param {string} folderId String ID of folder whose contents
  *     are to be retrieved; if this is 'root', the
  *     root folder is used.
- * @return {Object} list of content filenames, along with
+ * @return {FolderContents} list of content filenames, along with
  *     the root folder name.
  */
 function getFolderContents(folderId) {
   var topFolder;
+  /** @type {FolderContents} */
   var contents = {
-    children: []
+    children: [],
+    rootName: '',
   };
 
   if (folderId == 'root') {

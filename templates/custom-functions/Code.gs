@@ -22,8 +22,8 @@
  * A function that takes a single input value and returns a single value.
  * Returns a simple concatenation of Strings.
  *
- * @param {String} name A name to greet.
- * @return {String} A greeting.
+ * @param {string} name A name to greet.
+ * @return {string} A greeting.
  * @customfunction
  */
 function SAY_HELLO(name) {
@@ -35,8 +35,8 @@ function SAY_HELLO(name) {
  * range of cells.
  * Returns a range with all the input values incremented by one.
  *
- * @param {Array} input The range of numbers to increment.
- * @return {Array} The incremented values.
+ * @param {any} input The range of numbers to increment.
+ * @return {any} The incremented values.
  * @customfunction
  */
 function INCREMENT(input) {
@@ -55,8 +55,8 @@ function INCREMENT(input) {
  * Returns the sum the corner values in the range; for a single cell,
  * this is equal to (4 * the cell value).
  *
- * @param {Array} input The Range of numbers to sum the corners of.
- * @return {Number} The calculated sum.
+ * @param {number | number[][]} input The Range of numbers to sum the corners of.
+ * @return {number} The calculated sum.
  * @customfunction
  */
 function CORNER_SUM(input) {
@@ -65,8 +65,8 @@ function CORNER_SUM(input) {
     return CORNER_SUM([[input]]); // eslint-disable-line new-cap
   }
   // Range processing here.
-  var maxRowIndex = input.length - 1;
-  var maxColIndex = input[0].length - 1;
+  const maxRowIndex = input.length - 1;
+  const maxColIndex = input[0].length - 1;
   return input[0][0] + input[0][maxColIndex] +
       input[maxRowIndex][0] + input[maxRowIndex][maxColIndex];
 }
@@ -76,20 +76,21 @@ function CORNER_SUM(input) {
  * Returns a range consisting of the first 10 powers and roots of that
  * number (with column headers).
  *
- * @param {Number} input The number to calculate from.
- * @return {Array} The first ten powers and roots of that number,
- *     with associated labels.
+ * @param {number} input The number to calculate from.
+ * @return {Array<Array<string|number>>} The first ten powers and roots of that
+ *     number, with associated labels.
  * @customfunction
  */
 function POWERS_AND_ROOTS(input) {
-  if (input instanceof Array) {
-    throw new Error('Invalid: Range input not permitted');
+  if (typeof input !== 'number') {
+    throw new Error('Invalid: A single number is required.');
   }
   // Value processing and range generation here.
-  var headers = ['x', input + '^x', input + '^(1/x)'];
-  var result = [headers];
-  for (var i = 1; i <= 10; i++) {
-    result.push([i, Math.pow(input, i), Math.pow(input, 1/i)]);
+  const headers = ['x', input.toString() + '^x', input.toString() + '^(1/x)'];
+  /** @type {Array<Array<string|number>>} */
+  const result = [headers];
+  for (let i = 1; i <= 10; i++) {
+    result.push([i, Math.pow(input, i), Math.pow(input, 1 / i)]);
   }
   return result;
 }
@@ -99,7 +100,7 @@ function POWERS_AND_ROOTS(input) {
  * Returns the day of the year represented by the provided date.
  *
  * @param {Date} date A Date to examine.
- * @return {Number} The day of year for that date.
+ * @return {number} The day of year for that date.
  * @customfunction
  */
 function GET_DAY_OF_YEAR(date) {
@@ -107,9 +108,9 @@ function GET_DAY_OF_YEAR(date) {
     throw new Error('Invalid: Date input required');
   }
   // Date processing here.
-  var firstOfYear = new Date(date.getFullYear(), 0, 0);
-  var diff = date - firstOfYear;
-  var oneDay = 1000 * 60 * 60 * 24;
+  const firstOfYear = new Date(date.getFullYear(), 0, 0);
+  const diff = date.getTime() - firstOfYear.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
   return Math.floor(diff / oneDay);
 }
 
@@ -118,7 +119,7 @@ function GET_DAY_OF_YEAR(date) {
  * Returns the number of seconds measured by that duration.
  *
  * @param {Date} duration A duration to convert.
- * @return {Number} Number of seconds in that duration.
+ * @return {number} Number of seconds in that duration.
  * @customfunction
  */
 function CONVERT_DURATION_TO_SECONDS(duration) {

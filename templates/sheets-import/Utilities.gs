@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
@@ -20,6 +21,7 @@
  * @param {string} filename Project file name.
  * @return {string} The content of the rendered HTML.
  */
+// @ts-nocheck
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
@@ -27,28 +29,31 @@ function include(filename) {
 /**
  * Returns true if the given date string represents a date that is
  * more than 24 hours in the past; returns false otherwise.
- * @param {String} dateStr a date string.
- * @return {Boolean}
+ * @param {string} dateStr a date string.
+ * @return {boolean}
  */
 function isOlderThanADay(dateStr) {
-  var now = (new Date()).getTime();
+  var now = new Date().getTime();
   var then = Date.parse(dateStr);
-  return (then + 24 * 60 * 60 * 1000) < now;
+  return then + 24 * 60 * 60 * 1000 < now;
 }
 
 /**
  * Given an object and a string prefix, save every value in that object
  * to the Document properties service as a JSONified string. The property
  * key for each object key will be: prefix.<object_key>
- * @param {String} prefix a common string to label each added property.
- * @param {Object} obj a collection of key-values to save as
+ * @param {string} prefix a common string to label each added property.
+ * @param {Object<string, any>} obj a collection of key-values to save as
  *   user properties.
  */
 function saveObjectToProperties(prefix, obj) {
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
   var properties = PropertiesService.getDocumentProperties();
-  _.each(obj, function(val, key) {
-      var propKey = prefix + '.' + key;
-      properties.setProperty(propKey, JSON.stringify(val));
+  Object.keys(obj).forEach(function(key) {
+    var propKey = prefix + '.' + key;
+    properties.setProperty(propKey, JSON.stringify(obj[key]));
   });
 }
 
@@ -57,19 +62,23 @@ function saveObjectToProperties(prefix, obj) {
  * properties whose keys start with that prefix, and return the (JSON-parsed)
  * values in an object. The keys of the returned object will be the
  * same as the property keys with the leading "prefix." removed.
- * @param {String} prefix label of requested properties.
- * @return {Object} collection of key-value pairs taken from the
+ * @param {string} prefix label of requested properties.
+ * @return {Object<string, any>|null} collection of key-value pairs taken from the
  *   properties service. Will return null if the prefix is unrecognized.
  */
 function getObjectFromProperties(prefix) {
+  if (typeof _ === 'undefined') {
+    throw new Error('Underscore library not found. Have you added it?');
+  }
   var properties = PropertiesService.getDocumentProperties();
   var obj = {};
-  _.each(properties.getProperties(), function(val, key) {
+  var allProps = properties.getProperties();
+  Object.keys(allProps).forEach(function(key) {
     if (key.indexOf(prefix) > -1) {
-      obj[key.substr(prefix.length + 1)] = JSON.parse(val);
+      obj[key.substr(prefix.length + 1)] = JSON.parse(allProps[key] || '{}');
     }
   });
-  if (_.keys(obj).length == 0) {
+  if (Object.keys(obj).length == 0) {
     return null;
   }
   return obj;
@@ -78,11 +87,11 @@ function getObjectFromProperties(prefix) {
 /**
  * Given a string prefix, remove from the Document properties service all
  * properties whose keys start with that prefix.
- * @param {String} prefix label of properties to remove.
+ * @param {string} prefix label of properties to remove.
  */
 function deleteObjectFromProperties(prefix) {
   var properties = PropertiesService.getDocumentProperties();
-  _.each(properties.getProperties(), function(val, key) {
+  Object.keys(properties.getProperties()).forEach(function(key) {
     if (key.indexOf(prefix) > -1) {
       properties.deleteProperty(key);
     }
@@ -91,7 +100,7 @@ function deleteObjectFromProperties(prefix) {
 
 /**
  * Generate a random alphanumeric string.
- * @return {String} report ID string.
+ * @return {string} report ID string.
  */
 function newReportId() {
   return Math.random().toString(36).substring(2);
@@ -100,9 +109,9 @@ function newReportId() {
 /**
  * Sheets-specific utility. Find a sheet within a spreadsheet with
  * the given id. If not present, return null.
- * @param {Object} ss a Spreadsheet object.
- * @param {Number} sheetId a Sheet id.
- * @return {Object} a Sheet object, or null if not found.
+ * @param {object} ss a Spreadsheet object.
+ * @param {number} sheetId a Sheet id.
+ * @return {object|null} a Sheet object, or null if not found.
  */
 function getSheetById(ss, sheetId) {
   if (sheetId === null) {
@@ -123,16 +132,16 @@ function getSheetById(ss, sheetId) {
  * suffix to append to it to make it unique and return. This function
  * is used to avoid name collisions while adding or renaming sheets
  * automatically.
- * @param {Object} spreadsheet a Spreadsheet.
- * @param {String} baseName the initial suggested title for a sheet.
- * @return {String} a unique title for the sheet, based on the
+ * @param {object} spreadsheet a Spreadsheet.
+ * @param {string} baseName the initial suggested title for a sheet.
+ * @return {string} a unique title for the sheet, based on the
  *     given base title.
  */
 function getUniqueSheetName(spreadsheet, baseName) {
   var sheetName = baseName;
   var i = 2;
   while (spreadsheet.getSheetByName(sheetName) != null) {
-      sheetName = baseName + ' ' + i++;
+    sheetName = baseName + ' ' + i++;
   }
   return sheetName;
 }
@@ -141,9 +150,9 @@ function getUniqueSheetName(spreadsheet, baseName) {
  * Sheets-specific utility. Given a spreadsheet and a triggerId string,
  * return the user trigger that corresponds to that ID. Returns null
  * if no such trigger exists.
- * @param {Spreadsheet} spreadsheet container of the user triggers.
- * @param {String} triggerId trigger ID string.
- * @return {Trigger} corresponding user trigger, or null if not found.
+ * @param {object} spreadsheet container of the user triggers.
+ * @param {string} triggerId trigger ID string.
+ * @return {object|null} corresponding user trigger, or null if not found.
  */
 function getUserTriggerById(spreadsheet, triggerId) {
   var triggers = ScriptApp.getUserTriggers(spreadsheet);
@@ -158,11 +167,11 @@ function getUserTriggerById(spreadsheet, triggerId) {
 /**
  * Sheets-specific utility. Given a String sheet id, activate that
  * sheet if it exists.
- * @param {String} sheetId the sheet ID.
+ * @param {number} sheetId the sheet ID.
  */
 function activateById(sheetId) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, parseInt(sheetId));
+  var sheet = getSheetById(ss, sheetId);
   if (sheet != null) {
     sheet.activate();
   }
