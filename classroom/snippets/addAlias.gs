@@ -15,20 +15,18 @@
  */
 // [START classroom_add_alias]
 /**
- * Updates the section and room of Google Classroom.
- * @param {string} course_id
+ * Adds an alias to a course.
+ * @param {string} courseId The course ID.
  * @see https://developers.google.com/classroom/reference/rest/v1/courses.aliases/create
  */
-function addAlias(course_id) {
-  const alias = {
-    'alias': 'p:bio_101'
-  };
-  try {
-    const course_alias = Classroom.Courses.Aliases.create(resource=alias, courseId=course_id);
-    console.log('%s successfully added as an alias!', course_alias.alias);
-  } catch (err) {
-    // TODO (developer) - Handle exception
-    console.log('Request to add alias %s failed with error %s.', alias.alias, err.message);
+function addAlias(courseId) {
+  if (!Classroom || !Classroom.Courses || !Classroom.Courses.Aliases) {
+    throw new Error('Enable the Classroom API advanced service.');
   }
+  const alias = {
+    alias: 'p:bio_101',
+  };
+  const courseAlias = Classroom.Courses.Aliases.create(alias, courseId);
+  console.log('%s successfully added as an alias!', courseAlias.alias);
 }
 // [END classroom_add_alias]

@@ -15,22 +15,19 @@
  */
 // [START classroom_update_course]
 /**
- * Updates the section and room of Google Classroom.
- * @param {string} courseId
+ * Updates the section and room of a Google Classroom course.
+ * @param {string} courseId The course ID.
  * @see https://developers.google.com/classroom/reference/rest/v1/courses/update
  */
 function courseUpdate(courseId) {
-  try {
-    // Get the course using course ID
-    let course = Classroom.Courses.get(courseId);
-    course.section = 'Period 3';
-    course.room = '302';
-    // Update the course
-    course = Classroom.Courses.update(course, courseId);
-    console.log('Course "%s" updated.', course.name);
-  } catch (e) {
-    // TODO (developer) - Handle exception
-    console.log('Failed to update the course with error %s', e.message);
+  if (!Classroom || !Classroom.Courses) {
+    throw new Error('Enable the Classroom API advanced service.');
   }
+  let course = Classroom.Courses.get(courseId);
+  course.section = 'Period 3';
+  course.room = '302';
+  // Update the course
+  course = Classroom.Courses.update(course, courseId);
+  console.log('Course "%s" updated.', course.name);
 }
 // [END classroom_update_course]

@@ -15,27 +15,26 @@
  */
 // [START classroom_create_alias]
 /**
- * Creates Course with an alias specified
+ * Creates a course with an alias.
  */
 function createAlias() {
-  let course = {
+  if (!Classroom || !Classroom.Courses) {
+    throw new Error('Enable the Classroom API advanced service.');
+  }
+  const course = {
     id: 'p:bio_101',
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: 'We\'ll be learning about the structure of living creatures from a combination ' +
-      'of textbooks, guest lectures, and lab work. Expect to be excited!',
+    description:
+      'We\'ll be learning about the structure of living creatures from a ' +
+      'combination of textbooks, guest lectures, and lab work. Expect to be ' +
+      'excited!',
     room: '301',
     ownerId: 'me',
-    courseState: 'PROVISIONED'
+    courseState: 'PROVISIONED',
   };
-  try {
-    // Create the course using course details.
-    course = Classroom.Courses.create(course);
-    console.log('Course created: %s (%s)', course.name, course.id);
-  } catch (err) {
-    // TODO (developer) - Handle Courses.create() exception
-    console.log('Failed to create course %s with an error %s', course.name, err.message);
-  }
+  const newCourse = Classroom.Courses.create(course);
+  console.log('Course created: %s (%s)', newCourse.name, newCourse.id);
 }
 // [END classroom_create_alias]
