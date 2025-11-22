@@ -4,5 +4,5 @@ function doGet() {
 
 function getUnreadEmails() {
   // 'got' instead of 'get' will throw an error.
-  return GmailApp.gotInboxUnreadCount();
+  return GmailApp.getInboxUnreadCount();
 }
