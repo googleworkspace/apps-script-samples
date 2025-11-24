@@ -15,6 +15,6 @@
  */
 
 export {
-  TextEncoder,
-  TextDecoder,
+	TextEncoder,
+	TextDecoder,
 } from "fastestsmallesttextencoderdecoder/EncoderDecoderTogether.min.js";

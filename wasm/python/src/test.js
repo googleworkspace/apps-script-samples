@@ -17,10 +17,10 @@
 async function test() {}
 
 async function assert(a, b, message) {
-  const aVal = await a;
-  const bVal = await b;
+	const aVal = await a;
+	const bVal = await b;
 
-  if (aVal !== bVal) {
-    throw message ?? `'${aVal}' !== '${bVal}'`;
-  }
+	if (aVal !== bVal) {
+		throw message ?? `'${aVal}' !== '${bVal}'`;
+	}
 }

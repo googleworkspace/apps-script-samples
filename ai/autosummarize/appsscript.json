@@ -1,22 +1,22 @@
 {
-  "timeZone": "America/Denver",
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8",
-  "dependencies": {
-    "libraries": [
-      {
-        "userSymbol": "OAuth2",
-        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
-        "version": "43",
-        "developmentMode": false
-      }
-    ],
-    "enabledAdvancedServices": [
-      {
-        "userSymbol": "Drive",
-        "version": "v3",
-        "serviceId": "drive"
-      }
-    ]
-  }
+	"timeZone": "America/Denver",
+	"exceptionLogging": "STACKDRIVER",
+	"runtimeVersion": "V8",
+	"dependencies": {
+		"libraries": [
+			{
+				"userSymbol": "OAuth2",
+				"libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+				"version": "43",
+				"developmentMode": false
+			}
+		],
+		"enabledAdvancedServices": [
+			{
+				"userSymbol": "Drive",
+				"version": "v3",
+				"serviceId": "drive"
+			}
+		]
+	}
 }

@@ -16,54 +16,54 @@ limitations under the License.
 
 /**
  * Creates a link preview card for Google developer documentation links.
- * 
+ *
  * @param {!Object} event
  * @return {!Card}
  */
 function onLinkPreview(event) {
-  const hostApp = event.hostApp;
-  if (!event[hostApp].matchedUrl.url) {
-    return;
-  }
-  const url = event[hostApp].matchedUrl.url;
-  try {
-    const info = getPageSummary(url);
-    const card = buildCard(info.title, info.summary);
-    const linkPreview = CardService.newLinkPreview()
-      .setPreviewCard(card)
-      .setTitle(info.title)
-      .setLinkPreviewTitle(info.title);
-    return linkPreview;
-  } catch (error) {
-    // Log the error  
-    console.error("Error occurred:", error);
-    const errorCard = buildErrorCard();
-    return CardService.newActionResponseBuilder()
-    .setNavigation(CardService.newNavigation().updateCard(errorCard))
-    .build();
-  }
+	const hostApp = event.hostApp;
+	if (!event[hostApp].matchedUrl.url) {
+		return;
+	}
+	const url = event[hostApp].matchedUrl.url;
+	try {
+		const info = getPageSummary(url);
+		const card = buildCard(info.title, info.summary);
+		const linkPreview = CardService.newLinkPreview()
+			.setPreviewCard(card)
+			.setTitle(info.title)
+			.setLinkPreviewTitle(info.title);
+		return linkPreview;
+	} catch (error) {
+		// Log the error
+		console.error("Error occurred:", error);
+		const errorCard = buildErrorCard();
+		return CardService.newActionResponseBuilder()
+			.setNavigation(CardService.newNavigation().updateCard(errorCard))
+			.build();
+	}
 }
 
 /**
  * Action handler for a good rating .
- * 
+ *
  * @param {!Object} e The event passed from click action.
  * @return {!Card}
  */
 function onRatingClicked(e) {
-  let key = e.parameters.key;
-  let title = e.parameters.title;
-  let pageSummary = e.parameters.pageSummary;
+	const key = e.parameters.key;
+	const title = e.parameters.title;
+	const pageSummary = e.parameters.pageSummary;
 
-  const properties = PropertiesService.getScriptProperties();
-  let rating = Number(properties.getProperty(key) ?? 0);
-  properties.setProperty(key, ++rating);
+	const properties = PropertiesService.getScriptProperties();
+	let rating = Number(properties.getProperty(key) ?? 0);
+	properties.setProperty(key, ++rating);
 
-  let card = buildCard(title, pageSummary, false);
-  let linkPreview = CardService.newLinkPreview()
-    .setPreviewCard(card)
-    .setTitle(title)
-    .setLinkPreviewTitle(title);
+	const card = buildCard(title, pageSummary, false);
+	const linkPreview = CardService.newLinkPreview()
+		.setPreviewCard(card)
+		.setTitle(title)
+		.setLinkPreviewTitle(title);
 
-  return linkPreview;
+	return linkPreview;
 }

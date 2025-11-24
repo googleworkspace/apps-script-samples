@@ -1,37 +1,37 @@
 {
-  "timeZone": "America/Los_Angeles",
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8",
-  "dependencies": {
-    "enabledAdvancedServices": [
-      {
-        "userSymbol": "Chat",
-        "serviceId": "chat",
-        "version": "v1"
-      },
-      {
-        "userSymbol": "AdminDirectory",
-        "serviceId": "admin",
-        "version": "directory_v1"
-      }
-    ]
-  },
-  "webapp": {
-    "executeAs": "USER_ACCESSING",
-    "access": "DOMAIN"
-  },
-  "oauthScopes": [
-    "https://www.googleapis.com/auth/chat.messages",
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/admin.directory.user.readonly",
-    "https://www.googleapis.com/auth/script.external_request",
-    "https://www.googleapis.com/auth/chat.spaces.create",
-    "https://www.googleapis.com/auth/chat.spaces",
-    "https://www.googleapis.com/auth/chat.spaces.readonly",
-    "https://www.googleapis.com/auth/chat.spaces.create",
-    "https://www.googleapis.com/auth/chat.delete",
-    "https://www.googleapis.com/auth/chat.memberships",
-    "https://www.googleapis.com/auth/chat.memberships.app",
-    "https://www.googleapis.com/auth/userinfo.email"
-  ]
+	"timeZone": "America/Los_Angeles",
+	"exceptionLogging": "STACKDRIVER",
+	"runtimeVersion": "V8",
+	"dependencies": {
+		"enabledAdvancedServices": [
+			{
+				"userSymbol": "Chat",
+				"serviceId": "chat",
+				"version": "v1"
+			},
+			{
+				"userSymbol": "AdminDirectory",
+				"serviceId": "admin",
+				"version": "directory_v1"
+			}
+		]
+	},
+	"webapp": {
+		"executeAs": "USER_ACCESSING",
+		"access": "DOMAIN"
+	},
+	"oauthScopes": [
+		"https://www.googleapis.com/auth/chat.messages",
+		"https://www.googleapis.com/auth/spreadsheets",
+		"https://www.googleapis.com/auth/admin.directory.user.readonly",
+		"https://www.googleapis.com/auth/script.external_request",
+		"https://www.googleapis.com/auth/chat.spaces.create",
+		"https://www.googleapis.com/auth/chat.spaces",
+		"https://www.googleapis.com/auth/chat.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.spaces.create",
+		"https://www.googleapis.com/auth/chat.delete",
+		"https://www.googleapis.com/auth/chat.memberships",
+		"https://www.googleapis.com/auth/chat.memberships.app",
+		"https://www.googleapis.com/auth/userinfo.email"
+	]
 }

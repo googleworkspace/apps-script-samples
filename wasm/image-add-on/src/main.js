@@ -17,18 +17,18 @@
 const QUALITY = 80;
 
 async function main() {
-  const iterator = DriveApp.getFilesByType("image/jpeg");
+	const iterator = DriveApp.getFilesByType("image/jpeg");
 
-  while (iterator.hasNext()) {
-    const file = iterator.next();
-    const bytes = file.getBlob().getBytes();
+	while (iterator.hasNext()) {
+		const file = iterator.next();
+		const bytes = file.getBlob().getBytes();
 
-    const dataUrl = await compress_(bytes, QUALITY);
+		const dataUrl = await compress_(bytes, QUALITY);
 
-    if (dataUrl) {
-      console.log(dataUrl);
-    } else {
-      console.warn("failed to decode image");
-    }
-  }
+		if (dataUrl) {
+			console.log(dataUrl);
+		} else {
+			console.warn("failed to decode image");
+		}
+	}
 }

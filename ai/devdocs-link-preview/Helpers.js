@@ -18,10 +18,10 @@ limitations under the License.
  * Wraper around script properties to allow for a default value if unset.
  */
 function scriptPropertyWithDefault(key, defaultValue = undefined) {
-  const scriptProperties = PropertiesService.getScriptProperties();
-  const value = scriptProperties.getProperty(key);
-  if (value) {
-    return value;
-  }
-  return defaultValue;
+	const scriptProperties = PropertiesService.getScriptProperties();
+	const value = scriptProperties.getProperty(key);
+	if (value) {
+		return value;
+	}
+	return defaultValue;
 }

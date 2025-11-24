@@ -1,27 +1,27 @@
 {
-  "timeZone": "Europe/Madrid",
-  "dependencies": {
-    "libraries": [
-      {
-        "userSymbol": "OAuth2",
-        "version": "43",
-        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
-      }
-    ]
-  },
-  "addOns": {
-    "common": {
-      "name": "Productivity toolbox",
-      "logoUrl": "https://icons.iconarchive.com/icons/roundicons/100-free-solid/64/spy-icon.png",
-      "useLocaleFromApp": true
-    },
-    "gmail": {
-      "homepageTrigger": {
-        "runFunction": "onHomepage",
-        "enabled": true
-      }
-    }
-  },
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8"
+	"timeZone": "Europe/Madrid",
+	"dependencies": {
+		"libraries": [
+			{
+				"userSymbol": "OAuth2",
+				"version": "43",
+				"libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
+			}
+		]
+	},
+	"addOns": {
+		"common": {
+			"name": "Productivity toolbox",
+			"logoUrl": "https://icons.iconarchive.com/icons/roundicons/100-free-solid/64/spy-icon.png",
+			"useLocaleFromApp": true
+		},
+		"gmail": {
+			"homepageTrigger": {
+				"runFunction": "onHomepage",
+				"enabled": true
+			}
+		}
+	},
+	"exceptionLogging": "STACKDRIVER",
+	"runtimeVersion": "V8"
 }

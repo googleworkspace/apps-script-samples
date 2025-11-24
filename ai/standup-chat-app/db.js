@@ -34,65 +34,60 @@ limitations under the License.
  * @property {string} space.name
  */
 
-
 class DB {
-  /**
-   * params {String} spreadsheetId
-   */
-  constructor(spreadsheetId) {
-    this.spreadsheetId = spreadsheetId;
-    this.sheetName = "Messages";
+	/**
+	 * params {String} spreadsheetId
+	 */
+	constructor(spreadsheetId) {
+		this.spreadsheetId = spreadsheetId;
+		this.sheetName = "Messages";
+	}
 
-  }
+	/**
+	 * @returns {SpreadsheetApp.Sheet}
+	 */
+	get sheet() {
+		const spreadsheet = SpreadsheetApp.openById(this.spreadsheetId);
+		let sheet = spreadsheet.getSheetByName(this.sheetName);
 
-  /**
-   * @returns {SpreadsheetApp.Sheet}
-   */
-  get sheet() {
-    const spreadsheet = SpreadsheetApp.openById(this.spreadsheetId);
-    let sheet = spreadsheet.getSheetByName(this.sheetName);
+		// create if it does not exist
+		if (sheet == undefined) {
+			sheet = spreadsheet.insertSheet();
+			sheet.setName(this.sheetName);
+		}
 
-    // create if it does not exist
-    if (sheet == undefined) {
-      sheet = spreadsheet.insertSheet();
-      sheet.setName(this.sheetName)
-    }
+		return sheet;
+	}
 
-    return sheet;
-  }
+	/**
+	 * @returns {Message|undefined}
+	 */
+	get last() {
+		const lastRow = this.sheet.getLastRow();
+		if (lastRow === 0) return;
+		return JSON.parse(this.sheet.getSheetValues(lastRow, 1, 1, 2)[0][1]);
+	}
 
-  /**
-   * @returns {Message|undefined}
-   */
-  get last() {
-    const lastRow = this.sheet.getLastRow()
-    if (lastRow === 0) return;
-    return JSON.parse(this.sheet.getSheetValues(lastRow, 1, 1, 2)[0][1]);
-  }
-
-
-  /**
-   * @params {Chat_v1.Chat.V1.Schema.Message} message
-   */
-  append(message) {
-    this.sheet.appendRow([message.name, JSON.stringify(message, null, 2)]);
-  }
-
+	/**
+	 * @params {Chat_v1.Chat.V1.Schema.Message} message
+	 */
+	append(message) {
+		this.sheet.appendRow([message.name, JSON.stringify(message, null, 2)]);
+	}
 }
-
 
 /**
  * Test function for DB Object
  */
 function testDB() {
-  const db = new DB(SPREADSHEET_ID);
+	const db = new DB(SPREADSHEET_ID);
 
-  let thread = db.last;
-  if (thread == undefined) return;
-  console.log(thread)
+	let thread = db.last;
+	if (thread == undefined) return;
+	console.log(thread);
 
-  db.rowOffset = 1;
-  thread = db.last;
-  if (thread == undefined) return;
-  console.log(thread)
+	db.rowOffset = 1;
+	thread = db.last;
+	if (thread == undefined) return;
+	console.log(thread);
 }

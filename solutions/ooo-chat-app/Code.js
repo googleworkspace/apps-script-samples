@@ -184,7 +184,7 @@ function blockOutCalendar() {
 function cancelMeetings() {
   const events = CalendarApp.getEventsForDay(new Date());
 
-  events.forEach(function(event) {
+  events.forEach((event) => {
     if (event.getGuestList().length > 0) {
       event.setMyStatus(CalendarApp.GuestStatus.NO);
     }

@@ -15,23 +15,23 @@
  */
 
 async function compress_(bytes, { quality, format, width, height }) {
-  const wasm = await import("./pkg/example_bg.wasm");
-  const { __wbg_set_wasm, compress } = await import("./pkg/example_bg.js");
+	const wasm = await import("./pkg/example_bg.wasm");
+	const { __wbg_set_wasm, compress } = await import("./pkg/example_bg.js");
 
-  __wbg_set_wasm(wasm);
+	__wbg_set_wasm(wasm);
 
-  width = width || 0;
-  height = height || 0;
+	width = width || 0;
+	height = height || 0;
 
-  console.log({ quality, format, width, height });
+	console.log({ quality, format, width, height });
 
-  const result = compress(bytes, quality, format, width, height);
+	const result = compress(bytes, quality, format, width, height);
 
-  if (typeof result === "string") {
-    throw new Error(result);
-  }
+	if (typeof result === "string") {
+		throw new Error(result);
+	}
 
-  return result;
+	return result;
 }
 
 globalThis.compress_ = compress_;

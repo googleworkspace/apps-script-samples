@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const VERTEX_AI_LOCATION = PropertiesService.getScriptProperties().getProperty('project_location');
-const MODEL_ID = PropertiesService.getScriptProperties().getProperty('model_id');
-const SERVICE_ACCOUNT_KEY = PropertiesService.getScriptProperties().getProperty('service_account_key');
+const VERTEX_AI_LOCATION =
+	PropertiesService.getScriptProperties().getProperty("project_location");
+const MODEL_ID =
+	PropertiesService.getScriptProperties().getProperty("model_id");
+const SERVICE_ACCOUNT_KEY = PropertiesService.getScriptProperties().getProperty(
+	"service_account_key",
+);
 
 /**
  * Packages prompt and necessary settings, then sends a request to
@@ -26,83 +30,87 @@ const SERVICE_ACCOUNT_KEY = PropertiesService.getScriptProperties().getProperty(
  * @param prompt - String representing your prompt for Gemini AI.
  */
 function getAiSummary(prompt) {
+	const request = {
+		contents: [
+			{
+				role: "user",
+				parts: [
+					{
+						text: prompt,
+					},
+				],
+			},
+		],
+		generationConfig: {
+			temperature: 0.1,
+			maxOutputTokens: 2048,
+		},
+		safetySettings: [
+			{
+				category: "HARM_CATEGORY_HARASSMENT",
+				threshold: "BLOCK_NONE",
+			},
+			{
+				category: "HARM_CATEGORY_HATE_SPEECH",
+				threshold: "BLOCK_NONE",
+			},
+			{
+				category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+				threshold: "BLOCK_NONE",
+			},
+			{
+				category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+				threshold: "BLOCK_NONE",
+			},
+		],
+	};
 
-  const request = {
-    "contents": [{
-      "role": "user",
-      "parts": [{
-        "text": prompt
-      }]
-    }],
-    "generationConfig": {
-      "temperature": 0.1,
-      "maxOutputTokens": 2048,
-    },
-    "safetySettings": [
-      {
-        "category": "HARM_CATEGORY_HARASSMENT",
-        "threshold": "BLOCK_NONE"
-      },
-      {
-        "category": "HARM_CATEGORY_HATE_SPEECH",
-        "threshold": "BLOCK_NONE"
-      },
-      {
-        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        "threshold": "BLOCK_NONE"
-      },
-      {
-        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-        "threshold": "BLOCK_NONE"
-      }
-    ]
-  };
+	const credentials = credentialsForVertexAI();
 
-  const credentials = credentialsForVertexAI();
+	const fetchOptions = {
+		method: "post",
+		headers: {
+			Authorization: `Bearer ${credentials.accessToken}`,
+		},
+		contentType: "application/json",
+		muteHttpExceptions: true,
+		payload: JSON.stringify(request),
+	};
 
-  const fetchOptions = {
-    method: 'post',
-    headers: {
-      'Authorization': `Bearer ${credentials.accessToken}`
-    },
-    contentType: 'application/json',
-    muteHttpExceptions: true,
-    payload: JSON.stringify(request)
-  }
+	const url =
+		`https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}/` +
+		`locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
 
-  const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}/`
-  + `locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
+	const response = UrlFetchApp.fetch(url, fetchOptions);
 
-  const response = UrlFetchApp.fetch(url, fetchOptions);
+	const payload = JSON.parse(response);
+	const text = payload.candidates[0].content.parts[0].text;
 
-  const payload = JSON.parse(response);
-  const text = payload.candidates[0].content.parts[0].text
-
-  return text
+	return text;
 }
 
 /**
  * Gets credentials required to call Vertex API using a Service Account.
  * Requires use of Service Account Key stored with project
- * 
+ *
  * @return {!Object} Containing the Cloud Project Id and the access token.
  */
 function credentialsForVertexAI() {
-  const credentials = SERVICE_ACCOUNT_KEY;
-  if (!credentials) {
-    throw new Error("service_account_key script property must be set.");
-  }
+	const credentials = SERVICE_ACCOUNT_KEY;
+	if (!credentials) {
+		throw new Error("service_account_key script property must be set.");
+	}
 
-  const parsedCredentials = JSON.parse(credentials);
+	const parsedCredentials = JSON.parse(credentials);
 
-  const service = OAuth2.createService("Vertex")
-    .setTokenUrl('https://oauth2.googleapis.com/token')
-    .setPrivateKey(parsedCredentials['private_key'])
-    .setIssuer(parsedCredentials['client_email'])
-    .setPropertyStore(PropertiesService.getScriptProperties())
-    .setScope("https://www.googleapis.com/auth/cloud-platform");
-  return {
-    projectId: parsedCredentials['project_id'],
-    accessToken: service.getAccessToken(),
-  }
+	const service = OAuth2.createService("Vertex")
+		.setTokenUrl("https://oauth2.googleapis.com/token")
+		.setPrivateKey(parsedCredentials["private_key"])
+		.setIssuer(parsedCredentials["client_email"])
+		.setPropertyStore(PropertiesService.getScriptProperties())
+		.setScope("https://www.googleapis.com/auth/cloud-platform");
+	return {
+		projectId: parsedCredentials["project_id"],
+		accessToken: service.getAccessToken(),
+	};
 }

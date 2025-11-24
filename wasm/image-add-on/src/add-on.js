@@ -15,126 +15,126 @@
  */
 
 const COLORS = {
-  RED: "#EA4335",
+	RED: "#EA4335",
 };
 
 const properties = PropertiesService.getUserProperties();
 
 async function card(items) {
-  const builder = CardService.newCardBuilder();
+	const builder = CardService.newCardBuilder();
 
-  const { quality, format, width, height } = loadSettings();
+	const { quality, format, width, height } = loadSettings();
 
-  const controls = CardService.newCardSection()
-    .addWidget(
-      CardService.newSelectionInput()
-        .setFieldName("quality")
-        .setTitle("Quality")
-        .setType(CardService.SelectionInputType.RADIO_BUTTON)
-        .addItem("Low", "low", quality === "low")
-        .addItem("Medium", "medium", quality === "medium")
-        .addItem("High", "high", quality === "high")
-    )
-    .addWidget(
-      CardService.newTextInput()
-        .setFieldName("height")
-        .setTitle("Height")
-        .setMultiline(false)
-        .setValue(height ?? "")
-    )
-    .addWidget(
-      CardService.newTextInput()
-        .setFieldName("width")
-        .setTitle("Width")
-        .setMultiline(false)
-        .setValue(width ?? "")
-    )
-    .addWidget(
-      CardService.newTextButton()
-        .setBackgroundColor(COLORS.RED)
-        .setText("Apply Settings")
-        .setOnClickAction(
-          CardService.newAction()
-            .setFunctionName("updateSettings")
-            .setParameters({})
-            .setLoadIndicator(CardService.LoadIndicator.SPINNER)
-        )
-    )
-    .setCollapsible(true)
-    .setNumUncollapsibleWidgets(0);
+	const controls = CardService.newCardSection()
+		.addWidget(
+			CardService.newSelectionInput()
+				.setFieldName("quality")
+				.setTitle("Quality")
+				.setType(CardService.SelectionInputType.RADIO_BUTTON)
+				.addItem("Low", "low", quality === "low")
+				.addItem("Medium", "medium", quality === "medium")
+				.addItem("High", "high", quality === "high"),
+		)
+		.addWidget(
+			CardService.newTextInput()
+				.setFieldName("height")
+				.setTitle("Height")
+				.setMultiline(false)
+				.setValue(height ?? ""),
+		)
+		.addWidget(
+			CardService.newTextInput()
+				.setFieldName("width")
+				.setTitle("Width")
+				.setMultiline(false)
+				.setValue(width ?? ""),
+		)
+		.addWidget(
+			CardService.newTextButton()
+				.setBackgroundColor(COLORS.RED)
+				.setText("Apply Settings")
+				.setOnClickAction(
+					CardService.newAction()
+						.setFunctionName("updateSettings")
+						.setParameters({})
+						.setLoadIndicator(CardService.LoadIndicator.SPINNER),
+				),
+		)
+		.setCollapsible(true)
+		.setNumUncollapsibleWidgets(0);
 
-  builder.addSection(controls);
+	builder.addSection(controls);
 
-  const sections = await Promise.all(
-    (
-      items ??
-      JSON.parse(
-        PropertiesService.getUserProperties().getProperty("selectedItems")
-      )
-    )
-      .filter((item) => item.mimeType.startsWith("image"))
-      .map(async (item) => {
-        const section = CardService.newCardSection();
+	const sections = await Promise.all(
+		(
+			items ??
+			JSON.parse(
+				PropertiesService.getUserProperties().getProperty("selectedItems"),
+			)
+		)
+			.filter((item) => item.mimeType.startsWith("image"))
+			.map(async (item) => {
+				const section = CardService.newCardSection();
 
-        const bytes = DriveApp.getFileById(item.id).getBlob().getBytes();
+				const bytes = DriveApp.getFileById(item.id).getBlob().getBytes();
 
-        const newBytes = await compress_(bytes, {
-          quality: qualityToInt(quality),
-          format: item.mimeType.split("/").pop(),
-          width: parseInt(width ?? "0"),
-          height: parseInt(height ?? "0"),
-        });
+				const newBytes = await compress_(bytes, {
+					quality: qualityToInt(quality),
+					format: item.mimeType.split("/").pop(),
+					width: Number.parseInt(width ?? "0"),
+					height: Number.parseInt(height ?? "0"),
+				});
 
-        const dataUrl = `data:${item.mimeType};base64,${Utilities.base64Encode(
-          newBytes
-        )}`;
+				const dataUrl = `data:${item.mimeType};base64,${Utilities.base64Encode(
+					newBytes,
+				)}`;
 
-        section.addWidget(CardService.newImage().setImageUrl(dataUrl));
+				section.addWidget(CardService.newImage().setImageUrl(dataUrl));
 
-        section.addWidget(
-          CardService.newDecoratedText().setText(bytesToText(newBytes.length))
-        );
+				section.addWidget(
+					CardService.newDecoratedText().setText(bytesToText(newBytes.length)),
+				);
 
-        section.addWidget(
-          CardService.newButtonSet()
-            .addButton(
-              CardService.newTextButton()
-                .setBackgroundColor(COLORS.RED)
-                .setText("Save")
-                .setOnClickAction(
-                  CardService.newAction()
-                    .setFunctionName("save")
-                    .setParameters({
-                      bytes: Utilities.base64Encode(newBytes),
-                      action: "save",
-                      item: JSON.stringify(item),
-                    })
-                )
-            )
-            .addButton(
-              CardService.newTextButton()
-                .setBackgroundColor(COLORS.RED)
-                .setText("Save Copy")
-                .setOnClickAction(
-                  CardService.newAction()
-                    .setFunctionName("save")
-                    .setParameters({
-                      bytes: Utilities.base64Encode(newBytes),
-                      action: "save-as",
-                      item: JSON.stringify(item),
-                    })
-                )
-            )
-        );
-        return section;
-      })
-  );
+				section.addWidget(
+					CardService.newButtonSet()
+						.addButton(
+							CardService.newTextButton()
+								.setBackgroundColor(COLORS.RED)
+								.setText("Save")
+								.setOnClickAction(
+									CardService.newAction()
+										.setFunctionName("save")
+										.setParameters({
+											bytes: Utilities.base64Encode(newBytes),
+											action: "save",
+											item: JSON.stringify(item),
+										}),
+								),
+						)
+						.addButton(
+							CardService.newTextButton()
+								.setBackgroundColor(COLORS.RED)
+								.setText("Save Copy")
+								.setOnClickAction(
+									CardService.newAction()
+										.setFunctionName("save")
+										.setParameters({
+											bytes: Utilities.base64Encode(newBytes),
+											action: "save-as",
+											item: JSON.stringify(item),
+										}),
+								),
+						),
+				);
+				return section;
+			}),
+	);
 
-  for (const section of sections) {
-    builder.addSection(section);
-  }
+	for (const section of sections) {
+		builder.addSection(section);
+	}
 
-  return builder;
+	return builder;
 }
 
 /**
@@ -148,11 +148,11 @@ async function card(items) {
  * @return {Card}
  */
 async function onItemsSelectedTrigger(e) {
-  PropertiesService.getUserProperties().setProperty(
-    "selectedItems",
-    JSON.stringify(e.drive.selectedItems)
-  );
-  return (await card(e.drive.selectedItems)).build();
+	PropertiesService.getUserProperties().setProperty(
+		"selectedItems",
+		JSON.stringify(e.drive.selectedItems),
+	);
+	return (await card(e.drive.selectedItems)).build();
 }
 
 /**
@@ -165,89 +165,89 @@ async function onItemsSelectedTrigger(e) {
  * @return {DriveItemsSelectedActionResponse}
  */
 function onRequestFileScopeButtonClicked(e) {
-  const idToRequest = e.parameters.id;
-  return CardService.newDriveItemsSelectedActionResponseBuilder()
-    .requestFileScope(idToRequest)
-    .build();
+	const idToRequest = e.parameters.id;
+	return CardService.newDriveItemsSelectedActionResponseBuilder()
+		.requestFileScope(idToRequest)
+		.build();
 }
 
 function onFileScopeGrantedTrigger(e) {
-  console.info("after granting item");
-  console.info(e);
-  const builder = CardService.newCardBuilder();
-  return builder.build();
+	console.info("after granting item");
+	console.info(e);
+	const builder = CardService.newCardBuilder();
+	return builder.build();
 }
 
 function onHomePageTrigger() {
-  return CardService.newCardBuilder()
-    .setHeader(CardService.newCardHeader().setTitle("Drive Image Compress"))
-    .addSection(
-      CardService.newCardSection().addWidget(
-        CardService.newTextParagraph().setText(
-          "Select one or more files in Drive to compress the image."
-        )
-      )
-    )
-    .build();
+	return CardService.newCardBuilder()
+		.setHeader(CardService.newCardHeader().setTitle("Drive Image Compress"))
+		.addSection(
+			CardService.newCardSection().addWidget(
+				CardService.newTextParagraph().setText(
+					"Select one or more files in Drive to compress the image.",
+				),
+			),
+		)
+		.build();
 }
 
 function bytesToText(bytes) {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes === 0) return "0 Byte";
-  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return `${Math.round(bytes / 1024 ** i)} ${sizes[i]}`;
+	const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+	if (bytes === 0) return "0 Byte";
+	const i = Number.parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+	return `${Math.round(bytes / 1024 ** i)} ${sizes[i]}`;
 }
 
 async function save(...args) {
-  console.log(args);
-  return CardService.newActionResponseBuilder()
-    .setNavigation(CardService.newNavigation().popToRoot())
-    .build();
+	console.log(args);
+	return CardService.newActionResponseBuilder()
+		.setNavigation(CardService.newNavigation().popToRoot())
+		.build();
 }
 
 async function updateSettings(e) {
-  console.log({ e });
-  const { formInput } = e;
+	console.log({ e });
+	const { formInput } = e;
 
-  persistSettings(formInput);
+	persistSettings(formInput);
 
-  return CardService.newActionResponseBuilder()
-    .setNavigation(
-      CardService.newNavigation()
-        .popToRoot()
-        .updateCard((await card()).build())
-    )
-    .build();
+	return CardService.newActionResponseBuilder()
+		.setNavigation(
+			CardService.newNavigation()
+				.popToRoot()
+				.updateCard((await card()).build()),
+		)
+		.build();
 }
 
 function persistSettings(settings) {
-  properties.setProperty(
-    "settings",
-    JSON.stringify({
-      ...loadSettings,
-      ...settings,
-    })
-  );
+	properties.setProperty(
+		"settings",
+		JSON.stringify({
+			...loadSettings,
+			...settings,
+		}),
+	);
 }
 
 function loadSettings() {
-  const defaults = {
-    quality: "medium",
-  };
+	const defaults = {
+		quality: "medium",
+	};
 
-  return {
-    ...defaults,
-    ...JSON.parse(properties.getProperty("settings") ?? "{}"),
-  };
+	return {
+		...defaults,
+		...JSON.parse(properties.getProperty("settings") ?? "{}"),
+	};
 }
 
 function qualityToInt(quality) {
-  switch (quality) {
-    case "low":
-      return 50;
-    case "medium":
-      return 80;
-    case "high":
-      return 90;
-  }
+	switch (quality) {
+		case "low":
+			return 50;
+		case "medium":
+			return 80;
+		case "high":
+			return 90;
+	}
 }

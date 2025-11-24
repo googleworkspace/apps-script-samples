@@ -24,9 +24,9 @@ limitations under the License.
  * @returns {string} The base64 encoded hash of the string.
  */
 function hash(str, algorithm = Utilities.DigestAlgorithm.MD5) {
-  const digest = Utilities.computeDigest(algorithm, str);
+	const digest = Utilities.computeDigest(algorithm, str);
 
-  return Utilities.base64Encode(digest);
+	return Utilities.base64Encode(digest);
 }
 
 /**
@@ -47,20 +47,19 @@ function hash(str, algorithm = Utilities.DigestAlgorithm.MD5) {
  * cached(4, 5, 6); // A new result will be calculated and cached
  */
 function memoize(func, ttl = 600, cache = CacheService.getScriptCache()) {
-  return (...args) => {
+	return (...args) => {
+		// consider a more robust input to the hash function to handler complex
+		// types such as functions, dates, and regex
+		const key = hash(JSON.stringify([func.toString(), ...args]));
 
-    // consider a more robust input to the hash function to handler complex
-    // types such as functions, dates, and regex
-    const key = hash(JSON.stringify([func.toString(), ...args]));
+		const cached = cache.get(key);
 
-    const cached = cache.get(key);
-
-    if (cached != null) {
-      return JSON.parse(cached);
-    } else {
-      const result = func(...args);
-      cache.put(key, JSON.stringify(result), ttl);
-      return result;
-    }
-  };
+		if (cached != null) {
+			return JSON.parse(cached);
+		} else {
+			const result = func(...args);
+			cache.put(key, JSON.stringify(result), ttl);
+			return result;
+		}
+	};
 }

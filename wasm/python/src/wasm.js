@@ -15,7 +15,7 @@
  */
 
 globalThis.crypto = {
-  getRandomValues: (array) => array.map(() => Math.floor(Math.random() * 256)),
+	getRandomValues: (array) => array.map(() => Math.floor(Math.random() * 256)),
 };
 
 /**
@@ -24,12 +24,12 @@ globalThis.crypto = {
  * @returns
  */
 async function python_(source, ...args) {
-  const wasm = await import("./pkg/example_bg.wasm");
-  const { __wbg_set_wasm, python } = await import("./pkg/example_bg.js");
+	const wasm = await import("./pkg/example_bg.wasm");
+	const { __wbg_set_wasm, python } = await import("./pkg/example_bg.js");
 
-  __wbg_set_wasm(wasm);
+	__wbg_set_wasm(wasm);
 
-  return await python(source, args);
+	return await python(source, args);
 }
 
 globalThis.python_ = python_;
