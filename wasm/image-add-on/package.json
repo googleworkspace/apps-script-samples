@@ -8,7 +8,7 @@
     "build:wasm": "wireit",
     "clean": "rm -rf dist pkg target",
     "deploy": "wireit",
-    "format": "biome check --apply .; cargo fmt",
+    "format": "cargo fmt",
     "start": "wireit"
   },
   "wireit": {
@@ -72,7 +72,6 @@
   "author": "Justin Poehnelt <justin.poehnelt@gmail.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
     "@google/clasp": "^2.4.2",
     "esbuild": "^0.20.1",
     "esbuild-plugin-wasm": "github:Tschrock/esbuild-plugin-wasm#04ce98be15b9471980c150eb142d51b20a7dd8bd",
