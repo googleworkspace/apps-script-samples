@@ -66,7 +66,7 @@ function onFormSubmit(e) {
 	const topics = Object.keys(topicUrls).filter((topic) => {
 		// indexOf searches for the topic in topicsString and returns a non-negative
 		// index if the topic is found, or it will return -1 if it's not found.
-		return topicsString.indexOf(topic.toLowerCase()) != -1;
+		return topicsString.indexOf(topic.toLowerCase()) !== -1;
 	});
 
 	// If there is at least one topic selected, send an email to the recipient.
@@ -88,7 +88,7 @@ function onFormSubmit(e) {
 	const column = e.values.length + 1;
 	sheet.getRange(row, column).setValue(status);
 
-	console.log("status=" + status + "; responses=" + JSON.stringify(responses));
+	console.log(`status=${status}; responses=${JSON.stringify(responses)}`);
 }
 
 /**
@@ -102,10 +102,10 @@ function createEmailBody(name, topics) {
 	let topicsHtml = topics
 		.map((topic) => {
 			const url = topicUrls[topic];
-			return '<li><a href="' + url + '">' + topic + "</a></li>";
+			return `<li><a href="${url}">${topic}</a></li>`;
 		})
 		.join("");
-	topicsHtml = "<ul>" + topicsHtml + "</ul>";
+	topicsHtml = `<ul>${topicsHtml}</ul>`;
 
 	// Make sure to update the emailTemplateDocId at the top.
 	const docId = DocumentApp.openByUrl(EMAIL_TEMPLATE_DOC_URL).getId();
@@ -123,13 +123,10 @@ function createEmailBody(name, topics) {
  */
 function docToHtml(docId) {
 	// Downloads a Google Doc as an HTML string.
-	const url =
-		"https://docs.google.com/feeds/download/documents/export/Export?id=" +
-		docId +
-		"&exportFormat=html";
+	const url = `https://docs.google.com/feeds/download/documents/export/Export?id=${docId}&exportFormat=html`;
 	const param = {
 		method: "get",
-		headers: { Authorization: "Bearer " + ScriptApp.getOAuthToken() },
+		headers: { Authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
 		muteHttpExceptions: true,
 	};
 	return UrlFetchApp.fetch(url, param).getContentText();

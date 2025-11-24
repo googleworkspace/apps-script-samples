@@ -111,8 +111,8 @@ function removeSample() {
 
 	// Removes existing trigger if found.
 	const projectTriggers = ScriptApp.getProjectTriggers();
-	for (var i = 0; i < projectTriggers.length; i++) {
-		if (projectTriggers[i].getHandlerFunction() == HANDLER_FUNCTION) {
+	for (let i = 0; i < projectTriggers.length; i++) {
+		if (projectTriggers[i].getHandlerFunction() === HANDLER_FUNCTION) {
 			console.log(
 				`Existing trigger with handler function of '${HANDLER_FUNCTION}' removed.`,
 			);

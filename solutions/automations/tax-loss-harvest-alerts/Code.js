@@ -38,7 +38,7 @@ function checkLosses() {
 	let n = 0;
 	for (const i in data) {
 		//Skips the first row
-		if (n++ == 0) continue;
+		if (n++ === 0) continue;
 
 		//Loads the current row
 		const row = data[i];
@@ -47,15 +47,11 @@ function checkLosses() {
 		console.log(row[6]);
 
 		//Once at the end of the list, exits the loop
-		if (row[1] == "") break;
+		if (row[1] === "") break;
 
 		//If value is below purchase price, adds stock ticker and difference to list of tax loss opportunities
 		if (row[6] < 0) {
-			message +=
-				row[1] +
-				": " +
-				(Number.parseFloat(row[6].toString()) * 100).toFixed(2).toString() +
-				"%<br>";
+			message += `${row[1]}: ${(Number.parseFloat(row[6].toString()) * 100).toFixed(2).toString()}%<br>`;
 			send_message = true;
 		}
 	}

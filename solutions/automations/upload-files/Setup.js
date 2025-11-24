@@ -32,7 +32,7 @@ function setUp() {
     ID: ${appFolder.getId()}
     URL: ${appFolder.getUrl()}`);
 	} else {
-		console.log(`Could not setup application folder.`);
+		console.log("Could not setup application folder.");
 	}
 	// Calls the function that creates the Forms onSubmit trigger.
 	installTrigger_();

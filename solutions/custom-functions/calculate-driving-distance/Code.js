@@ -35,7 +35,7 @@ function onOpen() {
 		spreadsheet.addMenu("Directions", menuItems);
 	} catch (e) {
 		// TODO (Developer) - Handle Exception
-		console.log("Failed with error: %s" + e.error);
+		console.log(`Failed with error: %s${e.error}`);
 	}
 }
 
@@ -86,7 +86,7 @@ function prepareSheet_() {
 		sheet.autoResizeColumns(1, 4);
 	} catch (e) {
 		// TODO (Developer) - Handle Exception
-		console.log("Failed with error: %s" + e.error);
+		console.log(`Failed with error: %s${e.error}`);
 	}
 }
 
@@ -114,7 +114,7 @@ function generateStepByStep_() {
 		}
 		const rowNumber = Number(selectedRow);
 		if (
-			isNaN(rowNumber) ||
+			Number.isNaN(rowNumber) ||
 			rowNumber < 2 ||
 			rowNumber > settingsSheet.getLastRow()
 		) {
@@ -144,7 +144,7 @@ function generateStepByStep_() {
 		const directions = getDirections_(origin, destination);
 
 		// Create a new sheet and append the steps in the directions.
-		const sheetName = "Driving Directions for Row " + rowNumber;
+		const sheetName = `Driving Directions for Row ${rowNumber}`;
 		let directionsSheet = spreadsheet.getSheetByName(sheetName);
 		if (directionsSheet) {
 			directionsSheet.clear();
@@ -194,7 +194,7 @@ function generateStepByStep_() {
 		SpreadsheetApp.flush();
 	} catch (e) {
 		// TODO (Developer) - Handle Exception
-		console.log("Failed with error: %s" + e.error);
+		console.log(`Failed with error: %s${e.error}`);
 	}
 }
 

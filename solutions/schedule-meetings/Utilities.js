@@ -70,7 +70,7 @@ function getCalendarEventURL_(event, cal) {
 	const baseCalUrl = "https://www.google.com/calendar";
 	// Joins Calendar Event Id with Calendar Id, then base64 encode to derive the event URL.
 	let encodedId = Utilities.base64Encode(
-		event.getId().split("@")[0] + " " + cal.getId(),
+		`${event.getId().split("@")[0]} ${cal.getId()}`,
 	).replace(/\=/g, "");
 	encodedId = `/event?eid=${encodedId}`;
 	return baseCalUrl + encodedId;

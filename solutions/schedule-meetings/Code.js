@@ -46,11 +46,7 @@ function onAddToSpace(event) {
 	}
 
 	// Lets users know what they can do and how they can get help.
-	message =
-		message +
-		"/nI can quickly schedule a meeting for you with just a few clicks." +
-		"Try me out by typing */schedule_Meeting*. " +
-		"/nTo learn what else I can do, type */help*.";
+	message = `${message}/nI can quickly schedule a meeting for you with just a few clicks.Try me out by typing */schedule_Meeting*. /nTo learn what else I can do, type */help*.`;
 
 	return { text: message };
 }
@@ -87,10 +83,9 @@ function onMessage(event) {
         getDialogForAddContact(message);
       */
 		}
-	} else {
-		// Returns text if users didn't invoke a slash command.
-		return { text: "No action taken - use Slash Commands." };
 	}
+	// Returns text if users didn't invoke a slash command.
+	return { text: "No action taken - use Slash Commands." };
 }
 
 /**
@@ -127,7 +122,7 @@ function onCardClick(event) {
 		if (!startTime) {
 			errors.push("Missing or invalid start time.");
 		}
-		if (!duration || isNaN(duration)) {
+		if (!duration || Number.isNaN(duration)) {
 			errors.push("Missing or invalid duration");
 		}
 		if (errors.length) {
@@ -151,14 +146,15 @@ function onCardClick(event) {
 		const scheduledEvent = calendar.createEvent(subject, startTime, endTime, {
 			guests: recipients,
 			sendInvites: true,
-			description: body + "\nThis meeting scheduled by a Google Chat App!",
+			description: `${body}\nThis meeting scheduled by a Google Chat App!`,
 		});
 
 		// Gets a link to the Calendar event.
 		const url = getCalendarEventURL_(scheduledEvent, calendar);
 
 		return getConfirmationDialog_(url);
-	} else if (event.action.actionMethodName === "closeDialog") {
+	}
+	if (event.action.actionMethodName === "closeDialog") {
 		// Returns this dialog as success.
 		return {
 			actionResponse: {

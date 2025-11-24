@@ -46,7 +46,7 @@ function createSelectionCard(e, sourceScriptId, targetSpreadsheetUrl, errors) {
 	// If form errors exist, configures section with error messages.
 	let showErrors = false;
 
-	if (errors && errors.length) {
+	if (errors?.length) {
 		showErrors = true;
 		let msg = errors.reduce((str, err) => `${str}• ${err}<br>`, "");
 		msg = `<b>Form submission errors:</b><br><font color="#ba0000">${msg}</font>`;
@@ -127,7 +127,7 @@ function createSelectionCard(e, sourceScriptId, targetSpreadsheetUrl, errors) {
 		);
 
 	// Configures card footer with action to copy the macro.
-	var cardFooter = CardService.newFixedFooter().setPrimaryButton(
+	const cardFooter = CardService.newFixedFooter().setPrimaryButton(
 		CardService.newTextButton()
 			.setText("Share macro")
 			.setOnClickAction(
@@ -192,16 +192,15 @@ function onClickFunction_(e) {
 			errors.push("Invalid spreadsheet URL");
 		}
 
-	if (errors && errors.length) {
+	if (errors?.length) {
 		// Redisplays form if inputs are missing or invalid.
 		return createSelectionCard(e, sourceScriptId, targetSpreadsheetUrl, errors);
-	} else {
-		// Calls shareMacro function to copy the project.
-		shareMacro_(sourceScriptId, targetSpreadsheetUrl);
-
-		// Creates a success card to display to users.
-		return buildSuccessCard(e, targetSpreadsheetUrl);
 	}
+	// Calls shareMacro function to copy the project.
+	shareMacro_(sourceScriptId, targetSpreadsheetUrl);
+
+	// Creates a success card to display to users.
+	return buildSuccessCard(e, targetSpreadsheetUrl);
 }
 
 /**

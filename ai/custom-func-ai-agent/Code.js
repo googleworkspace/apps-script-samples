@@ -26,7 +26,7 @@ limitations under the License.
  * @customfunction
  */
 function FACT_CHECK(statement, outputFormat) {
-	if (!outputFormat || outputFormat == "") {
+	if (!outputFormat || outputFormat === "") {
 		outputFormat =
 			"Summarize it. Only keep the verdict result and main arguments. " +
 			"Do not reiterate the fact being checked. Remove all markdown. " +

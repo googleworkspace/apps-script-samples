@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import esbuild from "esbuild";
 import { wasmLoader } from "esbuild-plugin-wasm";
 

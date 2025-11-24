@@ -53,7 +53,7 @@ function createBracket() {
 	// Figures out how many players there are by skipping the empty cells.
 	let numPlayers = 0;
 	for (let i = 0; i < players.length; i++) {
-		if (!players[i][0] || players[i][0].length == 0) {
+		if (!players[i][0] || players[i][0].length === 0) {
 			break;
 		}
 		numPlayers++;
@@ -79,7 +79,7 @@ function createBracket() {
 	let upperPower = Math.ceil(Math.log(numPlayers) / Math.log(2));
 
 	// Calculates the number that is a power of 2 and lower than numPlayers.
-	const countNodesUpperBound = Math.pow(2, upperPower);
+	const countNodesUpperBound = 2 ** upperPower;
 
 	// Calculates the number that is a power of 2 and higher than numPlayers.
 	const countNodesLowerBound = countNodesUpperBound / 2;
@@ -106,10 +106,10 @@ function createBracket() {
 	// Fills in the rest of the bracket.
 	upperPower--;
 	for (let i = 0; i < upperPower; i++) {
-		const pow1 = Math.pow(2, i + 1);
-		const pow2 = Math.pow(2, i + 2);
-		const pow3 = Math.pow(2, i + 3);
-		for (let j = 0; j < Math.pow(2, upperPower - i - 1); j++) {
+		const pow1 = 2 ** (i + 1);
+		const pow2 = 2 ** (i + 2);
+		const pow3 = 2 ** (i + 3);
+		for (let j = 0; j < 2 ** (upperPower - i - 1); j++) {
 			setBracketItem_(sheetResults.getRange(j * pow3 + pow2, i * 2 + 5));
 			setConnector_(
 				sheetResults,

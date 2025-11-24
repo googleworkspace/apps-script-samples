@@ -80,7 +80,7 @@ function sync() {
 	}); // End foreach user.
 
 	PropertiesService.getScriptProperties().setProperty("lastRun", today);
-	console.log("Imported " + count + " events");
+	console.log(`Imported ${count} events`);
 }
 
 /**
@@ -90,7 +90,7 @@ function sync() {
  * @param {Calendar.Event} event The event to import.
  */
 function importEvent(username, event) {
-	event.summary = "[" + username + "] " + event.summary;
+	event.summary = `[${username}] ${event.summary}`;
 	event.organizer = {
 		id: TEAM_CALENDAR_ID,
 	};
@@ -98,10 +98,10 @@ function importEvent(username, event) {
 
 	// If the event is not of type 'default', it can't be imported, so it needs
 	// to be changed.
-	if (event.eventType != "default") {
+	if (event.eventType !== "default") {
 		event.eventType = "default";
-		delete event.outOfOfficeProperties;
-		delete event.focusTimeProperties;
+		event.outOfOfficeProperties = undefined;
+		event.focusTimeProperties = undefined;
 	}
 
 	console.log("Importing: %s", event.summary);
@@ -177,18 +177,18 @@ function formatDateAsRFC3339(date) {
  * @return {object} direct and indirect members.
  */
 function getAllMembers(groupEmail) {
-	var group = GroupsApp.getGroupByEmail(groupEmail);
-	var users = group.getUsers();
-	var childGroups = group.getGroups();
-	for (var i = 0; i < childGroups.length; i++) {
-		var childGroup = childGroups[i];
+	const group = GroupsApp.getGroupByEmail(groupEmail);
+	let users = group.getUsers();
+	const childGroups = group.getGroups();
+	for (let i = 0; i < childGroups.length; i++) {
+		const childGroup = childGroups[i];
 		users = users.concat(getAllMembers(childGroup.getEmail()));
 	}
 	// Remove duplicate members
-	var uniqueUsers = [];
-	var userEmails = {};
-	for (var i = 0; i < users.length; i++) {
-		var user = users[i];
+	const uniqueUsers = [];
+	const userEmails = {};
+	for (let i = 0; i < users.length; i++) {
+		const user = users[i];
 		if (!userEmails[user.getEmail()]) {
 			uniqueUsers.push(user);
 			userEmails[user.getEmail()] = true;

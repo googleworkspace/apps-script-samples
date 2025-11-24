@@ -78,9 +78,9 @@ function showNewsPrompt() {
 	// Processes the user's response.
 	const button = result.getSelectedButton();
 	topic = result.getResponseText();
-	if (button == ui.Button.OK) {
+	if (button === ui.Button.OK) {
 		analyzeNewsHeadlines();
-	} else if (button == ui.Button.CANCEL) {
+	} else if (button === ui.Button.CANCEL) {
 		// Shows alert if user clicked "Cancel."
 		ui.alert("News topic not selected!");
 	}
@@ -105,7 +105,7 @@ function analyzeNewsHeadlines() {
 		rowValues = rows.getValues();
 		getSentiments();
 	} else {
-		ss.toast("No headlines returned for topic: " + topic + "!");
+		ss.toast(`No headlines returned for topic: ${topic}!`);
 	}
 }
 
@@ -116,17 +116,17 @@ function getHeadlinesArray() {
 	// Fetches headlines for a given topic
 	const hdlnsResp = [];
 	const encodedtopic = encodeURIComponent(topic);
-	ss.toast("Getting headlines for: " + topic);
+	ss.toast(`Getting headlines for: ${topic}`);
 	const response = UrlFetchApp.fetch(
-		apiEndPointHdr + encodedtopic + "&apiKey=" + newsApiKey,
+		`${apiEndPointHdr + encodedtopic}&apiKey=${newsApiKey}`,
 	);
 	const results = JSON.parse(response);
-	const articles = results["articles"];
+	const articles = results.articles;
 
 	for (let i = 0; i < articles.length && i < articleMax; i++) {
-		let newsStory = articles[i]["title"];
-		if (articles[i]["description"] !== null) {
-			newsStory += ": " + articles[i]["description"];
+		let newsStory = articles[i].title;
+		if (articles[i].description !== null) {
+			newsStory += `: ${articles[i].description}`;
 		}
 		// Scrubs newsStory of invalid characters
 		newsStory = scrub(newsStory);
@@ -153,7 +153,7 @@ function getSentiments() {
 		const headlineCell = rowValues[i][headlineCol];
 		if (headlineCell) {
 			const sentimentData = retrieveSentiment(headlineCell);
-			const result = sentimentData["documentSentiment"]["score"];
+			const result = sentimentData.documentSentiment.score;
 			avg += result;
 			ds.getRange(i + 1, sentimentCol + 1).setBackgroundColor(getColor(result));
 			ds.getRange(i + 1, sentimentCol + 1).setValue(getFace(result));
@@ -167,7 +167,7 @@ function getSentiments() {
 	ds.getRange(bottomRow, 1, headlines.length, scoreCol + 1).setFontWeight(
 		"bold",
 	);
-	ds.getRange(bottomRow, headlineCol + 1).setValue('Topic: "' + topic + '"');
+	ds.getRange(bottomRow, headlineCol + 1).setValue(`Topic: "${topic}"`);
 	ds.getRange(bottomRow, headlineCol + 2).setValue("Avg:");
 	ds.getRange(bottomRow, sentimentCol + 1).setValue(getFace(avgDecimal));
 	ds.getRange(bottomRow, sentimentCol + 1).setBackgroundColor(
@@ -186,9 +186,7 @@ function getSentiments() {
  */
 function retrieveSentiment(text) {
 	// Sets REST call options
-	const apiEndPoint =
-		"https://language.googleapis.com/v1/documents:analyzeSentiment?key=" +
-		googleAPIKey;
+	const apiEndPoint = `https://language.googleapis.com/v1/documents:analyzeSentiment?key=${googleAPIKey}`;
 	const jsonReq = JSON.stringify({
 		document: {
 			type: "PLAIN_TEXT",
@@ -230,9 +228,11 @@ function reformatSheet() {
 function getFace(value) {
 	if (value >= threshold) {
 		return happyFace;
-	} else if (value < threshold && value > -threshold) {
+	}
+	if (value < threshold && value > -threshold) {
 		return mehFace;
-	} else if (value <= -threshold) {
+	}
+	if (value <= -threshold) {
 		return sadFace;
 	}
 }
@@ -243,9 +243,11 @@ function getFace(value) {
 function getColor(value) {
 	if (value >= threshold) {
 		return happyColor;
-	} else if (value < threshold && value > -threshold) {
+	}
+	if (value < threshold && value > -threshold) {
 		return mehColor;
-	} else if (value <= -threshold) {
+	}
+	if (value <= -threshold) {
 		return sadColor;
 	}
 }

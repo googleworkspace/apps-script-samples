@@ -51,7 +51,7 @@ class DB {
 		let sheet = spreadsheet.getSheetByName(this.sheetName);
 
 		// create if it does not exist
-		if (sheet == undefined) {
+		if (sheet === undefined) {
 			sheet = spreadsheet.insertSheet();
 			sheet.setName(this.sheetName);
 		}
@@ -83,11 +83,11 @@ function testDB() {
 	const db = new DB(SPREADSHEET_ID);
 
 	let thread = db.last;
-	if (thread == undefined) return;
+	if (thread === undefined) return;
 	console.log(thread);
 
 	db.rowOffset = 1;
 	thread = db.last;
-	if (thread == undefined) return;
+	if (thread === undefined) return;
 	console.log(thread);
 }

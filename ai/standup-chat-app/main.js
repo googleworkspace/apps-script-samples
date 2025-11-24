@@ -23,7 +23,7 @@ const SPREADSHEET_ID =
 const SPACE_NAME =
 	PropertiesService.getScriptProperties().getProperty("SPACE_NAME"); // e.g. "spaces/AAAABCa12Cc"
 
-const SUMMARY_HEADER = `\n\n*Gemini Generated Summary*\n\n`;
+const SUMMARY_HEADER = "\n\n*Gemini Generated Summary*\n\n";
 
 /**
  * Sends the message to create new standup instance.
@@ -65,7 +65,7 @@ function summarize() {
 	const db = new DB(SPREADSHEET_ID);
 	const last = db.last;
 
-	if (last == undefined) return;
+	if (last === undefined) return;
 
 	const filter = `thread.name=${last.thread.name}`;
 	let { messages } = Chat.Spaces.Messages.list(
@@ -91,7 +91,7 @@ function summarize() {
 	);
 	const summary = response.candidates[0].content?.parts[0].text;
 
-	if (summary == undefined) {
+	if (summary === undefined) {
 		return;
 	}
 

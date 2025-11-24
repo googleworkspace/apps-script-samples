@@ -150,7 +150,7 @@ function getCSVFilesData() {
 	// Gets headings once - same for all files/rows.
 	let csvHeadings = "";
 	for (const i in SAMPLE_DATA.headings)
-		csvHeadings += SAMPLE_DATA.headings[i] + ",";
+		csvHeadings += `${SAMPLE_DATA.headings[i]},`;
 
 	// Gets data for each file by rows.
 	for (const i in SAMPLE_DATA.csvFiles) {
@@ -160,7 +160,7 @@ function getCSVFilesData() {
 		for (const j in SAMPLE_DATA.csvFiles[i].rows) {
 			sampleCSV += "\n";
 			for (const k in SAMPLE_DATA.csvFiles[i].rows[j]) {
-				sampleCSV += SAMPLE_DATA.csvFiles[i].rows[j][k] + ",";
+				sampleCSV += `${SAMPLE_DATA.csvFiles[i].rows[j][k]},`;
 			}
 		}
 		files.push({ name: fileName, csv: sampleCSV });

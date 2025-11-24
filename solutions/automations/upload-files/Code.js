@@ -37,13 +37,13 @@ const APP_SUBFOLDER_NONE = "<None>";
 function onFormSubmit(e) {
 	try {
 		// Gets the application root folder.
-		var destFolder = getFolder_(APP_FOLDER_NAME);
+		let destFolder = getFolder_(APP_FOLDER_NAME);
 
 		// Gets all form responses.
 		const itemResponses = e.response.getItemResponses();
 
 		// Determines the subfolder to route the file to, if any.
-		var subFolderName;
+		let subFolderName;
 		const dest = itemResponses.filter(
 			(itemResponse) =>
 				itemResponse.getItem().getTitle().toString() === APP_SUBFOLDER_ITEM,
@@ -51,12 +51,12 @@ function onFormSubmit(e) {
 
 		// Gets the destination subfolder name, but ignores if APP_SUBFOLDER_NONE was selected;
 		if (dest.length > 0) {
-			if (dest[0].getResponse() != APP_SUBFOLDER_NONE) {
+			if (dest[0].getResponse() !== APP_SUBFOLDER_NONE) {
 				subFolderName = dest[0].getResponse();
 			}
 		}
 		// Gets the subfolder or creates it if it doesn't exist.
-		if (subFolderName != undefined) {
+		if (subFolderName !== undefined) {
 			destFolder = getSubFolder_(destFolder, subFolderName);
 		}
 		console.log(`Destination folder to use:

@@ -72,7 +72,7 @@ function setup_() {
 
 	// Hide the raw form responses.
 	ss.getSheets().forEach((sheet) => {
-		if (sheet.getFormUrl() == ss.getFormUrl()) {
+		if (sheet.getFormUrl() === ss.getFormUrl()) {
 			sheet.hideSheet();
 		}
 	});
@@ -109,9 +109,9 @@ function onFormSubmit_(event) {
 	sendNewEquipmentRequestEmail_(response);
 	const equipmentDetails = Utilities.formatString(
 		"%s\n%s\n%s",
-		response["Laptop"],
-		response["Desktop"],
-		response["Monitor"],
+		response.Laptop,
+		response.Desktop,
+		response.Monitor,
 	);
 	const row = [
 		"New",
@@ -120,7 +120,7 @@ function onFormSubmit_(event) {
 		response["Employee name"],
 		response["Desk location"],
 		equipmentDetails,
-		response["email"],
+		response.email,
 	];
 	const ss = SpreadsheetApp.getActiveSpreadsheet();
 	const sheet = ss.getSheetByName("Pending requests");
@@ -141,10 +141,10 @@ function processCompletedItems_() {
 	for (let i = rows.length; i >= 2; i--) {
 		const row = rows[i - 1];
 		const status = row[0];
-		if (status === "Completed" || status == "Cancelled") {
+		if (status === "Completed" || status === "Cancelled") {
 			pending.deleteRow(i);
 			completed.appendRow(row);
-			console.log("Deleted row: " + i);
+			console.log(`Deleted row: ${i}`);
 			sendEquipmentRequestCompletedEmail_({
 				"Employee name": row[3],
 				"Desk location": row[4],

@@ -67,8 +67,7 @@ function getAiSummary(prompt) {
 
 	const apiKey = PropertiesService.getScriptProperties().getProperty("api_key");
 	const response = UrlFetchApp.fetch(
-		"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
-			apiKey,
+		`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
 		options,
 	);
 

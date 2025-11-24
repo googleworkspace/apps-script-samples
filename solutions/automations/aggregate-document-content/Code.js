@@ -91,24 +91,23 @@ function performImport() {
 		if (!content) {
 			noContentList.push(docName);
 			continue;
-		} else {
-			numUpdates++;
-			// Inserts content into the main document.
-			// Appends a title/url reference link back to source document.
-			docTargetBody
-				.appendParagraph("")
-				.appendText(`${docName}`)
-				.setLinkUrl(docHtml);
-			// Appends a single-cell table and pastes the content.
-			docTargetBody.appendTable(content);
 		}
+		numUpdates++;
+		// Inserts content into the main document.
+		// Appends a title/url reference link back to source document.
+		docTargetBody
+			.appendParagraph("")
+			.appendText(`${docName}`)
+			.setLinkUrl(docHtml);
+		// Appends a single-cell table and pastes the content.
+		docTargetBody.appendTable(content);
 		docOpen.saveAndClose();
 	}
 	/** Provides an import summary */
 	docTarget.saveAndClose();
 	let msg = `Number of documents updated: ${numUpdates}`;
-	if (noContentList.length != 0) {
-		msg += `\n\nThe following documents had no updates:`;
+	if (noContentList.length !== 0) {
+		msg += "\n\nThe following documents had no updates:";
 		for (const file of noContentList) {
 			msg += `\n ${file}`;
 		}
@@ -124,7 +123,7 @@ function performImport() {
  */
 function getContent(body) {
 	// Finds the heading paragraph with matching style, keywords and !color.
-	var parValidHeading;
+	let parValidHeading;
 	const searchType = DocumentApp.ElementType.PARAGRAPH;
 	const searchHeading = APP_STYLE;
 	let searchResult = null;
@@ -132,12 +131,12 @@ function getContent(body) {
 	// Gets and loops through all paragraphs that match the style of APP_STYLE.
 	while ((searchResult = body.findElement(searchType, searchResult))) {
 		const par = searchResult.getElement().asParagraph();
-		if (par.getHeading() == searchHeading) {
+		if (par.getHeading() === searchHeading) {
 			// If heading style matches, searches for text string (case insensitive).
-			const findPos = par.findText("(?i)" + FIND_TEXT_KEYWORDS);
+			const findPos = par.findText(`(?i)${FIND_TEXT_KEYWORDS}`);
 			if (findPos !== null) {
 				// If text color is green, then the paragraph isn't a new summary to copy.
-				if (par.editAsText().getForegroundColor() != TEXT_COLOR) {
+				if (par.editAsText().getForegroundColor() !== TEXT_COLOR) {
 					parValidHeading = par;
 				}
 			}
@@ -146,19 +145,18 @@ function getContent(body) {
 
 	if (!parValidHeading) {
 		return;
-	} else {
-		// Updates the heading color to indicate that the summary has been imported.
-		const style = {};
-		style[DocumentApp.Attribute.FOREGROUND_COLOR] = TEXT_COLOR;
-		parValidHeading.setAttributes(style);
-		parValidHeading.appendText(" [Exported]");
-
-		// Gets the content from the table following the valid heading.
-		const elemObj = parValidHeading.getNextSibling().asTable();
-		const content = elemObj.copy();
-
-		return content;
 	}
+	// Updates the heading color to indicate that the summary has been imported.
+	const style = {};
+	style[DocumentApp.Attribute.FOREGROUND_COLOR] = TEXT_COLOR;
+	parValidHeading.setAttributes(style);
+	parValidHeading.appendText(" [Exported]");
+
+	// Gets the content from the table following the valid heading.
+	const elemObj = parValidHeading.getNextSibling().asTable();
+	const content = elemObj.copy();
+
+	return content;
 }
 
 /**

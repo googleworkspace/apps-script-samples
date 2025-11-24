@@ -93,7 +93,7 @@ function markVideos() {
 			}
 		}
 		// Sends notification email if Content is not empty.
-		if (emailContent.length > 0 && EMAIL_ON == "Y") {
+		if (emailContent.length > 0 && EMAIL_ON === "Y") {
 			sendEmailNotificationTemplate(emailContent, tabName);
 		}
 	});
@@ -116,7 +116,7 @@ function getVideoDetails(videoId) {
 function extractVideoIdFromUrl(url) {
 	let videoId = url.split("v=")[1];
 	const ampersandPosition = videoId.indexOf("&");
-	if (ampersandPosition != -1) {
+	if (ampersandPosition !== -1) {
 		videoId = videoId.substring(0, ampersandPosition);
 	}
 	return videoId;

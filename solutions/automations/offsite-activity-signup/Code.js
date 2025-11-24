@@ -201,8 +201,8 @@ function writeAttendeeAssignments_(ss, attendees) {
 function writeActivityRosters_(ss, activities) {
 	const sheet = findOrCreateSheetByName_(ss, "Activity rosters");
 	sheet.clear();
-	var rows = [];
-	var rows = activities.map((activity) => {
+	const rows = [];
+	let rows = activities.map((activity) => {
 		const roster = activity.roster.map((attendee) => attendee.email);
 		return [activity.description].concat(roster);
 	});
@@ -269,7 +269,7 @@ function loadActivitySchedule_(ss) {
 function loadAttendeeResponses_(ss, allActivityIds) {
 	const sheet = findResponseSheetForForm_(ss);
 
-	if (!sheet || sheet.getLastRow() == 1) {
+	if (!sheet || sheet.getLastRow() === 1) {
 		return undefined;
 	}
 
@@ -293,7 +293,7 @@ function loadAttendeeResponses_(ss, allActivityIds) {
 			prefs[rank] = index;
 			return prefs;
 		}, []);
-		if (autoAssign == "Yes") {
+		if (autoAssign === "Yes") {
 			// If auto assigning additional activites, append a randomized list of all the activities.
 			// These will then be considered as if the attendee ranked them.
 			const additionalChoices = shuffleArray_(allActivityIds);
@@ -399,16 +399,16 @@ function shuffleArray_(array) {
 function toOrdinal_(i) {
 	const j = i % 10;
 	const k = i % 100;
-	if (j == 1 && k != 11) {
-		return i + "st";
+	if (j === 1 && k !== 11) {
+		return `${i}st`;
 	}
-	if (j == 2 && k != 12) {
-		return i + "nd";
+	if (j === 2 && k !== 12) {
+		return `${i}nd`;
 	}
-	if (j == 3 && k != 13) {
-		return i + "rd";
+	if (j === 3 && k !== 13) {
+		return `${i}rd`;
 	}
-	return i + "th";
+	return `${i}th`;
 }
 
 /**

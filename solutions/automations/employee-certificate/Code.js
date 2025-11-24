@@ -72,12 +72,11 @@ function createCertificates() {
 		empSlide.replaceAllText("Employee Name", empName);
 		empSlide.replaceAllText(
 			"Date",
-			"Date: " +
-				Utilities.formatDate(
-					date,
-					Session.getScriptTimeZone(),
-					"MMMM dd, yyyy",
-				),
+			`Date: ${Utilities.formatDate(
+				date,
+				Session.getScriptTimeZone(),
+				"MMMM dd, yyyy",
+			)}`,
 		);
 		empSlide.replaceAllText("Your Name", managerName);
 		empSlide.replaceAllText("Title", title);
@@ -124,12 +123,8 @@ function sendCertificates() {
 
 		// Setup the required parameters and send them the email
 		const senderName = "CertBot";
-		const subject = empName + ", you're awesome!";
-		const body =
-			"Please find your employee appreciation certificate attached." +
-			"\n\n" +
-			compName +
-			" team";
+		const subject = `${empName}, you're awesome!`;
+		const body = `Please find your employee appreciation certificate attached.\n\n${compName} team`;
 		GmailApp.sendEmail(empEmail, subject, body, {
 			attachments: [attachment.getAs(MimeType.PDF)],
 			name: senderName,

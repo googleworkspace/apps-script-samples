@@ -125,11 +125,11 @@ function setUpForm_(ss, values) {
 	form.addTextItem().setTitle("Name").setRequired(true);
 	form.addTextItem().setTitle("Email").setRequired(true);
 	Object.keys(schedule).forEach((day) => {
-		const header = form.addSectionHeaderItem().setTitle("Sessions for " + day);
+		const header = form.addSectionHeaderItem().setTitle(`Sessions for ${day}`);
 		Object.keys(schedule[day]).forEach((time) => {
 			const item = form
 				.addMultipleChoiceItem()
-				.setTitle(time + " " + day)
+				.setTitle(`${time} ${day}`)
 				.setChoiceValues(schedule[day][time]);
 		});
 	});
@@ -144,8 +144,8 @@ function setUpForm_(ss, values) {
  */
 function onFormSubmit(e) {
 	const user = {
-		name: e.namedValues["Name"][0],
-		email: e.namedValues["Email"][0],
+		name: e.namedValues.Name[0],
+		email: e.namedValues.Email[0],
 	};
 
 	// Grab the session data again so that we can match it to the user's choices.
@@ -159,11 +159,11 @@ function onFormSubmit(e) {
 		const title = session[0];
 		const day = session[1].toLocaleDateString();
 		const time = session[2].toLocaleTimeString();
-		const timeslot = time + " " + day;
+		const timeslot = `${time} ${day}`;
 
 		// For every selection in the response, find the matching timeslot and title
 		// in the spreadsheet and add the session data to the response array.
-		if (e.namedValues[timeslot] && e.namedValues[timeslot] == title) {
+		if (e.namedValues[timeslot] && e.namedValues[timeslot] === title) {
 			response.push(session);
 		}
 	}
@@ -191,7 +191,7 @@ function sendInvites_(user, response) {
  */
 function sendDoc_(user, response) {
 	const doc = DocumentApp.create(
-		"Conference Itinerary for " + user.name,
+		`Conference Itinerary for ${user.name}`,
 	).addEditor(user.email);
 	const body = doc.getBody();
 	let table = [["Session", "Date", "Time", "Location"]];
@@ -214,7 +214,7 @@ function sendDoc_(user, response) {
 	MailApp.sendEmail({
 		to: user.email,
 		subject: doc.getName(),
-		body: "Thanks for registering! Here's your itinerary: " + doc.getUrl(),
+		body: `Thanks for registering! Here's your itinerary: ${doc.getUrl()}`,
 		attachments: doc.getAs(MimeType.PDF),
 	});
 }

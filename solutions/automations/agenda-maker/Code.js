@@ -28,9 +28,9 @@ function checkFolder() {
 	while (folders.hasNext()) {
 		const folder = folders.next();
 		if (
-			folder.getDescription() ==
+			folder.getDescription() ===
 				"Apps Script App - Do not change this description" &&
-			folder.getOwner().getEmail() == Session.getActiveUser().getEmail()
+			folder.getOwner().getEmail() === Session.getActiveUser().getEmail()
 		) {
 			return folder.getId();
 		}
@@ -134,13 +134,13 @@ function onCalendarChange() {
 
 		// Confirms whether the event has the #agenda tag
 		let description = event.getDescription();
-		if (description.search("#agenda") == -1) continue;
+		if (description.search("#agenda") === -1) continue;
 
 		// Only works with events created by the owner of this calendar
 		if (event.isOwnedByMe()) {
 			// Creates a new document from the template for an agenda for this event
 			const newDoc = DriveApp.getFileById(templateId).makeCopy();
-			newDoc.setName("Agenda for " + event.getTitle());
+			newDoc.setName(`Agenda for ${event.getTitle()}`);
 
 			const file = DriveApp.getFileById(newDoc.getId());
 			folder.addFile(file);
@@ -163,10 +163,10 @@ function onCalendarChange() {
 			}
 
 			// Replaces the tag with a link to the agenda document
-			const agendaUrl = "https://docs.google.com/document/d/" + newDoc.getId();
+			const agendaUrl = `https://docs.google.com/document/d/${newDoc.getId()}`;
 			description = description.replace(
 				"#agenda",
-				"<a href=" + agendaUrl + ">Agenda Doc</a>",
+				`<a href=${agendaUrl}>Agenda Doc</a>`,
 			);
 			event.setDescription(description);
 

@@ -18,7 +18,7 @@ function bookLinkPreview(event) {
 		const bookPageCount = bookData.volumeInfo.pageCount;
 
 		const previewHeader = CardService.newCardHeader()
-			.setSubtitle("By " + bookAuthors)
+			.setSubtitle(`By ${bookAuthors}`)
 			.setTitle(bookTitle);
 
 		const previewPages = CardService.newDecoratedText()

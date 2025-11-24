@@ -40,7 +40,7 @@ function getForm_(options) {
 	const sections = [];
 
 	// If errors present, display additional section with validation messages.
-	if (options.errors && options.errors.length) {
+	if (options.errors?.length) {
 		let errors = options.errors.reduce((str, err) => `${str}• ${err}<br>`, "");
 		errors = `<b>Errors:</b><br><font color="#ba0000">${errors}</font>`;
 		const errorSection = {

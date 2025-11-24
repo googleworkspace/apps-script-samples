@@ -16,7 +16,7 @@
 
 /// <reference types="node" />
 
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 import {
 	copyFileSync,
 	existsSync,
@@ -25,9 +25,9 @@ import {
 	rmSync,
 	statSync,
 	writeFileSync,
-} from "fs";
-import { dirname, join, relative, resolve, sep } from "path";
-import { promisify } from "util";
+} from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
+import { promisify } from "node:util";
 
 const execAsync = promisify(exec);
 const TEMP_ROOT = ".tsc_check";

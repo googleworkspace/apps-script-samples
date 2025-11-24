@@ -56,10 +56,9 @@ function memoize(func, ttl = 600, cache = CacheService.getScriptCache()) {
 
 		if (cached != null) {
 			return JSON.parse(cached);
-		} else {
-			const result = func(...args);
-			cache.put(key, JSON.stringify(result), ttl);
-			return result;
 		}
+		const result = func(...args);
+		cache.put(key, JSON.stringify(result), ttl);
+		return result;
 	};
 }

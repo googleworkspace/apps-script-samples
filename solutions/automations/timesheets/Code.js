@@ -186,23 +186,22 @@ function checkApprovedStatusToNotify() {
 	// Traverses through employee's row.
 	for (let i = 0; i < numRows; i++) {
 		// Do not notify twice.
-		if (notifiedValues[i][0] == "NOTIFIED") {
+		if (notifiedValues[i][0] === "NOTIFIED") {
 			continue;
 		}
 		const emailAddress = emailValues[i][0];
 		const approvalValue = approvalValues[i][0];
 
 		// Sends notifying emails & update status.
-		if (approvalValue == "IN PROGRESS") {
-			continue;
-		} else if (approvalValue == "APPROVED") {
+		if (approvalValue === "IN PROGRESS") {
+		} else if (approvalValue === "APPROVED") {
 			MailApp.sendEmail(
 				emailAddress,
 				APPROVED_EMAIL_SUBJECT,
 				APPROVED_EMAIL_MESSAGE,
 			);
 			updateNotifiedStatus(sheet, notifiedValues, i, beginningRow);
-		} else if (approvalValue == "NOT APPROVED") {
+		} else if (approvalValue === "NOT APPROVED") {
 			MailApp.sendEmail(
 				emailAddress,
 				REJECTED_EMAIL_SUBJECT,

@@ -51,7 +51,7 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 			Browser.Buttons.OK_CANCEL,
 		);
 
-		if (subjectLine === "cancel" || subjectLine == "") {
+		if (subjectLine === "cancel" || subjectLine === "") {
 			// If no subject line, finishes up
 			return;
 		}
@@ -87,7 +87,7 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 	// Loops through all the rows of data
 	obj.forEach((row, rowIdx) => {
 		// Only sends emails if email_sent cell is blank and not hidden by a filter
-		if (row[EMAIL_SENT_COL] == "") {
+		if (row[EMAIL_SENT_COL] === "") {
 			try {
 				const msgObj = fillInTemplateFromObject_(emailTemplate.message, row);
 
@@ -136,12 +136,10 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 			// Handles inline images and attachments so they can be included in the merge
 			// Based on https://stackoverflow.com/a/65813881/1027723
 			// Gets all attachments and inline image attachments
-			const allInlineImages = draft
-				.getMessage()
-				.getAttachments({
-					includeInlineImages: true,
-					includeAttachments: false,
-				});
+			const allInlineImages = draft.getMessage().getAttachments({
+				includeInlineImages: true,
+				includeAttachments: false,
+			});
 			const attachments = draft
 				.getMessage()
 				.getAttachments({ includeInlineImages: false });

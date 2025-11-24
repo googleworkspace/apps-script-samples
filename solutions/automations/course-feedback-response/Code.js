@@ -74,32 +74,7 @@ function createEmailBody(responses) {
 	const otherFeedback = responses["Any other feedback?"][0];
 
 	// create email body
-	const htmlBody =
-		"Hi " +
-		name +
-		",<br><br>" +
-		"Thanks for responding to our course feedback questionnaire.<br><br>" +
-		"It's really useful to us to help improve this course.<br><br>" +
-		"Have a great day!<br><br>" +
-		"Thanks,<br>" +
-		"Course Team<br><br>" +
-		"****************************************************************<br><br>" +
-		"<i>Your feedback:<br><br>" +
-		"What industry do you work in?<br><br>" +
-		industry +
-		"<br><br>" +
-		"How did you find out about this course?<br><br>" +
-		source +
-		"<br><br>" +
-		"On a scale of 1 - 5 how would you rate this course?<br><br>" +
-		rating +
-		"<br><br>" +
-		"What could be different to make it a 5 rating?<br><br>" +
-		productFeedback +
-		"<br><br>" +
-		"Any other feedback?<br><br>" +
-		otherFeedback +
-		"<br><br></i>";
+	const htmlBody = `Hi ${name},<br><br>Thanks for responding to our course feedback questionnaire.<br><br>It's really useful to us to help improve this course.<br><br>Have a great day!<br><br>Thanks,<br>Course Team<br><br>****************************************************************<br><br><i>Your feedback:<br><br>What industry do you work in?<br><br>${industry}<br><br>How did you find out about this course?<br><br>${source}<br><br>On a scale of 1 - 5 how would you rate this course?<br><br>${rating}<br><br>What could be different to make it a 5 rating?<br><br>${productFeedback}<br><br>Any other feedback?<br><br>${otherFeedback}<br><br></i>`;
 
 	return htmlBody;
 }
@@ -115,7 +90,7 @@ function createDraft(timestamp, email, emailBody) {
 	console.log("draft email create process started");
 
 	// create subject line
-	const subjectLine = "Thanks for your course feedback! " + timestamp;
+	const subjectLine = `Thanks for your course feedback! ${timestamp}`;
 
 	// create draft email
 	GmailApp.createDraft(email, subjectLine, "", {

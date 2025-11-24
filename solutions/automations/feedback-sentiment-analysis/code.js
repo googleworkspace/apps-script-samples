@@ -76,11 +76,9 @@ function markEntitySentiment() {
 	const textColumnIdx = headerRow.indexOf(COLUMN_NAME.COMMENTS);
 	const entityColumnIdx = headerRow.indexOf(COLUMN_NAME.ENTITY);
 	const idColumnIdx = headerRow.indexOf(COLUMN_NAME.ID);
-	if (entityColumnIdx == -1) {
+	if (entityColumnIdx === -1) {
 		Browser.msgBox(
-			"Error: Could not find the column named " +
-				COLUMN_NAME.ENTITY +
-				'. Please create an empty column with header "entity_sentiment" on the Review Data tab.',
+			`Error: Could not find the column named ${COLUMN_NAME.ENTITY}. Please create an empty column with header "entity_sentiment" on the Review Data tab.`,
 		);
 		return; // bail
 	}
@@ -134,9 +132,7 @@ function markEntitySentiment() {
  */
 function retrieveEntitySentiment(line) {
 	const apiKey = myApiKey;
-	const apiEndpoint =
-		"https://language.googleapis.com/v1/documents:analyzeEntitySentiment?key=" +
-		apiKey;
+	const apiEndpoint = `https://language.googleapis.com/v1/documents:analyzeEntitySentiment?key=${apiKey}`;
 	// Creates a JSON request, with text string, language, type and encoding
 	const nlData = {
 		document: {

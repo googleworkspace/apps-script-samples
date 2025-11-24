@@ -77,9 +77,9 @@ function updateCard(e) {
  * @return {string} The body of the Google Document.
  */
 function getDocumentBody(id) {
-	var doc = DocumentApp.openById(id);
-	var body = doc.getBody();
-	var text = body.getText();
+	const doc = DocumentApp.openById(id);
+	const body = doc.getBody();
+	const text = body.getText();
 
 	return text;
 }
@@ -94,10 +94,10 @@ function getDocAPIBody(id) {
 	// Call DOC API REST endpoint to get the file
 	const url = `https://docs.googleapis.com/v1/documents/${id}`;
 
-	var response = UrlFetchApp.fetch(url, {
+	const response = UrlFetchApp.fetch(url, {
 		method: "GET",
 		headers: {
-			Authorization: "Bearer " + ScriptApp.getOAuthToken(),
+			Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
 		},
 		muteHttpExceptions: true,
 	});

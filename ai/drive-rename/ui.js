@@ -32,7 +32,7 @@ function buildSelectionPage(e) {
 	const selected = e.drive.activeCursorItem;
 
 	// Check if Google Doc type, respond unsupported if not
-	if (selected.mimeType != "application/vnd.google-apps.document") {
+	if (selected.mimeType !== "application/vnd.google-apps.document") {
 		return {
 			sections: [
 				{

@@ -233,7 +233,7 @@ function fillDownData() {
 
 	// Find the number of empty rows below the active cell.
 	let i = 1; // Start at 1 to skip the ActiveCell.
-	while (searchValues[i] && searchValues[i][0] == "") {
+	while (searchValues[i] && searchValues[i][0] === "") {
 		i++;
 	}
 
@@ -254,7 +254,7 @@ function fillDownData() {
  */
 function showMessage(message, caller) {
 	// Sets the title using the APP_TITLE variable; adds optional caller string.
-	const title = APP_TITLE;
+	let title = APP_TITLE;
 	if (caller != null) {
 		title += ` : ${caller}`;
 	}

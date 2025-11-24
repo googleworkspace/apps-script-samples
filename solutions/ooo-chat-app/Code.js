@@ -20,7 +20,7 @@ limitations under the License.
 function onAddToSpace(event) {
   let message = 'Thank you for adding me to ';
   if (event.space.type === 'DM') {
-    message += 'a DM, ' + event.user.displayName + '!';
+    message += `a DM, ${event.user.displayName}!`;
   } else {
     message += event.space.displayName;
   }
