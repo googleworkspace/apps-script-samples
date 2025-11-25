@@ -59,13 +59,13 @@ function removeAllSummaries() {
 	const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 	const allSheets = spreadsheet.getSheets();
 
-	allSheets.forEach((sheet) => {
+	for (const sheet of allSheets) {
 		const sheetName = sheet.getName();
 		// Check if the sheet name starts with "AutoSummarize AI"
 		if (sheetName.startsWith("AutoSummarize AI")) {
 			spreadsheet.deleteSheet(sheet);
 		}
-	});
+	}
 }
 
 /**

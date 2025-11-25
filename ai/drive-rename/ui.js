@@ -84,13 +84,13 @@ function buildSelectionPage(e) {
 
 		// Create an object of items
 		const items = [];
-		aiResponse.names.forEach((name) => {
+		for (const name of aiResponse.names) {
 			items.push({
 				text: name,
 				value: name,
 				selected: false,
 			});
-		});
+		}
 
 		// Set first item as selected
 		items[0].selected = true;

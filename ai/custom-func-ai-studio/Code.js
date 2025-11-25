@@ -23,6 +23,5 @@ limitations under the License.
  * @customfunction
  */
 function gemini(range, prompt) {
-	prompt = `For the range of cells ${range}, ${prompt}`;
-	return getAiSummary(prompt);
+	return getAiSummary(`For the range of cells ${range}, ${prompt}`);
 }

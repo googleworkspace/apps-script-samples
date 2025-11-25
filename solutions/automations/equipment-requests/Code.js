@@ -71,11 +71,11 @@ function setup_() {
 	form.addListItem().setTitle("Monitor").setChoiceValues(AVAILABLE_MONITORS);
 
 	// Hide the raw form responses.
-	ss.getSheets().forEach((sheet) => {
+	for (const sheet of ss.getSheets()) {
 		if (sheet.getFormUrl() === ss.getFormUrl()) {
 			sheet.hideSheet();
 		}
-	});
+	}
 	// Start workflow on each form submit
 	ScriptApp.newTrigger("onFormSubmit_").forForm(form).onFormSubmit().create();
 	// Archive completed items every 5m.
@@ -93,9 +93,9 @@ function cleanup_() {
 	if (!formUrl) {
 		return;
 	}
-	ScriptApp.getProjectTriggers().forEach((trigger) => {
+	for (const trigger of ScriptApp.getProjectTriggers()) {
 		ScriptApp.deleteTrigger(trigger);
-	});
+	}
 	FormApp.openByUrl(formUrl).deleteAllResponses().setAcceptingResponses(false);
 }
 

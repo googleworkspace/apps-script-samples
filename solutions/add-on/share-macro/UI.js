@@ -257,10 +257,11 @@ function onClickFunction_(e) {
 			.setOnClickAction(CardService.newAction().setFunctionName("onHomepage")),
 	);
 
-	return (builder = CardService.newCardBuilder()
+	const builder = CardService.newCardBuilder()
 		.setHeader(cardHeader)
 		.addSection(sectionBody1)
 		.addSection(sectionBody2)
-		.setFixedFooter(cardFooter)
-		.build());
+		.setFixedFooter(cardFooter);
+
+	return builder.build();
 }

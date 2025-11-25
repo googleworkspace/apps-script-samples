@@ -43,22 +43,23 @@ function onOpen() {
  */
 function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 	// option to skip browser prompt if you want to use this code in other projects
-	if (!subjectLine) {
-		subjectLine = Browser.inputBox(
+	let processedSubjectLine = subjectLine;
+	if (!processedSubjectLine) {
+		processedSubjectLine = Browser.inputBox(
 			"Mail Merge",
 			"Type or copy/paste the subject line of the Gmail " +
 				"draft message you would like to mail merge with:",
 			Browser.Buttons.OK_CANCEL,
 		);
 
-		if (subjectLine === "cancel" || subjectLine === "") {
+		if (processedSubjectLine === "cancel" || processedSubjectLine === "") {
 			// If no subject line, finishes up
 			return;
 		}
 	}
 
 	// Gets the draft Gmail message to use as a template
-	const emailTemplate = getGmailTemplateFromDrafts_(subjectLine);
+	const emailTemplate = getGmailTemplateFromDrafts_(processedSubjectLine);
 
 	// Gets the data from the passed sheet
 	const dataRange = sheet.getDataRange();
@@ -78,7 +79,10 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 	// See https://stackoverflow.com/a/22917499/1027723
 	// For a pretty version, see https://mashe.hawksey.info/?p=17869/#comment-184945
 	const obj = data.map((r) =>
-		heads.reduce((o, k, i) => ((o[k] = r[i] || ""), o), {}),
+		heads.reduce((o, k, i) => {
+			o[k] = r[i] || "";
+			return o;
+		}, {}),
 	);
 
 	// Creates an array to record sent emails
@@ -147,10 +151,10 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 
 			// Creates an inline image object with the image name as key
 			// (can't rely on image index as array based on insert order)
-			const img_obj = allInlineImages.reduce(
-				(obj, i) => ((obj[i.getName()] = i), obj),
-				{},
-			);
+			const img_obj = allInlineImages.reduce((obj, i) => {
+				obj[i.getName()] = i;
+				return obj;
+			}, {});
 
 			//Regexp searches for all img string positions with cid
 			const imgexp = /<img.*?src="cid:(.*?)".*?alt="(.*?)"[^\>]+>/g;
@@ -158,10 +162,9 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
 
 			//Initiates the allInlineImages object
 			const inlineImagesObj = {};
-			// built an inlineImagesObj from inline image matches
-			matches.forEach(
-				(match) => (inlineImagesObj[match[1]] = img_obj[match[2]]),
-			);
+			for (const match of matches) {
+				inlineImagesObj[match[1]] = img_obj[match[2]];
+			}
 
 			return {
 				message: {

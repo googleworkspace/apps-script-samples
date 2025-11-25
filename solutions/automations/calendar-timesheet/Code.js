@@ -71,7 +71,7 @@ const getSettings = () => {
 
 	// find any calendars that were removed
 	const unavailebleCalendars = [];
-	savedCalendarSettings.forEach((savedCalendarSetting) => {
+	for (const savedCalendarSetting of savedCalendarSettings) {
 		if (
 			!availableCalendars.find(
 				(availableCalendar) => availableCalendar.id === savedCalendarSetting.id,
@@ -79,7 +79,7 @@ const getSettings = () => {
 		) {
 			unavailebleCalendars.push(savedCalendarSetting);
 		}
-	});
+	}
 
 	// map the current settings to the available calendars
 	const calendarSettings = availableCalendars.map((availableCalendar) => {

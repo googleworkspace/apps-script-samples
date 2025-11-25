@@ -129,7 +129,12 @@ function getContent(body) {
 	let searchResult = null;
 
 	// Gets and loops through all paragraphs that match the style of APP_STYLE.
-	while ((searchResult = body.findElement(searchType, searchResult))) {
+	while (true) {
+		searchResult = body.findElement(searchType, searchResult);
+		if (!searchResult) {
+			break;
+		}
+
 		const par = searchResult.getElement().asParagraph();
 		if (par.getHeading() === searchHeading) {
 			// If heading style matches, searches for text string (case insensitive).

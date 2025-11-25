@@ -7,6 +7,7 @@
  * @customfunction
  */
 function gemini(range, prompt) {
-	prompt = `For the table of data: ${range}, Answer the following: ${prompt}. Do not use formatting. Remove all markdown.`;
-	return getAiSummary(prompt);
+	return getAiSummary(
+		`For the table of data: ${range} Answer the following: ${prompt}. Do not use formatting. Remove all markdown.`,
+	);
 }

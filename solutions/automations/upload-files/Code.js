@@ -71,7 +71,7 @@ function onFormSubmit(e) {
 					itemResponse.getItem().getType().toString() === "FILE_UPLOAD",
 			)
 			.map((itemResponse) => itemResponse.getResponse())
-			.reduce((a, b) => [...a, ...b], []);
+			.reduce((a, b) => a.concat(b), []);
 
 		// Moves the files to the destination folder.
 		if (fileUploads.length > 0) {

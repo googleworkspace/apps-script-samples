@@ -14,6 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+DEFAULT_OUTPUT_FORMAT =
+	"Summarize it. Only keep the verdict result and main arguments. " +
+	"Do not reiterate the fact being checked. Remove all markdown. " +
+	"State the verdit result in a first paragraph in a few words and " +
+	"the rest of the summary in a second paragraph.";
+
 /**
  * Passes a statement to fact-check and, optionally, output formatting instructions.
  *
@@ -25,14 +31,7 @@ limitations under the License.
  * @return The generated and formatted verdict
  * @customfunction
  */
-function FACT_CHECK(statement, outputFormat) {
-	if (!outputFormat || outputFormat === "") {
-		outputFormat =
-			"Summarize it. Only keep the verdict result and main arguments. " +
-			"Do not reiterate the fact being checked. Remove all markdown. " +
-			"State the verdit result in a first paragraph in a few words and the rest of the summary in a second paragraph.";
-	}
-
+function FACT_CHECK(statement, outputFormat = DEFAULT_OUTPUT_FORMAT) {
 	return requestOutputFormatting(
 		`Here is a fact checking result: ${requestLlmAuditorAdkAiAgent(statement)}.\n\n${outputFormat}`,
 	);

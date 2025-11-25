@@ -70,14 +70,14 @@ function sync() {
 	// summary in the specified date range. Imports each of those to the team
 	// calendar.
 	let count = 0;
-	users.forEach((user) => {
+	for (const user of users) {
 		const username = user.getEmail().split("@")[0];
 		const events = findEvents(user, today, maxDate, lastRun);
-		events.forEach((event) => {
+		for (const event of events) {
 			importEvent(username, event);
 			count++;
-		}); // End foreach event.
-	}); // End foreach user.
+		}
+	}
 
 	PropertiesService.getScriptProperties().setProperty("lastRun", today);
 	console.log(`Imported ${count} events`);

@@ -64,7 +64,7 @@ class DB {
 	 */
 	get last() {
 		const lastRow = this.sheet.getLastRow();
-		if (lastRow === 0) return;
+		if (lastRow === 0) return undefined;
 		return JSON.parse(this.sheet.getSheetValues(lastRow, 1, 1, 2)[0][1]);
 	}
 

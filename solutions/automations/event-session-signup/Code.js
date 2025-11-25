@@ -87,11 +87,11 @@ function setUpCalendar_(values, range) {
  * @param {Date} time A Date object from which to extract the time.
  * @return {Date} A Date object representing the combined date and time.
  */
-function joinDateAndTime_(date, time) {
-	date = new Date(date);
-	date.setHours(time.getHours());
-	date.setMinutes(time.getMinutes());
-	return date;
+function joinDateAndTime_(date_, time) {
+	const processedDate = new Date(date_);
+	processedDate.setHours(time.getHours());
+	processedDate.setMinutes(time.getMinutes());
+	return processedDate;
 }
 
 /**
@@ -124,15 +124,15 @@ function setUpForm_(ss, values) {
 	form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
 	form.addTextItem().setTitle("Name").setRequired(true);
 	form.addTextItem().setTitle("Email").setRequired(true);
-	Object.keys(schedule).forEach((day) => {
-		const header = form.addSectionHeaderItem().setTitle(`Sessions for ${day}`);
-		Object.keys(schedule[day]).forEach((time) => {
-			const item = form
+	for (const day of Object.keys(schedule)) {
+		form.addSectionHeaderItem().setTitle(`Sessions for ${day}`);
+		for (const time of Object.keys(schedule[day])) {
+			form
 				.addMultipleChoiceItem()
 				.setTitle(`${time} ${day}`)
 				.setChoiceValues(schedule[day][time]);
-		});
-	});
+		}
+	}
 }
 
 /**

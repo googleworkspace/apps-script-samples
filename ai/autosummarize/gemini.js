@@ -37,14 +37,16 @@ const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
  *
  * @param {string} prompt The prompt to senb to Vertex AI API.
  * @param {string} options.temperature The temperature setting set by user.
- * @param {string} options.tokens The number of tokens to limit to the prompt.
+ * @param {string} options.maxOutputTokens The number of tokens to limit to the prompt.
  */
 function getAiSummary(parts, options = {}) {
-	options = Object.assign(
-		{},
-		{ temperature: 0.1, tokens: 8192 },
-		options ?? {},
-	);
+	const defaultOptions = {
+		temperature: 0.1,
+		maxOutputTokens: 8192,
+		topK: 1,
+		topP: 1,
+		stopSequences: [],
+	};
 	const request = {
 		contents: [
 			{
@@ -53,11 +55,8 @@ function getAiSummary(parts, options = {}) {
 			},
 		],
 		generationConfig: {
-			temperature: options.temperature,
-			topK: 1,
-			topP: 1,
-			maxOutputTokens: options.tokens,
-			stopSequences: [],
+			...defaultOptions,
+			...options,
 		},
 	};
 

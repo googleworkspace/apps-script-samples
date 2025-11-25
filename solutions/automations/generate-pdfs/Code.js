@@ -60,7 +60,7 @@ function processDocuments() {
 	const invoices = [];
 
 	// Iterates for each customer calling createInvoiceForCustomer routine.
-	customers.forEach((customer) => {
+	for (const customer of customers) {
 		ss.toast(`Creating Invoice for ${customer.customer_name}`, APP_TITLE, 1);
 		const invoice = createInvoiceForCustomer(
 			customer,
@@ -70,7 +70,7 @@ function processDocuments() {
 			ss.getId(),
 		);
 		invoices.push(invoice);
-	});
+	}
 	// Writes invoices data to the sheet.
 	invoicesSheet
 		.getRange(2, 1, invoices.length, invoices[0].length)
@@ -103,7 +103,7 @@ function createInvoiceForCustomer(
 
 	const lineItems = [];
 	let totalAmount = 0;
-	customerTransactions.forEach((lineItem) => {
+	for (const lineItem of customerTransactions) {
 		const lineItemProduct = products.filter(
 			(product) => product.sku_name === lineItem.sku,
 		)[0];
@@ -119,7 +119,7 @@ function createInvoiceForCustomer(
 			amount,
 		]);
 		totalAmount += Number.parseFloat(amount);
-	});
+	}
 
 	// Generates a random invoice number. You can replace with your own document ID method.
 	const invoiceNumber = Math.floor(100000 + Math.random() * 900000);
@@ -173,9 +173,9 @@ function clearTemplateSheet() {
 	const rngClear = templateSheet
 		.getRangeList(["B10:B11", "F10", "F12", "F14"])
 		.getRanges();
-	rngClear.forEach((cell) => {
+	for (const cell of rngClear) {
 		cell.clearContent();
-	});
+	}
 	// This sample only accounts for six rows of data 'B18:G24'. You can extend or make dynamic as necessary.
 	templateSheet.getRange(18, 2, 7, 6).clearContent();
 }

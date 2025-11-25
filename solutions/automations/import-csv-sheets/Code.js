@@ -89,10 +89,7 @@ function updateApplicationSheet() {
 	// Iterates through each CSV file.
 	while (cvsFiles.hasNext()) {
 		const csvFile = cvsFiles.next();
-		let isSuccess;
-
-		// Appends the unprocessed CSV data into the Google Sheets spreadsheet.
-		isSuccess = processCsv_(objSpreadSheet, csvFile);
+		const isSuccess = processCsv_(objSpreadSheet, csvFile);
 
 		if (isSuccess) {
 			// Moves the processed file to the processed folder to prevent future duplicate data imports.
@@ -100,7 +97,7 @@ function updateApplicationSheet() {
 			// Logs the successfully processed file to the filesProcessed array.
 			filesProcessed.push(csvFile.getName());
 			console.log(`Successfully processed: ${csvFile.getName()}`);
-		} else if (!isSuccess) {
+		} else {
 			// Doesn't move the unsuccesfully processed file so that it can be corrected and reprocessed later.
 			// Logs the unsuccessfully processed file to the filesNotProcessed array.
 			filesNotProcessed.push(csvFile.getName());
