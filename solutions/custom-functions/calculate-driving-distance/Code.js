@@ -167,9 +167,11 @@ function generateStepByStep_() {
     const newRows = [];
     for (const step of directions.routes[0].legs[0].steps) {
       // Remove HTML tags from the instructions.
-      const instructions = step.html_instructions
-        .replace(/<br>|<div.*?>/g, "\n")
-        .replace(/<.*?>/g, "");
+      const instructions = XmlService.parse(
+        `<root>${step.html_instructions}</root>`,
+      )
+        .getRootElement()
+        .getText();
       newRows.push([instructions, step.distance.value]);
     }
     directionsSheet.getRange(1, 1, headers.length, 3).setValues(headers);

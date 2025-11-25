@@ -93,7 +93,18 @@ function summarizeFiles(
         },
       ];
       const fileIdMatchPattern = /\/d\/(.*?)\//gi;
-      const fileId = fileIdMatchPattern.exec(fileUrl)[1];
+      const match = fileIdMatchPattern.exec(fileUrl);
+      if (!match) {
+        console.log(`Could not extract file ID from URL: ${fileUrl}`);
+        return [
+          fileUrl,
+          fileName,
+          "Could not extract file ID from URL.",
+          "",
+          "",
+        ];
+      }
+      const fileId = match[1];
 
       // Get file title and type.
       const currentFile = Drive.Files.get(fileId, { supportsAllDrives: true });
@@ -139,7 +150,7 @@ function summarizeFiles(
       // Prompt for summary
       const geminiOptions = {
         temperature,
-        tokens,
+        maxOutputTokens: tokens,
       };
       summary = getAiSummary(promptParts, geminiOptions);
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-DEFAULT_OUTPUT_FORMAT =
+const DEFAULT_OUTPUT_FORMAT =
   "Summarize it. Only keep the verdict result and main arguments. " +
   "Do not reiterate the fact being checked. Remove all markdown. " +
   "State the verdit result in a first paragraph in a few words and " +

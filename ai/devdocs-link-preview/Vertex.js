@@ -22,7 +22,7 @@ const MODEL_ID = scriptPropertyWithDefault("model_id", "gemini-2.5-flash");
 const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
 
 /**
- * Invokes Gemini to extrac the title and summary of a given URL. Responses may be cached.
+ * Invokes Gemini to extract the title and summary of a given URL. Responses may be cached.
  */
 function getPageSummary(targetUrl) {
   const cachedResponse = CacheService.getScriptCache().get(targetUrl);
@@ -84,8 +84,9 @@ function getPageSummary(targetUrl) {
   if (!jsonMatch) {
     throw new Error("Unable to generate preview,");
   }
-  CacheService.getScriptCache().put(targetUrl, jsonMatch);
-  return JSON.parse(jsonMatch[0]);
+  const jsonResponse = jsonMatch[0];
+  CacheService.getScriptCache().put(targetUrl, jsonResponse);
+  return JSON.parse(jsonResponse);
 }
 
 /**
