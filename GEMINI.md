@@ -7,6 +7,16 @@ This guide outlines best practices for developing Google Apps Script projects, f
 * For new sample directories, ensure the top-level folder is included in the [`test.yaml`](.github/workflows/test.yaml) GitHub workflow's matrix configuration.
 * Do not move or delete snippet tags: `[END apps_script_... ]` or `[END apps_script_... ]`.
 
+
+## Tools
+
+Lint and format code using [Biome](https://biomejs.dev/).
+
+```bash
+pnpm lint
+pnpm format
+```
+
 ## Apps Script Code Best Practices
 
 Apps Script supports the V8 runtime, which enables modern ECMAScript syntax. Using these features makes your code cleaner, more readable, and less error-prone.
