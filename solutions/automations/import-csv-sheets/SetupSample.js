@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-/** 
+/**
  * This file contains functions that set up the folders and sample files used to demo the application.
- * 
+ *
  * Sample data for the application is stored in the SampleData.gs file.
  */
 
@@ -24,18 +24,17 @@
 const INCLUDE_SAMPLE_DATA_FILES = true; // Set to true to create sample data files, false to skip.
 
 /**
- * Runs the setup for the sample. 
+ * Runs the setup for the sample.
  * 1) Creates the application folder and subfolders for unprocessed/processed CSV files.
  *    from global variables APP_FOLDER | SOURCE_FOLDER | PROCESSED_FOLDER
  * 2) Creates the sample Sheets spreadsheet in the application folder.
- *    from global variable SHEET_REPORT_NAME 
- * 3) Creates CSV files from sample data in the unprocessed files folder. 
+ *    from global variable SHEET_REPORT_NAME
+ * 3) Creates CSV files from sample data in the unprocessed files folder.
  *    from variable SAMPLE_DATA in SampleData.gs.
  * 4) Creates an installable trigger to run process automatically at a specified time interval.
  */
 function setupSample() {
-
-  console.log(`Application setup for: ${APP_TITLE}`)
+  console.log(`Application setup for: ${APP_TITLE}`);
 
   // Creates application folder.
   const folderAppPrimary = getApplicationFolder_(APP_FOLDER);
@@ -43,10 +42,11 @@ function setupSample() {
   const folderSource = getFolder_(SOURCE_FOLDER);
   const folderProcessed = getFolder_(PROCESSED_FOLDER);
 
-  console.log(`Application folders: ${folderAppPrimary.getName()}, ${folderSource.getName()}, ${folderProcessed.getName()}`)
+  console.log(
+    `Application folders: ${folderAppPrimary.getName()}, ${folderSource.getName()}, ${folderProcessed.getName()}`,
+  );
 
   if (INCLUDE_SAMPLE_DATA_FILES) {
-
     // Sets up primary destination spreadsheet
     const sheet = setupPrimarySpreadsheet_(folderAppPrimary);
 
@@ -57,37 +57,44 @@ function setupSample() {
     for (const file of csvFiles) {
       // Creates CSV file in source folder if it doesn't exist.
       if (!fileExists_(file.name, folderSource)) {
-        let csvFileId = DriveApp.createFile(file.name, file.csv, MimeType.CSV);
-        console.log(`Created Sample CSV: ${file.name}`)
+        const csvFileId = DriveApp.createFile(
+          file.name,
+          file.csv,
+          MimeType.CSV,
+        );
+        console.log(`Created Sample CSV: ${file.name}`);
         csvFileId.moveTo(folderSource);
       }
     }
   }
   // Installs (or recreates) project trigger
-  installTrigger()
+  installTrigger();
 
-  console.log(`Setup completed for: ${APP_TITLE}`)
+  console.log(`Setup completed for: ${APP_TITLE}`);
 }
 
 /**
- * 
+ *
  */
 function setupPrimarySpreadsheet_(folderAppPrimary) {
-
   // Creates the report destination spreadsheet if doesn't exist.
   if (!fileExists_(SHEET_REPORT_NAME, folderAppPrimary)) {
-
-    // Creates new destination spreadsheet (report) with cell size of 20 x 10. 
+    // Creates new destination spreadsheet (report) with cell size of 20 x 10.
     const sheet = SpreadsheetApp.create(SHEET_REPORT_NAME, 20, 10);
 
     // Adds the sample data headings.
-    let sheetHeadings = getHeadings();
-    sheet.getSheets()[0].getRange(1, 1, 1, sheetHeadings[0].length).setValues(sheetHeadings);
+    const sheetHeadings = getHeadings();
+    sheet
+      .getSheets()[0]
+      .getRange(1, 1, 1, sheetHeadings[0].length)
+      .setValues(sheetHeadings);
     SpreadsheetApp.flush();
     // Moves to primary application root folder.
-    DriveApp.getFileById(sheet.getId()).moveTo(folderAppPrimary)
+    DriveApp.getFileById(sheet.getId()).moveTo(folderAppPrimary);
 
-    console.log(`Created file: ${SHEET_REPORT_NAME} In folder: ${folderAppPrimary.getName()}.`)
+    console.log(
+      `Created file: ${SHEET_REPORT_NAME} In folder: ${folderAppPrimary.getName()}.`,
+    );
     return sheet;
   }
 }
@@ -98,13 +105,17 @@ function setupPrimarySpreadsheet_(folderAppPrimary) {
  */
 function removeSample() {
   getApplicationFolder_(APP_FOLDER).setTrashed(true);
-  console.log(`'${APP_FOLDER}' contents have been moved to Drive Trash folder.`)
+  console.log(
+    `'${APP_FOLDER}' contents have been moved to Drive Trash folder.`,
+  );
 
   // Removes existing trigger if found.
   const projectTriggers = ScriptApp.getProjectTriggers();
-  for (var i = 0; i < projectTriggers.length; i++) {
-    if (projectTriggers[i].getHandlerFunction() == HANDLER_FUNCTION) {
-      console.log(`Existing trigger with handler function of '${HANDLER_FUNCTION}' removed.`);
+  for (let i = 0; i < projectTriggers.length; i++) {
+    if (projectTriggers[i].getHandlerFunction() === HANDLER_FUNCTION) {
+      console.log(
+        `Existing trigger with handler function of '${HANDLER_FUNCTION}' removed.`,
+      );
       ScriptApp.deleteTrigger(projectTriggers[i]);
     }
   }

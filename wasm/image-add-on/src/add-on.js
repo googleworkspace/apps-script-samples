@@ -33,21 +33,21 @@ async function card(items) {
         .setType(CardService.SelectionInputType.RADIO_BUTTON)
         .addItem("Low", "low", quality === "low")
         .addItem("Medium", "medium", quality === "medium")
-        .addItem("High", "high", quality === "high")
+        .addItem("High", "high", quality === "high"),
     )
     .addWidget(
       CardService.newTextInput()
         .setFieldName("height")
         .setTitle("Height")
         .setMultiline(false)
-        .setValue(height ?? "")
+        .setValue(height ?? ""),
     )
     .addWidget(
       CardService.newTextInput()
         .setFieldName("width")
         .setTitle("Width")
         .setMultiline(false)
-        .setValue(width ?? "")
+        .setValue(width ?? ""),
     )
     .addWidget(
       CardService.newTextButton()
@@ -57,8 +57,8 @@ async function card(items) {
           CardService.newAction()
             .setFunctionName("updateSettings")
             .setParameters({})
-            .setLoadIndicator(CardService.LoadIndicator.SPINNER)
-        )
+            .setLoadIndicator(CardService.LoadIndicator.SPINNER),
+        ),
     )
     .setCollapsible(true)
     .setNumUncollapsibleWidgets(0);
@@ -69,7 +69,7 @@ async function card(items) {
     (
       items ??
       JSON.parse(
-        PropertiesService.getUserProperties().getProperty("selectedItems")
+        PropertiesService.getUserProperties().getProperty("selectedItems"),
       )
     )
       .filter((item) => item.mimeType.startsWith("image"))
@@ -81,18 +81,18 @@ async function card(items) {
         const newBytes = await compress_(bytes, {
           quality: qualityToInt(quality),
           format: item.mimeType.split("/").pop(),
-          width: parseInt(width ?? "0"),
-          height: parseInt(height ?? "0"),
+          width: Number.parseInt(width ?? "0"),
+          height: Number.parseInt(height ?? "0"),
         });
 
         const dataUrl = `data:${item.mimeType};base64,${Utilities.base64Encode(
-          newBytes
+          newBytes,
         )}`;
 
         section.addWidget(CardService.newImage().setImageUrl(dataUrl));
 
         section.addWidget(
-          CardService.newDecoratedText().setText(bytesToText(newBytes.length))
+          CardService.newDecoratedText().setText(bytesToText(newBytes.length)),
         );
 
         section.addWidget(
@@ -108,8 +108,8 @@ async function card(items) {
                       bytes: Utilities.base64Encode(newBytes),
                       action: "save",
                       item: JSON.stringify(item),
-                    })
-                )
+                    }),
+                ),
             )
             .addButton(
               CardService.newTextButton()
@@ -122,12 +122,12 @@ async function card(items) {
                       bytes: Utilities.base64Encode(newBytes),
                       action: "save-as",
                       item: JSON.stringify(item),
-                    })
-                )
-            )
+                    }),
+                ),
+            ),
         );
         return section;
-      })
+      }),
   );
 
   for (const section of sections) {
@@ -150,7 +150,7 @@ async function card(items) {
 async function onItemsSelectedTrigger(e) {
   PropertiesService.getUserProperties().setProperty(
     "selectedItems",
-    JSON.stringify(e.drive.selectedItems)
+    JSON.stringify(e.drive.selectedItems),
   );
   return (await card(e.drive.selectedItems)).build();
 }
@@ -184,9 +184,9 @@ function onHomePageTrigger() {
     .addSection(
       CardService.newCardSection().addWidget(
         CardService.newTextParagraph().setText(
-          "Select one or more files in Drive to compress the image."
-        )
-      )
+          "Select one or more files in Drive to compress the image.",
+        ),
+      ),
     )
     .build();
 }
@@ -194,7 +194,7 @@ function onHomePageTrigger() {
 function bytesToText(bytes) {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   if (bytes === 0) return "0 Byte";
-  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  const i = Number.parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return `${Math.round(bytes / 1024 ** i)} ${sizes[i]}`;
 }
 
@@ -215,7 +215,7 @@ async function updateSettings(e) {
     .setNavigation(
       CardService.newNavigation()
         .popToRoot()
-        .updateCard((await card()).build())
+        .updateCard((await card()).build()),
     )
     .build();
 }
@@ -226,7 +226,7 @@ function persistSettings(settings) {
     JSON.stringify({
       ...loadSettings,
       ...settings,
-    })
+    }),
   );
 }
 

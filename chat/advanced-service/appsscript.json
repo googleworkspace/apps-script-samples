@@ -15,15 +15,19 @@
   ],
   "chat": {},
   "dependencies": {
-    "enabledAdvancedServices": [{
-      "userSymbol": "Chat",
-      "version": "v1",
-      "serviceId": "chat"
-    }],
-    "libraries": [{
-      "userSymbol": "OAuth2",
-      "version": "43",
-      "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
-    }]
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Chat",
+        "version": "v1",
+        "serviceId": "chat"
+      }
+    ],
+    "libraries": [
+      {
+        "userSymbol": "OAuth2",
+        "version": "43",
+        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
+      }
+    ]
   }
 }

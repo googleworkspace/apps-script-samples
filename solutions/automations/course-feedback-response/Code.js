@@ -21,20 +21,20 @@ limitations under the License.
  * Creates custom menu for user to run scripts.
  */
 function onOpen() {
-  let ui = SpreadsheetApp.getUi();
-  ui.createMenu('Form Reply Tool')
-      .addItem('Enable auto draft replies', 'installTrigger')
-      .addToUi();
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu("Form Reply Tool")
+    .addItem("Enable auto draft replies", "installTrigger")
+    .addToUi();
 }
 
 /**
  * Installs a trigger on the Spreadsheet for when a Form response is submitted.
  */
 function installTrigger() {
-  ScriptApp.newTrigger('onFormSubmit')
-      .forSpreadsheet(SpreadsheetApp.getActive())
-      .onFormSubmit()
-      .create();
+  ScriptApp.newTrigger("onFormSubmit")
+    .forSpreadsheet(SpreadsheetApp.getActive())
+    .onFormSubmit()
+    .create();
 }
 
 /**
@@ -43,14 +43,14 @@ function installTrigger() {
  * @param {Object} event - Form submit event
  */
 function onFormSubmit(e) {
-  let responses = e.namedValues;
+  const responses = e.namedValues;
 
   // parse form response data
-  let timestamp = responses.Timestamp[0];
-  let email = responses['Email address'][0].trim();
+  const timestamp = responses.Timestamp[0];
+  const email = responses["Email address"][0].trim();
 
   // create email body
-  let emailBody = createEmailBody(responses);
+  const emailBody = createEmailBody(responses);
 
   // create draft email
   createDraft(timestamp, email, emailBody);
@@ -64,32 +64,17 @@ function onFormSubmit(e) {
  */
 function createEmailBody(responses) {
   // parse form response data
-  let name = responses.Name[0].trim();
-  let industry = responses['What industry do you work in?'][0];
-  let source = responses['How did you find out about this course?'][0];
-  let rating = responses['On a scale of 1 - 5 how would you rate this course?'][0];
-  let productFeedback = responses['What could be different to make it a 5 rating?'][0];
-  let otherFeedback = responses['Any other feedback?'][0];
+  const name = responses.Name[0].trim();
+  const industry = responses["What industry do you work in?"][0];
+  const source = responses["How did you find out about this course?"][0];
+  const rating =
+    responses["On a scale of 1 - 5 how would you rate this course?"][0];
+  const productFeedback =
+    responses["What could be different to make it a 5 rating?"][0];
+  const otherFeedback = responses["Any other feedback?"][0];
 
   // create email body
-  let htmlBody = 'Hi ' + name + ',<br><br>' +
-    'Thanks for responding to our course feedback questionnaire.<br><br>' +
-      'It\'s really useful to us to help improve this course.<br><br>' +
-        'Have a great day!<br><br>' +
-          'Thanks,<br>' +
-            'Course Team<br><br>' +
-              '****************************************************************<br><br>' +
-                '<i>Your feedback:<br><br>' +
-                  'What industry do you work in?<br><br>' +
-                    industry + '<br><br>' +
-                      'How did you find out about this course?<br><br>' +
-                        source + '<br><br>' +
-                          'On a scale of 1 - 5 how would you rate this course?<br><br>' +
-                            rating + '<br><br>' +
-                              'What could be different to make it a 5 rating?<br><br>' +
-                                productFeedback + '<br><br>' +
-                                  'Any other feedback?<br><br>' +
-                                    otherFeedback + '<br><br></i>';
+  const htmlBody = `Hi ${name},<br><br>Thanks for responding to our course feedback questionnaire.<br><br>It's really useful to us to help improve this course.<br><br>Have a great day!<br><br>Thanks,<br>Course Team<br><br>****************************************************************<br><br><i>Your feedback:<br><br>What industry do you work in?<br><br>${industry}<br><br>How did you find out about this course?<br><br>${source}<br><br>On a scale of 1 - 5 how would you rate this course?<br><br>${rating}<br><br>What could be different to make it a 5 rating?<br><br>${productFeedback}<br><br>Any other feedback?<br><br>${otherFeedback}<br><br></i>`;
 
   return htmlBody;
 }
@@ -102,18 +87,13 @@ function createEmailBody(responses) {
  * @param {string} emailBody The email body as an HTML string
  */
 function createDraft(timestamp, email, emailBody) {
-  console.log('draft email create process started');
+  console.log("draft email create process started");
 
   // create subject line
-  let subjectLine = 'Thanks for your course feedback! ' + timestamp;
+  const subjectLine = `Thanks for your course feedback! ${timestamp}`;
 
   // create draft email
-  GmailApp.createDraft(
-      email,
-      subjectLine,
-      '',
-      {
-        htmlBody: emailBody,
-      }
-  );
+  GmailApp.createDraft(email, subjectLine, "", {
+    htmlBody: emailBody,
+  });
 }

@@ -16,26 +16,28 @@ limitations under the License.
 
 /**
  * Makes a simple content-only call to Gemini AI.
- * 
+ *
  * @param {string} text Prompt to pass to Gemini API.
  * @param {string} API_KEY Developer API Key enabled to call Gemini.
- * 
- * @return {string} Response from AI call. 
+ *
+ * @return {string} Response from AI call.
  */
 function generateContent(text, API_KEY) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
-  return JSON.parse(UrlFetchApp.fetch(url, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    payload: JSON.stringify({
-      contents: [{
-        parts: [
-          {text}
-        ]
-      }]
-    }),
-  }).getContentText())
+  return JSON.parse(
+    UrlFetchApp.fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      payload: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text }],
+          },
+        ],
+      }),
+    }).getContentText(),
+  );
 }

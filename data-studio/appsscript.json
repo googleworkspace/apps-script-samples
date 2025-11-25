@@ -12,13 +12,14 @@
     "termsOfServiceUrl": "https://hooli.xyz/tos",
     "authType": ["NONE"],
     "feeType": ["PAID"],
-    "sources": ["HOOLI_CHAT_LOG", "ENDFRAME_SERVER_STREAM", "RETINABYTE_USER_ANALYTICS"],
+    "sources": [
+      "HOOLI_CHAT_LOG",
+      "ENDFRAME_SERVER_STREAM",
+      "RETINABYTE_USER_ANALYTICS"
+    ],
     "templates": {
       "default": "872223s89f5fdkjnd983kjf"
     }
   },
-  "urlFetchWhitelist": [
-    "https://api.hooli.xyz/",
-    "https://hooli.xyz/"
-  ]
+  "urlFetchWhitelist": ["https://api.hooli.xyz/", "https://hooli.xyz/"]
 }

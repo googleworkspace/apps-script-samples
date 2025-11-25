@@ -16,7 +16,7 @@ limitations under the License.
 
 /**
  * Main entry point for add-on when opened.
- * 
+ *
  * @param e - Add-on event context
  */
 function onHomepageOpened(e) {
@@ -26,46 +26,43 @@ function onHomepageOpened(e) {
     action: {
       navigations: [
         {
-          pushCard: card
-        }
-      ]
-    }
+          pushCard: card,
+        },
+      ],
+    },
   };
 }
 
 /**
  * Handles selection of a file in Google Drive.
- * 
+ *
  * @param e - Add-on event context
  */
 function onDriveItemsSelected(e) {
-
   return {
     action: {
       navigations: [
         {
-          pushCard: buildSelectionPage(e)
-        }
-      ]
-    }
-  }
+          pushCard: buildSelectionPage(e),
+        },
+      ],
+    },
+  };
 }
-
 
 /**
  * Handles the update of the card on demand.
- * 
+ *
  * @param e - (Modified) add-on event context
  */
 function onCardUpdate(e) {
-
   return {
     action: {
       navigations: [
         {
-          updateCard: buildSelectionPage(e)
-        }
-      ]
-    }
-  }
+          updateCard: buildSelectionPage(e),
+        },
+      ],
+    },
+  };
 }

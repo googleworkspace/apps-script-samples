@@ -2,15 +2,15 @@
   "timeZone": "America/New_York",
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",
-  "oauthScopes": [
-    "https://www.googleapis.com/auth/chat.spaces.readonly"
-  ],
+  "oauthScopes": ["https://www.googleapis.com/auth/chat.spaces.readonly"],
   "chat": {},
   "dependencies": {
-    "enabledAdvancedServices": [{
-      "userSymbol": "Chat",
-      "version": "v1",
-      "serviceId": "chat"
-    }]
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Chat",
+        "version": "v1",
+        "serviceId": "chat"
+      }
+    ]
   }
 }

@@ -34,7 +34,6 @@ limitations under the License.
  * @property {string} space.name
  */
 
-
 class DB {
   /**
    * params {String} spreadsheetId
@@ -42,7 +41,6 @@ class DB {
   constructor(spreadsheetId) {
     this.spreadsheetId = spreadsheetId;
     this.sheetName = "Messages";
-
   }
 
   /**
@@ -53,9 +51,9 @@ class DB {
     let sheet = spreadsheet.getSheetByName(this.sheetName);
 
     // create if it does not exist
-    if (sheet == undefined) {
+    if (sheet === undefined) {
       sheet = spreadsheet.insertSheet();
-      sheet.setName(this.sheetName)
+      sheet.setName(this.sheetName);
     }
 
     return sheet;
@@ -65,11 +63,10 @@ class DB {
    * @returns {Message|undefined}
    */
   get last() {
-    const lastRow = this.sheet.getLastRow()
-    if (lastRow === 0) return;
+    const lastRow = this.sheet.getLastRow();
+    if (lastRow === 0) return undefined;
     return JSON.parse(this.sheet.getSheetValues(lastRow, 1, 1, 2)[0][1]);
   }
-
 
   /**
    * @params {Chat_v1.Chat.V1.Schema.Message} message
@@ -77,9 +74,7 @@ class DB {
   append(message) {
     this.sheet.appendRow([message.name, JSON.stringify(message, null, 2)]);
   }
-
 }
-
 
 /**
  * Test function for DB Object
@@ -88,11 +83,11 @@ function testDB() {
   const db = new DB(SPREADSHEET_ID);
 
   let thread = db.last;
-  if (thread == undefined) return;
-  console.log(thread)
+  if (thread === undefined) return;
+  console.log(thread);
 
   db.rowOffset = 1;
   thread = db.last;
-  if (thread == undefined) return;
-  console.log(thread)
+  if (thread === undefined) return;
+  console.log(thread);
 }

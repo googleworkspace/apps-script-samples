@@ -15,196 +15,195 @@
  */
 
 /**
-* Form input dialog as JSON.
-* @return {object} JSON-formatted cards for the dialog.
-*/
+ * Form input dialog as JSON.
+ * @return {object} JSON-formatted cards for the dialog.
+ */
 function getInputFormAsDialog_(options) {
   const form = getForm_(options);
   return {
-    'actionResponse': {
-      'type': 'DIALOG',
-      'dialogAction': {
-        'dialog': {
-          'body': form
-        }
-      }
-    }
+    actionResponse: {
+      type: "DIALOG",
+      dialogAction: {
+        dialog: {
+          body: form,
+        },
+      },
+    },
   };
 }
 
 /**
-* Form JSON to collect inputs regarding the meeting.
-* @return {object} JSON-formatted cards.
-*/
+ * Form JSON to collect inputs regarding the meeting.
+ * @return {object} JSON-formatted cards.
+ */
 function getForm_(options) {
   const sections = [];
 
   // If errors present, display additional section with validation messages.
-  if (options.errors && options.errors.length) {
-    let errors = options.errors.reduce((str, err) => `${str}• ${err}<br>`, '');
+  if (options.errors?.length) {
+    let errors = options.errors.reduce((str, err) => `${str}• ${err}<br>`, "");
     errors = `<b>Errors:</b><br><font color="#ba0000">${errors}</font>`;
     const errorSection = {
-      'widgets': [
+      widgets: [
         {
           textParagraph: {
-            text: errors
-          }
-        }
-      ]
-    }
+            text: errors,
+          },
+        },
+      ],
+    };
     sections.push(errorSection);
   }
-  let formSection = {
-    'header': 'Schedule meeting and send email to invited participants',
-    'widgets': [
+  const formSection = {
+    header: "Schedule meeting and send email to invited participants",
+    widgets: [
       {
-        'textInput': {
-          'label': 'Event Title',
-          'type': 'SINGLE_LINE',
-          'name': 'subject',
-          'value': options.subject
-        }
+        textInput: {
+          label: "Event Title",
+          type: "SINGLE_LINE",
+          name: "subject",
+          value: options.subject,
+        },
       },
       {
-        'textInput': {
-          'label': 'Invitee Email Address',
-          'type': 'SINGLE_LINE',
-          'name': 'email',
-          'value': options.invitee,
-          'hintText': 'Add team group email'
-        }
+        textInput: {
+          label: "Invitee Email Address",
+          type: "SINGLE_LINE",
+          name: "email",
+          value: options.invitee,
+          hintText: "Add team group email",
+        },
       },
       {
-        'textInput': {
-          'label': 'Description',
-          'type': 'MULTIPLE_LINE',
-          'name': 'body',
-          'value': options.body
-        }
+        textInput: {
+          label: "Description",
+          type: "MULTIPLE_LINE",
+          name: "body",
+          value: options.body,
+        },
       },
       {
-        'textInput': {
-          'label': 'Meeting start date & time',
-          'type': 'SINGLE_LINE',
-          'name': 'date',
-          'value': options.startTime,
-          'hintText': 'mm/dd/yyyy H:MM'
-        }
+        textInput: {
+          label: "Meeting start date & time",
+          type: "SINGLE_LINE",
+          name: "date",
+          value: options.startTime,
+          hintText: "mm/dd/yyyy H:MM",
+        },
       },
       {
-        'selectionInput': {
-          'type': 'DROPDOWN',
-          'label': 'Meeting Duration',
-          'name': 'duration',
-          'items': [
+        selectionInput: {
+          type: "DROPDOWN",
+          label: "Meeting Duration",
+          name: "duration",
+          items: [
             {
-              'text': '15 minutes',
-              'value': '15',
-              'selected': options.duration === 15
+              text: "15 minutes",
+              value: "15",
+              selected: options.duration === 15,
             },
             {
-              'text': '30 minutes',
-              'value': '30',
-              'selected': options.duration === 30
+              text: "30 minutes",
+              value: "30",
+              selected: options.duration === 30,
             },
             {
-              'text': '45 minutes',
-              'value': '45',
-              'selected': options.duration === 45
+              text: "45 minutes",
+              value: "45",
+              selected: options.duration === 45,
             },
             {
-              'text': '1 Hour',
-              'value': '60',
-              'selected': options.duration === 60
+              text: "1 Hour",
+              value: "60",
+              selected: options.duration === 60,
             },
             {
-              'text': '1.5 Hours',
-              'value': '90',
-              'selected': options.duration === 90
+              text: "1.5 Hours",
+              value: "90",
+              selected: options.duration === 90,
             },
             {
-              'text': '2 Hours',
-              'value': '120',
-              'selected': options.duration === 120
-            }
-          ]
-        }
-      }
+              text: "2 Hours",
+              value: "120",
+              selected: options.duration === 120,
+            },
+          ],
+        },
+      },
     ],
-    'collapsible': false
+    collapsible: false,
   };
   sections.push(formSection);
-  const card =  {
-    'sections': sections,
-    'name': 'Google Chat Scheduled Meeting',
-    'fixedFooter': {
-      'primaryButton': {
-        'text': 'Submit',
-        'onClick': {
-          'action': {
-            'function': 'handleFormSubmit'
-          }
+  const card = {
+    sections: sections,
+    name: "Google Chat Scheduled Meeting",
+    fixedFooter: {
+      primaryButton: {
+        text: "Submit",
+        onClick: {
+          action: {
+            function: "handleFormSubmit",
+          },
         },
-        'altText': 'Submit'
-      }
-    }
+        altText: "Submit",
+      },
+    },
   };
   return card;
 }
 
 /**
-* Confirmation dialog after a calendar event is created successfully.
-* @param {string} url The Google Calendar Event url for link button
-* @return {object} JSON-formatted cards for the dialog
-*/
+ * Confirmation dialog after a calendar event is created successfully.
+ * @param {string} url The Google Calendar Event url for link button
+ * @return {object} JSON-formatted cards for the dialog
+ */
 function getConfirmationDialog_(url) {
   return {
-    'actionResponse': {
-      'type': 'DIALOG',
-      'dialogAction': {
-        'dialog': {
-          'body': {
-            'sections': [
+    actionResponse: {
+      type: "DIALOG",
+      dialogAction: {
+        dialog: {
+          body: {
+            sections: [
               {
-                'widgets': [
+                widgets: [
                   {
-                    'textParagraph': {
-                      'text': 'Meeting created successfully!'
+                    textParagraph: {
+                      text: "Meeting created successfully!",
                     },
-                    'horizontalAlignment': 'CENTER'
+                    horizontalAlignment: "CENTER",
                   },
                   {
-                    'buttonList': {
-                      'buttons': [
+                    buttonList: {
+                      buttons: [
                         {
-                          'text': 'Open Calendar Event',
-                          'onClick': {
-                            'openLink': {
-                              'url': url
-                            }
-                          }
-                        }
-
-                      ]
+                          text: "Open Calendar Event",
+                          onClick: {
+                            openLink: {
+                              url: url,
+                            },
+                          },
+                        },
+                      ],
                     },
-                    'horizontalAlignment': 'CENTER'
-                  }
-                ]
-              }
+                    horizontalAlignment: "CENTER",
+                  },
+                ],
+              },
             ],
-            'fixedFooter': {
-              'primaryButton': {
-                'text': 'OK',
-                'onClick': {
-                  'action': {
-                    'function': 'closeDialog'
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+            fixedFooter: {
+              primaryButton: {
+                text: "OK",
+                onClick: {
+                  action: {
+                    function: "closeDialog",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  };
 }

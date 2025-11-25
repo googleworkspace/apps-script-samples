@@ -8,9 +8,7 @@
     "https://www.googleapis.com/auth/drive.readonly",
     "https://www.googleapis.com/auth/script.projects"
   ],
-    "urlFetchWhitelist": [
-    "https://script.googleapis.com/"
-  ],
+  "urlFetchWhitelist": ["https://script.googleapis.com/"],
   "addOns": {
     "common": {
       "name": "Share Macro",

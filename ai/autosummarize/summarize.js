@@ -16,7 +16,7 @@ limitations under the License.
 
 /**
  * Exports a Google Doc/Sheet/Slide to the requested format.
- * 
+ *
  * @param {string} fileId - ID of file to export
  * @param {string} targetType - MIME type to export as
  * @return Base64 encoded file content
@@ -37,7 +37,7 @@ function exportFile(fileId, targetType = "application/pdf") {
 
 /**
  * Downloads a binary file from Drive.
- * 
+ *
  * @param {string} fileId - ID of file to export
  * @param {string} targetType - MIME type to export as
  * @return Base64 encoded file content
@@ -59,8 +59,14 @@ function downloadFile(fileId) {
 /**
  * Main function for AutoSummarize AI process.
  */
-function summarizeFiles(sourceSheetLinks, customPrompt1, customPrompt2, temperature, tokens) {
-  return sourceSheetLinks.map(function (fileUrl) {
+function summarizeFiles(
+  sourceSheetLinks,
+  customPrompt1,
+  customPrompt2,
+  temperature,
+  tokens,
+) {
+  return sourceSheetLinks.map((fileUrl) => {
     console.log("Processing:", fileUrl);
 
     let fileName = "";
@@ -69,38 +75,55 @@ function summarizeFiles(sourceSheetLinks, customPrompt1, customPrompt2, temperat
     let customPrompt2Response = "";
 
     if (!fileUrl) {
-      return ["", fileName, summary, customPrompt1Response, customPrompt2Response];
+      return [
+        "",
+        fileName,
+        summary,
+        customPrompt1Response,
+        customPrompt2Response,
+      ];
     }
     try {
       const promptParts = [
         {
-          text: 'Summarize the following document.',
+          text: "Summarize the following document.",
         },
         {
-          text: 'Return your response as a single paragraph. Reformat any lists as part of the paragraph. Output only the single paragraph as plain text. Do not use more than 3 sentences. Do not use markdown.'
-        }
-      ]
-      let fileIdMatchPattern = new RegExp("/d/(.*?)/", "gi");
-      let fileId = fileIdMatchPattern.exec(fileUrl)[1];
+          text: "Return your response as a single paragraph. Reformat any lists as part of the paragraph. Output only the single paragraph as plain text. Do not use more than 3 sentences. Do not use markdown.",
+        },
+      ];
+      const fileIdMatchPattern = /\/d\/(.*?)\//gi;
+      const match = fileIdMatchPattern.exec(fileUrl);
+      if (!match) {
+        console.log(`Could not extract file ID from URL: ${fileUrl}`);
+        return [
+          fileUrl,
+          fileName,
+          "Could not extract file ID from URL.",
+          "",
+          "",
+        ];
+      }
+      const fileId = match[1];
 
       // Get file title and type.
-      let currentFile = Drive.Files.get(fileId, { "supportsAllDrives": true });
-      let fileMimeType = currentFile.mimeType;
+      const currentFile = Drive.Files.get(fileId, { supportsAllDrives: true });
+      const fileMimeType = currentFile.mimeType;
       fileName = currentFile.name;
 
       console.log(`Processing ${fileName} (ID: ${fileId})...`);
 
       // Add file content to the prompt
-      switch(fileMimeType) {
+      switch (fileMimeType) {
         case "application/vnd.google-apps.presentation":
         case "application/vnd.google-apps.document":
         case "application/vnd.google-apps.spreadsheet":
           promptParts.push({
             inlineData: {
-              mimeType: 'application/pdf',
-              data: exportFile(fileId, 'application/pdf'),
-            }
-          })
+              mimeType: "application/pdf",
+              data: exportFile(fileId, "application/pdf"),
+            },
+          });
           break;
         case "application/pdf":
         case "image/gif":
@@ -110,36 +133,54 @@ function summarizeFiles(sourceSheetLinks, customPrompt1, customPrompt2, temperat
             inlineData: {
               mimeType: fileMimeType,
               data: downloadFile(fileId),
-            }
-          })
+            },
+          });
           break;
         default:
           console.log(`Unsupported file type: ${fileMimeType}`);
-          return [fileUrl, fileName, summary, customPrompt1Response, customPrompt2Response];
+          return [
+            fileUrl,
+            fileName,
+            summary,
+            customPrompt1Response,
+            customPrompt2Response,
+          ];
       }
 
       // Prompt for summary
-      let geminiOptions = {
+      const geminiOptions = {
         temperature,
-        tokens,
+        maxOutputTokens: tokens,
       };
       summary = getAiSummary(promptParts, geminiOptions);
 
       // If any custom prompts, request those too
       if (customPrompt1) {
         promptParts[0].text = customPrompt1;
-        customPrompt1Response = getAiSummary(promptParts, geminiOptions);        
+        customPrompt1Response = getAiSummary(promptParts, geminiOptions);
       }
       if (customPrompt2) {
         promptParts[0].text = customPrompt2;
-        customPrompt2Response = getAiSummary(promptParts, geminiOptions);        
+        customPrompt2Response = getAiSummary(promptParts, geminiOptions);
       }
 
-      return [fileUrl, fileName, summary, customPrompt1Response, customPrompt2Response];
+      return [
+        fileUrl,
+        fileName,
+        summary,
+        customPrompt1Response,
+        customPrompt2Response,
+      ];
     } catch (e) {
       // Add error row values if anything else goes wrong.
       console.log(e);
-      return [fileUrl, fileName, "Something went wrong. Make sure you have access to this row's link.", "", ""];
+      return [
+        fileUrl,
+        fileName,
+        "Something went wrong. Make sure you have access to this row's link.",
+        "",
+        "",
+      ];
     }
   });
 }

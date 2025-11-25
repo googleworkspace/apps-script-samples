@@ -25,11 +25,12 @@ const NUM_TEST_USERS = 150;
  * Adds custom menu items when opening the sheet.
  */
 function onOpen() {
-  let menu = SpreadsheetApp.getUi().createMenu('Activities')
-      .addItem('Create form', 'buildForm_')
-      .addItem('Generate test data', 'generateTestData_')
-      .addItem('Assign activities', 'assignActivities_')
-      .addToUi();
+  const menu = SpreadsheetApp.getUi()
+    .createMenu("Activities")
+    .addItem("Create form", "buildForm_")
+    .addItem("Generate test data", "generateTestData_")
+    .addItem("Assign activities", "assignActivities_")
+    .addToUi();
 }
 
 /**
@@ -37,42 +38,47 @@ function onOpen() {
  * N choices of activities, where N is defined by NUM_ITEMS_TO_RANK.
  */
 function buildForm_() {
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   if (ss.getFormUrl()) {
-    let msg = 'Form already exists. Unlink the form and try again.';
+    const msg = "Form already exists. Unlink the form and try again.";
     SpreadsheetApp.getUi().alert(msg);
     return;
   }
-  let form = FormApp.create('Activity Signup')
-      .setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
-      .setAllowResponseEdits(true)
-      .setLimitOneResponsePerUser(true)
-      .setCollectEmail(true);
-  let sectionHelpText = Utilities.formatString('Please choose your top %d activities',
-      NUM_ITEMS_TO_RANK);
-  form.addSectionHeaderItem()
-      .setTitle('Activity choices')
-      .setHelpText(sectionHelpText);
+  const form = FormApp.create("Activity Signup")
+    .setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
+    .setAllowResponseEdits(true)
+    .setLimitOneResponsePerUser(true)
+    .setCollectEmail(true);
+  const sectionHelpText = Utilities.formatString(
+    "Please choose your top %d activities",
+    NUM_ITEMS_TO_RANK,
+  );
+  form
+    .addSectionHeaderItem()
+    .setTitle("Activity choices")
+    .setHelpText(sectionHelpText);
 
   // Presents activity ranking as a form grid with each activity as a row and rank as a column.
-  let rows = loadActivitySchedule_(ss).map(function(activity) {
-    return activity.description;
-  });
-  let columns = range_(1, NUM_ITEMS_TO_RANK).map(function(value) {
-    return Utilities.formatString('%s', toOrdinal_(value));
-  });
-  let gridValidation = FormApp.createGridValidation()
-      .setHelpText('Select one item per column.')
-      .requireLimitOneResponsePerColumn()
-      .build();
-  form.addGridItem()
-      .setColumns(columns)
-      .setRows(rows)
-      .setValidation(gridValidation);
+  const rows = loadActivitySchedule_(ss).map(
+    (activity) => activity.description,
+  );
+  const columns = range_(1, NUM_ITEMS_TO_RANK).map((value) =>
+    Utilities.formatString("%s", toOrdinal_(value)),
+  );
+  const gridValidation = FormApp.createGridValidation()
+    .setHelpText("Select one item per column.")
+    .requireLimitOneResponsePerColumn()
+    .build();
+  form
+    .addGridItem()
+    .setColumns(columns)
+    .setRows(rows)
+    .setValidation(gridValidation);
 
-  form.addListItem()
-      .setTitle('Assign other activities if choices are not available?')
-      .setChoiceValues(['Yes', 'No']);
+  form
+    .addListItem()
+    .setTitle("Assign other activities if choices are not available?")
+    .setChoiceValues(["Yes", "No"]);
 }
 
 /**
@@ -83,12 +89,10 @@ function buildForm_() {
  * See https://en.wikipedia.org/wiki/Random_serial_dictatorship for additional information.
  */
 function assignActivities_() {
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
-  let activities = loadActivitySchedule_(ss);
-  let activityIds = activities.map(function(activity) {
-    return activity.id;
-  });
-  let attendees = loadAttendeeResponses_(ss, activityIds);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const activities = loadActivitySchedule_(ss);
+  const activityIds = activities.map((activity) => activity.id);
+  const attendees = loadAttendeeResponses_(ss, activityIds);
   assignWithRandomPriority_(attendees, activities, 2);
   writeAttendeeAssignments_(ss, attendees);
   writeActivityRosters_(ss, activities);
@@ -101,16 +105,20 @@ function assignActivities_() {
  * @param {object[]} activities - Array of all available activities
  * @param {number} numActivitiesPerPerson - Maximum number of activities to assign
  */
-function assignWithRandomPriority_(attendees, activities, numActivitiesPerPerson) {
-  let activitiesById = activities.reduce(function(obj, activity) {
+function assignWithRandomPriority_(
+  attendees,
+  activities,
+  numActivitiesPerPerson,
+) {
+  const activitiesById = activities.reduce((obj, activity) => {
     obj[activity.id] = activity;
     return obj;
   }, {});
   for (let i = 0; i < numActivitiesPerPerson; ++i) {
-    let randomizedAttendees = shuffleArray_(attendees);
-    randomizedAttendees.forEach(function(attendee) {
+    const randomizedAttendees = shuffleArray_(attendees);
+    for (const attendee of randomizedAttendees) {
       makeChoice_(attendee, activitiesById);
-    });
+    }
   }
 }
 
@@ -122,11 +130,11 @@ function assignWithRandomPriority_(attendees, activities, numActivitiesPerPerson
  */
 function makeChoice_(attendee, activitiesById) {
   for (let i = 0; i < attendee.preferences.length; ++i) {
-    let activity = activitiesById[attendee.preferences[i]];
+    const activity = activitiesById[attendee.preferences[i]];
     if (!activity) {
       continue;
     }
-    let canJoin = checkAvailability_(attendee, activity);
+    const canJoin = checkAvailability_(attendee, activity);
     if (canJoin) {
       attendee.assigned.push(activity);
       activity.roster.push(attendee);
@@ -147,12 +155,15 @@ function checkAvailability_(attendee, activity) {
   if (activity.capacity <= activity.roster.length) {
     return false;
   }
-  let timesConflict = attendee.assigned.some(function(assignedActivity) {
-    return !(assignedActivity.startAt.getTime() > activity.endAt.getTime() ||
-      activity.startAt.getTime() > assignedActivity.endAt.getTime());
-  });
+  const timesConflict = attendee.assigned.some(
+    (assignedActivity) =>
+      !(
+        assignedActivity.startAt.getTime() > activity.endAt.getTime() ||
+        activity.startAt.getTime() > assignedActivity.endAt.getTime()
+      ),
+  );
   return !timesConflict;
-};
+}
 
 /**
  * Populates a sheet with the assigned activities for each attendee.
@@ -161,23 +172,23 @@ function checkAvailability_(attendee, activity) {
  * @param {object[]} attendees - Array of attendees with their activity assignments
  */
 function writeAttendeeAssignments_(ss, attendees) {
-  let sheet = findOrCreateSheetByName_(ss, 'Activities by person');
+  const sheet = findOrCreateSheetByName_(ss, "Activities by person");
   sheet.clear();
-  sheet.appendRow(['Email address', 'Activities']);
-  sheet.getRange('B1:1').merge();
-  let rows = attendees.map(function(attendee) {
+  sheet.appendRow(["Email address", "Activities"]);
+  sheet.getRange("B1:1").merge();
+  const rows = attendees.map((attendee) => {
     // Prefill row to ensure consistent length otherwise
     // can't bulk update the sheet with range.setValues()
-    let row = fillArray_([], ACTIVITIES_PER_PERSON + 1, '');
+    const row = fillArray_([], ACTIVITIES_PER_PERSON + 1, "");
     row[0] = attendee.email;
-    attendee.assigned.forEach(function(activity, index) {
+    attendee.assigned.forEach((activity, index) => {
       row[index + 1] = activity.description;
     });
     return row;
   });
   bulkAppendRows_(sheet, rows);
   sheet.setFrozenRows(1);
-  sheet.getRange('1:1').setFontWeight('bold');
+  sheet.getRange("1:1").setFontWeight("bold");
   sheet.autoResizeColumns(1, sheet.getLastColumn());
 }
 
@@ -188,20 +199,17 @@ function writeAttendeeAssignments_(ss, attendees) {
  * @param {object[]} activities - Array of activities with their rosters
  */
 function writeActivityRosters_(ss, activities) {
-  let sheet = findOrCreateSheetByName_(ss, 'Activity rosters');
+  const sheet = findOrCreateSheetByName_(ss, "Activity rosters");
   sheet.clear();
-  var rows = [];
-  var rows = activities.map(function(activity) {
-    let roster = activity.roster.map(function(attendee) {
-      return attendee.email;
-    });
+  let rows = activities.map((activity) => {
+    const roster = activity.roster.map((attendee) => attendee.email);
     return [activity.description].concat(roster);
   });
   // Transpose the data so each activity is a column
-  rows = transpose_(rows, '');
+  rows = transpose_(rows, "");
   bulkAppendRows_(sheet, rows);
   sheet.setFrozenRows(1);
-  sheet.getRange('1:1').setFontWeight('bold');
+  sheet.getRange("1:1").setFontWeight("bold");
   sheet.autoResizeColumns(1, sheet.getLastColumn());
 }
 
@@ -212,19 +220,31 @@ function writeActivityRosters_(ss, activities) {
  * @return {object[]} Array of available activities.
  */
 function loadActivitySchedule_(ss) {
-  let timeZone = ss.getSpreadsheetTimeZone();
-  let sheet = ss.getSheetByName('Activity Schedule');
-  let rows = sheet.getSheetValues(
-      sheet.getFrozenRows() + 1, 1,
-      sheet.getLastRow() - 1, sheet.getLastRow());
-  let activities = rows.map(function(row, index) {
-    let name = row[0];
-    let startAt = new Date(row[1]);
-    let endAt = new Date(row[2]);
-    let capacity = parseInt(row[3]);
-    let formattedStartAt= Utilities.formatDate(startAt, timeZone, 'EEE hh:mm a');
-    let formattedEndAt = Utilities.formatDate(endAt, timeZone, 'hh:mm a');
-    let description = Utilities.formatString('%s (%s-%s)', name, formattedStartAt, formattedEndAt);
+  const timeZone = ss.getSpreadsheetTimeZone();
+  const sheet = ss.getSheetByName("Activity Schedule");
+  const rows = sheet.getSheetValues(
+    sheet.getFrozenRows() + 1,
+    1,
+    sheet.getLastRow() - 1,
+    sheet.getLastRow(),
+  );
+  const activities = rows.map((row, index) => {
+    const name = row[0];
+    const startAt = new Date(row[1]);
+    const endAt = new Date(row[2]);
+    const capacity = Number.parseInt(row[3]);
+    const formattedStartAt = Utilities.formatDate(
+      startAt,
+      timeZone,
+      "EEE hh:mm a",
+    );
+    const formattedEndAt = Utilities.formatDate(endAt, timeZone, "hh:mm a");
+    const description = Utilities.formatString(
+      "%s (%s-%s)",
+      name,
+      formattedStartAt,
+      formattedEndAt,
+    );
     return {
       id: index,
       name: name,
@@ -246,33 +266,36 @@ function loadActivitySchedule_(ss) {
  * @return {object[]} Array of parsed attendee respones.
  */
 function loadAttendeeResponses_(ss, allActivityIds) {
-  let sheet = findResponseSheetForForm_(ss);
+  const sheet = findResponseSheetForForm_(ss);
 
-  if (!sheet || sheet.getLastRow() == 1) {
+  if (!sheet || sheet.getLastRow() === 1) {
     return undefined;
   }
 
-  let rows = sheet.getSheetValues(
-      sheet.getFrozenRows() + 1, 1,
-      sheet.getLastRow() - 1, sheet.getLastRow());
-  let attendees = rows.map(function(row) {
-    let _ = row.shift(); // Ignore timestamp
-    let email = row.shift();
-    let autoAssign = row.pop();
+  const rows = sheet.getSheetValues(
+    sheet.getFrozenRows() + 1,
+    1,
+    sheet.getLastRow() - 1,
+    sheet.getLastRow(),
+  );
+  const attendees = rows.map((row) => {
+    const _ = row.shift(); // Ignore timestamp
+    const email = row.shift();
+    const autoAssign = row.pop();
     // Find ranked items in the response data.
-    let preferences = row.reduce(function(prefs, value, index) {
-      let match = value.match(/(\d+).*/);
+    let preferences = row.reduce((prefs, value, index) => {
+      const match = value.match(/(\d+).*/);
       if (!match) {
         return prefs;
       }
-      let rank = parseInt(match[1]) - 1; // Convert ordinal to array index
+      const rank = Number.parseInt(match[1]) - 1; // Convert ordinal to array index
       prefs[rank] = index;
       return prefs;
     }, []);
-    if (autoAssign == 'Yes') {
+    if (autoAssign === "Yes") {
       // If auto assigning additional activites, append a randomized list of all the activities.
       // These will then be considered as if the attendee ranked them.
-      let additionalChoices = shuffleArray_(allActivityIds);
+      const additionalChoices = shuffleArray_(allActivityIds);
       preferences = preferences.concat(additionalChoices);
     }
     return {
@@ -290,29 +313,30 @@ function loadAttendeeResponses_(ss, allActivityIds) {
  * through other means.
  */
 function generateTestData_() {
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = findResponseSheetForForm_(ss);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = findResponseSheetForForm_(ss);
   if (!sheet) {
-    let msg = 'No response sheet found. Create the form and try again.';
+    const msg = "No response sheet found. Create the form and try again.";
     SpreadsheetApp.getUi().alert(msg);
   }
   if (sheet.getLastRow() > 1) {
-    let msg = 'Response sheet is not empty, can not generate test data. ' +
-      'Remove responses and try again.';
+    const msg =
+      "Response sheet is not empty, can not generate test data. " +
+      "Remove responses and try again.";
     SpreadsheetApp.getUi().alert(msg);
     return;
   }
 
-  let activities = loadActivitySchedule_(ss);
-  let choices = fillArray_([], activities.length, '');
-  range_(1, 5).forEach(function(value) {
+  const activities = loadActivitySchedule_(ss);
+  const choices = fillArray_([], activities.length, "");
+  for (const value of range_(1, 5)) {
     choices[value] = toOrdinal_(value);
-  });
+  }
 
-  let rows = range_(1, NUM_TEST_USERS).map(function(value) {
-    let randomizedChoices = shuffleArray_(choices);
-    let email = Utilities.formatString('person%d@example.com', value);
-    return [new Date(), email].concat(randomizedChoices).concat(['Yes']);
+  const rows = range_(1, NUM_TEST_USERS).map((value) => {
+    const randomizedChoices = shuffleArray_(choices);
+    const email = Utilities.formatString("person%d@example.com", value);
+    return [new Date(), email].concat(randomizedChoices).concat(["Yes"]);
   });
   bulkAppendRows_(sheet, rows);
 }
@@ -325,7 +349,7 @@ function generateTestData_() {
  * @return {Sheet} Sheet instance
  */
 function findOrCreateSheetByName_(ss, name) {
-  let sheet = ss.getSheetByName(name);
+  const sheet = ss.getSheetByName(name);
   if (sheet) {
     return sheet;
   }
@@ -339,10 +363,10 @@ function findOrCreateSheetByName_(ss, name) {
  * @param {Array<Array<object>>} rows - Rows to append
  */
 function bulkAppendRows_(sheet, rows) {
-  let startRow = sheet.getLastRow() + 1;
-  let startColumn = 1;
-  let numRows = rows.length;
-  let numColumns = rows[0].length;
+  const startRow = sheet.getLastRow() + 1;
+  const startColumn = 1;
+  const numRows = rows.length;
+  const numColumns = rows[0].length;
   sheet.getRange(startRow, startColumn, numRows, numColumns).setValues(rows);
 }
 
@@ -353,10 +377,10 @@ function bulkAppendRows_(sheet, rows) {
  * @return {object[]} randomized copy of the array
  */
 function shuffleArray_(array) {
-  let clone = array.slice(0);
+  const clone = array.slice(0);
   for (let i = clone.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let temp = clone[i];
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = clone[i];
     clone[i] = clone[j];
     clone[j] = temp;
   }
@@ -372,18 +396,18 @@ function shuffleArray_(array) {
  * @return {string} Formatted string
  */
 function toOrdinal_(i) {
-  let j = i % 10;
-  let k = i % 100;
-  if (j == 1 && k != 11) {
-    return i + 'st';
+  const j = i % 10;
+  const k = i % 100;
+  if (j === 1 && k !== 11) {
+    return `${i}st`;
   }
-  if (j == 2 && k != 12) {
-    return i + 'nd';
+  if (j === 2 && k !== 12) {
+    return `${i}nd`;
   }
-  if (j == 3 && k != 13) {
-    return i + 'rd';
+  if (j === 3 && k !== 13) {
+    return `${i}rd`;
   }
-  return i + 'th';
+  return `${i}th`;
 }
 
 /**
@@ -393,12 +417,12 @@ function toOrdinal_(i) {
  * @return {Sheet} Sheet with form responses, undefined if not found.
  */
 function findResponseSheetForForm_(ss) {
-  let formUrl = ss.getFormUrl();
+  const formUrl = ss.getFormUrl();
   if (!ss || !formUrl) {
     return undefined;
   }
-  let sheets = ss.getSheets();
-  for (let i in sheets) {
+  const sheets = ss.getSheets();
+  for (const i in sheets) {
     if (sheets[i].getFormUrl() === formUrl) {
       return sheets[i];
     }
@@ -429,10 +453,11 @@ function fillArray_(arr, length, value) {
  * @return {number[]} Array of values representing the range
  */
 function range_(start, end) {
-  let arr = [start];
+  const arr = [start];
   let i = start;
   while (i < end) {
-    arr.push(i += 1);
+    i += 1;
+    arr.push(i);
   }
   return arr;
 }
@@ -447,12 +472,13 @@ function range_(start, end) {
  * @return {Array<Array<object>>} New transposed array
  */
 function transpose_(arr, fillValue) {
-  let transposed = [];
-  arr.forEach(function(row, rowIndex) {
-    row.forEach(function(col, colIndex) {
-      transposed[colIndex] = transposed[colIndex] || fillArray_([], arr.length, fillValue);
+  const transposed = [];
+  for (const [rowIndex, row] of arr.entries()) {
+    for (const [colIndex, col] of row.entries()) {
+      transposed[colIndex] =
+        transposed[colIndex] || fillArray_([], arr.length, fillValue);
       transposed[colIndex][rowIndex] = row[colIndex];
-    });
-  });
+    }
+  }
   return transposed;
 }

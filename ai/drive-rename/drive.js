@@ -16,101 +16,90 @@ limitations under the License.
 
 /**
  * Renames a file based on user selection / updates card.
- * 
+ *
  * @param {!Event} e Add-on event context
  * @return {!Card}
  */
 function renameFile(e) {
+  const newName = e.formInput.names;
+  const id = e.drive.activeCursorItem.id;
+  DriveApp.getFileById(id).setName(newName);
 
-  const newName = e.formInput.names
-  const id = e.drive.activeCursorItem.id
-  DriveApp.getFileById(id).setName(newName)
-
-  const eUpdated =
-  {
-    hostApp: 'drive',
-    drive:
-    {
+  const eUpdated = {
+    hostApp: "drive",
+    drive: {
       selectedItems: [[Object]],
-      activeCursorItem:
-      {
+      activeCursorItem: {
         title: newName,
         id: id,
         iconUrl: e.drive.activeCursorItem.iconUrl,
-        mimeType: e.drive.activeCursorItem.mimeType
+        mimeType: e.drive.activeCursorItem.mimeType,
       },
-      commonEventObject: { hostApp: 'DRIVE', platform: 'WEB' },
-      clientPlatform: 'web'
-    }
-  }
+      commonEventObject: { hostApp: "DRIVE", platform: "WEB" },
+      clientPlatform: "web",
+    },
+  };
 
-  return onCardUpdate(eUpdated)
-
+  return onCardUpdate(eUpdated);
 }
 
 /**
  * Redraws the same card to force AI to refresh its data.
- * 
+ *
  * @param {!Event} e Add-on event context
  * @return {!Card}
  */
 function updateCard(e) {
+  const id = e.drive.activeCursorItem.id;
 
-  const id = e.drive.activeCursorItem.id
-
-  const eConverted =
-  {
-    hostApp: 'drive',
-    drive:
-    {
+  const eConverted = {
+    hostApp: "drive",
+    drive: {
       selectedItems: [[Object]],
-      activeCursorItem:
-      {
+      activeCursorItem: {
         title: DriveApp.getFileById(id).getName(),
         id: id,
         iconUrl: e.drive.activeCursorItem.iconUrl,
-        mimeType: e.drive.activeCursorItem.mimeType
+        mimeType: e.drive.activeCursorItem.mimeType,
       },
-      commonEventObject: { hostApp: 'DRIVE', platform: 'WEB' },
-      clientPlatform: 'web'
-    }
-  }
+      commonEventObject: { hostApp: "DRIVE", platform: "WEB" },
+      clientPlatform: "web",
+    },
+  };
 
-  return onCardUpdate(eConverted)
+  return onCardUpdate(eConverted);
 }
 
 /**
  * Fetches the body of given document, using DocumentApp.
- * 
+ *
  * @param {string} id The Google Document file ID.
  * @return {string} The body of the Google Document.
  */
 function getDocumentBody(id) {
-
-  var doc = DocumentApp.openById(id);
-  var body = doc.getBody();
-  var text = body.getText();
+  const doc = DocumentApp.openById(id);
+  const body = doc.getBody();
+  const text = body.getText();
 
   return text;
 }
 
 /**
  * Fetches the body of given document, using DocsApi.
- * 
+ *
  * @param {string} id The Google Document file ID.
  * @return {string} The body of the Google Document.
  */
 function getDocAPIBody(id) {
-
   // Call DOC API REST endpoint to get the file
-  let url = `https://docs.googleapis.com/v1/documents/${id}`;
+  const url = `https://docs.googleapis.com/v1/documents/${id}`;
 
-  var response = UrlFetchApp.fetch(url, {
-    method: 'GET',
+  const response = UrlFetchApp.fetch(url, {
+    method: "GET",
     headers: {
-      Authorization: 'Bearer ' + ScriptApp.getOAuthToken(),
+      Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
     },
-    muteHttpExceptions: true
+    muteHttpExceptions: true,
   });
 
   if (response.getResponseCode() !== 200) {
@@ -119,20 +108,19 @@ function getDocAPIBody(id) {
      ${response.getContentText()}`);
   }
 
-  let file = response.getContentText();
-  let data = JSON.parse(file);
+  const file = response.getContentText();
+  const data = JSON.parse(file);
 
   return data.body.content;
 }
 
 /**
  * Sends the given document to the trash folder.
- * 
+ *
  * @param {!Event} e Add-on event context
  */
 function moveFileToTrash(e) {
-
-  const id = e.drive.activeCursorItem.id
+  const id = e.drive.activeCursorItem.id;
   const file = DriveApp.getFileById(id);
   file.setTrashed(true);
 }

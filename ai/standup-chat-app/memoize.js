@@ -48,7 +48,6 @@ function hash(str, algorithm = Utilities.DigestAlgorithm.MD5) {
  */
 function memoize(func, ttl = 600, cache = CacheService.getScriptCache()) {
   return (...args) => {
-
     // consider a more robust input to the hash function to handler complex
     // types such as functions, dates, and regex
     const key = hash(JSON.stringify([func.toString(), ...args]));
@@ -57,10 +56,9 @@ function memoize(func, ttl = 600, cache = CacheService.getScriptCache()) {
 
     if (cached != null) {
       return JSON.parse(cached);
-    } else {
-      const result = func(...args);
-      cache.put(key, JSON.stringify(result), ttl);
-      return result;
     }
+    const result = func(...args);
+    cache.put(key, JSON.stringify(result), ttl);
+    return result;
   };
 }

@@ -23,10 +23,12 @@ function scriptPropertyWithDefault(key, defaultValue = undefined) {
   return defaultValue;
 }
 
-const VERTEX_AI_LOCATION = scriptPropertyWithDefault('project_location', 'us-central1');
-const MODEL_ID = scriptPropertyWithDefault('model_id', 'gemini-pro-vision');
-const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault('service_account_key');
-
+const VERTEX_AI_LOCATION = scriptPropertyWithDefault(
+  "project_location",
+  "us-central1",
+);
+const MODEL_ID = scriptPropertyWithDefault("model_id", "gemini-pro-vision");
+const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
 
 /**
  * Packages prompt and necessary settings, then sends a request to
@@ -35,61 +37,64 @@ const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault('service_account_key');
  *
  * @param {string} prompt The prompt to senb to Vertex AI API.
  * @param {string} options.temperature The temperature setting set by user.
- * @param {string} options.tokens The number of tokens to limit to the prompt.
+ * @param {string} options.maxOutputTokens The number of tokens to limit to the prompt.
  */
 function getAiSummary(parts, options = {}) {
-  options = Object.assign({}, { temperature: 0.1, tokens: 8192}, options ?? {})
+  const defaultOptions = {
+    temperature: 0.1,
+    maxOutputTokens: 8192,
+    topK: 1,
+    topP: 1,
+    stopSequences: [],
+  };
   const request = {
-    "contents": [
+    contents: [
       {
-        "role": "user",
-        "parts": parts,
-      }
+        role: "user",
+        parts: parts,
+      },
     ],
-    "generationConfig": {
-      "temperature": options.temperature,
-      "topK": 1,
-      "topP": 1,
-      "maxOutputTokens": options.tokens,
-      "stopSequences": []
+    generationConfig: {
+      ...defaultOptions,
+      ...options,
     },
-  }
+  };
 
   const credentials = credentialsForVertexAI();
 
   const fetchOptions = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${credentials.accessToken}`
+      Authorization: `Bearer ${credentials.accessToken}`,
     },
-    contentType: 'application/json',
+    contentType: "application/json",
     muteHttpExceptions: true,
-    payload: JSON.stringify(request)
-  }
+    payload: JSON.stringify(request),
+  };
 
-  const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
-    `/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
+  const url =
+    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
+    `/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
   const response = UrlFetchApp.fetch(url, fetchOptions);
 
-  
   const responseCode = response.getResponseCode();
   if (responseCode >= 400) {
     throw new Error(`Unable to process file: Error code ${responseCode}`);
   }
-  
+
   const responseText = response.getContentText();
   const parsedResponse = JSON.parse(responseText);
   if (parsedResponse.error) {
     throw new Error(parsedResponse.error.message);
   }
-  const text = parsedResponse.candidates[0].content.parts[0].text
-  return text
+  const text = parsedResponse.candidates[0].content.parts[0].text;
+  return text;
 }
 
 /**
  * Gets credentials required to call Vertex API using a Service Account.
  * Requires use of Service Account Key stored with project
- * 
+ *
  * @return {!Object} Containing the Cloud Project Id and the access token.
  */
 function credentialsForVertexAI() {
@@ -100,13 +105,13 @@ function credentialsForVertexAI() {
 
   const parsedCredentials = JSON.parse(credentials);
   const service = OAuth2.createService("Vertex")
-    .setTokenUrl('https://oauth2.googleapis.com/token')
-    .setPrivateKey(parsedCredentials['private_key'])
-    .setIssuer(parsedCredentials['client_email'])
+    .setTokenUrl("https://oauth2.googleapis.com/token")
+    .setPrivateKey(parsedCredentials.private_key)
+    .setIssuer(parsedCredentials.client_email)
     .setPropertyStore(PropertiesService.getScriptProperties())
     .setScope("https://www.googleapis.com/auth/cloud-platform");
   return {
-    projectId: parsedCredentials['project_id'],
+    projectId: parsedCredentials.project_id,
     accessToken: service.getAccessToken(),
-  }
+  };
 }

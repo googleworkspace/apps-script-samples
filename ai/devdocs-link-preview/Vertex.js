@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const VERTEX_AI_LOCATION = scriptPropertyWithDefault('project_location', 'us-central1');
-const MODEL_ID = scriptPropertyWithDefault('model_id', 'gemini-2.5-flash');
-const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault('service_account_key');
+const VERTEX_AI_LOCATION = scriptPropertyWithDefault(
+  "project_location",
+  "us-central1",
+);
+const MODEL_ID = scriptPropertyWithDefault("model_id", "gemini-2.5-flash");
+const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
 
 /**
- * Invokes Gemini to extrac the title and summary of a given URL. Responses may be cached.
+ * Invokes Gemini to extract the title and summary of a given URL. Responses may be cached.
  */
 function getPageSummary(targetUrl) {
-  let cachedResponse = CacheService.getScriptCache().get(targetUrl);
+  const cachedResponse = CacheService.getScriptCache().get(targetUrl);
   if (cachedResponse) {
     return JSON.parse(cachedResponse);
   }
@@ -33,39 +36,40 @@ function getPageSummary(targetUrl) {
         role: "user",
         parts: [
           {
-            text: targetUrl
-          }
-        ]
-      }
+            text: targetUrl,
+          },
+        ],
+      },
     ],
     systemInstruction: {
       parts: [
         {
-          text: `You are a Google Developers documentation expert. In 2-3 sentences, create a short description of what the following web page is about based on the snippet of HTML from the page. Make the summary scannable. Don't repeat the URL in the description. Use proper grammar. Make the description easy to read. Only include the description in your response, exclude any conversational parts of the response. Make sure you use the most recent Google product names. Output the response as JSON with the page title as "title" and the summary as "summary"`
-        }
-      ]
+          text: `You are a Google Developers documentation expert. In 2-3 sentences, create a short description of what the following web page is about based on the snippet of HTML from the page. Make the summary scannable. Don't repeat the URL in the description. Use proper grammar. Make the description easy to read. Only include the description in your response, exclude any conversational parts of the response. Make sure you use the most recent Google product names. Output the response as JSON with the page title as "title" and the summary as "summary"`,
+        },
+      ],
     },
     generationConfig: {
-      temperature: .2,
+      temperature: 0.2,
       candidateCount: 1,
-      maxOutputTokens: 2048
-    }
-  }
+      maxOutputTokens: 2048,
+    },
+  };
 
   const credentials = credentialsForVertexAI();
 
   const fetchOptions = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${credentials.accessToken}`
+      Authorization: `Bearer ${credentials.accessToken}`,
     },
-    contentType: 'application/json',
+    contentType: "application/json",
     muteHttpExceptions: true,
-    payload: JSON.stringify(request)
-  }
+    payload: JSON.stringify(request),
+  };
 
-  const url = `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
-    `/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`
+  const url =
+    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
+    `/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
   const response = UrlFetchApp.fetch(url, fetchOptions);
 
   const responseText = response.getContentText();
@@ -75,21 +79,20 @@ function getPageSummary(targetUrl) {
     throw new Error("Unable to generate preview,");
   }
   const parsedResponse = JSON.parse(responseText);
-  let modelResponse = parsedResponse.candidates[0].content.parts[0].text;
+  const modelResponse = parsedResponse.candidates[0].content.parts[0].text;
   const jsonMatch = modelResponse.match(/(?<=^`{3}json$)([\s\S]*)(?=^`{3}$)/gm);
   if (!jsonMatch) {
     throw new Error("Unable to generate preview,");
   }
-  CacheService.getScriptCache().put(targetUrl, jsonMatch);
-  return JSON.parse(jsonMatch[0]);
+  const jsonResponse = jsonMatch[0];
+  CacheService.getScriptCache().put(targetUrl, jsonResponse);
+  return JSON.parse(jsonResponse);
 }
-
-
 
 /**
  * Gets credentials required to call Vertex API using a Service Account.
  * Requires use of Service Account Key stored with project
- * 
+ *
  * @return {!Object} Containing the Cloud Project Id and the access token.
  */
 function credentialsForVertexAI() {
@@ -100,13 +103,13 @@ function credentialsForVertexAI() {
 
   const parsedCredentials = JSON.parse(credentials);
   const service = OAuth2.createService("Vertex")
-    .setTokenUrl('https://oauth2.googleapis.com/token')
-    .setPrivateKey(parsedCredentials['private_key'])
-    .setIssuer(parsedCredentials['client_email'])
+    .setTokenUrl("https://oauth2.googleapis.com/token")
+    .setPrivateKey(parsedCredentials.private_key)
+    .setIssuer(parsedCredentials.client_email)
     .setPropertyStore(PropertiesService.getScriptProperties())
     .setScope("https://www.googleapis.com/auth/cloud-platform");
   return {
-    projectId: parsedCredentials['project_id'],
+    projectId: parsedCredentials.project_id,
     accessToken: service.getAccessToken(),
-  }
+  };
 }

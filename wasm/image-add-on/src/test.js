@@ -38,7 +38,7 @@ async function latency(func, iterations, argsFunc = () => []) {
       await func(...args);
       endTime = Date.now();
     } catch (e) {
-      endTime = Infinity;
+      endTime = Number.POSITIVE_INFINITY;
       console.error(e);
       continue;
     }
@@ -63,7 +63,7 @@ async function latency(func, iterations, argsFunc = () => []) {
 
 async function benchmark() {
   await hello_("world"); // Warmup
-  
+
   console.log(await latency(hello_, 100, () => [generateRandomString(10)]));
   console.log(await latency(hello_, 100, () => [generateRandomString(100)]));
   console.log(await latency(hello_, 100, () => [generateRandomString(1000)]));
@@ -74,10 +74,11 @@ async function benchmark() {
 
 function generateRandomString(length = 1024) {
   // Choose your desired character set
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
 
-  let result = '';
+  let result = "";
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }

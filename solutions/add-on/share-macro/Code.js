@@ -18,14 +18,13 @@ limitations under the License.
 */
 
 /**
- * Uses Apps Script API to copy source Apps Script project 
+ * Uses Apps Script API to copy source Apps Script project
  * to destination Google Spreadsheet container.
- * 
+ *
  * @param {string} sourceScriptId - Script ID of the source project.
  * @param {string} targetSpreadsheetUrl - URL if the target spreadsheet.
  */
 function shareMacro_(sourceScriptId, targetSpreadsheetUrl) {
-
   // Gets the source project content using the Apps Script API.
   const sourceProject = APPS_SCRIPT_API.get(sourceScriptId);
   const sourceFiles = APPS_SCRIPT_API.getContent(sourceScriptId);
@@ -34,16 +33,18 @@ function shareMacro_(sourceScriptId, targetSpreadsheetUrl) {
   const parentSSId = SpreadsheetApp.openByUrl(targetSpreadsheetUrl).getId();
 
   // Creates an Apps Script project that's bound to the target spreadsheet.
-  const targetProjectObj = APPS_SCRIPT_API.create(sourceProject.title, parentSSId);
+  const targetProjectObj = APPS_SCRIPT_API.create(
+    sourceProject.title,
+    parentSSId,
+  );
 
   // Updates the Apps Script project with the source project content.
   APPS_SCRIPT_API.updateContent(targetProjectObj.scriptId, sourceFiles);
-
 }
 
 /**
- * Function that encapsulates Apps Script API project manipulation. 
-*/
+ * Function that encapsulates Apps Script API project manipulation.
+ */
 const APPS_SCRIPT_API = {
   accessToken: ScriptApp.getOAuthToken(),
 
@@ -53,24 +54,23 @@ const APPS_SCRIPT_API = {
    * @return {Object} - JSON representation of source project.
    */
   get: function (scriptId) {
-    const url = ('https://script.googleapis.com/v1/projects/' + scriptId);
+    const url = `https://script.googleapis.com/v1/projects/${scriptId}`;
     const options = {
-      "method": 'get',
-      "headers": {
-        "Authorization": "Bearer " + this.accessToken
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
       },
-      "muteHttpExceptions": true,
+      muteHttpExceptions: true,
     };
     const res = UrlFetchApp.fetch(url, options);
-    if (res.getResponseCode() == 200) {
+    if (res.getResponseCode() === 200) {
       return JSON.parse(res);
-    } else {
-      console.log('An error occurred gettting the project details');
-      console.log(res.getResponseCode());
-      console.log(res.getContentText());
-      console.log(res);
-      return false;
     }
+    console.log("An error occurred gettting the project details");
+    console.log(res.getResponseCode());
+    console.log(res.getContentText());
+    console.log(res);
+    return false;
   },
 
   /* APPS_SCRIPT_API.create
@@ -80,57 +80,57 @@ const APPS_SCRIPT_API = {
    * @return {Object} - JSON representation completed project creation.
    */
   create: function (title, parentId) {
-    const url = 'https://script.googleapis.com/v1/projects';
+    const url = "https://script.googleapis.com/v1/projects";
     const options = {
-      "headers": {
-        "Authorization": "Bearer " + this.accessToken,
-        "Content-Type": "application/json"
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+        "Content-Type": "application/json",
       },
-      "muteHttpExceptions": true,
-      "method": "POST",
-      "payload": { "title": title }
-    }
+      muteHttpExceptions: true,
+      method: "POST",
+      payload: { title: title },
+    };
     if (parentId) {
       options.payload.parentId = parentId;
     }
     options.payload = JSON.stringify(options.payload);
     let res = UrlFetchApp.fetch(url, options);
-    if (res.getResponseCode() == 200) {
+    if (res.getResponseCode() === 200) {
       res = JSON.parse(res);
       return res;
-    } else {
-      console.log("An error occurred while creating the project");
-      console.log(res.getResponseCode());
-      console.log(res.getContentText());
-      console.log(res);
-      return false;
     }
+    console.log("An error occurred while creating the project");
+    console.log(res.getResponseCode());
+    console.log(res.getContentText());
+    console.log(res);
+    return false;
   },
-   /* APPS_SCRIPT_API.getContent
+  /* APPS_SCRIPT_API.getContent
    * Gets the content of the source Apps Script project.
    * @param {string} scriptId - Script ID of the source project.
    * @return {Object} - JSON representation of Apps Script project content.
    */
-   getContent: function (scriptId) {
-    const url = "https://script.googleapis.com/v1/projects/" + scriptId + "/content";
+  getContent: function (scriptId) {
+    const url = `https://script.googleapis.com/v1/projects/${scriptId}/content`;
     const options = {
-      "method": 'get',
-      "headers": {
-        "Authorization": "Bearer " + this.accessToken
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
       },
-      "muteHttpExceptions": true,
+      muteHttpExceptions: true,
     };
     let res = UrlFetchApp.fetch(url, options);
-    if (res.getResponseCode() == 200) {
+    if (res.getResponseCode() === 200) {
       res = JSON.parse(res);
-      return res['files'];
-    } else {
-      console.log('An error occurred obtaining the content from the source script');
-      console.log(res.getResponseCode());
-      console.log(res.getContentText());
-      console.log(res);
-      return false;
+      return res.files;
     }
+    console.log(
+      "An error occurred obtaining the content from the source script",
+    );
+    console.log(res.getResponseCode());
+    console.log(res.getContentText());
+    console.log(res);
+    return false;
   },
 
   /* APPS_SCRIPT_API.updateContent
@@ -140,25 +140,24 @@ const APPS_SCRIPT_API = {
    * @return {boolean} - Result status of the function.
    */
   updateContent: function (scriptId, files) {
-    const url = "https://script.googleapis.com/v1/projects/" + scriptId + "/content";
+    const url = `https://script.googleapis.com/v1/projects/${scriptId}/content`;
     const options = {
-      "method": 'put',
-      "headers": {
-        "Authorization": "Bearer " + this.accessToken
+      method: "put",
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
       },
-      "contentType": "application/json",
-      "payload": JSON.stringify({ "files": files }),
-      "muteHttpExceptions": true,
+      contentType: "application/json",
+      payload: JSON.stringify({ files: files }),
+      muteHttpExceptions: true,
     };
-    let res = UrlFetchApp.fetch(url, options);
-    if (res.getResponseCode() == 200) {
+    const res = UrlFetchApp.fetch(url, options);
+    if (res.getResponseCode() === 200) {
       return true;
-    } else {
-      console.log(`An error occurred updating content of script ${scriptId}`);
-      console.log(res.getResponseCode());
-      console.log(res.getContentText());
-      console.log(res);
-      return false;
     }
-  }
-}
+    console.log(`An error occurred updating content of script ${scriptId}`);
+    console.log(res.getResponseCode());
+    console.log(res.getContentText());
+    console.log(res);
+    return false;
+  },
+};

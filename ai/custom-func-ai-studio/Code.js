@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 /**
  * Passes a prompt and a data range to Gemini AI.
- * 
+ *
  * @param {range} range The range of cells.
  * @param {string} prompt The text prompt as a string or single cell reference.
  * @return The Gemini response.
  * @customfunction
  */
-function gemini(range,prompt) {
-  prompt = `For the range of cells ${range}, ${prompt}`
-  return getAiSummary(prompt);
+function gemini(range, prompt) {
+  return getAiSummary(`For the range of cells ${range}, ${prompt}`);
 }

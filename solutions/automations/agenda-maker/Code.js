@@ -23,21 +23,21 @@ limitations under the License.
  * @return {*} Drive folder ID for the app.
  */
 function checkFolder() {
-  const folders = DriveApp.getFoldersByName('Agenda Maker - App');
+  const folders = DriveApp.getFoldersByName("Agenda Maker - App");
   // Finds the folder if it exists
   while (folders.hasNext()) {
-    let folder = folders.next();
+    const folder = folders.next();
     if (
-      folder.getDescription() ==
-        'Apps Script App - Do not change this description' &&
-      folder.getOwner().getEmail() == Session.getActiveUser().getEmail()
+      folder.getDescription() ===
+        "Apps Script App - Do not change this description" &&
+      folder.getOwner().getEmail() === Session.getActiveUser().getEmail()
     ) {
       return folder.getId();
     }
   }
   // If the folder doesn't exist, creates one
-  let folder = DriveApp.createFolder('Agenda Maker - App');
-  folder.setDescription('Apps Script App - Do not change this description');
+  const folder = DriveApp.createFolder("Agenda Maker - App");
+  folder.setDescription("Apps Script App - Do not change this description");
   return folder.getId();
 }
 
@@ -46,7 +46,7 @@ function checkFolder() {
  */
 function getTemplateId(folderId) {
   const folder = DriveApp.getFolderById(folderId);
-  const files = folder.getFilesByName('Agenda TEMPLATE##');
+  const files = folder.getFilesByName("Agenda TEMPLATE##");
 
   // If there is a file, returns the ID.
   while (files.hasNext()) {
@@ -56,52 +56,52 @@ function getTemplateId(folderId) {
 
   // Otherwise, creates the agenda template.
   // You can adjust the default template here
-  const doc = DocumentApp.create('Agenda TEMPLATE##');
+  const doc = DocumentApp.create("Agenda TEMPLATE##");
   const body = doc.getBody();
 
   body
-      .appendParagraph('##Attendees##')
-      .setHeading(DocumentApp.ParagraphHeading.HEADING1)
-      .editAsText()
-      .setBold(true);
-  body.appendParagraph(' ').editAsText().setBold(false);
+    .appendParagraph("##Attendees##")
+    .setHeading(DocumentApp.ParagraphHeading.HEADING1)
+    .editAsText()
+    .setBold(true);
+  body.appendParagraph(" ").editAsText().setBold(false);
 
   body
-      .appendParagraph('Overview')
-      .setHeading(DocumentApp.ParagraphHeading.HEADING1)
-      .editAsText()
-      .setBold(true);
-  body.appendParagraph(' ');
-  body.appendParagraph('- Topic 1: ').editAsText().setBold(true);
-  body.appendParagraph(' ').editAsText().setBold(false);
-  body.appendParagraph('- Topic 2: ').editAsText().setBold(true);
-  body.appendParagraph(' ').editAsText().setBold(false);
-  body.appendParagraph('- Topic 3: ').editAsText().setBold(true);
-  body.appendParagraph(' ').editAsText().setBold(false);
+    .appendParagraph("Overview")
+    .setHeading(DocumentApp.ParagraphHeading.HEADING1)
+    .editAsText()
+    .setBold(true);
+  body.appendParagraph(" ");
+  body.appendParagraph("- Topic 1: ").editAsText().setBold(true);
+  body.appendParagraph(" ").editAsText().setBold(false);
+  body.appendParagraph("- Topic 2: ").editAsText().setBold(true);
+  body.appendParagraph(" ").editAsText().setBold(false);
+  body.appendParagraph("- Topic 3: ").editAsText().setBold(true);
+  body.appendParagraph(" ").editAsText().setBold(false);
 
   body
-      .appendParagraph('Next Steps')
-      .setHeading(DocumentApp.ParagraphHeading.HEADING1)
-      .editAsText()
-      .setBold(true);
-  body.appendParagraph('- Takeaway 1: ').editAsText().setBold(true);
-  body.appendParagraph('- Responsible: ').editAsText().setBold(false);
-  body.appendParagraph('- Accountable: ');
-  body.appendParagraph('- Consult: ');
-  body.appendParagraph('- Inform: ');
-  body.appendParagraph(' ');
-  body.appendParagraph('- Takeaway 2: ').editAsText().setBold(true);
-  body.appendParagraph('- Responsible: ').editAsText().setBold(false);
-  body.appendParagraph('- Accountable: ');
-  body.appendParagraph('- Consult: ');
-  body.appendParagraph('- Inform: ');
-  body.appendParagraph(' ');
-  body.appendParagraph('- Takeaway 3: ').editAsText().setBold(true);
-  body.appendParagraph('- Responsible: ').editAsText().setBold(false);
-  body.appendParagraph('- Accountable: ');
-  body.appendParagraph('- Consult: ');
-  body.appendParagraph('- Inform: ');
-  
+    .appendParagraph("Next Steps")
+    .setHeading(DocumentApp.ParagraphHeading.HEADING1)
+    .editAsText()
+    .setBold(true);
+  body.appendParagraph("- Takeaway 1: ").editAsText().setBold(true);
+  body.appendParagraph("- Responsible: ").editAsText().setBold(false);
+  body.appendParagraph("- Accountable: ");
+  body.appendParagraph("- Consult: ");
+  body.appendParagraph("- Inform: ");
+  body.appendParagraph(" ");
+  body.appendParagraph("- Takeaway 2: ").editAsText().setBold(true);
+  body.appendParagraph("- Responsible: ").editAsText().setBold(false);
+  body.appendParagraph("- Accountable: ");
+  body.appendParagraph("- Consult: ");
+  body.appendParagraph("- Inform: ");
+  body.appendParagraph(" ");
+  body.appendParagraph("- Takeaway 3: ").editAsText().setBold(true);
+  body.appendParagraph("- Responsible: ").editAsText().setBold(false);
+  body.appendParagraph("- Accountable: ");
+  body.appendParagraph("- Consult: ");
+  body.appendParagraph("- Inform: ");
+
   doc.saveAndClose();
 
   folder.addFile(DriveApp.getFileById(doc.getId()));
@@ -118,9 +118,9 @@ function onCalendarChange() {
   // Gets recent events with the #agenda tag
   const now = new Date();
   const events = CalendarApp.getEvents(
-      now,
-      new Date(now.getTime() + 2 * 60 * 60 * 1000000),
-      {search: '#agenda'},
+    now,
+    new Date(now.getTime() + 2 * 60 * 60 * 1000000),
+    { search: "#agenda" },
   );
 
   const folderId = checkFolder();
@@ -134,13 +134,13 @@ function onCalendarChange() {
 
     // Confirms whether the event has the #agenda tag
     let description = event.getDescription();
-    if (description.search('#agenda') == -1) continue;
+    if (description.search("#agenda") === -1) continue;
 
     // Only works with events created by the owner of this calendar
     if (event.isOwnedByMe()) {
       // Creates a new document from the template for an agenda for this event
       const newDoc = DriveApp.getFileById(templateId).makeCopy();
-      newDoc.setName('Agenda for ' + event.getTitle());
+      newDoc.setName(`Agenda for ${event.getTitle()}`);
 
       const file = DriveApp.getFileById(newDoc.getId());
       folder.addFile(file);
@@ -150,31 +150,31 @@ function onCalendarChange() {
 
       // Fills in the template with information about the attendees from the
       // calendar event
-      const conf = body.findText('##Attendees##');
+      const conf = body.findText("##Attendees##");
       if (conf) {
         const ref = conf.getStartOffset();
 
-        for (let i in event.getGuestList()) {
-          let guest = event.getGuestList()[i];
+        for (const i in event.getGuestList()) {
+          const guest = event.getGuestList()[i];
 
           body.insertParagraph(ref + 2, guest.getEmail());
         }
-        body.replaceText('##Attendees##', 'Attendees');
+        body.replaceText("##Attendees##", "Attendees");
       }
 
       // Replaces the tag with a link to the agenda document
-      const agendaUrl = 'https://docs.google.com/document/d/' + newDoc.getId();
+      const agendaUrl = `https://docs.google.com/document/d/${newDoc.getId()}`;
       description = description.replace(
-          '#agenda',
-          '<a href=' + agendaUrl + '>Agenda Doc</a>',
+        "#agenda",
+        `<a href=${agendaUrl}>Agenda Doc</a>`,
       );
       event.setDescription(description);
 
       // Invites attendees to the Google doc so they automatically receive access to the agenda
       newDoc.addEditor(newDoc.getOwner());
 
-      for (let i in event.getGuestList()) {
-        let guest = event.getGuestList()[i];
+      for (const i in event.getGuestList()) {
+        const guest = event.getGuestList()[i];
 
         newDoc.addEditor(guest.getEmail());
       }
@@ -187,6 +187,9 @@ function onCalendarChange() {
  * Creates an event-driven trigger that fires whenever there's a change to the calendar.
  */
 function setUp() {
-  let email = Session.getActiveUser().getEmail();
-  ScriptApp.newTrigger("onCalendarChange").forUserCalendar(email).onEventUpdated().create();
+  const email = Session.getActiveUser().getEmail();
+  ScriptApp.newTrigger("onCalendarChange")
+    .forUserCalendar(email)
+    .onEventUpdated()
+    .create();
 }
