@@ -23,184 +23,196 @@ const topicName = 'projects/<YOUR_TOPIC_PATH>';
 /**
  * Forms API Method: forms.create
  * POST https://forms.googleapis.com/v1/forms
+ * @param {string} title The title of the new form.
+ * @return {string} The form object as a JSON string.
  */
 function create(title) {
   const accessToken = ScriptApp.getOAuthToken();
   const jsonTitle = JSON.stringify({
     info: {
-      title: title
-    }
+      title: title,
+    },
   });
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
+    headers: {
+      Authorization: 'Bearer ' + accessToken,
     },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': jsonTitle
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('post'),
+    contentType: 'application/json',
+    payload: jsonTitle,
   };
 
   console.log('Forms API POST options was: ' + JSON.stringify(options));
   const response = UrlFetchApp.fetch(formsAPIUrl, options);
   console.log('Response from Forms API was: ' + JSON.stringify(response));
 
-  return ('' + response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.get
  * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
+ * @param {string} formId The ID of the form to get.
+ * @return {string} The form object as a JSON string.
  */
 function get(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'get'
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('get'),
   };
 
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
-    console.log('Response from Forms API was: ' + response);
-    return ('' + response);
-  } catch (e) {
-    console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e) +
-      '<br/><br/>Unable to find Form with formId:<br/>' + formId);
-  }
+  const response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
+  console.log('Response from Forms API was: ' + response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.batchUpdate
  * POST https://forms.googleapis.com/v1/forms/{formId}:batchUpdate
+ * @param {string} formId The ID of the form to update.
+ * @return {number} The response code.
  */
 function batchUpdate(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   // Request body to add a description to a Form
   const update = {
-    'requests': [{
-      'updateFormInfo': {
-        'info': {
-          'description': 'Please complete this quiz based on this week\'s readings for class.'
+    requests: [
+      {
+        updateFormInfo: {
+          info: {
+            description:
+              'Please complete this quiz based on this week\'s ' +
+              'readings for class.',
+          },
+          updateMask: 'description',
         },
-        'updateMask': 'description'
-      }
-    }]
-  }
-
-  const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
-    },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': JSON.stringify(update),
-    'muteHttpExceptions': true,
+      },
+    ],
   };
 
-  const response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
-    options);
+  const options = {
+    headers: {
+      Authorization: 'Bearer ' + accessToken,
+    },
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('post'),
+    contentType: 'application/json',
+    payload: JSON.stringify(update),
+    muteHttpExceptions: true,
+  };
+
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + ':batchUpdate',
+      options,
+  );
   console.log('Response code from API: ' + response.getResponseCode());
-  return (response.getResponseCode());
+  return response.getResponseCode();
 }
 
 /**
  * Forms API Method: forms.responses.get
  * GET https://forms.googleapis.com/v1/forms/{formId}/responses/{responseId}
+ * @param {string} formId The form ID.
+ * @param {string} responseId The response ID.
+ * @return {string} The response object as a JSON string.
  */
 function responsesGet(formId, responseId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'get'
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('get'),
   };
 
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
-      responseId, options);
-    console.log('Response from Forms.responses.get was: ' + response);
-    return ('' + response);
-  } catch (e) {
-    console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e))
-  }
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'responses/' + responseId,
+      options,
+  );
+  console.log('Response from Forms.responses.get was: ' + response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.responses.list
  * GET https://forms.googleapis.com/v1/forms/{formId}/responses
+ * @param {string} formId The form ID.
+ * @return {string} The response object as a JSON string.
  */
 function responsesList(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'get'
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('get'),
   };
 
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
-      options);
-    console.log('Response from Forms.responses was: ' + response);
-    return ('' + response);
-  } catch (e) {
-    console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e))
-  }
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'responses',
+      options,
+  );
+  console.log('Response from Forms.responses was: ' + response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.watches.create
  * POST https://forms.googleapis.com/v1/forms/{formId}/watches
+ * @param {string} formId The form ID.
+ * @return {string} The watch object as a JSON string.
  */
 function createWatch(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const myWatch = {
-    'watch': {
-      'target': {
-        'topic': {
-          'topicName': topicName
-        }
+    watch: {
+      target: {
+        topic: {
+          topicName: topicName,
+        },
       },
-      'eventType': 'RESPONSES',
-    }
+      eventType: 'RESPONSES',
+    },
   };
   console.log('myWatch is: ' + JSON.stringify(myWatch));
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
+    headers: {
+      Authorization: 'Bearer ' + accessToken,
     },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': JSON.stringify(myWatch),
-    'muteHttpExceptions': false,
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('post'),
+    contentType: 'application/json',
+    payload: JSON.stringify(myWatch),
+    muteHttpExceptions: false,
   };
   console.log('options are: ' + JSON.stringify(options));
   console.log('formsAPIURL was: ' + formsAPIUrl);
 
-  const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
-    options);
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'watches',
+      options,
+  );
   console.log(response);
-  return ('' + response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.watches.delete
  * DELETE https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}
+ * @param {string} formId The form ID.
+ * @param {string} watchId The watch ID.
+ * @return {string} The response as a JSON string.
  */
 function deleteWatch(formId, watchId) {
   const accessToken = ScriptApp.getOAuthToken();
@@ -208,73 +220,68 @@ function deleteWatch(formId, watchId) {
   console.log('formsAPIUrl is: ' + formsAPIUrl);
 
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'delete',
-    'muteHttpExceptions': false,
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('delete'),
+    muteHttpExceptions: false,
   };
 
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
-      watchId, options);
-    console.log(response);
-    return ('' + response);
-  } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
-  }
-
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'watches/' + watchId,
+      options,
+  );
+  console.log(response);
+  return response.getContentText();
 }
 
-/** 
+/**
  * Forms API Method: forms.watches.list
  * GET https://forms.googleapis.com/v1/forms/{formId}/watches
+ * @param {string} formId The form ID.
+ * @return {string} The response as a JSON string.
  */
 function watchesList(formId) {
   console.log('formId is: ' + formId);
   const accessToken = ScriptApp.getOAuthToken();
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'get'
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('get'),
   };
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
-      options);
-    console.log(response);
-    return ('' + response);
-  } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
-  }
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'watches',
+      options,
+  );
+  console.log(response);
+  return response.getContentText();
 }
 
 /**
  * Forms API Method: forms.watches.renew
  * POST https://forms.googleapis.com/v1/forms/{formId}/watches/{watchId}:renew
+ * @param {string} formId The form ID.
+ * @param {string} watchId The watch ID.
+ * @return {string} The watch object as a JSON string.
  */
 function renewWatch(formId, watchId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
+    headers: {
       Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+      Accept: 'application/json',
     },
-    'method': 'post'
+    method: /** @type {GoogleAppsScript.URL_Fetch.HttpMethod} */ ('post'),
   };
 
-  try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
-      watchId + ':renew', options);
-    console.log(response);
-    return ('' + response);
-  } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
-  }
+  const response = UrlFetchApp.fetch(
+      formsAPIUrl + formId + '/' + 'watches/' + watchId + ':renew',
+      options,
+  );
+  console.log(response);
+  return response.getContentText();
 }
