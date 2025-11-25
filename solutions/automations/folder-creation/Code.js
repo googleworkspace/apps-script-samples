@@ -19,15 +19,15 @@ Please watch this video tutorial to see how to use this script: https://youtu.be
 */
 
 function createNewFolder(project) {
-	const folder = Drive.Files.insert(
-		{
-			parents: [{ id: "ADD YOUR SHARED DRIVE FOLDER ID HERE" }],
-			title: project,
-			mimeType: "application/vnd.google-apps.folder",
-		},
-		null,
-		{ supportsAllDrives: true },
-	);
+  const folder = Drive.Files.insert(
+    {
+      parents: [{ id: "ADD YOUR SHARED DRIVE FOLDER ID HERE" }],
+      title: project,
+      mimeType: "application/vnd.google-apps.folder",
+    },
+    null,
+    { supportsAllDrives: true },
+  );
 
-	return folder.alternateLink;
+  return folder.alternateLink;
 }

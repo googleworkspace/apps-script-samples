@@ -1,6 +1,6 @@
 {
-	"timeZone": "America/Denver",
-	"dependencies": {},
-	"exceptionLogging": "STACKDRIVER",
-	"runtimeVersion": "V8"
+  "timeZone": "America/Denver",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
 }

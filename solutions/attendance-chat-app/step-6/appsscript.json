@@ -1,13 +1,13 @@
 {
-	"timeZone": "America/Los_Angeles",
-	"dependencies": {
-		"enabledAdvancedServices": [
-			{
-				"userSymbol": "Gmail",
-				"serviceId": "gmail",
-				"version": "v1"
-			}
-		]
-	},
-	"chat": {}
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Gmail",
+        "serviceId": "gmail",
+        "version": "v1"
+      }
+    ]
+  },
+  "chat": {}
 }

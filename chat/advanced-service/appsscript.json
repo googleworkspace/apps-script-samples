@@ -1,33 +1,33 @@
 {
-	"timeZone": "America/New_York",
-	"exceptionLogging": "STACKDRIVER",
-	"runtimeVersion": "V8",
-	"oauthScopes": [
-		"https://www.googleapis.com/auth/chat.spaces",
-		"https://www.googleapis.com/auth/chat.spaces.create",
-		"https://www.googleapis.com/auth/chat.spaces.readonly",
-		"https://www.googleapis.com/auth/chat.memberships",
-		"https://www.googleapis.com/auth/chat.memberships.app",
-		"https://www.googleapis.com/auth/chat.memberships.readonly",
-		"https://www.googleapis.com/auth/chat.messages",
-		"https://www.googleapis.com/auth/chat.messages.create",
-		"https://www.googleapis.com/auth/chat.messages.readonly"
-	],
-	"chat": {},
-	"dependencies": {
-		"enabledAdvancedServices": [
-			{
-				"userSymbol": "Chat",
-				"version": "v1",
-				"serviceId": "chat"
-			}
-		],
-		"libraries": [
-			{
-				"userSymbol": "OAuth2",
-				"version": "43",
-				"libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
-			}
-		]
-	}
+  "timeZone": "America/New_York",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/chat.spaces",
+    "https://www.googleapis.com/auth/chat.spaces.create",
+    "https://www.googleapis.com/auth/chat.spaces.readonly",
+    "https://www.googleapis.com/auth/chat.memberships",
+    "https://www.googleapis.com/auth/chat.memberships.app",
+    "https://www.googleapis.com/auth/chat.memberships.readonly",
+    "https://www.googleapis.com/auth/chat.messages",
+    "https://www.googleapis.com/auth/chat.messages.create",
+    "https://www.googleapis.com/auth/chat.messages.readonly"
+  ],
+  "chat": {},
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Chat",
+        "version": "v1",
+        "serviceId": "chat"
+      }
+    ],
+    "libraries": [
+      {
+        "userSymbol": "OAuth2",
+        "version": "43",
+        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
+      }
+    ]
+  }
 }

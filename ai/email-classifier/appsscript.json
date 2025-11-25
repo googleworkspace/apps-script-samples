@@ -1,38 +1,38 @@
 {
-	"timeZone": "America/Los_Angeles",
-	"dependencies": {
-		"enabledAdvancedServices": [
-			{
-				"userSymbol": "Gmail",
-				"version": "v1",
-				"serviceId": "gmail"
-			},
-			{
-				"userSymbol": "Sheets",
-				"version": "v4",
-				"serviceId": "sheets"
-			}
-		]
-	},
-	"oauthScopes": [
-		"https://www.googleapis.com/auth/cloud-platform",
-		"https://www.googleapis.com/auth/gmail.addons.execute",
-		"https://www.googleapis.com/auth/gmail.modify",
-		"https://www.googleapis.com/auth/script.external_request",
-		"https://www.googleapis.com/auth/spreadsheets"
-	],
-	"addOns": {
-		"common": {
-			"name": "Email Classifier",
-			"logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/label_important/v20/googblue-24dp/1x/gm_label_important_googblue_24dp.png"
-		},
-		"gmail": {
-			"homepageTrigger": {
-				"runFunction": "onHomepageTrigger",
-				"enabled": true
-			}
-		}
-	},
-	"exceptionLogging": "STACKDRIVER",
-	"runtimeVersion": "V8"
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Gmail",
+        "version": "v1",
+        "serviceId": "gmail"
+      },
+      {
+        "userSymbol": "Sheets",
+        "version": "v4",
+        "serviceId": "sheets"
+      }
+    ]
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/cloud-platform",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.modify",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/spreadsheets"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Email Classifier",
+      "logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/label_important/v20/googblue-24dp/1x/gm_label_important_googblue_24dp.png"
+    },
+    "gmail": {
+      "homepageTrigger": {
+        "runFunction": "onHomepageTrigger",
+        "enabled": true
+      }
+    }
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
 }

@@ -1,44 +1,44 @@
 {
-	"timeZone": "America/Los_Angeles",
-	"exceptionLogging": "STACKDRIVER",
-	"runtimeVersion": "V8",
-	"dependencies": {
-		"enabledAdvancedServices": [
-			{
-				"userSymbol": "Drive",
-				"serviceId": "drive",
-				"version": "v3"
-			}
-		]
-	},
-	"oauthScopes": [
-		"https://www.googleapis.com/auth/script.external_request",
-		"https://www.googleapis.com/auth/drive.addons.metadata.readonly",
-		"https://www.googleapis.com/auth/drive.file",
-		"https://www.googleapis.com/auth/drive",
-		"https://www.googleapis.com/auth/drive.readonly",
-		"https://www.googleapis.com/auth/documents"
-	],
-	"urlFetchWhitelist": [
-		"https://*.googleusercontent.com/",
-		"https://*.googleapis.com/"
-	],
-	"addOns": {
-		"common": {
-			"name": "Name with Intelligence",
-			"logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/drive_file_rename_outline/v12/googblue-48dp/2x/gm_drive_file_rename_outline_googblue_48dp.png",
-			"layoutProperties": {
-				"primaryColor": "#4285f4",
-				"secondaryColor": "#3f8bca"
-			}
-		},
-		"drive": {
-			"homepageTrigger": {
-				"runFunction": "onHomepageOpened"
-			},
-			"onItemsSelectedTrigger": {
-				"runFunction": "onDriveItemsSelected"
-			}
-		}
-	}
+  "timeZone": "America/Los_Angeles",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Drive",
+        "serviceId": "drive",
+        "version": "v3"
+      }
+    ]
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/drive.addons.metadata.readonly",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/documents"
+  ],
+  "urlFetchWhitelist": [
+    "https://*.googleusercontent.com/",
+    "https://*.googleapis.com/"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Name with Intelligence",
+      "logoUrl": "https://fonts.gstatic.com/s/i/googlematerialicons/drive_file_rename_outline/v12/googblue-48dp/2x/gm_drive_file_rename_outline_googblue_48dp.png",
+      "layoutProperties": {
+        "primaryColor": "#4285f4",
+        "secondaryColor": "#3f8bca"
+      }
+    },
+    "drive": {
+      "homepageTrigger": {
+        "runFunction": "onHomepageOpened"
+      },
+      "onItemsSelectedTrigger": {
+        "runFunction": "onDriveItemsSelected"
+      }
+    }
+  }
 }

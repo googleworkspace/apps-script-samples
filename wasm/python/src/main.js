@@ -23,11 +23,11 @@
  * @customfunction
  */
 async function PYTHON(code = "args", ...args) {
-	const result = await python_(`${code}`, ...args);
+  const result = await python_(`${code}`, ...args);
 
-	if (result instanceof Error) {
-		throw result;
-	}
+  if (result instanceof Error) {
+    throw result;
+  }
 
-	return result;
+  return result;
 }

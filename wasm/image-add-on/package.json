@@ -1,59 +1,59 @@
 {
-	"name": "example",
-	"version": "0.1.0",
-	"description": "An example integration of WASM with Rust into Apps Script",
-	"scripts": {
-		"build": "wireit",
-		"build:rust": "wireit",
-		"build:wasm": "wireit",
-		"clean": "rm -rf dist pkg target",
-		"deploy": "wireit",
-		"format": "cargo fmt",
-		"start": "wireit"
-	},
-	"wireit": {
-		"build": {
-			"command": "node build.js",
-			"dependencies": ["build:wasm"],
-			"files": ["src/*.js", "src/*.json", "*.js", "package.json"],
-			"output": ["dist"]
-		},
-		"build:rust": {
-			"command": "cargo build --release --target wasm32-unknown-unknown",
-			"output": ["./target/wasm32-unknown-unknown/release/example.wasm"],
-			"files": ["Cargo.lock", "Cargo.toml", "src/**/*.rs", "package.json"]
-		},
-		"build:wasm": {
-			"command": "wasm-bindgen --out-dir src/pkg --target bundler ./target/wasm32-unknown-unknown/release/example.wasm && wasm-opt src/pkg/example_bg.wasm -Oz -o src/pkg/example_bg.wasm",
-			"dependencies": ["build:rust"],
-			"files": [
-				"./target/wasm32-unknown-unknown/release/example_bg.wasm",
-				"package.json"
-			],
-			"output": ["src/pkg"]
-		},
-		"start": {
-			"command": "node dist/index.js",
-			"dependencies": ["build"]
-		},
-		"deploy": {
-			"command": "clasp push -f",
-			"dependencies": ["build"],
-			"files": [".clasp.json", ".claspignore"]
-		}
-	},
-	"author": "Justin Poehnelt <justin.poehnelt@gmail.com>",
-	"license": "Apache-2.0",
-	"devDependencies": {
-		"@google/clasp": "^2.4.2",
-		"esbuild": "^0.20.1",
-		"esbuild-plugin-wasm": "github:Tschrock/esbuild-plugin-wasm#04ce98be15b9471980c150eb142d51b20a7dd8bd",
-		"vitest": "^1.3.1",
-		"wireit": "^0.14.4"
-	},
-	"dependencies": {
-		"@types/google-apps-script": "^1.0.82",
-		"fastestsmallesttextencoderdecoder": "^1.0.22"
-	},
-	"type": "module"
+  "name": "example",
+  "version": "0.1.0",
+  "description": "An example integration of WASM with Rust into Apps Script",
+  "scripts": {
+    "build": "wireit",
+    "build:rust": "wireit",
+    "build:wasm": "wireit",
+    "clean": "rm -rf dist pkg target",
+    "deploy": "wireit",
+    "format": "cargo fmt",
+    "start": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "node build.js",
+      "dependencies": ["build:wasm"],
+      "files": ["src/*.js", "src/*.json", "*.js", "package.json"],
+      "output": ["dist"]
+    },
+    "build:rust": {
+      "command": "cargo build --release --target wasm32-unknown-unknown",
+      "output": ["./target/wasm32-unknown-unknown/release/example.wasm"],
+      "files": ["Cargo.lock", "Cargo.toml", "src/**/*.rs", "package.json"]
+    },
+    "build:wasm": {
+      "command": "wasm-bindgen --out-dir src/pkg --target bundler ./target/wasm32-unknown-unknown/release/example.wasm && wasm-opt src/pkg/example_bg.wasm -Oz -o src/pkg/example_bg.wasm",
+      "dependencies": ["build:rust"],
+      "files": [
+        "./target/wasm32-unknown-unknown/release/example_bg.wasm",
+        "package.json"
+      ],
+      "output": ["src/pkg"]
+    },
+    "start": {
+      "command": "node dist/index.js",
+      "dependencies": ["build"]
+    },
+    "deploy": {
+      "command": "clasp push -f",
+      "dependencies": ["build"],
+      "files": [".clasp.json", ".claspignore"]
+    }
+  },
+  "author": "Justin Poehnelt <justin.poehnelt@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@google/clasp": "^2.4.2",
+    "esbuild": "^0.20.1",
+    "esbuild-plugin-wasm": "github:Tschrock/esbuild-plugin-wasm#04ce98be15b9471980c150eb142d51b20a7dd8bd",
+    "vitest": "^1.3.1",
+    "wireit": "^0.14.4"
+  },
+  "dependencies": {
+    "@types/google-apps-script": "^1.0.82",
+    "fastestsmallesttextencoderdecoder": "^1.0.22"
+  },
+  "type": "module"
 }

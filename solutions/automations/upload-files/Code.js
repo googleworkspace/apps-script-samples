@@ -35,54 +35,54 @@ const APP_SUBFOLDER_NONE = "<None>";
  * @param {object} event - Form submit.
  */
 function onFormSubmit(e) {
-	try {
-		// Gets the application root folder.
-		let destFolder = getFolder_(APP_FOLDER_NAME);
+  try {
+    // Gets the application root folder.
+    let destFolder = getFolder_(APP_FOLDER_NAME);
 
-		// Gets all form responses.
-		const itemResponses = e.response.getItemResponses();
+    // Gets all form responses.
+    const itemResponses = e.response.getItemResponses();
 
-		// Determines the subfolder to route the file to, if any.
-		let subFolderName;
-		const dest = itemResponses.filter(
-			(itemResponse) =>
-				itemResponse.getItem().getTitle().toString() === APP_SUBFOLDER_ITEM,
-		);
+    // Determines the subfolder to route the file to, if any.
+    let subFolderName;
+    const dest = itemResponses.filter(
+      (itemResponse) =>
+        itemResponse.getItem().getTitle().toString() === APP_SUBFOLDER_ITEM,
+    );
 
-		// Gets the destination subfolder name, but ignores if APP_SUBFOLDER_NONE was selected;
-		if (dest.length > 0) {
-			if (dest[0].getResponse() !== APP_SUBFOLDER_NONE) {
-				subFolderName = dest[0].getResponse();
-			}
-		}
-		// Gets the subfolder or creates it if it doesn't exist.
-		if (subFolderName !== undefined) {
-			destFolder = getSubFolder_(destFolder, subFolderName);
-		}
-		console.log(`Destination folder to use:
+    // Gets the destination subfolder name, but ignores if APP_SUBFOLDER_NONE was selected;
+    if (dest.length > 0) {
+      if (dest[0].getResponse() !== APP_SUBFOLDER_NONE) {
+        subFolderName = dest[0].getResponse();
+      }
+    }
+    // Gets the subfolder or creates it if it doesn't exist.
+    if (subFolderName !== undefined) {
+      destFolder = getSubFolder_(destFolder, subFolderName);
+    }
+    console.log(`Destination folder to use:
     Name: ${destFolder.getName()}
     ID: ${destFolder.getId()}
     URL: ${destFolder.getUrl()}`);
 
-		// Gets the file upload response as an array to allow for multiple files.
-		const fileUploads = itemResponses
-			.filter(
-				(itemResponse) =>
-					itemResponse.getItem().getType().toString() === "FILE_UPLOAD",
-			)
-			.map((itemResponse) => itemResponse.getResponse())
-			.reduce((a, b) => a.concat(b), []);
+    // Gets the file upload response as an array to allow for multiple files.
+    const fileUploads = itemResponses
+      .filter(
+        (itemResponse) =>
+          itemResponse.getItem().getType().toString() === "FILE_UPLOAD",
+      )
+      .map((itemResponse) => itemResponse.getResponse())
+      .reduce((a, b) => a.concat(b), []);
 
-		// Moves the files to the destination folder.
-		if (fileUploads.length > 0) {
-			for (const fileId of fileUploads) {
-				DriveApp.getFileById(fileId).moveTo(destFolder);
-				console.log(`File Copied: ${fileId}`);
-			}
-		}
-	} catch (err) {
-		console.log(err);
-	}
+    // Moves the files to the destination folder.
+    if (fileUploads.length > 0) {
+      for (const fileId of fileUploads) {
+        DriveApp.getFileById(fileId).moveTo(destFolder);
+        console.log(`File Copied: ${fileId}`);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 /**
@@ -95,22 +95,22 @@ function onFormSubmit(e) {
  * @return {object} Drive folder
  */
 function getSubFolder_(objParentFolder, subFolderName) {
-	// Iterates subfolders of parent folder to check if folder already exists.
-	const subFolders = objParentFolder.getFolders();
-	while (subFolders.hasNext()) {
-		const folder = subFolders.next();
+  // Iterates subfolders of parent folder to check if folder already exists.
+  const subFolders = objParentFolder.getFolders();
+  while (subFolders.hasNext()) {
+    const folder = subFolders.next();
 
-		// Returns the existing folder if found.
-		if (folder.getName() === subFolderName) {
-			return folder;
-		}
-	}
-	// Creates a new folder if one doesn't already exist.
-	return objParentFolder
-		.createFolder(subFolderName)
-		.setDescription(
-			`Created by ${APP_TITLE} application to store uploaded Forms files.`,
-		);
+    // Returns the existing folder if found.
+    if (folder.getName() === subFolderName) {
+      return folder;
+    }
+  }
+  // Creates a new folder if one doesn't already exist.
+  return objParentFolder
+    .createFolder(subFolderName)
+    .setDescription(
+      `Created by ${APP_TITLE} application to store uploaded Forms files.`,
+    );
 }
 
 // [END apps_script_upload_files]

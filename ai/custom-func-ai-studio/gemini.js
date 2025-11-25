@@ -23,56 +23,56 @@ limitations under the License.
  * @return {string} Result of Gemini AI in string format.
  */
 function getAiSummary(prompt) {
-	const data = {
-		contents: [
-			{
-				parts: [
-					{
-						text: prompt,
-					},
-				],
-			},
-		],
-		generationConfig: {
-			temperature: 0.2,
-			topK: 1,
-			topP: 1,
-			maxOutputTokens: 2048,
-			stopSequences: [],
-		},
-		safetySettings: [
-			{
-				category: "HARM_CATEGORY_HARASSMENT",
-				threshold: "BLOCK_NONE",
-			},
-			{
-				category: "HARM_CATEGORY_HATE_SPEECH",
-				threshold: "BLOCK_NONE",
-			},
-			{
-				category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-				threshold: "BLOCK_NONE",
-			},
-			{
-				category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-				threshold: "BLOCK_NONE",
-			},
-		],
-	};
-	const options = {
-		method: "post",
-		contentType: "application/json",
-		payload: JSON.stringify(data), // Convert the JavaScript object to a JSON string.
-	};
+  const data = {
+    contents: [
+      {
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    generationConfig: {
+      temperature: 0.2,
+      topK: 1,
+      topP: 1,
+      maxOutputTokens: 2048,
+      stopSequences: [],
+    },
+    safetySettings: [
+      {
+        category: "HARM_CATEGORY_HARASSMENT",
+        threshold: "BLOCK_NONE",
+      },
+      {
+        category: "HARM_CATEGORY_HATE_SPEECH",
+        threshold: "BLOCK_NONE",
+      },
+      {
+        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        threshold: "BLOCK_NONE",
+      },
+      {
+        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+        threshold: "BLOCK_NONE",
+      },
+    ],
+  };
+  const options = {
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify(data), // Convert the JavaScript object to a JSON string.
+  };
 
-	const apiKey = PropertiesService.getScriptProperties().getProperty("api_key");
-	const response = UrlFetchApp.fetch(
-		`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
-		options,
-	);
+  const apiKey = PropertiesService.getScriptProperties().getProperty("api_key");
+  const response = UrlFetchApp.fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+    options,
+  );
 
-	const payload = JSON.parse(response.getContentText());
-	const text = payload.candidates[0].content.parts[0].text;
+  const payload = JSON.parse(response.getContentText());
+  const text = payload.candidates[0].content.parts[0].text;
 
-	return text;
+  return text;
 }

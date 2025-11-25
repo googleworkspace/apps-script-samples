@@ -22,62 +22,62 @@ limitations under the License.
  * @return {!Card}
  */
 function buildCard(pageTitle, summary, showRating = true) {
-	const cardHeader = CardService.newCardHeader().setTitle("About this page");
+  const cardHeader = CardService.newCardHeader().setTitle("About this page");
 
-	const summarySection = CardService.newCardSection().addWidget(
-		CardService.newTextParagraph().setText(summary),
-	);
+  const summarySection = CardService.newCardSection().addWidget(
+    CardService.newTextParagraph().setText(summary),
+  );
 
-	const feedbackSection =
-		CardService.newCardSection().setHeader("Rate this summary");
+  const feedbackSection =
+    CardService.newCardSection().setHeader("Rate this summary");
 
-	if (showRating) {
-		const thumbsUpAction = CardService.newAction()
-			.setFunctionName("onRatingClicked")
-			.setParameters({
-				key: "upVotes",
-				title: pageTitle,
-				pageSummary: summary,
-			});
+  if (showRating) {
+    const thumbsUpAction = CardService.newAction()
+      .setFunctionName("onRatingClicked")
+      .setParameters({
+        key: "upVotes",
+        title: pageTitle,
+        pageSummary: summary,
+      });
 
-		const thumbsDownAction = CardService.newAction()
-			.setFunctionName("onRatingClicked")
-			.setParameters({
-				key: "downVotes",
-				title: pageTitle,
-				pageSummary: summary,
-			});
+    const thumbsDownAction = CardService.newAction()
+      .setFunctionName("onRatingClicked")
+      .setParameters({
+        key: "downVotes",
+        title: pageTitle,
+        pageSummary: summary,
+      });
 
-		const thumbsUpButton = CardService.newImageButton()
-			.setIconUrl(
-				"https://fonts.gstatic.com/s/i/googlematerialicons/thumb_up_alt/v11/gm_blue-24dp/1x/gm_thumb_up_alt_gm_blue_24dp.png",
-			)
-			.setAltText("Looks good")
-			.setOnClickAction(thumbsUpAction);
+    const thumbsUpButton = CardService.newImageButton()
+      .setIconUrl(
+        "https://fonts.gstatic.com/s/i/googlematerialicons/thumb_up_alt/v11/gm_blue-24dp/1x/gm_thumb_up_alt_gm_blue_24dp.png",
+      )
+      .setAltText("Looks good")
+      .setOnClickAction(thumbsUpAction);
 
-		const thumbsDownButton = CardService.newImageButton()
-			.setIconUrl(
-				"https://fonts.gstatic.com/s/i/googlematerialicons/thumb_down_alt/v11/gm_blue-24dp/1x/gm_thumb_down_alt_gm_blue_24dp.png",
-			)
-			.setAltText("Not great")
-			.setOnClickAction(thumbsDownAction);
+    const thumbsDownButton = CardService.newImageButton()
+      .setIconUrl(
+        "https://fonts.gstatic.com/s/i/googlematerialicons/thumb_down_alt/v11/gm_blue-24dp/1x/gm_thumb_down_alt_gm_blue_24dp.png",
+      )
+      .setAltText("Not great")
+      .setOnClickAction(thumbsDownAction);
 
-		const ratingButtons = CardService.newButtonSet()
-			.addButton(thumbsUpButton)
-			.addButton(thumbsDownButton);
-		feedbackSection.addWidget(ratingButtons);
-	} else {
-		feedbackSection.addWidget(
-			CardService.newTextParagraph().setText("Thank you for your feedback."),
-		);
-	}
+    const ratingButtons = CardService.newButtonSet()
+      .addButton(thumbsUpButton)
+      .addButton(thumbsDownButton);
+    feedbackSection.addWidget(ratingButtons);
+  } else {
+    feedbackSection.addWidget(
+      CardService.newTextParagraph().setText("Thank you for your feedback."),
+    );
+  }
 
-	const card = CardService.newCardBuilder()
-		.setHeader(cardHeader)
-		.addSection(summarySection)
-		.addSection(feedbackSection)
-		.build();
-	return card;
+  const card = CardService.newCardBuilder()
+    .setHeader(cardHeader)
+    .addSection(summarySection)
+    .addSection(feedbackSection)
+    .build();
+  return card;
 }
 
 /**
@@ -86,29 +86,29 @@ function buildCard(pageTitle, summary, showRating = true) {
  * @return {!Card}
  */
 function buildErrorCard() {
-	const cardHeader = CardService.newCardHeader().setTitle(
-		"Uh oh! Something went wrong.",
-	);
+  const cardHeader = CardService.newCardHeader().setTitle(
+    "Uh oh! Something went wrong.",
+  );
 
-	const errorMessage = CardService.newTextParagraph().setText(
-		"It looks like Gemini got stage fright.",
-	);
+  const errorMessage = CardService.newTextParagraph().setText(
+    "It looks like Gemini got stage fright.",
+  );
 
-	const tryAgainButton = CardService.newTextButton()
-		.setText("Try again")
-		.setTextButtonStyle(CardService.TextButtonStyle.TEXT)
-		.setOnClickAction(CardService.newAction().setFunctionName("onLinkPreview"));
+  const tryAgainButton = CardService.newTextButton()
+    .setText("Try again")
+    .setTextButtonStyle(CardService.TextButtonStyle.TEXT)
+    .setOnClickAction(CardService.newAction().setFunctionName("onLinkPreview"));
 
-	const buttonList = CardService.newButtonSet().addButton(tryAgainButton);
+  const buttonList = CardService.newButtonSet().addButton(tryAgainButton);
 
-	const mainSection = CardService.newCardSection()
-		.addWidget(errorMessage)
-		.addWidget(buttonList);
+  const mainSection = CardService.newCardSection()
+    .addWidget(errorMessage)
+    .addWidget(buttonList);
 
-	const errorCard = CardService.newCardBuilder()
-		.setHeader(cardHeader)
-		.addSection(mainSection)
-		.build();
+  const errorCard = CardService.newCardBuilder()
+    .setHeader(cardHeader)
+    .addSection(mainSection)
+    .build();
 
-	return errorCard;
+  return errorCard;
 }

@@ -21,45 +21,45 @@ limitations under the License.
  * Checks for losses in the sheet.
  */
 function checkLosses() {
-	// Pulls data from the spreadsheet
-	const sheet =
-		SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calculations");
-	const source = sheet.getRange("A:G");
-	const data = source.getValues();
+  // Pulls data from the spreadsheet
+  const sheet =
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Calculations");
+  const source = sheet.getRange("A:G");
+  const data = source.getValues();
 
-	//Prepares the email alert content
-	let message = "Stocks: <br><br>";
+  //Prepares the email alert content
+  let message = "Stocks: <br><br>";
 
-	let send_message = false;
+  let send_message = false;
 
-	console.log("starting loop");
+  console.log("starting loop");
 
-	//Loops through the cells in the spreadsheet to find cells where the stock fell below purchase price
-	let n = 0;
-	for (const i in data) {
-		//Skips the first row
-		if (n++ === 0) continue;
+  //Loops through the cells in the spreadsheet to find cells where the stock fell below purchase price
+  let n = 0;
+  for (const i in data) {
+    //Skips the first row
+    if (n++ === 0) continue;
 
-		//Loads the current row
-		const row = data[i];
+    //Loads the current row
+    const row = data[i];
 
-		console.log(row[1]);
-		console.log(row[6]);
+    console.log(row[1]);
+    console.log(row[6]);
 
-		//Once at the end of the list, exits the loop
-		if (row[1] === "") break;
+    //Once at the end of the list, exits the loop
+    if (row[1] === "") break;
 
-		//If value is below purchase price, adds stock ticker and difference to list of tax loss opportunities
-		if (row[6] < 0) {
-			message += `${row[1]}: ${(Number.parseFloat(row[6].toString()) * 100).toFixed(2).toString()}%<br>`;
-			send_message = true;
-		}
-	}
-	if (!send_message) return;
+    //If value is below purchase price, adds stock ticker and difference to list of tax loss opportunities
+    if (row[6] < 0) {
+      message += `${row[1]}: ${(Number.parseFloat(row[6].toString()) * 100).toFixed(2).toString()}%<br>`;
+      send_message = true;
+    }
+  }
+  if (!send_message) return;
 
-	MailApp.sendEmail({
-		to: SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),
-		subject: "Tax-loss harvest",
-		htmlBody: message,
-	});
+  MailApp.sendEmail({
+    to: SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),
+    subject: "Tax-loss harvest",
+    htmlBody: message,
+  });
 }

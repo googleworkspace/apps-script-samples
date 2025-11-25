@@ -29,11 +29,11 @@
  * @param {object} e The event parameter for a simple onOpen trigger.
  */
 function onOpen(e) {
-	const menu = SpreadsheetApp.getUi().createMenu(APP_TITLE);
-	menu
-		.addItem("Process invoices", "processDocuments")
-		.addItem("Send emails", "sendEmails")
-		.addSeparator()
-		.addItem("Reset template", "clearTemplateSheet")
-		.addToUi();
+  const menu = SpreadsheetApp.getUi().createMenu(APP_TITLE);
+  menu
+    .addItem("Process invoices", "processDocuments")
+    .addItem("Send emails", "sendEmails")
+    .addSeparator()
+    .addItem("Reset template", "clearTemplateSheet")
+    .addToUi();
 }

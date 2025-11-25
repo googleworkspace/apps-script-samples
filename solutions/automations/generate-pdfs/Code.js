@@ -44,37 +44,37 @@ const EMAIL_BODY = "Hello!\rPlease see the attached PDF document.";
  * Called by user via custom menu item.
  */
 function processDocuments() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const customersSheet = ss.getSheetByName(CUSTOMERS_SHEET_NAME);
-	const productsSheet = ss.getSheetByName(PRODUCTS_SHEET_NAME);
-	const transactionsSheet = ss.getSheetByName(TRANSACTIONS_SHEET_NAME);
-	const invoicesSheet = ss.getSheetByName(INVOICES_SHEET_NAME);
-	const invoiceTemplateSheet = ss.getSheetByName(INVOICE_TEMPLATE_SHEET_NAME);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const customersSheet = ss.getSheetByName(CUSTOMERS_SHEET_NAME);
+  const productsSheet = ss.getSheetByName(PRODUCTS_SHEET_NAME);
+  const transactionsSheet = ss.getSheetByName(TRANSACTIONS_SHEET_NAME);
+  const invoicesSheet = ss.getSheetByName(INVOICES_SHEET_NAME);
+  const invoiceTemplateSheet = ss.getSheetByName(INVOICE_TEMPLATE_SHEET_NAME);
 
-	// Gets data from the storage sheets as objects.
-	const customers = dataRangeToObject(customersSheet);
-	const products = dataRangeToObject(productsSheet);
-	const transactions = dataRangeToObject(transactionsSheet);
+  // Gets data from the storage sheets as objects.
+  const customers = dataRangeToObject(customersSheet);
+  const products = dataRangeToObject(productsSheet);
+  const transactions = dataRangeToObject(transactionsSheet);
 
-	ss.toast("Creating Invoices", APP_TITLE, 1);
-	const invoices = [];
+  ss.toast("Creating Invoices", APP_TITLE, 1);
+  const invoices = [];
 
-	// Iterates for each customer calling createInvoiceForCustomer routine.
-	for (const customer of customers) {
-		ss.toast(`Creating Invoice for ${customer.customer_name}`, APP_TITLE, 1);
-		const invoice = createInvoiceForCustomer(
-			customer,
-			products,
-			transactions,
-			invoiceTemplateSheet,
-			ss.getId(),
-		);
-		invoices.push(invoice);
-	}
-	// Writes invoices data to the sheet.
-	invoicesSheet
-		.getRange(2, 1, invoices.length, invoices[0].length)
-		.setValues(invoices);
+  // Iterates for each customer calling createInvoiceForCustomer routine.
+  for (const customer of customers) {
+    ss.toast(`Creating Invoice for ${customer.customer_name}`, APP_TITLE, 1);
+    const invoice = createInvoiceForCustomer(
+      customer,
+      products,
+      transactions,
+      invoiceTemplateSheet,
+      ss.getId(),
+    );
+    invoices.push(invoice);
+  }
+  // Writes invoices data to the sheet.
+  invoicesSheet
+    .getRange(2, 1, invoices.length, invoices[0].length)
+    .setValues(invoices);
 }
 
 /**
@@ -88,75 +88,75 @@ function processDocuments() {
  * Return {array} of instance customer invoice data
  */
 function createInvoiceForCustomer(
-	customer,
-	products,
-	transactions,
-	templateSheet,
-	ssId,
+  customer,
+  products,
+  transactions,
+  templateSheet,
+  ssId,
 ) {
-	const customerTransactions = transactions.filter(
-		(transaction) => transaction.customer_name === customer.customer_name,
-	);
+  const customerTransactions = transactions.filter(
+    (transaction) => transaction.customer_name === customer.customer_name,
+  );
 
-	// Clears existing data from the template.
-	clearTemplateSheet();
+  // Clears existing data from the template.
+  clearTemplateSheet();
 
-	const lineItems = [];
-	let totalAmount = 0;
-	for (const lineItem of customerTransactions) {
-		const lineItemProduct = products.filter(
-			(product) => product.sku_name === lineItem.sku,
-		)[0];
-		const qty = Number.parseInt(lineItem.licenses);
-		const price = Number.parseFloat(lineItemProduct.price).toFixed(2);
-		const amount = Number.parseFloat(qty * price).toFixed(2);
-		lineItems.push([
-			lineItemProduct.sku_name,
-			lineItemProduct.sku_description,
-			"",
-			qty,
-			price,
-			amount,
-		]);
-		totalAmount += Number.parseFloat(amount);
-	}
+  const lineItems = [];
+  let totalAmount = 0;
+  for (const lineItem of customerTransactions) {
+    const lineItemProduct = products.filter(
+      (product) => product.sku_name === lineItem.sku,
+    )[0];
+    const qty = Number.parseInt(lineItem.licenses);
+    const price = Number.parseFloat(lineItemProduct.price).toFixed(2);
+    const amount = Number.parseFloat(qty * price).toFixed(2);
+    lineItems.push([
+      lineItemProduct.sku_name,
+      lineItemProduct.sku_description,
+      "",
+      qty,
+      price,
+      amount,
+    ]);
+    totalAmount += Number.parseFloat(amount);
+  }
 
-	// Generates a random invoice number. You can replace with your own document ID method.
-	const invoiceNumber = Math.floor(100000 + Math.random() * 900000);
+  // Generates a random invoice number. You can replace with your own document ID method.
+  const invoiceNumber = Math.floor(100000 + Math.random() * 900000);
 
-	// Calulates dates.
-	const todaysDate = new Date().toDateString();
-	const dueDate = new Date(
-		Date.now() + 1000 * 60 * 60 * 24 * DUE_DATE_NUM_DAYS,
-	).toDateString();
+  // Calulates dates.
+  const todaysDate = new Date().toDateString();
+  const dueDate = new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * DUE_DATE_NUM_DAYS,
+  ).toDateString();
 
-	// Sets values in the template.
-	templateSheet.getRange("B10").setValue(customer.customer_name);
-	templateSheet.getRange("B11").setValue(customer.address);
-	templateSheet.getRange("F10").setValue(invoiceNumber);
-	templateSheet.getRange("F12").setValue(todaysDate);
-	templateSheet.getRange("F14").setValue(dueDate);
-	templateSheet.getRange(18, 2, lineItems.length, 6).setValues(lineItems);
+  // Sets values in the template.
+  templateSheet.getRange("B10").setValue(customer.customer_name);
+  templateSheet.getRange("B11").setValue(customer.address);
+  templateSheet.getRange("F10").setValue(invoiceNumber);
+  templateSheet.getRange("F12").setValue(todaysDate);
+  templateSheet.getRange("F14").setValue(dueDate);
+  templateSheet.getRange(18, 2, lineItems.length, 6).setValues(lineItems);
 
-	// Cleans up and creates PDF.
-	SpreadsheetApp.flush();
-	Utilities.sleep(500); // Using to offset any potential latency in creating .pdf
-	const pdf = createPDF(
-		ssId,
-		templateSheet,
-		`Invoice#${invoiceNumber}-${customer.customer_name}`,
-	);
-	return [
-		invoiceNumber,
-		todaysDate,
-		customer.customer_name,
-		customer.email,
-		"",
-		totalAmount,
-		dueDate,
-		pdf.getUrl(),
-		"No",
-	];
+  // Cleans up and creates PDF.
+  SpreadsheetApp.flush();
+  Utilities.sleep(500); // Using to offset any potential latency in creating .pdf
+  const pdf = createPDF(
+    ssId,
+    templateSheet,
+    `Invoice#${invoiceNumber}-${customer.customer_name}`,
+  );
+  return [
+    invoiceNumber,
+    todaysDate,
+    customer.customer_name,
+    customer.email,
+    "",
+    totalAmount,
+    dueDate,
+    pdf.getUrl(),
+    "No",
+  ];
 }
 
 /**
@@ -167,17 +167,17 @@ function createInvoiceForCustomer(
  * Called by createInvoiceForCustomer() or by the user via custom menu item.
  */
 function clearTemplateSheet() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const templateSheet = ss.getSheetByName(INVOICE_TEMPLATE_SHEET_NAME);
-	// Clears existing data from the template.
-	const rngClear = templateSheet
-		.getRangeList(["B10:B11", "F10", "F12", "F14"])
-		.getRanges();
-	for (const cell of rngClear) {
-		cell.clearContent();
-	}
-	// This sample only accounts for six rows of data 'B18:G24'. You can extend or make dynamic as necessary.
-	templateSheet.getRange(18, 2, 7, 6).clearContent();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const templateSheet = ss.getSheetByName(INVOICE_TEMPLATE_SHEET_NAME);
+  // Clears existing data from the template.
+  const rngClear = templateSheet
+    .getRangeList(["B10:B11", "F10", "F12", "F14"])
+    .getRanges();
+  for (const cell of rngClear) {
+    cell.clearContent();
+  }
+  // This sample only accounts for six rows of data 'B18:G24'. You can extend or make dynamic as necessary.
+  templateSheet.getRange(18, 2, 7, 6).clearContent();
 }
 
 /**
@@ -188,25 +188,25 @@ function clearTemplateSheet() {
  * @return {file object} PDF file as a blob
  */
 function createPDF(ssId, sheet, pdfName) {
-	const fr = 0;
-	const fc = 0;
-	const lc = 9;
-	const lr = 27;
-	const url = `https://docs.google.com/spreadsheets/d/${ssId}/export?format=pdf&size=7&fzr=true&portrait=true&fitw=true&gridlines=false&printtitle=false&top_margin=0.5&bottom_margin=0.25&left_margin=0.5&right_margin=0.5&sheetnames=false&pagenum=UNDEFINED&attachment=true&gid=${sheet.getSheetId()}&r1=${fr}&c1=${fc}&r2=${lr}&c2=${lc}`;
+  const fr = 0;
+  const fc = 0;
+  const lc = 9;
+  const lr = 27;
+  const url = `https://docs.google.com/spreadsheets/d/${ssId}/export?format=pdf&size=7&fzr=true&portrait=true&fitw=true&gridlines=false&printtitle=false&top_margin=0.5&bottom_margin=0.25&left_margin=0.5&right_margin=0.5&sheetnames=false&pagenum=UNDEFINED&attachment=true&gid=${sheet.getSheetId()}&r1=${fr}&c1=${fc}&r2=${lr}&c2=${lc}`;
 
-	const params = {
-		method: "GET",
-		headers: { authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
-	};
-	const blob = UrlFetchApp.fetch(url, params)
-		.getBlob()
-		.setName(`${pdfName}.pdf`);
+  const params = {
+    method: "GET",
+    headers: { authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
+  };
+  const blob = UrlFetchApp.fetch(url, params)
+    .getBlob()
+    .setName(`${pdfName}.pdf`);
 
-	// Gets the folder in Drive where the PDFs are stored.
-	const folder = getFolderByName_(OUTPUT_FOLDER_NAME);
+  // Gets the folder in Drive where the PDFs are stored.
+  const folder = getFolderByName_(OUTPUT_FOLDER_NAME);
 
-	const pdfFile = folder.createFile(blob);
-	return pdfFile;
+  const pdfFile = folder.createFile(blob);
+  return pdfFile;
 }
 
 /**
@@ -216,33 +216,33 @@ function createPDF(ssId, sheet, pdfName) {
  * Called by user via custom menu item.
  */
 function sendEmails() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const invoicesSheet = ss.getSheetByName(INVOICES_SHEET_NAME);
-	const invoicesData = invoicesSheet
-		.getRange(1, 1, invoicesSheet.getLastRow(), invoicesSheet.getLastColumn())
-		.getValues();
-	const keysI = invoicesData.splice(0, 1)[0];
-	const invoices = getObjects(invoicesData, createObjectKeys(keysI));
-	ss.toast("Emailing Invoices", APP_TITLE, 1);
-	invoices.forEach((invoice, index) => {
-		if (invoice.email_sent !== "Yes") {
-			ss.toast(`Emailing Invoice for ${invoice.customer}`, APP_TITLE, 1);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const invoicesSheet = ss.getSheetByName(INVOICES_SHEET_NAME);
+  const invoicesData = invoicesSheet
+    .getRange(1, 1, invoicesSheet.getLastRow(), invoicesSheet.getLastColumn())
+    .getValues();
+  const keysI = invoicesData.splice(0, 1)[0];
+  const invoices = getObjects(invoicesData, createObjectKeys(keysI));
+  ss.toast("Emailing Invoices", APP_TITLE, 1);
+  invoices.forEach((invoice, index) => {
+    if (invoice.email_sent !== "Yes") {
+      ss.toast(`Emailing Invoice for ${invoice.customer}`, APP_TITLE, 1);
 
-			const fileId = invoice.invoice_link.match(/[-\w]{25,}(?!.*[-\w]{25,})/);
-			const attachment = DriveApp.getFileById(fileId);
+      const fileId = invoice.invoice_link.match(/[-\w]{25,}(?!.*[-\w]{25,})/);
+      const attachment = DriveApp.getFileById(fileId);
 
-			let recipient = invoice.email;
-			if (EMAIL_OVERRIDE) {
-				recipient = EMAIL_ADDRESS_OVERRIDE;
-			}
+      let recipient = invoice.email;
+      if (EMAIL_OVERRIDE) {
+        recipient = EMAIL_ADDRESS_OVERRIDE;
+      }
 
-			GmailApp.sendEmail(recipient, EMAIL_SUBJECT, EMAIL_BODY, {
-				attachments: [attachment.getAs(MimeType.PDF)],
-				name: APP_TITLE,
-			});
-			invoicesSheet.getRange(index + 2, 9).setValue("Yes");
-		}
-	});
+      GmailApp.sendEmail(recipient, EMAIL_SUBJECT, EMAIL_BODY, {
+        attachments: [attachment.getAs(MimeType.PDF)],
+        name: APP_TITLE,
+      });
+      invoicesSheet.getRange(index + 2, 9).setValue("Yes");
+    }
+  });
 }
 
 /**
@@ -252,40 +252,40 @@ function sendEmails() {
  * Return {object} of a sheet's datarange as an object
  */
 function dataRangeToObject(sheet) {
-	const dataRange = sheet
-		.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn())
-		.getValues();
-	const keys = dataRange.splice(0, 1)[0];
-	return getObjects(dataRange, createObjectKeys(keys));
+  const dataRange = sheet
+    .getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn())
+    .getValues();
+  const keys = dataRange.splice(0, 1)[0];
+  return getObjects(dataRange, createObjectKeys(keys));
 }
 
 /**
  * Utility function for mapping sheet data to objects.
  */
 function getObjects(data, keys) {
-	const objects = [];
-	for (let i = 0; i < data.length; ++i) {
-		const object = {};
-		let hasData = false;
-		for (let j = 0; j < data[i].length; ++j) {
-			const cellData = data[i][j];
-			if (isCellEmpty(cellData)) {
-				continue;
-			}
-			object[keys[j]] = cellData;
-			hasData = true;
-		}
-		if (hasData) {
-			objects.push(object);
-		}
-	}
-	return objects;
+  const objects = [];
+  for (let i = 0; i < data.length; ++i) {
+    const object = {};
+    let hasData = false;
+    for (let j = 0; j < data[i].length; ++j) {
+      const cellData = data[i][j];
+      if (isCellEmpty(cellData)) {
+        continue;
+      }
+      object[keys[j]] = cellData;
+      hasData = true;
+    }
+    if (hasData) {
+      objects.push(object);
+    }
+  }
+  return objects;
 }
 // Creates object keys for column headers.
 function createObjectKeys(keys) {
-	return keys.map((key) => key.replace(/\W+/g, "_").toLowerCase());
+  return keys.map((key) => key.replace(/\W+/g, "_").toLowerCase());
 }
 // Returns true if the cell where cellData was read from is empty.
 function isCellEmpty(cellData) {
-	return typeof cellData === "string" && cellData === "";
+  return typeof cellData === "string" && cellData === "";
 }

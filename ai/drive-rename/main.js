@@ -20,17 +20,17 @@ limitations under the License.
  * @param e - Add-on event context
  */
 function onHomepageOpened(e) {
-	const card = buildHomePage();
+  const card = buildHomePage();
 
-	return {
-		action: {
-			navigations: [
-				{
-					pushCard: card,
-				},
-			],
-		},
-	};
+  return {
+    action: {
+      navigations: [
+        {
+          pushCard: card,
+        },
+      ],
+    },
+  };
 }
 
 /**
@@ -39,15 +39,15 @@ function onHomepageOpened(e) {
  * @param e - Add-on event context
  */
 function onDriveItemsSelected(e) {
-	return {
-		action: {
-			navigations: [
-				{
-					pushCard: buildSelectionPage(e),
-				},
-			],
-		},
-	};
+  return {
+    action: {
+      navigations: [
+        {
+          pushCard: buildSelectionPage(e),
+        },
+      ],
+    },
+  };
 }
 
 /**
@@ -56,13 +56,13 @@ function onDriveItemsSelected(e) {
  * @param e - (Modified) add-on event context
  */
 function onCardUpdate(e) {
-	return {
-		action: {
-			navigations: [
-				{
-					updateCard: buildSelectionPage(e),
-				},
-			],
-		},
-	};
+  return {
+    action: {
+      navigations: [
+        {
+          updateCard: buildSelectionPage(e),
+        },
+      ],
+    },
+  };
 }

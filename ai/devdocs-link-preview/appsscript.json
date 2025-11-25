@@ -1,70 +1,70 @@
 {
-	"timeZone": "America/Los_Angeles",
-	"exceptionLogging": "STACKDRIVER",
-	"runtimeVersion": "V8",
-	"dependencies": {
-		"libraries": [
-			{
-				"userSymbol": "OAuth2",
-				"libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
-				"version": "43"
-			}
-		]
-	},
-	"oauthScopes": [
-		"https://www.googleapis.com/auth/workspace.linkpreview",
-		"https://www.googleapis.com/auth/script.external_request",
-		"https://www.googleapis.com/auth/cloud-platform"
-	],
-	"addOns": {
-		"common": {
-			"name": "DevDocs Previews",
-			"logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png",
-			"layoutProperties": {
-				"primaryColor": "#1A73E8"
-			}
-		},
-		"docs": {
-			"linkPreviewTriggers": [
-				{
-					"patterns": [
-						{
-							"hostPattern": "developers.google.*"
-						}
-					],
-					"runFunction": "onLinkPreview",
-					"labelText": "Page title",
-					"logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
-				}
-			]
-		},
-		"sheets": {
-			"linkPreviewTriggers": [
-				{
-					"patterns": [
-						{
-							"hostPattern": "developers.google.*"
-						}
-					],
-					"runFunction": "onLinkPreview",
-					"labelText": "Page title",
-					"logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
-				}
-			]
-		},
-		"slides": {
-			"linkPreviewTriggers": [
-				{
-					"patterns": [
-						{
-							"hostPattern": "developers.google.*"
-						}
-					],
-					"runFunction": "onLinkPreview",
-					"labelText": "Page title",
-					"logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
-				}
-			]
-		}
-	}
+  "timeZone": "America/Los_Angeles",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dependencies": {
+    "libraries": [
+      {
+        "userSymbol": "OAuth2",
+        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+        "version": "43"
+      }
+    ]
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/workspace.linkpreview",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "addOns": {
+    "common": {
+      "name": "DevDocs Previews",
+      "logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png",
+      "layoutProperties": {
+        "primaryColor": "#1A73E8"
+      }
+    },
+    "docs": {
+      "linkPreviewTriggers": [
+        {
+          "patterns": [
+            {
+              "hostPattern": "developers.google.*"
+            }
+          ],
+          "runFunction": "onLinkPreview",
+          "labelText": "Page title",
+          "logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
+        }
+      ]
+    },
+    "sheets": {
+      "linkPreviewTriggers": [
+        {
+          "patterns": [
+            {
+              "hostPattern": "developers.google.*"
+            }
+          ],
+          "runFunction": "onLinkPreview",
+          "labelText": "Page title",
+          "logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
+        }
+      ]
+    },
+    "slides": {
+      "linkPreviewTriggers": [
+        {
+          "patterns": [
+            {
+              "hostPattern": "developers.google.*"
+            }
+          ],
+          "runFunction": "onLinkPreview",
+          "labelText": "Page title",
+          "logoUrl": "https://www.gstatic.com/images/branding/productlogos/google_developers/v8/web-24dp/logo_google_developers_color_1x_web_24dp.png"
+        }
+      ]
+    }
+  }
 }

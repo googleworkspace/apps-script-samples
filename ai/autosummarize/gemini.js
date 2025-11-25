@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 function scriptPropertyWithDefault(key, defaultValue = undefined) {
-	const scriptProperties = PropertiesService.getScriptProperties();
-	const value = scriptProperties.getProperty(key);
-	if (value) {
-		return value;
-	}
-	return defaultValue;
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const value = scriptProperties.getProperty(key);
+  if (value) {
+    return value;
+  }
+  return defaultValue;
 }
 
 const VERTEX_AI_LOCATION = scriptPropertyWithDefault(
-	"project_location",
-	"us-central1",
+  "project_location",
+  "us-central1",
 );
 const MODEL_ID = scriptPropertyWithDefault("model_id", "gemini-pro-vision");
 const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
@@ -40,55 +40,55 @@ const SERVICE_ACCOUNT_KEY = scriptPropertyWithDefault("service_account_key");
  * @param {string} options.maxOutputTokens The number of tokens to limit to the prompt.
  */
 function getAiSummary(parts, options = {}) {
-	const defaultOptions = {
-		temperature: 0.1,
-		maxOutputTokens: 8192,
-		topK: 1,
-		topP: 1,
-		stopSequences: [],
-	};
-	const request = {
-		contents: [
-			{
-				role: "user",
-				parts: parts,
-			},
-		],
-		generationConfig: {
-			...defaultOptions,
-			...options,
-		},
-	};
+  const defaultOptions = {
+    temperature: 0.1,
+    maxOutputTokens: 8192,
+    topK: 1,
+    topP: 1,
+    stopSequences: [],
+  };
+  const request = {
+    contents: [
+      {
+        role: "user",
+        parts: parts,
+      },
+    ],
+    generationConfig: {
+      ...defaultOptions,
+      ...options,
+    },
+  };
 
-	const credentials = credentialsForVertexAI();
+  const credentials = credentialsForVertexAI();
 
-	const fetchOptions = {
-		method: "POST",
-		headers: {
-			Authorization: `Bearer ${credentials.accessToken}`,
-		},
-		contentType: "application/json",
-		muteHttpExceptions: true,
-		payload: JSON.stringify(request),
-	};
+  const fetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${credentials.accessToken}`,
+    },
+    contentType: "application/json",
+    muteHttpExceptions: true,
+    payload: JSON.stringify(request),
+  };
 
-	const url =
-		`https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
-		`/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
-	const response = UrlFetchApp.fetch(url, fetchOptions);
+  const url =
+    `https://${VERTEX_AI_LOCATION}-aiplatform.googleapis.com/v1/projects/${credentials.projectId}` +
+    `/locations/${VERTEX_AI_LOCATION}/publishers/google/models/${MODEL_ID}:generateContent`;
+  const response = UrlFetchApp.fetch(url, fetchOptions);
 
-	const responseCode = response.getResponseCode();
-	if (responseCode >= 400) {
-		throw new Error(`Unable to process file: Error code ${responseCode}`);
-	}
+  const responseCode = response.getResponseCode();
+  if (responseCode >= 400) {
+    throw new Error(`Unable to process file: Error code ${responseCode}`);
+  }
 
-	const responseText = response.getContentText();
-	const parsedResponse = JSON.parse(responseText);
-	if (parsedResponse.error) {
-		throw new Error(parsedResponse.error.message);
-	}
-	const text = parsedResponse.candidates[0].content.parts[0].text;
-	return text;
+  const responseText = response.getContentText();
+  const parsedResponse = JSON.parse(responseText);
+  if (parsedResponse.error) {
+    throw new Error(parsedResponse.error.message);
+  }
+  const text = parsedResponse.candidates[0].content.parts[0].text;
+  return text;
 }
 
 /**
@@ -98,20 +98,20 @@ function getAiSummary(parts, options = {}) {
  * @return {!Object} Containing the Cloud Project Id and the access token.
  */
 function credentialsForVertexAI() {
-	const credentials = SERVICE_ACCOUNT_KEY;
-	if (!credentials) {
-		throw new Error("service_account_key script property must be set.");
-	}
+  const credentials = SERVICE_ACCOUNT_KEY;
+  if (!credentials) {
+    throw new Error("service_account_key script property must be set.");
+  }
 
-	const parsedCredentials = JSON.parse(credentials);
-	const service = OAuth2.createService("Vertex")
-		.setTokenUrl("https://oauth2.googleapis.com/token")
-		.setPrivateKey(parsedCredentials.private_key)
-		.setIssuer(parsedCredentials.client_email)
-		.setPropertyStore(PropertiesService.getScriptProperties())
-		.setScope("https://www.googleapis.com/auth/cloud-platform");
-	return {
-		projectId: parsedCredentials.project_id,
-		accessToken: service.getAccessToken(),
-	};
+  const parsedCredentials = JSON.parse(credentials);
+  const service = OAuth2.createService("Vertex")
+    .setTokenUrl("https://oauth2.googleapis.com/token")
+    .setPrivateKey(parsedCredentials.private_key)
+    .setIssuer(parsedCredentials.client_email)
+    .setPropertyStore(PropertiesService.getScriptProperties())
+    .setScope("https://www.googleapis.com/auth/cloud-platform");
+  return {
+    projectId: parsedCredentials.project_id,
+    accessToken: service.getAccessToken(),
+  };
 }

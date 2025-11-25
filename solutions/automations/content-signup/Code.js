@@ -20,30 +20,30 @@ limitations under the License.
 // To use your own template doc, update the below variable with the URL of your own Google Doc template.
 // Make sure you update the sharing settings so that 'anyone'  or 'anyone in your organization' can view.
 const EMAIL_TEMPLATE_DOC_URL =
-	"https://docs.google.com/document/d/1enes74gWsMG3dkK3SFO08apXkr0rcYBd3JHKOb2Nksk/edit?usp=sharing";
+  "https://docs.google.com/document/d/1enes74gWsMG3dkK3SFO08apXkr0rcYBd3JHKOb2Nksk/edit?usp=sharing";
 // Update this variable to customize the email subject.
 const EMAIL_SUBJECT = "Hello, here is the content you requested";
 
 // Update this variable to the content titles and URLs you want to offer. Make sure you update the form so that the content titles listed here match the content titles you list in the form.
 const topicUrls = {
-	"Google Calendar how-to videos":
-		"https://www.youtube.com/playlist?list=PLU8ezI8GYqs7IPb_UdmUNKyUCqjzGO9PJ",
-	"Google Drive how-to videos":
-		"https://www.youtube.com/playlist?list=PLU8ezI8GYqs7Y5d1cgZm2Obq7leVtLkT4",
-	"Google Docs how-to videos":
-		"https://www.youtube.com/playlist?list=PLU8ezI8GYqs4JKwZ-fpBP-zSoWPL8Sit7",
-	"Google Sheets how-to videos":
-		"https://www.youtube.com/playlist?list=PLU8ezI8GYqs61ciKpXf_KkV7ZRbRHVG38",
+  "Google Calendar how-to videos":
+    "https://www.youtube.com/playlist?list=PLU8ezI8GYqs7IPb_UdmUNKyUCqjzGO9PJ",
+  "Google Drive how-to videos":
+    "https://www.youtube.com/playlist?list=PLU8ezI8GYqs7Y5d1cgZm2Obq7leVtLkT4",
+  "Google Docs how-to videos":
+    "https://www.youtube.com/playlist?list=PLU8ezI8GYqs4JKwZ-fpBP-zSoWPL8Sit7",
+  "Google Sheets how-to videos":
+    "https://www.youtube.com/playlist?list=PLU8ezI8GYqs61ciKpXf_KkV7ZRbRHVG38",
 };
 
 /**
  * Installs a trigger on the spreadsheet for when someone submits a form.
  */
 function installTrigger() {
-	ScriptApp.newTrigger("onFormSubmit")
-		.forSpreadsheet(SpreadsheetApp.getActive())
-		.onFormSubmit()
-		.create();
+  ScriptApp.newTrigger("onFormSubmit")
+    .forSpreadsheet(SpreadsheetApp.getActive())
+    .onFormSubmit()
+    .create();
 }
 
 /**
@@ -52,43 +52,43 @@ function installTrigger() {
  * @param {Object} event - Form submit event
  */
 function onFormSubmit(e) {
-	const responses = e.namedValues;
+  const responses = e.namedValues;
 
-	// If the question title is a label, it can be accessed as an object field.
-	// If it has spaces or other characters, it can be accessed as a dictionary.
-	const timestamp = responses.Timestamp[0];
-	const email = responses["Email address"][0].trim();
-	const name = responses.Name[0].trim();
-	const topicsString = responses.Topics[0].toLowerCase();
+  // If the question title is a label, it can be accessed as an object field.
+  // If it has spaces or other characters, it can be accessed as a dictionary.
+  const timestamp = responses.Timestamp[0];
+  const email = responses["Email address"][0].trim();
+  const name = responses.Name[0].trim();
+  const topicsString = responses.Topics[0].toLowerCase();
 
-	// Parse topics of interest into a list (since there are multiple items
-	// that are saved in the row as blob of text).
-	const topics = Object.keys(topicUrls).filter((topic) => {
-		// indexOf searches for the topic in topicsString and returns a non-negative
-		// index if the topic is found, or it will return -1 if it's not found.
-		return topicsString.indexOf(topic.toLowerCase()) !== -1;
-	});
+  // Parse topics of interest into a list (since there are multiple items
+  // that are saved in the row as blob of text).
+  const topics = Object.keys(topicUrls).filter((topic) => {
+    // indexOf searches for the topic in topicsString and returns a non-negative
+    // index if the topic is found, or it will return -1 if it's not found.
+    return topicsString.indexOf(topic.toLowerCase()) !== -1;
+  });
 
-	// If there is at least one topic selected, send an email to the recipient.
-	let status = "";
-	if (topics.length > 0) {
-		MailApp.sendEmail({
-			to: email,
-			subject: EMAIL_SUBJECT,
-			htmlBody: createEmailBody(name, topics),
-		});
-		status = "Sent";
-	} else {
-		status = "No topics selected";
-	}
+  // If there is at least one topic selected, send an email to the recipient.
+  let status = "";
+  if (topics.length > 0) {
+    MailApp.sendEmail({
+      to: email,
+      subject: EMAIL_SUBJECT,
+      htmlBody: createEmailBody(name, topics),
+    });
+    status = "Sent";
+  } else {
+    status = "No topics selected";
+  }
 
-	// Append the status on the spreadsheet to the responses' row.
-	const sheet = SpreadsheetApp.getActiveSheet();
-	const row = sheet.getActiveRange().getRow();
-	const column = e.values.length + 1;
-	sheet.getRange(row, column).setValue(status);
+  // Append the status on the spreadsheet to the responses' row.
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const row = sheet.getActiveRange().getRow();
+  const column = e.values.length + 1;
+  sheet.getRange(row, column).setValue(status);
 
-	console.log(`status=${status}; responses=${JSON.stringify(responses)}`);
+  console.log(`status=${status}; responses=${JSON.stringify(responses)}`);
 }
 
 /**
@@ -99,20 +99,20 @@ function onFormSubmit(e) {
  * @return {string} - The email body as an HTML string.
  */
 function createEmailBody(name, topics) {
-	let topicsHtml = topics
-		.map((topic) => {
-			const url = topicUrls[topic];
-			return `<li><a href="${url}">${topic}</a></li>`;
-		})
-		.join("");
-	topicsHtml = `<ul>${topicsHtml}</ul>`;
+  let topicsHtml = topics
+    .map((topic) => {
+      const url = topicUrls[topic];
+      return `<li><a href="${url}">${topic}</a></li>`;
+    })
+    .join("");
+  topicsHtml = `<ul>${topicsHtml}</ul>`;
 
-	// Make sure to update the emailTemplateDocId at the top.
-	const docId = DocumentApp.openByUrl(EMAIL_TEMPLATE_DOC_URL).getId();
-	let emailBody = docToHtml(docId);
-	emailBody = emailBody.replace(/{{NAME}}/g, name);
-	emailBody = emailBody.replace(/{{TOPICS}}/g, topicsHtml);
-	return emailBody;
+  // Make sure to update the emailTemplateDocId at the top.
+  const docId = DocumentApp.openByUrl(EMAIL_TEMPLATE_DOC_URL).getId();
+  let emailBody = docToHtml(docId);
+  emailBody = emailBody.replace(/{{NAME}}/g, name);
+  emailBody = emailBody.replace(/{{TOPICS}}/g, topicsHtml);
+  return emailBody;
 }
 
 /**
@@ -122,12 +122,12 @@ function createEmailBody(name, topics) {
  * @return {string} The Google Doc rendered as an HTML string.
  */
 function docToHtml(docId) {
-	// Downloads a Google Doc as an HTML string.
-	const url = `https://docs.google.com/feeds/download/documents/export/Export?id=${docId}&exportFormat=html`;
-	const param = {
-		method: "get",
-		headers: { Authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
-		muteHttpExceptions: true,
-	};
-	return UrlFetchApp.fetch(url, param).getContentText();
+  // Downloads a Google Doc as an HTML string.
+  const url = `https://docs.google.com/feeds/download/documents/export/Export?id=${docId}&exportFormat=html`;
+  const param = {
+    method: "get",
+    headers: { Authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
+    muteHttpExceptions: true,
+  };
+  return UrlFetchApp.fetch(url, param).getContentText();
 }

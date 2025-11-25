@@ -35,13 +35,13 @@ const MONTHS_IN_ADVANCE = 3;
  * Sets up the script to run automatically every hour.
  */
 function setup() {
-	const triggers = ScriptApp.getProjectTriggers();
-	if (triggers.length > 0) {
-		throw new Error("Triggers are already setup.");
-	}
-	ScriptApp.newTrigger("sync").timeBased().everyHours(1).create();
-	// Runs the first sync immediately.
-	sync();
+  const triggers = ScriptApp.getProjectTriggers();
+  if (triggers.length > 0) {
+    throw new Error("Triggers are already setup.");
+  }
+  ScriptApp.newTrigger("sync").timeBased().everyHours(1).create();
+  // Runs the first sync immediately.
+  sync();
 }
 
 /**
@@ -49,38 +49,38 @@ function setup() {
  * 'vacation' or 'out of office' events to the team calendar.
  */
 function sync() {
-	// Defines the calendar event date range to search.
-	const today = new Date();
-	const maxDate = new Date();
-	maxDate.setMonth(maxDate.getMonth() + MONTHS_IN_ADVANCE);
+  // Defines the calendar event date range to search.
+  const today = new Date();
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + MONTHS_IN_ADVANCE);
 
-	// Determines the time the the script was last run.
-	let lastRun = PropertiesService.getScriptProperties().getProperty("lastRun");
-	lastRun = lastRun ? new Date(lastRun) : null;
+  // Determines the time the the script was last run.
+  let lastRun = PropertiesService.getScriptProperties().getProperty("lastRun");
+  lastRun = lastRun ? new Date(lastRun) : null;
 
-	// Gets the list of users in the Google Group.
-	let users = getAllMembers(GROUP_EMAIL);
-	if (ONLY_DIRECT_MEMBERS) {
-		users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
-	} else if (Array.isArray(GROUP_EMAIL)) {
-		users = getUsersFromGroups(GROUP_EMAIL);
-	}
+  // Gets the list of users in the Google Group.
+  let users = getAllMembers(GROUP_EMAIL);
+  if (ONLY_DIRECT_MEMBERS) {
+    users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
+  } else if (Array.isArray(GROUP_EMAIL)) {
+    users = getUsersFromGroups(GROUP_EMAIL);
+  }
 
-	// For each user, finds events having one or more of the keywords in the event
-	// summary in the specified date range. Imports each of those to the team
-	// calendar.
-	let count = 0;
-	for (const user of users) {
-		const username = user.getEmail().split("@")[0];
-		const events = findEvents(user, today, maxDate, lastRun);
-		for (const event of events) {
-			importEvent(username, event);
-			count++;
-		}
-	}
+  // For each user, finds events having one or more of the keywords in the event
+  // summary in the specified date range. Imports each of those to the team
+  // calendar.
+  let count = 0;
+  for (const user of users) {
+    const username = user.getEmail().split("@")[0];
+    const events = findEvents(user, today, maxDate, lastRun);
+    for (const event of events) {
+      importEvent(username, event);
+      count++;
+    }
+  }
 
-	PropertiesService.getScriptProperties().setProperty("lastRun", today);
-	console.log(`Imported ${count} events`);
+  PropertiesService.getScriptProperties().setProperty("lastRun", today);
+  console.log(`Imported ${count} events`);
 }
 
 /**
@@ -90,29 +90,29 @@ function sync() {
  * @param {Calendar.Event} event The event to import.
  */
 function importEvent(username, event) {
-	event.summary = `[${username}] ${event.summary}`;
-	event.organizer = {
-		id: TEAM_CALENDAR_ID,
-	};
-	event.attendees = [];
+  event.summary = `[${username}] ${event.summary}`;
+  event.organizer = {
+    id: TEAM_CALENDAR_ID,
+  };
+  event.attendees = [];
 
-	// If the event is not of type 'default', it can't be imported, so it needs
-	// to be changed.
-	if (event.eventType !== "default") {
-		event.eventType = "default";
-		event.outOfOfficeProperties = undefined;
-		event.focusTimeProperties = undefined;
-	}
+  // If the event is not of type 'default', it can't be imported, so it needs
+  // to be changed.
+  if (event.eventType !== "default") {
+    event.eventType = "default";
+    event.outOfOfficeProperties = undefined;
+    event.focusTimeProperties = undefined;
+  }
 
-	console.log("Importing: %s", event.summary);
-	try {
-		Calendar.Events.import(event, TEAM_CALENDAR_ID);
-	} catch (e) {
-		console.error(
-			"Error attempting to import event: %s. Skipping.",
-			e.toString(),
-		);
-	}
+  console.log("Importing: %s", event.summary);
+  try {
+    Calendar.Events.import(event, TEAM_CALENDAR_ID);
+  } catch (e) {
+    console.error(
+      "Error attempting to import event: %s. Skipping.",
+      e.toString(),
+    );
+  }
 }
 
 /**
@@ -127,38 +127,38 @@ function importEvent(username, event) {
  * @return {Calendar.Event[]} An array of calendar events.
  */
 function findEvents(user, start, end, optSince) {
-	const params = {
-		eventTypes: "outOfOffice",
-		timeMin: formatDateAsRFC3339(start),
-		timeMax: formatDateAsRFC3339(end),
-		showDeleted: true,
-	};
-	if (optSince) {
-		// This prevents the script from examining events that have not been
-		// modified since the specified date (that is, the last time the
-		// script was run).
-		params.updatedMin = formatDateAsRFC3339(optSince);
-	}
-	let pageToken = null;
-	let events = [];
-	do {
-		params.pageToken = pageToken;
-		let response;
-		try {
-			response = Calendar.Events.list(user.getEmail(), params);
-		} catch (e) {
-			console.error(
-				"Error retriving events for %s, %s: %s; skipping",
-				user,
-				keyword,
-				e.toString(),
-			);
-			continue;
-		}
-		events = events.concat(response.items);
-		pageToken = response.nextPageToken;
-	} while (pageToken);
-	return events;
+  const params = {
+    eventTypes: "outOfOffice",
+    timeMin: formatDateAsRFC3339(start),
+    timeMax: formatDateAsRFC3339(end),
+    showDeleted: true,
+  };
+  if (optSince) {
+    // This prevents the script from examining events that have not been
+    // modified since the specified date (that is, the last time the
+    // script was run).
+    params.updatedMin = formatDateAsRFC3339(optSince);
+  }
+  let pageToken = null;
+  let events = [];
+  do {
+    params.pageToken = pageToken;
+    let response;
+    try {
+      response = Calendar.Events.list(user.getEmail(), params);
+    } catch (e) {
+      console.error(
+        "Error retriving events for %s, %s: %s; skipping",
+        user,
+        keyword,
+        e.toString(),
+      );
+      continue;
+    }
+    events = events.concat(response.items);
+    pageToken = response.nextPageToken;
+  } while (pageToken);
+  return events;
 }
 
 /**
@@ -168,7 +168,7 @@ function findEvents(user, start, end, optSince) {
  * @return {string} a formatted date string.
  */
 function formatDateAsRFC3339(date) {
-	return Utilities.formatDate(date, "UTC", "yyyy-MM-dd'T'HH:mm:ssZ");
+  return Utilities.formatDate(date, "UTC", "yyyy-MM-dd'T'HH:mm:ssZ");
 }
 
 /**
@@ -177,24 +177,24 @@ function formatDateAsRFC3339(date) {
  * @return {object} direct and indirect members.
  */
 function getAllMembers(groupEmail) {
-	const group = GroupsApp.getGroupByEmail(groupEmail);
-	let users = group.getUsers();
-	const childGroups = group.getGroups();
-	for (let i = 0; i < childGroups.length; i++) {
-		const childGroup = childGroups[i];
-		users = users.concat(getAllMembers(childGroup.getEmail()));
-	}
-	// Remove duplicate members
-	const uniqueUsers = [];
-	const userEmails = {};
-	for (let i = 0; i < users.length; i++) {
-		const user = users[i];
-		if (!userEmails[user.getEmail()]) {
-			uniqueUsers.push(user);
-			userEmails[user.getEmail()] = true;
-		}
-	}
-	return uniqueUsers;
+  const group = GroupsApp.getGroupByEmail(groupEmail);
+  let users = group.getUsers();
+  const childGroups = group.getGroups();
+  for (let i = 0; i < childGroups.length; i++) {
+    const childGroup = childGroups[i];
+    users = users.concat(getAllMembers(childGroup.getEmail()));
+  }
+  // Remove duplicate members
+  const uniqueUsers = [];
+  const userEmails = {};
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    if (!userEmails[user.getEmail()]) {
+      uniqueUsers.push(user);
+      userEmails[user.getEmail()] = true;
+    }
+  }
+  return uniqueUsers;
 }
 
 /**
@@ -203,14 +203,14 @@ function getAllMembers(groupEmail) {
  * @return {object} indirect members of multiple groups.
  */
 function getUsersFromGroups(groupEmails) {
-	const users = [];
-	for (const groupEmail of groupEmails) {
-		const groupUsers = GroupsApp.getGroupByEmail(groupEmail).getUsers();
-		for (const user of groupUsers) {
-			if (!users.some((u) => u.getEmail() === user.getEmail())) {
-				users.push(user);
-			}
-		}
-	}
-	return users;
+  const users = [];
+  for (const groupEmail of groupEmails) {
+    const groupUsers = GroupsApp.getGroupByEmail(groupEmail).getUsers();
+    for (const user of groupUsers) {
+      if (!users.some((u) => u.getEmail() === user.getEmail())) {
+        users.push(user);
+      }
+    }
+  }
+  return users;
 }

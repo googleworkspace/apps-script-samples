@@ -22,17 +22,17 @@ const REQUEST_NOTIFICATION_EMAIL = "request_intake@example.com";
 
 // Update the following variables with your own equipment options.
 const AVAILABLE_LAPTOPS = [
-	'15" high Performance Laptop (OS X)',
-	'15" high Performance Laptop (Windows)',
-	'15" high performance Laptop (Linux)',
-	'13" lightweight laptop (Windows)',
+  '15" high Performance Laptop (OS X)',
+  '15" high Performance Laptop (Windows)',
+  '15" high performance Laptop (Linux)',
+  '13" lightweight laptop (Windows)',
 ];
 const AVAILABLE_DESKTOPS = [
-	"Standard workstation (Windows)",
-	"Standard workstation (Linux)",
-	"High performance workstation (Windows)",
-	"High performance workstation (Linux)",
-	"Mac Pro (OS X)",
+  "Standard workstation (Windows)",
+  "Standard workstation (Linux)",
+  "High performance workstation (Windows)",
+  "High performance workstation (Linux)",
+  "Mac Pro (OS X)",
 ];
 const AVAILABLE_MONITORS = ['Single 27"', 'Single 32"', 'Dual 24"'];
 
@@ -42,61 +42,61 @@ const AVAILABLE_MONITORS = ['Single 27"', 'Single 32"', 'Dual 24"'];
  * Adds a custom menu to the spreadsheet.
  */
 function onOpen() {
-	SpreadsheetApp.getUi()
-		.createMenu("Equipment requests")
-		.addItem("Set up", "setup_")
-		.addItem("Clean up", "cleanup_")
-		.addToUi();
+  SpreadsheetApp.getUi()
+    .createMenu("Equipment requests")
+    .addItem("Set up", "setup_")
+    .addItem("Clean up", "cleanup_")
+    .addToUi();
 }
 
 /**
  * Creates the form and triggers for the workflow.
  */
 function setup_() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	if (ss.getFormUrl()) {
-		const msg = "Form already exists. Unlink the form and try again.";
-		SpreadsheetApp.getUi().alert(msg);
-		return;
-	}
-	const form = FormApp.create("Equipment Requests")
-		.setCollectEmail(true)
-		.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
-		.setLimitOneResponsePerUser(false);
-	form.addTextItem().setTitle("Employee name").setRequired(true);
-	form.addTextItem().setTitle("Desk location").setRequired(true);
-	form.addDateItem().setTitle("Due date").setRequired(true);
-	form.addListItem().setTitle("Laptop").setChoiceValues(AVAILABLE_LAPTOPS);
-	form.addListItem().setTitle("Desktop").setChoiceValues(AVAILABLE_DESKTOPS);
-	form.addListItem().setTitle("Monitor").setChoiceValues(AVAILABLE_MONITORS);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss.getFormUrl()) {
+    const msg = "Form already exists. Unlink the form and try again.";
+    SpreadsheetApp.getUi().alert(msg);
+    return;
+  }
+  const form = FormApp.create("Equipment Requests")
+    .setCollectEmail(true)
+    .setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
+    .setLimitOneResponsePerUser(false);
+  form.addTextItem().setTitle("Employee name").setRequired(true);
+  form.addTextItem().setTitle("Desk location").setRequired(true);
+  form.addDateItem().setTitle("Due date").setRequired(true);
+  form.addListItem().setTitle("Laptop").setChoiceValues(AVAILABLE_LAPTOPS);
+  form.addListItem().setTitle("Desktop").setChoiceValues(AVAILABLE_DESKTOPS);
+  form.addListItem().setTitle("Monitor").setChoiceValues(AVAILABLE_MONITORS);
 
-	// Hide the raw form responses.
-	for (const sheet of ss.getSheets()) {
-		if (sheet.getFormUrl() === ss.getFormUrl()) {
-			sheet.hideSheet();
-		}
-	}
-	// Start workflow on each form submit
-	ScriptApp.newTrigger("onFormSubmit_").forForm(form).onFormSubmit().create();
-	// Archive completed items every 5m.
-	ScriptApp.newTrigger("processCompletedItems_")
-		.timeBased()
-		.everyMinutes(5)
-		.create();
+  // Hide the raw form responses.
+  for (const sheet of ss.getSheets()) {
+    if (sheet.getFormUrl() === ss.getFormUrl()) {
+      sheet.hideSheet();
+    }
+  }
+  // Start workflow on each form submit
+  ScriptApp.newTrigger("onFormSubmit_").forForm(form).onFormSubmit().create();
+  // Archive completed items every 5m.
+  ScriptApp.newTrigger("processCompletedItems_")
+    .timeBased()
+    .everyMinutes(5)
+    .create();
 }
 
 /**
  * Cleans up the project (stop triggers, form submission, etc.)
  */
 function cleanup_() {
-	const formUrl = SpreadsheetApp.getActiveSpreadsheet().getFormUrl();
-	if (!formUrl) {
-		return;
-	}
-	for (const trigger of ScriptApp.getProjectTriggers()) {
-		ScriptApp.deleteTrigger(trigger);
-	}
-	FormApp.openByUrl(formUrl).deleteAllResponses().setAcceptingResponses(false);
+  const formUrl = SpreadsheetApp.getActiveSpreadsheet().getFormUrl();
+  if (!formUrl) {
+    return;
+  }
+  for (const trigger of ScriptApp.getProjectTriggers()) {
+    ScriptApp.deleteTrigger(trigger);
+  }
+  FormApp.openByUrl(formUrl).deleteAllResponses().setAcceptingResponses(false);
 }
 
 /**
@@ -105,26 +105,26 @@ function cleanup_() {
  * @param {Object} event - Form submit event
  */
 function onFormSubmit_(event) {
-	const response = mapResponse_(event.response);
-	sendNewEquipmentRequestEmail_(response);
-	const equipmentDetails = Utilities.formatString(
-		"%s\n%s\n%s",
-		response.Laptop,
-		response.Desktop,
-		response.Monitor,
-	);
-	const row = [
-		"New",
-		"",
-		response["Due date"],
-		response["Employee name"],
-		response["Desk location"],
-		equipmentDetails,
-		response.email,
-	];
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const sheet = ss.getSheetByName("Pending requests");
-	sheet.appendRow(row);
+  const response = mapResponse_(event.response);
+  sendNewEquipmentRequestEmail_(response);
+  const equipmentDetails = Utilities.formatString(
+    "%s\n%s\n%s",
+    response.Laptop,
+    response.Desktop,
+    response.Monitor,
+  );
+  const row = [
+    "New",
+    "",
+    response["Due date"],
+    response["Employee name"],
+    response["Desk location"],
+    equipmentDetails,
+    response.email,
+  ];
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("Pending requests");
+  sheet.appendRow(row);
 }
 
 /**
@@ -134,24 +134,24 @@ function onFormSubmit_(event) {
  * @param {Object} event
  */
 function processCompletedItems_() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const pending = ss.getSheetByName("Pending requests");
-	const completed = ss.getSheetByName("Completed requests");
-	const rows = pending.getDataRange().getValues();
-	for (let i = rows.length; i >= 2; i--) {
-		const row = rows[i - 1];
-		const status = row[0];
-		if (status === "Completed" || status === "Cancelled") {
-			pending.deleteRow(i);
-			completed.appendRow(row);
-			console.log(`Deleted row: ${i}`);
-			sendEquipmentRequestCompletedEmail_({
-				"Employee name": row[3],
-				"Desk location": row[4],
-				email: row[6],
-			});
-		}
-	}
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const pending = ss.getSheetByName("Pending requests");
+  const completed = ss.getSheetByName("Completed requests");
+  const rows = pending.getDataRange().getValues();
+  for (let i = rows.length; i >= 2; i--) {
+    const row = rows[i - 1];
+    const status = row[0];
+    if (status === "Completed" || status === "Cancelled") {
+      pending.deleteRow(i);
+      completed.appendRow(row);
+      console.log(`Deleted row: ${i}`);
+      sendEquipmentRequestCompletedEmail_({
+        "Employee name": row[3],
+        "Desk location": row[4],
+        email: row[6],
+      });
+    }
+  }
 }
 
 /**
@@ -160,17 +160,17 @@ function processCompletedItems_() {
  * @param {Object} request - Request details
  */
 function sendNewEquipmentRequestEmail_(request) {
-	const template = HtmlService.createTemplateFromFile(
-		"new-equipment-request.html",
-	);
-	template.request = request;
-	template.sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
-	const msg = template.evaluate();
-	MailApp.sendEmail({
-		to: REQUEST_NOTIFICATION_EMAIL,
-		subject: "New equipment request",
-		htmlBody: msg.getContent(),
-	});
+  const template = HtmlService.createTemplateFromFile(
+    "new-equipment-request.html",
+  );
+  template.request = request;
+  template.sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
+  const msg = template.evaluate();
+  MailApp.sendEmail({
+    to: REQUEST_NOTIFICATION_EMAIL,
+    subject: "New equipment request",
+    htmlBody: msg.getContent(),
+  });
 }
 
 /**
@@ -179,14 +179,14 @@ function sendNewEquipmentRequestEmail_(request) {
  * @param {Object} request - Request details
  */
 function sendEquipmentRequestCompletedEmail_(request) {
-	const template = HtmlService.createTemplateFromFile("request-complete.html");
-	template.request = request;
-	const msg = template.evaluate();
-	MailApp.sendEmail({
-		to: request.email,
-		subject: "Equipment request completed",
-		htmlBody: msg.getContent(),
-	});
+  const template = HtmlService.createTemplateFromFile("request-complete.html");
+  template.request = request;
+  const msg = template.evaluate();
+  MailApp.sendEmail({
+    to: request.email,
+    subject: "Equipment request completed",
+    htmlBody: msg.getContent(),
+  });
 }
 
 /**
@@ -197,13 +197,13 @@ function sendEquipmentRequestCompletedEmail_(request) {
  * @return {Object} Form values keyed by question title
  */
 function mapResponse_(response) {
-	const initialValue = {
-		email: response.getRespondentEmail(),
-		timestamp: response.getTimestamp(),
-	};
-	return response.getItemResponses().reduce((obj, itemResponse) => {
-		const key = itemResponse.getItem().getTitle();
-		obj[key] = itemResponse.getResponse();
-		return obj;
-	}, initialValue);
+  const initialValue = {
+    email: response.getRespondentEmail(),
+    timestamp: response.getTimestamp(),
+  };
+  return response.getItemResponses().reduce((obj, itemResponse) => {
+    const key = itemResponse.getItem().getTitle();
+    obj[key] = itemResponse.getResponse();
+    return obj;
+  }, initialValue);
 }

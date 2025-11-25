@@ -27,20 +27,20 @@
  * @return {object} Spreadsheet object.
  */
 function getSpreadSheet_(fileName, objFolder) {
-	const files = objFolder.getFilesByName(fileName);
+  const files = objFolder.getFilesByName(fileName);
 
-	while (files.hasNext()) {
-		const file = files.next();
-		const fileId = file.getId();
+  while (files.hasNext()) {
+    const file = files.next();
+    const fileId = file.getId();
 
-		const existingSpreadsheet = SpreadsheetApp.openById(fileId);
-		return existingSpreadsheet;
-	}
+    const existingSpreadsheet = SpreadsheetApp.openById(fileId);
+    return existingSpreadsheet;
+  }
 
-	// If application destination spreadsheet is missing, creates a new sample version.
-	const folderAppPrimary = getApplicationFolder_(APP_FOLDER);
-	const sampleSheet = setupPrimarySpreadsheet_(folderAppPrimary);
-	return sampleSheet;
+  // If application destination spreadsheet is missing, creates a new sample version.
+  const folderAppPrimary = getApplicationFolder_(APP_FOLDER);
+  const sampleSheet = setupPrimarySpreadsheet_(folderAppPrimary);
+  return sampleSheet;
 }
 
 /**
@@ -51,14 +51,14 @@ function getSpreadSheet_(fileName, objFolder) {
  * @return {boolean} true if found in folder, false if not.
  */
 function fileExists_(fileName, objFolder) {
-	const files = objFolder.getFilesByName(fileName);
+  const files = objFolder.getFilesByName(fileName);
 
-	while (files.hasNext()) {
-		const file = files.next();
-		console.log(`${file.getName()} already exists.`);
-		return true;
-	}
-	return false;
+  while (files.hasNext()) {
+    const file = files.next();
+    console.log(`${file.getName()} already exists.`);
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -69,23 +69,23 @@ function fileExists_(fileName, objFolder) {
  * @return {object} Google Drive Folder
  */
 function getFolder_(folderName) {
-	// Gets the primary folder for the application.
-	const parentFolder = getApplicationFolder_();
+  // Gets the primary folder for the application.
+  const parentFolder = getApplicationFolder_();
 
-	// Iterates subfolders to check if folder already exists.
-	const subFolders = parentFolder.getFolders();
-	while (subFolders.hasNext()) {
-		const folder = subFolders.next();
+  // Iterates subfolders to check if folder already exists.
+  const subFolders = parentFolder.getFolders();
+  while (subFolders.hasNext()) {
+    const folder = subFolders.next();
 
-		// Returns the existing folder if found.
-		if (folder.getName() === folderName) {
-			return folder;
-		}
-	}
-	// Creates a new folder if one doesn't already exist.
-	return parentFolder
-		.createFolder(folderName)
-		.setDescription(`Supporting folder created by ${APP_TITLE}.`);
+    // Returns the existing folder if found.
+    if (folder.getName() === folderName) {
+      return folder;
+    }
+  }
+  // Creates a new folder if one doesn't already exist.
+  return parentFolder
+    .createFolder(folderName)
+    .setDescription(`Supporting folder created by ${APP_TITLE}.`);
 }
 
 /**
@@ -96,23 +96,23 @@ function getFolder_(folderName) {
  * @return {object} Google Drive Folder
  */
 function getApplicationFolder_() {
-	// Gets root folder, currently set to 'My Drive'
-	const parentFolder = DriveApp.getRootFolder();
+  // Gets root folder, currently set to 'My Drive'
+  const parentFolder = DriveApp.getRootFolder();
 
-	// Iterates through the subfolders to check if folder already exists.
-	const subFolders = parentFolder.getFolders();
-	while (subFolders.hasNext()) {
-		const folder = subFolders.next();
+  // Iterates through the subfolders to check if folder already exists.
+  const subFolders = parentFolder.getFolders();
+  while (subFolders.hasNext()) {
+    const folder = subFolders.next();
 
-		// Returns the existing folder if found.
-		if (folder.getName() === APP_FOLDER) {
-			return folder;
-		}
-	}
-	// Creates a new folder if one doesn't already exist.
-	return parentFolder
-		.createFolder(APP_FOLDER)
-		.setDescription(`Main application folder created by ${APP_TITLE}.`);
+    // Returns the existing folder if found.
+    if (folder.getName() === APP_FOLDER) {
+      return folder;
+    }
+  }
+  // Creates a new folder if one doesn't already exist.
+  return parentFolder
+    .createFolder(APP_FOLDER)
+    .setDescription(`Main application folder created by ${APP_TITLE}.`);
 }
 
 /**
@@ -120,24 +120,24 @@ function getApplicationFolder_() {
  * @logs details of created Google Drive folder.
  */
 function test_getFolderByName() {
-	let folder = getApplicationFolder_();
-	console.log(
-		`Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
-	);
-	// Uncomment the following to automatically delete test folder.
-	// folder.setTrashed(true);
+  let folder = getApplicationFolder_();
+  console.log(
+    `Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
+  );
+  // Uncomment the following to automatically delete test folder.
+  // folder.setTrashed(true);
 
-	folder = getFolder_(SOURCE_FOLDER);
-	console.log(
-		`Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
-	);
-	// Uncomment the following to automatically delete test folder.
-	// folder.setTrashed(true);
+  folder = getFolder_(SOURCE_FOLDER);
+  console.log(
+    `Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
+  );
+  // Uncomment the following to automatically delete test folder.
+  // folder.setTrashed(true);
 
-	folder = getFolder_(PROCESSED_FOLDER);
-	console.log(
-		`Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
-	);
-	// Uncomment the following to automatically delete test folder.
-	// folder.setTrashed(true);
+  folder = getFolder_(PROCESSED_FOLDER);
+  console.log(
+    `Name: ${folder.getName()}\rID: ${folder.getId()}\rURL:${folder.getUrl()}\rDescription: ${folder.getDescription()}`,
+  );
+  // Uncomment the following to automatically delete test folder.
+  // folder.setTrashed(true);
 }

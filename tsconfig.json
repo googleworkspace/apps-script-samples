@@ -1,15 +1,15 @@
 {
-	"compilerOptions": {
-		"allowJs": true,
-		"checkJs": true,
-		"noEmit": true,
-		"target": "es2019",
-		"module": "commonjs",
-		"alwaysStrict": true,
-		"lib": ["es2019"],
-		"types": ["google-apps-script"],
-		"strict": true,
-		"noImplicitAny": true
-	},
-	"include": ["**/*.gs", ".github/scripts/check-gs.ts"]
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "alwaysStrict": true,
+    "lib": ["es2019"],
+    "types": ["google-apps-script"],
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "include": ["**/*.gs", ".github/scripts/check-gs.ts"]
 }

@@ -33,72 +33,72 @@ const PM_SHEET_NAME = "Summary";
  * until all summary data is gathered. Then the script writes the summary array starting at the cell of the custom function.
  */
 function getSheetsData() {
-	const ss = SpreadsheetApp.getActiveSpreadsheet();
-	const sheets = ss.getSheets();
-	const outputArr = [];
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheets = ss.getSheets();
+  const outputArr = [];
 
-	// For each sheet, summarizes the data and pushes to a temporary array.
-	for (const s in sheets) {
-		// Gets sheet name.
-		const sheetNm = sheets[s].getName();
-		// Skips ReadMe and Summary sheets.
-		if (sheetNm === READ_ME_SHEET_NAME || sheetNm === PM_SHEET_NAME) {
-			continue;
-		}
-		// Gets sheets data.
-		const values = sheets[s].getDataRange().getValues();
-		// Gets the first row of the sheet which is the header row.
-		const headerRowValues = values[0];
-		// Finds the columns with the heading names 'Owner Name' and 'Status' and gets the index value of each.
-		// Using 'indexOf()' to get the position of each column prevents the script from breaking if the columns change positions in a sheet.
-		const columnOwner = headerRowValues.indexOf("Owner Name");
-		const columnStatus = headerRowValues.indexOf("Status");
-		// Removes header row.
-		values.splice(0, 1);
-		// Gets the 'Owner Name' column value by retrieving the first data row in the array.
-		const owner = values[0][columnOwner];
-		// Counts the total number of tasks.
-		const taskCnt = values.length;
-		// Counts the number of tasks that have the 'Complete' status.
-		// If the options you want to count in your spreadsheet differ, update the strings below to match the text of each option.
-		// To add more options, copy the line below and update the string to the new text.
-		const completeCnt = filterByPosition(
-			values,
-			"Complete",
-			columnStatus,
-		).length;
-		// Counts the number of tasks that have the 'In-Progress' status.
-		const inProgressCnt = filterByPosition(
-			values,
-			"In-Progress",
-			columnStatus,
-		).length;
-		// Counts the number of tasks that have the 'Scheduled' status.
-		const scheduledCnt = filterByPosition(
-			values,
-			"Scheduled",
-			columnStatus,
-		).length;
-		// Counts the number of tasks that have the 'Overdue' status.
-		const overdueCnt = filterByPosition(values, "Overdue", columnStatus).length;
-		// Builds the output array.
-		outputArr.push([
-			owner,
-			taskCnt,
-			completeCnt,
-			inProgressCnt,
-			scheduledCnt,
-			overdueCnt,
-			sheetNm,
-		]);
-	}
-	// Writes the output array.
-	return outputArr;
+  // For each sheet, summarizes the data and pushes to a temporary array.
+  for (const s in sheets) {
+    // Gets sheet name.
+    const sheetNm = sheets[s].getName();
+    // Skips ReadMe and Summary sheets.
+    if (sheetNm === READ_ME_SHEET_NAME || sheetNm === PM_SHEET_NAME) {
+      continue;
+    }
+    // Gets sheets data.
+    const values = sheets[s].getDataRange().getValues();
+    // Gets the first row of the sheet which is the header row.
+    const headerRowValues = values[0];
+    // Finds the columns with the heading names 'Owner Name' and 'Status' and gets the index value of each.
+    // Using 'indexOf()' to get the position of each column prevents the script from breaking if the columns change positions in a sheet.
+    const columnOwner = headerRowValues.indexOf("Owner Name");
+    const columnStatus = headerRowValues.indexOf("Status");
+    // Removes header row.
+    values.splice(0, 1);
+    // Gets the 'Owner Name' column value by retrieving the first data row in the array.
+    const owner = values[0][columnOwner];
+    // Counts the total number of tasks.
+    const taskCnt = values.length;
+    // Counts the number of tasks that have the 'Complete' status.
+    // If the options you want to count in your spreadsheet differ, update the strings below to match the text of each option.
+    // To add more options, copy the line below and update the string to the new text.
+    const completeCnt = filterByPosition(
+      values,
+      "Complete",
+      columnStatus,
+    ).length;
+    // Counts the number of tasks that have the 'In-Progress' status.
+    const inProgressCnt = filterByPosition(
+      values,
+      "In-Progress",
+      columnStatus,
+    ).length;
+    // Counts the number of tasks that have the 'Scheduled' status.
+    const scheduledCnt = filterByPosition(
+      values,
+      "Scheduled",
+      columnStatus,
+    ).length;
+    // Counts the number of tasks that have the 'Overdue' status.
+    const overdueCnt = filterByPosition(values, "Overdue", columnStatus).length;
+    // Builds the output array.
+    outputArr.push([
+      owner,
+      taskCnt,
+      completeCnt,
+      inProgressCnt,
+      scheduledCnt,
+      overdueCnt,
+      sheetNm,
+    ]);
+  }
+  // Writes the output array.
+  return outputArr;
 }
 
 /**
  * Below is a helper function that filters a 2-dimenstional array.
  */
 function filterByPosition(array, find, position) {
-	return array.filter((innerArray) => innerArray[position] === find);
+  return array.filter((innerArray) => innerArray[position] === find);
 }

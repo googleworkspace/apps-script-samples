@@ -19,7 +19,7 @@
  * @return {string}
  */
 function getFieldValue_(formInputs, fieldName) {
-	return formInputs[fieldName][""].stringInputs.value[0];
+  return formInputs[fieldName][""].stringInputs.value[0];
 }
 
 // Regular expression to validate the date/time input.
@@ -30,17 +30,17 @@ const DATE_TIME_PATTERN = /\d{1,2}\/\d{1,2}\/\d{4}\s+\d{1,2}:\d\d/;
  * @return {date}
  */
 function getStartTimeAsDateObject_(dateTimeStr) {
-	if (!dateTimeStr || !dateTimeStr.match(DATE_TIME_PATTERN)) {
-		return null;
-	}
+  if (!dateTimeStr || !dateTimeStr.match(DATE_TIME_PATTERN)) {
+    return null;
+  }
 
-	const parts = dateTimeStr.split(" ");
-	const [month, day, year] = parts[0].split("/").map(Number);
-	const [hour, minute] = parts[1].split(":").map(Number);
+  const parts = dateTimeStr.split(" ");
+  const [month, day, year] = parts[0].split("/").map(Number);
+  const [hour, minute] = parts[1].split(":").map(Number);
 
-	Session.getScriptTimeZone();
+  Session.getScriptTimeZone();
 
-	return new Date(year, month - 1, day, hour, minute);
+  return new Date(year, month - 1, day, hour, minute);
 }
 
 /**
@@ -48,15 +48,15 @@ function getStartTimeAsDateObject_(dateTimeStr) {
  * @return {string} date/time in mm/dd/yyy HH:MM format needed for use by Calendar
  */
 function getTopOfHourDateString_() {
-	const date = new Date();
-	date.setHours(date.getHours() + 1);
-	date.setMinutes(0, 0, 0);
-	// Adding the date as string might lead to an incorrect response due to time zone adjustments.
-	return Utilities.formatDate(
-		date,
-		Session.getScriptTimeZone(),
-		"MM/dd/yyyy H:mm",
-	);
+  const date = new Date();
+  date.setHours(date.getHours() + 1);
+  date.setMinutes(0, 0, 0);
+  // Adding the date as string might lead to an incorrect response due to time zone adjustments.
+  return Utilities.formatDate(
+    date,
+    Session.getScriptTimeZone(),
+    "MM/dd/yyyy H:mm",
+  );
 }
 
 /**
@@ -67,11 +67,11 @@ function getTopOfHourDateString_() {
  * @return {string} URL in the form of 'https://www.google.com/calendar/event?eid={event-id}'
  */
 function getCalendarEventURL_(event, cal) {
-	const baseCalUrl = "https://www.google.com/calendar";
-	// Joins Calendar Event Id with Calendar Id, then base64 encode to derive the event URL.
-	let encodedId = Utilities.base64Encode(
-		`${event.getId().split("@")[0]} ${cal.getId()}`,
-	).replace(/\=/g, "");
-	encodedId = `/event?eid=${encodedId}`;
-	return baseCalUrl + encodedId;
+  const baseCalUrl = "https://www.google.com/calendar";
+  // Joins Calendar Event Id with Calendar Id, then base64 encode to derive the event URL.
+  let encodedId = Utilities.base64Encode(
+    `${event.getId().split("@")[0]} ${cal.getId()}`,
+  ).replace(/\=/g, "");
+  encodedId = `/event?eid=${encodedId}`;
+  return baseCalUrl + encodedId;
 }

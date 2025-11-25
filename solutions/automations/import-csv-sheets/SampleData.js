@@ -22,111 +22,111 @@
 
 // Fictitious sample data.
 const SAMPLE_DATA = {
-	headings: [
-		"PropertyName",
-		"LeaseID",
-		"LeaseLocation",
-		"OwnerName",
-		"SquareFootage",
-		"RenewDate",
-		"LastAmount",
-		"LastPaymentDate",
-		"Revenue",
-	],
-	csvFiles: [
-		{
-			name: "Sample One.CSV",
-			rows: [
-				{
-					PropertyName: "The Modern Building",
-					LeaseID: "271312",
-					LeaseLocation: "Mountain View CA 94045",
-					OwnerName: "Yuri",
-					SquareFootage: "17500",
-					RenewDate: "12/15/2022",
-					LastAmount: "100000",
-					LastPaymentDate: "3/01/2022",
-					Revenue: "12000",
-				},
-				{
-					PropertyName: "Garage @ 45",
-					LeaseID: "271320",
-					LeaseLocation: "Mountain View CA 94045",
-					OwnerName: "Luka",
-					SquareFootage: "1000",
-					RenewDate: "6/2/2022",
-					LastAmount: "50000",
-					LastPaymentDate: "4/01/2022",
-					Revenue: "20000",
-				},
-				{
-					PropertyName: "Office Park Deluxe",
-					LeaseID: "271301",
-					LeaseLocation: "Mountain View CA 94045",
-					OwnerName: "Sasha",
-					SquareFootage: "5000",
-					RenewDate: "6/2/2022",
-					LastAmount: "25000",
-					LastPaymentDate: "4/01/2022",
-					Revenue: "1200",
-				},
-			],
-		},
-		{
-			name: "Sample Two.CSV",
-			rows: [
-				{
-					PropertyName: "Tours Jumelles Minuscules",
-					LeaseID: "271260",
-					LeaseLocation: "8 Rue du Nom Fictif 341 Paris",
-					OwnerName: "Lucian",
-					SquareFootage: "1000000",
-					RenewDate: "7/14/2022",
-					LastAmount: "1250000",
-					LastPaymentDate: "5/01/2022",
-					Revenue: "77777",
-				},
-				{
-					PropertyName: "Barraca da Praia",
-					LeaseID: "271281",
-					LeaseLocation: "Avenida da Pastelaria 1903 Lisbon 1229-076",
-					OwnerName: "Raha",
-					SquareFootage: "1000",
-					RenewDate: "6/2/2022",
-					LastAmount: "50000",
-					LastPaymentDate: "4/01/2022",
-					Revenue: "20000",
-				},
-			],
-		},
-		{
-			name: "Sample Three.CSV",
-			rows: [
-				{
-					PropertyName: "Round Building in the Square",
-					LeaseID: "371260",
-					LeaseLocation: "8 Rue du Nom Fictif 341 Paris",
-					OwnerName: "Charlie",
-					SquareFootage: "75000",
-					RenewDate: "8/1/2022",
-					LastAmount: "250000",
-					LastPaymentDate: "6/01/2022",
-					Revenue: "22222",
-				},
-				{
-					PropertyName: "Square Building in the Round",
-					LeaseID: "371281",
-					LeaseLocation: "Avenida da Pastelaria 1903 Lisbon 1229-076",
-					OwnerName: "Lee",
-					SquareFootage: "10000",
-					RenewDate: "6/2/2022",
-					LastAmount: "5000",
-					LastPaymentDate: "4/01/2022",
-					Revenue: "1800",
-				},
-			],
-		},
-	],
+  headings: [
+    "PropertyName",
+    "LeaseID",
+    "LeaseLocation",
+    "OwnerName",
+    "SquareFootage",
+    "RenewDate",
+    "LastAmount",
+    "LastPaymentDate",
+    "Revenue",
+  ],
+  csvFiles: [
+    {
+      name: "Sample One.CSV",
+      rows: [
+        {
+          PropertyName: "The Modern Building",
+          LeaseID: "271312",
+          LeaseLocation: "Mountain View CA 94045",
+          OwnerName: "Yuri",
+          SquareFootage: "17500",
+          RenewDate: "12/15/2022",
+          LastAmount: "100000",
+          LastPaymentDate: "3/01/2022",
+          Revenue: "12000",
+        },
+        {
+          PropertyName: "Garage @ 45",
+          LeaseID: "271320",
+          LeaseLocation: "Mountain View CA 94045",
+          OwnerName: "Luka",
+          SquareFootage: "1000",
+          RenewDate: "6/2/2022",
+          LastAmount: "50000",
+          LastPaymentDate: "4/01/2022",
+          Revenue: "20000",
+        },
+        {
+          PropertyName: "Office Park Deluxe",
+          LeaseID: "271301",
+          LeaseLocation: "Mountain View CA 94045",
+          OwnerName: "Sasha",
+          SquareFootage: "5000",
+          RenewDate: "6/2/2022",
+          LastAmount: "25000",
+          LastPaymentDate: "4/01/2022",
+          Revenue: "1200",
+        },
+      ],
+    },
+    {
+      name: "Sample Two.CSV",
+      rows: [
+        {
+          PropertyName: "Tours Jumelles Minuscules",
+          LeaseID: "271260",
+          LeaseLocation: "8 Rue du Nom Fictif 341 Paris",
+          OwnerName: "Lucian",
+          SquareFootage: "1000000",
+          RenewDate: "7/14/2022",
+          LastAmount: "1250000",
+          LastPaymentDate: "5/01/2022",
+          Revenue: "77777",
+        },
+        {
+          PropertyName: "Barraca da Praia",
+          LeaseID: "271281",
+          LeaseLocation: "Avenida da Pastelaria 1903 Lisbon 1229-076",
+          OwnerName: "Raha",
+          SquareFootage: "1000",
+          RenewDate: "6/2/2022",
+          LastAmount: "50000",
+          LastPaymentDate: "4/01/2022",
+          Revenue: "20000",
+        },
+      ],
+    },
+    {
+      name: "Sample Three.CSV",
+      rows: [
+        {
+          PropertyName: "Round Building in the Square",
+          LeaseID: "371260",
+          LeaseLocation: "8 Rue du Nom Fictif 341 Paris",
+          OwnerName: "Charlie",
+          SquareFootage: "75000",
+          RenewDate: "8/1/2022",
+          LastAmount: "250000",
+          LastPaymentDate: "6/01/2022",
+          Revenue: "22222",
+        },
+        {
+          PropertyName: "Square Building in the Round",
+          LeaseID: "371281",
+          LeaseLocation: "Avenida da Pastelaria 1903 Lisbon 1229-076",
+          OwnerName: "Lee",
+          SquareFootage: "10000",
+          RenewDate: "6/2/2022",
+          LastAmount: "5000",
+          LastPaymentDate: "4/01/2022",
+          Revenue: "1800",
+        },
+      ],
+    },
+  ],
 };
 
 /**
@@ -134,10 +134,10 @@ const SAMPLE_DATA = {
  * @return {string[][]} array of each column heading as string.
  */
 function getHeadings() {
-	const headings = [[]];
-	for (const i in SAMPLE_DATA.headings)
-		headings[0].push(SAMPLE_DATA.headings[i]);
-	return headings;
+  const headings = [[]];
+  for (const i in SAMPLE_DATA.headings)
+    headings[0].push(SAMPLE_DATA.headings[i]);
+  return headings;
 }
 
 /**
@@ -145,44 +145,44 @@ function getHeadings() {
  * @return {object[]} {"file": ["name","csv"]}
  */
 function getCSVFilesData() {
-	const files = [];
+  const files = [];
 
-	// Gets headings once - same for all files/rows.
-	let csvHeadings = "";
-	for (const i in SAMPLE_DATA.headings)
-		csvHeadings += `${SAMPLE_DATA.headings[i]},`;
+  // Gets headings once - same for all files/rows.
+  let csvHeadings = "";
+  for (const i in SAMPLE_DATA.headings)
+    csvHeadings += `${SAMPLE_DATA.headings[i]},`;
 
-	// Gets data for each file by rows.
-	for (const i in SAMPLE_DATA.csvFiles) {
-		let sampleCSV = "";
-		sampleCSV += csvHeadings;
-		const fileName = SAMPLE_DATA.csvFiles[i].name;
-		for (const j in SAMPLE_DATA.csvFiles[i].rows) {
-			sampleCSV += "\n";
-			for (const k in SAMPLE_DATA.csvFiles[i].rows[j]) {
-				sampleCSV += `${SAMPLE_DATA.csvFiles[i].rows[j][k]},`;
-			}
-		}
-		files.push({ name: fileName, csv: sampleCSV });
-	}
-	return files;
+  // Gets data for each file by rows.
+  for (const i in SAMPLE_DATA.csvFiles) {
+    let sampleCSV = "";
+    sampleCSV += csvHeadings;
+    const fileName = SAMPLE_DATA.csvFiles[i].name;
+    for (const j in SAMPLE_DATA.csvFiles[i].rows) {
+      sampleCSV += "\n";
+      for (const k in SAMPLE_DATA.csvFiles[i].rows[j]) {
+        sampleCSV += `${SAMPLE_DATA.csvFiles[i].rows[j][k]},`;
+      }
+    }
+    files.push({ name: fileName, csv: sampleCSV });
+  }
+  return files;
 }
 
 /*
  * Checks data functions are working as necessary.
  */
 function test_getHeadings() {
-	const h = getHeadings();
-	console.log(h);
-	console.log(h[0].length);
+  const h = getHeadings();
+  console.log(h);
+  console.log(h[0].length);
 }
 
 function test_getCSVFilesData() {
-	const csvFiles = getCSVFilesData();
-	console.log(csvFiles);
+  const csvFiles = getCSVFilesData();
+  console.log(csvFiles);
 
-	for (const file of csvFiles) {
-		console.log(file.name);
-		console.log(file.csv);
-	}
+  for (const file of csvFiles) {
+    console.log(file.name);
+    console.log(file.csv);
+  }
 }

@@ -34,17 +34,17 @@ limitations under the License.
  *
  */
 function tierPrice(value, table) {
-	let total = 0;
-	// Creates an array for each row of the table and loops through each array.
-	for (const [start, end, percent] of table) {
-		// Checks if the value is less than the starting value of the tier. If it is less, the loop stops.
-		if (value < start) {
-			break;
-		}
-		// Calculates the portion of the value to be multiplied by the tier's percent value.
-		const amount = Math.min(value, end) - start;
-		// Multiplies the amount by the tier's percent value and adds the product to the total.
-		total += amount * percent;
-	}
-	return total;
+  let total = 0;
+  // Creates an array for each row of the table and loops through each array.
+  for (const [start, end, percent] of table) {
+    // Checks if the value is less than the starting value of the tier. If it is less, the loop stops.
+    if (value < start) {
+      break;
+    }
+    // Calculates the portion of the value to be multiplied by the tier's percent value.
+    const amount = Math.min(value, end) - start;
+    // Multiplies the amount by the tier's percent value and adds the product to the total.
+    total += amount * percent;
+  }
+  return total;
 }
