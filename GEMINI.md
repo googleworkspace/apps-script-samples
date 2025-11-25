@@ -21,7 +21,7 @@ pnpm format
 
 Apps Script supports the V8 runtime, which enables modern ECMAScript syntax. Using these features makes your code cleaner, more readable, and less error-prone.
 
-### 1. `let` and `const`
+### `let` and `const`
 Use `let` and `const` instead of `var` for block-scoped variables.
 
 *   **`const`**: Use for values that should not be reassigned.
@@ -37,7 +37,7 @@ if (true) {
 // local is not accessible here
 ```
 
-### 2. Arrow Functions
+### Arrow Functions
 Use arrow functions for concise function expressions, especially for callbacks.
 
 ```javascript
@@ -45,7 +45,7 @@ const numbers = [1, 2, 3];
 const squares = numbers.map(x => x * x); // [1, 4, 9]
 ```
 
-### 3. Destructuring
+### Destructuring
 Unpack values from arrays or properties from objects into distinct variables.
 
 ```javascript
@@ -56,7 +56,7 @@ const coords = [10, 20];
 const [x, y] = coords;
 ```
 
-### 4. Template Literals
+### Template Literals
 Use template literals for string interpolation and multi-line strings.
 
 ```javascript
@@ -69,7 +69,7 @@ const multiLine = `
 `;
 ```
 
-### 5. Default Parameters
+### Default Parameters
 Specify default values for function parameters.
 
 ```javascript
@@ -78,6 +78,23 @@ function greet(name = "Guest") {
 }
 
 greet(); // "Hello, Guest!"
+```
+
+### Prefer `for...of` for Iteration
+While `forEach` is convenient, `for...of` loops generally offer better performance and more control (e.g., `break`, `continue`) in Apps Script, especially when dealing with large arrays.
+
+```javascript
+const numbers = [1, 2, 3];
+
+// Using forEach (less performant for large arrays)
+numbers.forEach(num => {
+  console.log(num);
+});
+
+// Using for...of (preferred)
+for (const num of numbers) {
+  console.log(num);
+}
 ```
 
 ## Apps Script V8 Runtime
@@ -237,7 +254,7 @@ function greet(name, age) {
 
 ### Advanced Patterns
 
-#### 4. Custom Objects (@typedef)
+#### 1. Custom Objects (@typedef)
 For complex objects, define a type using `@typedef`.
 
 ```javascript
@@ -257,7 +274,7 @@ function processUser(config) {
 }
 ```
 
-#### 5. Type Casting
+#### 2. Type Casting
 Sometimes the type checker cannot infer the type correctly. Use inline `@type` to cast.
 
 ```javascript
@@ -267,7 +284,7 @@ const data = JSON.parse(jsonString);
 const config = data;
 ```
 
-#### 6. Arrays and Generics
+#### 3. Arrays and Generics
 Specify array contents clearly.
 
 ```javascript
@@ -280,7 +297,7 @@ function lengths(names) {
 }
 ```
 
-#### 7. Handling `null` and `undefined`
+#### 4. Handling `null` and `undefined`
 Be explicit if a value can be null.
 
 ```javascript
