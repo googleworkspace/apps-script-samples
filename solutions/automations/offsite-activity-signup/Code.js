@@ -116,9 +116,9 @@ function assignWithRandomPriority_(
 	}, {});
 	for (let i = 0; i < numActivitiesPerPerson; ++i) {
 		const randomizedAttendees = shuffleArray_(attendees);
-		randomizedAttendees.forEach((attendee) => {
+		for (const attendee of randomizedAttendees) {
 			makeChoice_(attendee, activitiesById);
-		});
+		}
 	}
 }
 
@@ -201,7 +201,6 @@ function writeAttendeeAssignments_(ss, attendees) {
 function writeActivityRosters_(ss, activities) {
 	const sheet = findOrCreateSheetByName_(ss, "Activity rosters");
 	sheet.clear();
-	const rows = [];
 	let rows = activities.map((activity) => {
 		const roster = activity.roster.map((attendee) => attendee.email);
 		return [activity.description].concat(roster);
@@ -330,9 +329,9 @@ function generateTestData_() {
 
 	const activities = loadActivitySchedule_(ss);
 	const choices = fillArray_([], activities.length, "");
-	range_(1, 5).forEach((value) => {
+	for (const value of range_(1, 5)) {
 		choices[value] = toOrdinal_(value);
-	});
+	}
 
 	const rows = range_(1, NUM_TEST_USERS).map((value) => {
 		const randomizedChoices = shuffleArray_(choices);
@@ -457,7 +456,8 @@ function range_(start, end) {
 	const arr = [start];
 	let i = start;
 	while (i < end) {
-		arr.push((i += 1));
+		i += 1;
+		arr.push(i);
 	}
 	return arr;
 }
@@ -473,12 +473,12 @@ function range_(start, end) {
  */
 function transpose_(arr, fillValue) {
 	const transposed = [];
-	arr.forEach((row, rowIndex) => {
-		row.forEach((col, colIndex) => {
+	for (const [rowIndex, row] of arr.entries()) {
+		for (const [colIndex, col] of row.entries()) {
 			transposed[colIndex] =
 				transposed[colIndex] || fillArray_([], arr.length, fillValue);
 			transposed[colIndex][rowIndex] = row[colIndex];
-		});
-	});
+		}
+	}
 	return transposed;
 }

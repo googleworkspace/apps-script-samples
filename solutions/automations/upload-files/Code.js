@@ -75,10 +75,10 @@ function onFormSubmit(e) {
 
 		// Moves the files to the destination folder.
 		if (fileUploads.length > 0) {
-			fileUploads.forEach((fileId) => {
+			for (const fileId of fileUploads) {
 				DriveApp.getFileById(fileId).moveTo(destFolder);
 				console.log(`File Copied: ${fileId}`);
-			});
+			}
 		}
 	} catch (err) {
 		console.log(err);

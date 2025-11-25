@@ -167,9 +167,9 @@ async function checkProject(
 	);
 
 	try {
-		await execAsync(`tsc -p "${projectTempDir}"`, { cwd: rootDir });
+		await execAsync(`tsc -p \"${projectTempDir}\"`, { cwd: rootDir });
 		return { name: project.name, success: true, output: "" };
-	} catch (e: any) {
+	} catch (e: { stdout: string; stderr: string }) {
 		const rawOutput = (e.stdout || "") + (e.stderr || "");
 
 		const rewritten = rawOutput

@@ -37,7 +37,7 @@ function markVideos() {
 	const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
 
 	// Runs through process for each tab in Spreadsheet.
-	sheets.forEach((dataSheet) => {
+	for (const dataSheet of sheets) {
 		const tabName = dataSheet.getName();
 		const range = dataSheet.getDataRange();
 		const numRows = range.getNumRows();
@@ -96,7 +96,7 @@ function markVideos() {
 		if (emailContent.length > 0 && EMAIL_ON === "Y") {
 			sendEmailNotificationTemplate(emailContent, tabName);
 		}
-	});
+	}
 }
 
 /**

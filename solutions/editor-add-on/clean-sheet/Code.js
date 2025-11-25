@@ -84,9 +84,9 @@ function deleteEmptyRows() {
 	console.log(rangesToDelete);
 
 	// Deletes the rows using REVERSE order to ensure proper indexing is used.
-	rangesToDelete
-		.reverse()
-		.forEach(([start, end]) => sheet.deleteRows(start, end - start + 1));
+	for (const [start, end] of rangesToDelete.reverse()) {
+		sheet.deleteRows(start, end - start + 1);
+	}
 	SpreadsheetApp.flush();
 }
 
@@ -159,9 +159,9 @@ function deleteEmptyColumns() {
 	console.log(rangesToDelete);
 
 	// Deletes the columns using REVERSE order to ensure proper indexing is used.
-	rangesToDelete
-		.reverse()
-		.forEach(([start, end]) => sheet.deleteColumns(start, end - start + 1));
+	for (const [start, end] of rangesToDelete.reverse()) {
+		sheet.deleteColumns(start, end - start + 1);
+	}
 	SpreadsheetApp.flush();
 }
 
