@@ -136,8 +136,8 @@ function addNotifiedColumn(sheet, beginningRow, numRows) {
     numRows,
     1,
   );
-  dropdownValues = ["NOTIFIED", "PENDING"];
-  rule = SpreadsheetApp.newDataValidation()
+  const dropdownValues = ["NOTIFIED", "PENDING"];
+  const rule = SpreadsheetApp.newDataValidation()
     .requireValueInList(dropdownValues)
     .build();
   notifiedColumnRange.setDataValidation(rule);
