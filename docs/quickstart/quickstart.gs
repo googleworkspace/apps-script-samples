@@ -21,7 +21,8 @@
  */
 function printDocTitle() {
   const documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';
-  const doc = Docs.Documents.get(documentId, {'includeTabsContent': true});
+  const doc = /** @type {any} */ (Docs).Documents.get(documentId,
+      {'includeTabsContent': true});
   console.log(`The title of the doc is: ${doc.title}`);
 }
 // [END docs_quickstart]
