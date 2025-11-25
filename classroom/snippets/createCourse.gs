@@ -15,29 +15,31 @@
  */
 // [START classroom_create_course]
 /**
- * Creates 10th Grade Biology Course.
+ * Creates a 10th Grade Biology course.
+ * @return {string} The ID of the created course.
  * @see https://developers.google.com/classroom/reference/rest/v1/courses/create
- * return {string} Id of created course
  */
 function createCourse() {
-  let course = {
+  if (!Classroom || !Classroom.Courses) {
+    throw new Error('Enable the Classroom API advanced service.');
+  }
+  const course = {
     name: '10th Grade Biology',
     section: 'Period 2',
     descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: 'We\'ll be learning about the structure of living creatures from a combination ' +
-      'of textbooks, guest lectures, and lab work. Expect to be excited!',
+    description:
+      'We\'ll be learning about the structure of living creatures from a ' +
+      'combination of textbooks, guest lectures, and lab work. Expect to be ' +
+      'excited!',
     room: '301',
     ownerId: 'me',
-    courseState: 'PROVISIONED'
+    courseState: 'PROVISIONED',
   };
-  try {
-    // Create the course using course details.
-    course = Classroom.Courses.create(course);
-    console.log('Course created: %s (%s)', course.name, course.id);
-    return course.id;
-  } catch (err) {
-    // TODO (developer) - Handle Courses.create() exception
-    console.log('Failed to create course %s with an error %s', course.name, err.message);
+  const newCourse = Classroom.Courses.create(course);
+  console.log('Course created: %s (%s)', newCourse.name, newCourse.id);
+  if (!newCourse.id) {
+    throw new Error('Course created but no ID was returned.');
   }
+  return newCourse.id;
 }
 // [END classroom_create_course]
