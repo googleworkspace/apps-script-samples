@@ -46,7 +46,7 @@ function listInboxSnippets() {
       });
       if (threadList.threads && threadList.threads.length > 0) {
         for (const thread of threadList.threads) {
-          console.log("Snippet: %s", thread.snippet);
+          console.log(`Snippet: ${thread.snippet}`);
         }
       }
       pageToken = threadList.nextPageToken;
