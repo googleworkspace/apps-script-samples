@@ -88,8 +88,7 @@ async function main() {
     }
 
     // 2. Run Biome
-    const biomeArgs =
-      command === "format" ? "check --write ." : "check .";
+    const biomeArgs = command === "format" ? "check --write ." : "check .";
     console.log(`Running biome ${biomeArgs}...`);
     try {
       const { stdout, stderr } = await execAsync(

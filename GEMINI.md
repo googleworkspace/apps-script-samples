@@ -7,7 +7,7 @@ This guide outlines best practices for developing Google Apps Script projects, f
 * For new sample directories, ensure the top-level folder is included in the [`test.yaml`](.github/workflows/test.yaml) GitHub workflow's matrix configuration.
 * Do not move or delete snippet tags: `[END apps_script_... ]` or `[END apps_script_... ]`.
 * Keep code within snippet tags self-contained. Avoid depending on helper functions defined outside the snippet tags if the snippet is intended to be copied and pasted.
-
+* Avoid function name collisions (e.g., multiple `onOpen` or `main` functions) by placing separate samples in their own directories or files. Do not append suffixes like `_2`, `_3` to function names. For variables, replace collisions with a more descriptive name.
 
 ## Tools
 
