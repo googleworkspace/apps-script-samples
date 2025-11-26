@@ -82,7 +82,7 @@ function use() {
  */
 function DATEADD(date, unit, amount) {
   var args = toArray(arguments); // eslint-disable-line prefer-rest-params
-  return multimap(args, function (date, unit, amount) {
+  return multimap(args, (date, unit, amount) => {
     validateParameters(date, unit, amount);
     return moment(date).add(unit, amount).toDate();
   });
@@ -115,7 +115,7 @@ function DATETEST(date, unit, amount) {
  */
 function DATESUBTRACT(date, unit, amount) {
   var args = toArray(arguments); // eslint-disable-line prefer-rest-params
-  return multimap(args, function (date, unit, amount) {
+  return multimap(args, (date, unit, amount) => {
     validateParameters(date, unit, amount);
     return moment(date).subtract(unit, amount).toDate();
   });
@@ -162,7 +162,7 @@ function validateParameters(date, unit, amount) {
  */
 function multimap(args, func) {
   // Determine the length of the arrays.
-  var lengths = args.map(function (arg) {
+  var lengths = args.map((arg) => {
     if (arg instanceof Array) {
       return arg.length;
     } else {
@@ -179,7 +179,7 @@ function multimap(args, func) {
   // Ensure all the arrays are the same length.
   // Arrays of length 1 are exempted, since they are assumed to be rows/columns
   // that should apply to each row/column in the other sets.
-  lengths.forEach(function (length) {
+  lengths.forEach((length) => {
     if (length != max && length > 1) {
       throw new Error("All input ranges must be the same size: " + max);
     }
@@ -188,7 +188,7 @@ function multimap(args, func) {
   // Recursively apply the map function to each element in the arrays.
   var result = [];
   for (var i = 0; i < max; i++) {
-    var params = args.map(function (arg) {
+    var params = args.map((arg) => {
       if (arg instanceof Array) {
         return arg.length == 1 ? arg[0] : arg[i];
       } else {

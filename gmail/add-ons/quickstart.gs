@@ -85,19 +85,17 @@ function toggleLabel(e){
   var thread = message.getThread();
   
   if (selected != null){
-     for each (var label in GmailApp.getUserLabels()) {
+     for each (var label in GmailApp.getUserLabels()) 
        if(selected.indexOf(label.getName()) != -1){
           thread.addLabel(label);
        }
        else {
          thread.removeLabel(label);
        }
-     }
   }
   else {
-    for each (var label in GmailApp.getUserLabels()) {
+    for each (var label in GmailApp.getUserLabels()) 
       thread.removeLabel(label);
-    }
   }
 }
 

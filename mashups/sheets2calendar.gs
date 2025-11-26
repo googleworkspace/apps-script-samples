@@ -15,15 +15,13 @@ function createEventsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create an event for each row.
-  data.forEach(function (row) {
+  data.forEach((row) => {
     const title = row[0];
     const description = row[1];
     const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    const emails = emailsStr.split(",").map(function (email) {
-      return email.trim();
-    });
+    const emails = emailsStr.split(",").map((email) => email.trim());
 
     const now = new Date();
     // Start the event at the next hour mark.
@@ -40,7 +38,7 @@ function createEventsFromSpreadsheet() {
     const event = CalendarApp.createEvent(title, start, end).setDescription(
       description,
     );
-    emails.forEach(function (email) {
+    emails.forEach((email) => {
       event.addGuest(email);
     });
 

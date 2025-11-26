@@ -49,9 +49,9 @@ function createAndRunQuery() {
   let execution;
   //We leave the default date range blank for the report run to
   //use the value defined during query creation
-  let defaultDateRange = {};
-  let partnerId = "1234567"; //Replace with your Partner ID
-  let query = {
+  const defaultDateRange = {};
+  const partnerId = "1234567"; //Replace with your Partner ID
+  const query = {
     metadata: {
       title: "Apps Script Example Report",
       dataRange: {

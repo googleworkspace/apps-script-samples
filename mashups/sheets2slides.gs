@@ -15,15 +15,13 @@ function createPresentationsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a presentation for each row.
-  data.forEach(function (row) {
+  data.forEach((row) => {
     const title = row[0];
     const content = row[1];
     const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    const emails = emailsStr.split(",").map(function (email) {
-      return email.trim();
-    });
+    const emails = emailsStr.split(",").map((email) => email.trim());
 
     // Create the presentation, insert a new slide at the start, append the content,
     // and share it out.

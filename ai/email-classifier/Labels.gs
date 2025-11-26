@@ -73,7 +73,7 @@ function createLabels() {
 function labelsCreated() {
   for (const labelName in classificationLabels) {
     const { name } = classificationLabels[labelName];
-    let gmailLabel = GmailApp.getUserLabelByName(name);
+    const gmailLabel = GmailApp.getUserLabelByName(name);
 
     if (!gmailLabel) {
       return false;
@@ -100,7 +100,7 @@ function fetchLabelId(name) {
 function removeLabels() {
   for (const labelName in classificationLabels) {
     const classificationLabel = classificationLabels[labelName];
-    let gmailLabel = GmailApp.getUserLabelByName(classificationLabel.name);
+    const gmailLabel = GmailApp.getUserLabelByName(classificationLabel.name);
 
     if (gmailLabel) {
       gmailLabel.deleteLabel();

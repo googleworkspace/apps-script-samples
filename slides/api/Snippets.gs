@@ -181,7 +181,7 @@ function createTextboxWithText(presentationId, pageId) {
  * @returns {*}
  */
 function createImage(presentationId, pageId) {
-  let requests = [];
+  const requests = [];
   const imageId = "MyImage_01";
   const imageUrl =
     "https://www.google.com/images/branding/googlelogo/2x/" +
@@ -242,10 +242,10 @@ function createImage(presentationId, pageId) {
  * @returns {*[]}
  */
 function textMerging(templatePresentationId, dataSpreadsheetId) {
-  let responses = [];
+  const responses = [];
   const dataRangeNotation = "Customers!A2:M6";
   try {
-    let values = SpreadsheetApp.openById(dataSpreadsheetId)
+    const values = SpreadsheetApp.openById(dataSpreadsheetId)
       .getRange(dataRangeNotation)
       .getValues();
 
@@ -305,7 +305,7 @@ function textMerging(templatePresentationId, dataSpreadsheetId) {
       );
       // Count the total number of replacements made.
       let numReplacements = 0;
-      result.replies.forEach(function (reply) {
+      result.replies.forEach((reply) => {
         numReplacements += reply.replaceAllText.occurrencesChanged;
       });
       console.log(
@@ -376,14 +376,14 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
     ];
 
     // Execute the requests for this presentation.
-    let batchUpdateResponse = Slides.Presentations.batchUpdate(
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
       {
         requests: requests,
       },
       presentationCopyId,
     );
     let numReplacements = 0;
-    batchUpdateResponse.replies.forEach(function (reply) {
+    batchUpdateResponse.replies.forEach((reply) => {
       numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
     });
     console.log("Created merged presentation with ID: %s", presentationCopyId);

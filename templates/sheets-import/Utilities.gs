@@ -46,7 +46,7 @@ function isOlderThanADay(dateStr) {
  */
 function saveObjectToProperties(prefix, obj) {
   var properties = PropertiesService.getDocumentProperties();
-  _.each(obj, function (val, key) {
+  _.each(obj, (val, key) => {
     var propKey = prefix + "." + key;
     properties.setProperty(propKey, JSON.stringify(val));
   });
@@ -64,7 +64,7 @@ function saveObjectToProperties(prefix, obj) {
 function getObjectFromProperties(prefix) {
   var properties = PropertiesService.getDocumentProperties();
   var obj = {};
-  _.each(properties.getProperties(), function (val, key) {
+  _.each(properties.getProperties(), (val, key) => {
     if (key.indexOf(prefix) > -1) {
       obj[key.substr(prefix.length + 1)] = JSON.parse(val);
     }
@@ -82,7 +82,7 @@ function getObjectFromProperties(prefix) {
  */
 function deleteObjectFromProperties(prefix) {
   var properties = PropertiesService.getDocumentProperties();
-  _.each(properties.getProperties(), function (val, key) {
+  _.each(properties.getProperties(), (val, key) => {
     if (key.indexOf(prefix) > -1) {
       properties.deleteProperty(key);
     }
@@ -162,7 +162,7 @@ function getUserTriggerById(spreadsheet, triggerId) {
  */
 function activateById(sheetId) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, parseInt(sheetId));
+  var sheet = getSheetById(ss, Number.parseInt(sheetId));
   if (sheet != null) {
     sheet.activate();
   }

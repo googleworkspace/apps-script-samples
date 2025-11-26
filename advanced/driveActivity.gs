@@ -24,7 +24,7 @@ function getUsersActivity() {
   let pageToken;
   const users = {};
   do {
-    let result = AppsActivity.Activities.list({
+    const result = AppsActivity.Activities.list({
       "drive.fileId": fileId,
       source: "drive.google.com",
       pageToken: pageToken,

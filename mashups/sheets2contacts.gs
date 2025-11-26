@@ -13,7 +13,7 @@ function createContactsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Send a contact for each row.
-  data.forEach(function (row) {
+  data.forEach((row) => {
     const firstName = row[0];
     const lastName = row[1];
     const email = row[2];

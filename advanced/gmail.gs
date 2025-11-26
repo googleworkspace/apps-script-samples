@@ -45,7 +45,7 @@ function listInboxSnippets() {
         pageToken: pageToken,
       });
       if (threadList.threads && threadList.threads.length > 0) {
-        threadList.threads.forEach(function (thread) {
+        threadList.threads.forEach((thread) => {
           console.log("Snippet: %s", thread.snippet);
         });
       }
@@ -88,8 +88,8 @@ function logRecentHistory() {
       });
       const history = recordList.history;
       if (history && history.length > 0) {
-        history.forEach(function (record) {
-          record.messages.forEach(function (message) {
+        history.forEach((record) => {
+          record.messages.forEach((message) => {
             if (changed.indexOf(message.id) === -1) {
               changed.push(message.id);
             }
@@ -99,7 +99,7 @@ function logRecentHistory() {
       pageToken = recordList.nextPageToken;
     } while (pageToken);
 
-    changed.forEach(function (id) {
+    changed.forEach((id) => {
       console.log("Message Changed: %s", id);
     });
   } catch (err) {

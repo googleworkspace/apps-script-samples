@@ -41,9 +41,9 @@ Helpers.prototype.createTestPresentation = function () {
   return presentation.presentationId;
 };
 
-Helpers.prototype.addSlides = function (presentationId, num, layout) {
-  let requests = [];
-  let slideIds = [];
+Helpers.prototype.addSlides = (presentationId, num, layout) => {
+  const requests = [];
+  const slideIds = [];
   for (let i = 0; i < num; ++i) {
     slideIds.push("slide_" + i);
     requests.push({
@@ -59,11 +59,7 @@ Helpers.prototype.addSlides = function (presentationId, num, layout) {
   return slideIds;
 };
 
-Helpers.prototype.createTestTextbox = function (
-  presentationId,
-  pageId,
-  callback,
-) {
+Helpers.prototype.createTestTextbox = (presentationId, pageId, callback) => {
   const boxId = "MyTextBox_01";
   const pt350 = {
     magnitude: 350,
@@ -107,13 +103,13 @@ Helpers.prototype.createTestTextbox = function (
   return createTextboxResponse.replies[0].createShape.objectId;
 };
 
-Helpers.prototype.createTestSheetsChart = function (
+Helpers.prototype.createTestSheetsChart = (
   presentationId,
   pageId,
   spreadsheetId,
   sheetChartId,
   callback,
-) {
+) => {
   const chartId = "MyChart_01";
   const emu4M = {
     magnitude: 4000000,

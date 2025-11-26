@@ -50,7 +50,7 @@ function buildCard_GmailHome(notifyOk = false) {
    */
 
   if (notifyOk == true) {
-    let fixedFooter = CardService.newFixedFooter().setPrimaryButton(
+    const fixedFooter = CardService.newFixedFooter().setPrimaryButton(
       CardService.newTextButton()
         .setText("Analysis complete")
         .setOnClickAction(

@@ -18,9 +18,9 @@ function COUNTY(address) {
   }
   /** @type {{long_name: string, types: string[]}[]} */
   const addressComponents = results[0].address_components;
-  const counties = addressComponents.filter(function (component) {
-    return component.types.indexOf("administrative_area_level_2") >= 0;
-  });
+  const counties = addressComponents.filter(
+    (component) => component.types.indexOf("administrative_area_level_2") >= 0,
+  );
   if (!counties.length) {
     throw new Error("Unable to determine county");
   }

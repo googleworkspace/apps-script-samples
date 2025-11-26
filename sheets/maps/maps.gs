@@ -106,10 +106,10 @@ function getDrivingDirections() {
 
   // These regular expressions will be used to strip out
   // unneeded HTML tags
-  var r1 = new RegExp("<b>", "g");
-  var r2 = new RegExp("</b>", "g");
-  var r3 = new RegExp('<div style="font-size:0.9em">', "g");
-  var r4 = new RegExp("</div>", "g");
+  var r1 = /<b>/g;
+  var r2 = /<\/b>/g;
+  var r3 = /<div style="font-size:0.9em">/g;
+  var r4 = /<\/div>/g;
 
   // points is used for storing the points in the step-by-step directions
   var points = [];
@@ -166,7 +166,7 @@ function getDrivingDirections() {
     lpoints = points;
   } else {
     var pCount = points.length / 2;
-    var step = parseInt(pCount / 100);
+    var step = Number.parseInt(pCount / 100);
     for (var i = 0; i < 100; ++i) {
       lpoints.push(points[i * step * 2]);
       lpoints.push(points[i * step * 2 + 1]);
@@ -255,8 +255,8 @@ function analyzeLocations() {
     // elevationResults, see
     // http://code.google.com/apis/maps/documentation/elevation/#ElevationResponses
     elevationResults = Maps.newElevationSampler().sampleLocation(
-      parseFloat(lat),
-      parseFloat(lng),
+      Number.parseFloat(lat),
+      Number.parseFloat(lng),
     );
 
     // Check to see if the current latitude is greater than our max latitude

@@ -15,7 +15,7 @@ function sendEmailsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Send an email for each row.
-  data.forEach(function (row) {
+  data.forEach((row) => {
     const subject = row[0];
     const htmlMessage = row[1];
     const emails = row[2];

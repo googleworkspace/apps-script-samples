@@ -98,9 +98,9 @@ function getSchema(request) {
  */
 function responseToRows(requestedFields, response, packageName) {
   // Transform parsed data and filter for requested fields
-  return response.map(function (dailyDownload) {
-    let row = [];
-    requestedFields.asArray().forEach(function (field) {
+  return response.map((dailyDownload) => {
+    const row = [];
+    requestedFields.asArray().forEach((field) => {
       switch (field.getId()) {
         case "day":
           return row.push(dailyDownload.day.replace(/-/g, ""));
@@ -122,9 +122,7 @@ function responseToRows(requestedFields, response, packageName) {
  * @return {object} The data.
  */
 function getData(request) {
-  const requestedFieldIds = request.fields.map(function (field) {
-    return field.name;
-  });
+  const requestedFieldIds = request.fields.map((field) => field.name);
   const requestedFields = getFields().forIds(requestedFieldIds);
 
   // Fetch and parse data from API

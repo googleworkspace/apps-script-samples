@@ -24,7 +24,7 @@ function removeDuplicates() {
   const data = sheet.getDataRange().getValues();
   // [END apps_script_sheets_sheet]
   const uniqueData = {};
-  for (let row of data) {
+  for (const row of data) {
     const key = row.join();
     // [START apps_script_sheets_duplicate]
     uniqueData[key] = uniqueData[key] || row;

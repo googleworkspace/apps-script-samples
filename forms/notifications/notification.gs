@@ -296,7 +296,7 @@ function sendCreatorNotification() {
     const form = FormApp.getActiveForm();
     const settings = PropertiesService.getDocumentProperties();
     let responseStep = settings.getProperty("responseStep");
-    responseStep = responseStep ? parseInt(responseStep) : 10;
+    responseStep = responseStep ? Number.parseInt(responseStep) : 10;
 
     // If the total number of form responses is an even multiple of the
     // response step setting, send a notification email(s) to the form
@@ -344,7 +344,7 @@ function sendRespondentNotification(response) {
     const form = FormApp.getActiveForm();
     const settings = PropertiesService.getDocumentProperties();
     const emailId = settings.getProperty("respondentEmailItemId");
-    const emailItem = form.getItemById(parseInt(emailId));
+    const emailItem = form.getItemById(Number.parseInt(emailId));
     const respondentEmail = response
       .getResponseForItem(emailItem)
       .getResponse();

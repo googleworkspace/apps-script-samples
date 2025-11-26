@@ -128,11 +128,11 @@ function itShouldCreateAnImage() {
  */
 function itShouldMergeText() {
   console.log("> itShouldMergeText");
-  let responses = textMerging(TEMPLATE_PRESENTATION_ID, DATA_SPREADSHEET_ID);
+  const responses = textMerging(TEMPLATE_PRESENTATION_ID, DATA_SPREADSHEET_ID);
   expectToEqual(5, responses.length);
-  responses.forEach(function (response) {
+  responses.forEach((response) => {
     let numReplacements = 0;
-    response.forEach(function (res) {
+    response.forEach((res) => {
       numReplacements += res.replaceAllText.occurrencesChanged;
     });
     expectToEqual(4, numReplacements);
@@ -144,14 +144,14 @@ function itShouldMergeText() {
  */
 function itShouldImageMerge() {
   console.log("> itShouldImageMerge");
-  let response = imageMerging(
+  const response = imageMerging(
     TEMPLATE_PRESENTATION_ID,
     IMAGE_URL,
     CUSTOMER_NAME,
   );
   expectToEqual(2, response.replies.length);
   let numReplacements = 0;
-  response.replies.forEach(function (reply) {
+  response.replies.forEach((reply) => {
     numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
   });
   expectToEqual(2, numReplacements);

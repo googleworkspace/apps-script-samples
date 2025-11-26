@@ -33,12 +33,10 @@ function getTaskLists() {
   if (!taskLists) {
     return [];
   }
-  return taskLists.map(function (taskList) {
-    return {
-      id: taskList.getId(),
-      name: taskList.getTitle(),
-    };
-  });
+  return taskLists.map((taskList) => ({
+    id: taskList.getId(),
+    name: taskList.getTitle(),
+  }));
 }
 
 /**
@@ -52,17 +50,13 @@ function getTasks(taskListId) {
     return [];
   }
   return tasks
-    .map(function (task) {
-      return {
-        id: task.getId(),
-        title: task.getTitle(),
-        notes: task.getNotes(),
-        completed: Boolean(task.getCompleted()),
-      };
-    })
-    .filter(function (task) {
-      return task.title;
-    });
+    .map((task) => ({
+      id: task.getId(),
+      title: task.getTitle(),
+      notes: task.getNotes(),
+      completed: Boolean(task.getCompleted()),
+    }))
+    .filter((task) => task.title);
 }
 
 /**

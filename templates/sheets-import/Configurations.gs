@@ -40,7 +40,7 @@ function getReportConfig(reportId) {
   // Sheet name may have been changed manually, so
   // get the current one.
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, parseInt(config.sheetId));
+  var sheet = getSheetById(ss, Number.parseInt(config.sheetId));
   config.sheetName = !sheet ? null : sheet.getName();
   return config;
 }
@@ -130,7 +130,7 @@ function getAllReports() {
  */
 function getScheduledReports(opt_user) {
   var scheduledReports = [];
-  _.keys(getAllReports()).forEach(function (reportId) {
+  _.keys(getAllReports()).forEach((reportId) => {
     var config = getReportConfig(reportId);
     if (config && config.scheduled && (!opt_user || opt_user == config.owner)) {
       scheduledReports.push(config);
@@ -191,9 +191,7 @@ function updateOnImport(config, sheet, lastRun) {
  * @return {Array} column ID strings.
  */
 function getColumnIds(config) {
-  return _.map(config.columns, function (col) {
-    return col.column;
-  });
+  return _.map(config.columns, (col) => col.column);
 }
 
 /**

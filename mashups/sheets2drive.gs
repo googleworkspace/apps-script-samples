@@ -15,15 +15,13 @@ function createDriveFilesFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a PDF in Google Drive for each row.
-  data.forEach(function (row) {
+  data.forEach((row) => {
     const fileName = row[0];
     const htmlContent = row[1];
     const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    const emails = emailsStr.split(",").map(function (email) {
-      return email.trim();
-    });
+    const emails = emailsStr.split(",").map((email) => email.trim());
 
     // Convert the HTML content to PDF.
     const html = Utilities.newBlob(htmlContent, "text/html");

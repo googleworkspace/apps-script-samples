@@ -39,7 +39,7 @@ function emailSentiment() {
 
   for (let i = 0; i < msgs.length; i++) {
     for (let j = 0; j < msgs[i].length; j++) {
-      let emailText = msgs[i][j].getPlainBody();
+      const emailText = msgs[i][j].getPlainBody();
       currentPrediction = processSentiment(emailText);
       if (currentPrediction === true) {
         label_upset.addToThread(msgs[i][j].getThread());

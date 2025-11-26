@@ -1,5 +1,5 @@
-let snippets = new Snippets();
-let helpers = new Helpers();
+const snippets = new Snippets();
+const helpers = new Helpers();
 
 /**
  * A simple exists assertion check. Expects a value to exist. Errors if DNE.

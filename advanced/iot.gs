@@ -25,7 +25,7 @@ function listRegistries() {
   const response = CloudIoT.Projects.Locations.Registries.list(parent);
   console.log(response);
   if (response.deviceRegistries) {
-    response.deviceRegistries.forEach(function (registry) {
+    response.deviceRegistries.forEach((registry) => {
       console.log(registry.id);
     });
   }
@@ -115,7 +115,7 @@ function listDevicesForRegistry() {
 
   console.log("Registry contains the following devices: ");
   if (response.devices) {
-    response.devices.forEach(function (device) {
+    response.devices.forEach((device) => {
       console.log("\t" + device.id);
     });
   }

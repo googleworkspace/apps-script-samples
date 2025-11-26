@@ -64,14 +64,12 @@ function getDocumentInfo() {
     result.selection = {
       selectedElements: selection
         .getSelectedElements()
-        .map(function (selectedElement) {
-          return {
-            element: getElementInfo(selectedElement.getElement()),
-            partial: selectedElement.isPartial(),
-            startOffset: selectedElement.getStartOffset(),
-            endOffsetInclusive: selectedElement.getEndOffsetInclusive(),
-          };
-        }),
+        .map((selectedElement) => ({
+          element: getElementInfo(selectedElement.getElement()),
+          partial: selectedElement.isPartial(),
+          startOffset: selectedElement.getStartOffset(),
+          endOffsetInclusive: selectedElement.getEndOffsetInclusive(),
+        })),
     };
   }
   return result;

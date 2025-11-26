@@ -87,10 +87,10 @@ function showSidebar() {
 function getInitialDataForSidebar() {
   var reportSet = getAllReports();
   var reportList = [];
-  _.each(reportSet, function (val, key) {
+  _.each(reportSet, (val, key) => {
     reportList.push({ name: val, reportId: key });
   });
-  reportList.sort(function (a, b) {
+  reportList.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -212,16 +212,14 @@ function removeReport(reportId) {
  */
 function activateReportSheet(config) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, parseInt(config.sheetId));
+  var sheet = getSheetById(ss, Number.parseInt(config.sheetId));
   if (sheet == null) {
     sheet = ss.insertSheet();
     sheet.setName(getUniqueSheetName(ss, config.name));
   }
   sheet.activate();
 
-  var headers = _.map(config.columns, function (col) {
-    return col.label;
-  });
+  var headers = _.map(config.columns, (col) => col.label);
   sheet.clear();
   sheet.clearNotes();
   sheet.setFrozenRows(1);

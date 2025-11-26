@@ -61,9 +61,7 @@ function runQuery() {
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
-  const headers = queryResults.schema.fields.map(function (field) {
-    return field.name;
-  });
+  const headers = queryResults.schema.fields.map((field) => field.name);
   sheet.appendRow(headers);
 
   // Append the results.
