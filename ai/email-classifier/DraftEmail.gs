@@ -21,7 +21,8 @@
  * @param {string} body The body of the email thread.
  * @returns {string} The prompt string.
  */
-const draftEmailPrompt = (subject, body) => `
+const draftEmailPrompt = (subject, body) =>
+  `
 You are an AI assistant. Based on the following email thread:
 
 Subject: ${subject}
@@ -74,9 +75,9 @@ function draftEmail(subject, messages) {
     body.push(`Message ${i + 1}:`);
     body.push(`From: ${message.getFrom()}`);
     body.push(`To:${message.getTo()}`);
-    body.push('Body:');
+    body.push("Body:");
     body.push(message.getPlainBody());
-    body.push('---');
+    body.push("---");
   }
 
   // Prepare the request payload
@@ -86,10 +87,10 @@ function draftEmail(subject, messages) {
         role: "user",
         parts: [
           {
-            text: draftEmailPrompt(subject, body.join('\n'))
-          }
-        ]
-      }
+            text: draftEmailPrompt(subject, body.join("\n")),
+          },
+        ],
+      },
     ],
     generationConfig: {
       temperature: 0,
@@ -97,19 +98,19 @@ function draftEmail(subject, messages) {
       topP: 0.1,
       seed: 37,
       maxOutputTokens: 1024,
-      responseMimeType: 'text/plain'
-    }
+      responseMimeType: "text/plain",
+    },
   };
 
   // Prepare the request options
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${ScriptApp.getOAuthToken()}`
+      Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
     },
-    contentType: 'application/json',
+    contentType: "application/json",
     muteHttpExceptions: true, // Set to true to inspect the error response
-    payload: JSON.stringify(payload)
+    payload: JSON.stringify(payload),
   };
 
   // Make the API request
@@ -128,14 +129,14 @@ function draftEmail(subject, messages) {
  * @returns {string|null} The HTML content or null if not found.
  */
 function extractHtmlContent(textString) {
-    // The regex pattern:
-    // ````html` (literal start marker)
-    // `(.*?)` (capturing group for any character, non-greedily, including newlines)
-    // ` ``` ` (literal end marker)
-    // `s` flag makes '.' match any character including newlines.
-    const match = textString.match(/```html(.*?)```/s);
-    if (match && match[1]) {
-        return match[1]; // Return the content of the first capturing group
-    }
-    return null; // Or an empty string, depending on desired behavior if not found
+  // The regex pattern:
+  // ````html` (literal start marker)
+  // `(.*?)` (capturing group for any character, non-greedily, including newlines)
+  // ` ``` ` (literal end marker)
+  // `s` flag makes '.' match any character including newlines.
+  const match = textString.match(/```html(.*?)```/s);
+  if (match?.[1]) {
+    return match[1]; // Return the content of the first capturing group
+  }
+  return null; // Or an empty string, depending on desired behavior if not found
 }

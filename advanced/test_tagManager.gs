@@ -15,7 +15,7 @@
  */
 // Before running tagManager tests create a test tagMAnager account
 // and replace the value below with its account path
-const path = 'accounts/6007387289';
+const path = "accounts/6007387289";
 
 /**
  * Tests createContainerVersion function of tagManager.gs
@@ -23,7 +23,7 @@ const path = 'accounts/6007387289';
  * @return {object} version The container version
  */
 function itShouldCreateContainerVersion(accountPath) {
-  console.log('> itShouldCreateContainerVersion');
+  console.log("> itShouldCreateContainerVersion");
   const version = createContainerVersion(accountPath);
   return version;
 }
@@ -33,7 +33,7 @@ function itShouldCreateContainerVersion(accountPath) {
  * @param {object} version tag managers container version
  */
 function itShouldPublishVersionAndQuickPreviewDraft(version) {
-  console.log('> itShouldPublishVersionAndQuickPreviewDraft');
+  console.log("> itShouldPublishVersionAndQuickPreviewDraft");
   publishVersionAndQuickPreviewDraft(version);
 }
 
@@ -42,7 +42,7 @@ function itShouldPublishVersionAndQuickPreviewDraft(version) {
  * @param {object} version tag managers container version
  */
 function itShouldCreateAndReauthorizeUserEnvironment(version) {
-  console.log('> itShouldCreateAndReauthorizeUserEnvironment');
+  console.log("> itShouldCreateAndReauthorizeUserEnvironment");
   createAndReauthorizeUserEnvironment(version);
 }
 
@@ -51,7 +51,7 @@ function itShouldCreateAndReauthorizeUserEnvironment(version) {
  * @param {string} accountPath Tag manager account's path
  */
 function itShouldLogAllAccountUserPermissionsWithContainerAccess(accountPath) {
-  console.log('> itShouldLogAllAccountUserPermissionsWithContainerAccess');
+  console.log("> itShouldLogAllAccountUserPermissionsWithContainerAccess");
   logAllAccountUserPermissionsWithContainerAccess(accountPath);
 }
 /**

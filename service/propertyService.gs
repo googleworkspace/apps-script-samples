@@ -25,13 +25,15 @@ function saveSingleProperty() {
     const userProperties = PropertiesService.getUserProperties();
     const documentProperties = PropertiesService.getDocumentProperties();
 
-    scriptProperties.setProperty('SERVER_URL', 'http://www.example.com/');
-    userProperties.setProperty('DISPLAY_UNITS', 'metric');
-    documentProperties.setProperty('SOURCE_DATA_ID',
-        '1j3GgabZvXUF177W0Zs_2v--H6SPCQb4pmZ6HsTZYT5k');
+    scriptProperties.setProperty("SERVER_URL", "http://www.example.com/");
+    userProperties.setProperty("DISPLAY_UNITS", "metric");
+    documentProperties.setProperty(
+      "SOURCE_DATA_ID",
+      "1j3GgabZvXUF177W0Zs_2v--H6SPCQb4pmZ6HsTZYT5k",
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_save_data_single_value]
 }
@@ -45,13 +47,13 @@ function saveMultipleProperties() {
     // Set multiple script properties in one call.
     const scriptProperties = PropertiesService.getScriptProperties();
     scriptProperties.setProperties({
-      'cow': 'moo',
-      'sheep': 'baa',
-      'chicken': 'cluck'
+      cow: "moo",
+      sheep: "baa",
+      chicken: "cluck",
     });
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_save_data_multiple_value]
 }
@@ -64,11 +66,11 @@ function readSingleProperty() {
   try {
     // Get the value for the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
-    const units = userProperties.getProperty('DISPLAY_UNITS');
-    console.log('values of units %s', units);
+    const units = userProperties.getProperty("DISPLAY_UNITS");
+    console.log("values of units %s", units);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_read_data_single_value]
 }
@@ -83,11 +85,11 @@ function readAllProperties() {
     const scriptProperties = PropertiesService.getScriptProperties();
     const data = scriptProperties.getProperties();
     for (const key in data) {
-      console.log('Key: %s, Value: %s', key, data[key]);
+      console.log("Key: %s, Value: %s", key, data[key]);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_read_multiple_data_value]
 }
@@ -100,12 +102,12 @@ function updateProperty() {
   try {
     // Change the unit type in the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
-    let units = userProperties.getProperty('DISPLAY_UNITS');
-    units = 'imperial'; // Only changes local value, not stored value.
-    userProperties.setProperty('DISPLAY_UNITS', units); // Updates stored value.
+    let units = userProperties.getProperty("DISPLAY_UNITS");
+    units = "imperial"; // Only changes local value, not stored value.
+    userProperties.setProperty("DISPLAY_UNITS", units); // Updates stored value.
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_modify_data]
 }
@@ -118,10 +120,10 @@ function deleteSingleProperty() {
   try {
     // Delete the user property 'DISPLAY_UNITS'.
     const userProperties = PropertiesService.getUserProperties();
-    userProperties.deleteProperty('DISPLAY_UNITS');
+    userProperties.deleteProperty("DISPLAY_UNITS");
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_delete_data_single_value]
 }
@@ -138,7 +140,7 @@ function deleteAllUserProperties() {
     userProperties.deleteAllProperties();
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
   // [END apps_script_property_service_delete_all_data]
 }

@@ -19,15 +19,15 @@
  * You can find the "Instance connection name" in the Google Cloud
  * Platform Console, on the instance Overview page.
  */
-const connectionName = 'Instance_connection_name';
-const rootPwd = 'root_password';
-const user = 'user_name';
-const userPwd = 'user_password';
-const db = 'database_name';
+const connectionName = "Instance_connection_name";
+const rootPwd = "root_password";
+const user = "user_name";
+const userPwd = "user_password";
+const db = "database_name";
 
-const root = 'root';
-const instanceUrl = 'jdbc:google:mysql://' + connectionName;
-const dbUrl = instanceUrl + '/' + db;
+const root = "root";
+const instanceUrl = `jdbc:google:mysql://${connectionName}`;
+const dbUrl = `${instanceUrl}/${db}`;
 
 // [START apps_script_jdbc_create]
 /**
@@ -36,10 +36,10 @@ const dbUrl = instanceUrl + '/' + db;
 function createDatabase() {
   try {
     const conn = Jdbc.getCloudSqlConnection(instanceUrl, root, rootPwd);
-    conn.createStatement().execute('CREATE DATABASE ' + db);
+    conn.createStatement().execute(`CREATE DATABASE ${db}`);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -50,15 +50,15 @@ function createUser() {
   try {
     const conn = Jdbc.getCloudSqlConnection(dbUrl, root, rootPwd);
 
-    const stmt = conn.prepareStatement('CREATE USER ? IDENTIFIED BY ?');
+    const stmt = conn.prepareStatement("CREATE USER ? IDENTIFIED BY ?");
     stmt.setString(1, user);
     stmt.setString(2, userPwd);
     stmt.execute();
 
-    conn.createStatement().execute('GRANT ALL ON `%`.* TO ' + user);
+    conn.createStatement().execute(`GRANT ALL ON \`%\`.* TO ${user}`);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -68,12 +68,16 @@ function createUser() {
 function createTable() {
   try {
     const conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
-    conn.createStatement().execute('CREATE TABLE entries ' +
-      '(guestName VARCHAR(255), content VARCHAR(255), ' +
-      'entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));');
+    conn
+      .createStatement()
+      .execute(
+        "CREATE TABLE entries " +
+          "(guestName VARCHAR(255), content VARCHAR(255), " +
+          "entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));",
+      );
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 // [END apps_script_jdbc_create]
@@ -86,14 +90,15 @@ function writeOneRecord() {
   try {
     const conn = Jdbc.getCloudSqlConnection(dbUrl, user, userPwd);
 
-    const stmt = conn.prepareStatement('INSERT INTO entries ' +
-      '(guestName, content) values (?, ?)');
-    stmt.setString(1, 'First Guest');
-    stmt.setString(2, 'Hello, world');
+    const stmt = conn.prepareStatement(
+      "INSERT INTO entries " + "(guestName, content) values (?, ?)",
+    );
+    stmt.setString(1, "First Guest");
+    stmt.setString(2, "Hello, world");
     stmt.execute();
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -106,11 +111,12 @@ function writeManyRecords() {
     conn.setAutoCommit(false);
 
     const start = new Date();
-    const stmt = conn.prepareStatement('INSERT INTO entries ' +
-      '(guestName, content) values (?, ?)');
+    const stmt = conn.prepareStatement(
+      "INSERT INTO entries " + "(guestName, content) values (?, ?)",
+    );
     for (let i = 0; i < 500; i++) {
-      stmt.setString(1, 'Name ' + i);
-      stmt.setString(2, 'Hello, world ' + i);
+      stmt.setString(1, `Name ${i}`);
+      stmt.setString(2, `Hello, world ${i}`);
       stmt.addBatch();
     }
 
@@ -119,10 +125,10 @@ function writeManyRecords() {
     conn.close();
 
     const end = new Date();
-    console.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
+    console.log("Time elapsed: %sms for %s rows.", end - start, batch.length);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -136,11 +142,12 @@ function writeManyRecordsUsingExecuteBatch() {
     conn.setAutoCommit(false);
 
     const start = new Date();
-    const stmt = conn.prepareStatement('INSERT INTO entries ' +
-      '(guestName, content) values (?, ?)');
+    const stmt = conn.prepareStatement(
+      "INSERT INTO entries " + "(guestName, content) values (?, ?)",
+    );
     const params = [];
     for (let i = 0; i < 500; i++) {
-      params.push(['Name ' + i, 'Hello, world ' + i]);
+      params.push([`Name ${i}`, `Hello, world ${i}`]);
     }
 
     const batch = stmt.executeBatch(params);
@@ -148,10 +155,10 @@ function writeManyRecordsUsingExecuteBatch() {
     conn.close();
 
     const end = new Date();
-    console.log('Time elapsed: %sms for %s rows.', end - start, batch.length);
+    console.log("Time elapsed: %sms for %s rows.", end - start, batch.length);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 // [END apps_script_jdbc_write]
@@ -166,13 +173,13 @@ function readFromTable() {
     const start = new Date();
     const stmt = conn.createStatement();
     stmt.setMaxRows(1000);
-    const results = stmt.executeQuery('SELECT * FROM entries');
+    const results = stmt.executeQuery("SELECT * FROM entries");
     const numCols = results.getMetaData().getColumnCount();
 
     while (results.next()) {
-      let rowString = '';
+      let rowString = "";
       for (let col = 0; col < numCols; col++) {
-        rowString += results.getString(col + 1) + '\t';
+        rowString += `${results.getString(col + 1)}\t`;
       }
       console.log(rowString);
     }
@@ -181,10 +188,10 @@ function readFromTable() {
     stmt.close();
 
     const end = new Date();
-    console.log('Time elapsed: %sms', end - start);
+    console.log("Time elapsed: %sms", end - start);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -198,25 +205,25 @@ function readFromTableUsingGetRows() {
     const start = new Date();
     const stmt = conn.createStatement();
     stmt.setMaxRows(1000);
-    const results = stmt.executeQuery('SELECT * FROM entries');
+    const results = stmt.executeQuery("SELECT * FROM entries");
     const numCols = results.getMetaData().getColumnCount();
     const getRowArgs = [];
     for (let col = 0; col < numCols; col++) {
       getRowArgs.push(`getString(${col + 1})`);
     }
-    const rows = results.getRows(getRowArgs.join(','));
+    const rows = results.getRows(getRowArgs.join(","));
     for (let i = 0; i < rows.length; i++) {
-      console.log(rows[i].join('\t'));
+      console.log(rows[i].join("\t"));
     }
 
     results.close();
     stmt.close();
 
     const end = new Date();
-    console.log('Time elapsed: %sms', end - start);
+    console.log("Time elapsed: %sms", end - start);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 // [END apps_script_jdbc_read]

@@ -25,17 +25,17 @@ function listLabels() {
     try {
       const response = DriveLabels.Labels.list({
         publishedOnly: true,
-        pageToken: pageToken
+        pageToken: pageToken,
       });
       pageToken = response.nextPageToken;
       labels = labels.concat(response.labels);
     } catch (err) {
       // TODO (developer) - Handle exception
-      console.log('Failed to list labels with error %s', err.message);
+      console.log("Failed to list labels with error %s", err.message);
     }
   } while (pageToken != null);
 
-  console.log('Found %d labels', labels.length);
+  console.log("Found %d labels", labels.length);
 }
 // [END apps_script_drive_labels_list_labels]
 
@@ -46,13 +46,17 @@ function listLabels() {
  */
 function getLabel(labelName) {
   try {
-    const label = DriveLabels.Labels.get(labelName, {view: 'LABEL_VIEW_FULL'});
+    const label = DriveLabels.Labels.get(labelName, {
+      view: "LABEL_VIEW_FULL",
+    });
     const title = label.properties.title;
     const fieldsLength = label.fields.length;
-    console.log(`Fetched label with title: '${title}' and ${fieldsLength} fields.`);
+    console.log(
+      `Fetched label with title: '${title}' and ${fieldsLength} fields.`,
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to get label with error %s', err.message);
+    console.log("Failed to get label with error %s", err.message);
   }
 }
 // [END apps_script_drive_labels_get_label]
@@ -69,56 +73,71 @@ function listLabelsOnDriveItem(fileId) {
   try {
     const appliedLabels = Drive.Files.listLabels(fileId);
 
-    console.log('%d label(s) are applied to this file', appliedLabels.labels.length);
+    console.log(
+      "%d label(s) are applied to this file",
+      appliedLabels.labels.length,
+    );
 
-    appliedLabels.labels.forEach((appliedLabel) => {
+    for (const appliedLabel of appliedLabels.labels) {
       // Resource name of the label at the applied revision.
-      const labelName = 'labels/' + appliedLabel.id + '@' + appliedLabel.revisionId;
+      const labelName = `labels/${appliedLabel.id}@${appliedLabel.revisionId}`;
 
-      console.log('Fetching Label: %s', labelName);
-      const label = DriveLabels.Labels.get(labelName, {view: 'LABEL_VIEW_FULL'});
+      console.log("Fetching Label: %s", labelName);
+      const label = DriveLabels.Labels.get(labelName, {
+        view: "LABEL_VIEW_FULL",
+      });
 
-      console.log('Label Title: %s', label.properties.title);
+      console.log("Label Title: %s", label.properties.title);
 
-      Object.keys(appliedLabel.fields).forEach((fieldId) => {
+      for (const fieldId of Object.keys(appliedLabel.fields)) {
         const fieldValue = appliedLabel.fields[fieldId];
-        const field = label.fields.find((f) => f.id == fieldId);
+        const field = label.fields.find((f) => f.id === fieldId);
 
-        console.log(`Field ID: ${field.id}, Display Name: ${field.properties.displayName}`);
+        console.log(
+          `Field ID: ${field.id}, Display Name: ${field.properties.displayName}`,
+        );
         switch (fieldValue.valueType) {
-          case 'text':
-            console.log('Text: %s', fieldValue.text[0]);
+          case "text":
+            console.log("Text: %s", fieldValue.text[0]);
             break;
-          case 'integer':
-            console.log('Integer: %d', fieldValue.integer[0]);
+          case "integer":
+            console.log("Integer: %d", fieldValue.integer[0]);
             break;
-          case 'dateString':
-            console.log('Date: %s', fieldValue.dateString[0]);
+          case "dateString":
+            console.log("Date: %s", fieldValue.dateString[0]);
             break;
-          case 'user':
-            const user = fieldValue.user.map((user) => {
-              return `${user.emailAddress}: ${user.displayName}`;
-            }).join(', ');
+          case "user": {
+            const user = fieldValue.user
+              .map((user) => {
+                return `${user.emailAddress}: ${user.displayName}`;
+              })
+              .join(", ");
             console.log(`User: ${user}`);
             break;
-          case 'selection':
+          }
+          case "selection": {
             const choices = fieldValue.selection.map((choiceId) => {
-              return field.selectionOptions.choices.find((choice) => choice.id === choiceId);
+              return field.selectionOptions.choices.find(
+                (choice) => choice.id === choiceId,
+              );
             });
-            const selection = choices.map((choice) => {
-              return `${choice.id}: ${choice.properties.displayName}`;
-            }).join(', ');
+            const selection = choices
+              .map((choice) => {
+                return `${choice.id}: ${choice.properties.displayName}`;
+              })
+              .join(", ");
             console.log(`Selection: ${selection}`);
             break;
+          }
           default:
-            console.log('Unknown: %s', fieldValue.valueType);
+            console.log("Unknown: %s", fieldValue.valueType);
             console.log(fieldValue.value);
         }
-      });
-    });
+      }
+    }
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_drive_labels_list_labels_on_drive_item]

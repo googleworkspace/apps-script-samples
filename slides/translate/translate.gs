@@ -23,9 +23,10 @@
  * @param {Event} event The open event.
  */
 function onOpen(event) {
-  SlidesApp.getUi().createAddonMenu()
-      .addItem('Open Translate', 'showSidebar')
-      .addToUi();
+  SlidesApp.getUi()
+    .createAddonMenu()
+    .addItem("Open Translate", "showSidebar")
+    .addToUi();
 }
 
 /**
@@ -40,9 +41,8 @@ function onInstall(event) {
  * Opens a sidebar in the document containing the add-on's user interface.
  */
 function showSidebar() {
-  const ui = HtmlService
-      .createHtmlOutputFromFile('sidebar')
-      .setTitle('Translate');
+  const ui =
+    HtmlService.createHtmlOutputFromFile("sidebar").setTitle("Translate");
   SlidesApp.getUi().showSidebar(ui);
 }
 
@@ -53,26 +53,27 @@ function showSidebar() {
  */
 function getElementTexts(elements) {
   let texts = [];
-  elements.forEach((element)=> {
+  for (const element of elements) {
     switch (element.getPageElementType()) {
       case SlidesApp.PageElementType.GROUP:
-        element.asGroup().getChildren().forEach((child)=> {
+        for (const child of element.asGroup().getChildren()) {
           texts = texts.concat(getElementTexts(child));
-        });
+        }
         break;
-      case SlidesApp.PageElementType.TABLE:
+      case SlidesApp.PageElementType.TABLE: {
         const table = element.asTable();
-        for (let y = 0; y < table.getNumColumns(); ++y) {
-          for (let x = 0; x < table.getNumRows(); ++x) {
-            texts.push(table.getCell(x, y).getText());
+        for (let r = 0; r < table.getNumRows(); ++r) {
+          for (let c = 0; c < table.getNumColumns(); ++c) {
+            texts.push(table.getCell(r, c).getText());
           }
         }
         break;
+      }
       case SlidesApp.PageElementType.SHAPE:
         texts.push(element.asShape().getText());
         break;
     }
-  });
+  }
   return texts;
 }
 
@@ -89,30 +90,33 @@ function translateSelectedElements(targetLanguage) {
   let texts = [];
   switch (selectionType) {
     case SlidesApp.SelectionType.PAGE:
-      selection.getPageRange().getPages().forEach((page)=> {
+      for (const page of selection.getPageRange().getPages()) {
         texts = texts.concat(getElementTexts(page.getPageElements()));
-      });
+      }
       break;
-    case SlidesApp.SelectionType.PAGE_ELEMENT:
+    case SlidesApp.SelectionType.PAGE_ELEMENT: {
       const pageElements = selection.getPageElementRange().getPageElements();
       texts = texts.concat(getElementTexts(pageElements));
       break;
+    }
     case SlidesApp.SelectionType.TABLE_CELL:
-      selection.getTableCellRange().getTableCells().forEach((cell)=> {
+      for (const cell of selection.getTableCellRange().getTableCells()) {
         texts.push(cell.getText());
-      });
+      }
       break;
     case SlidesApp.SelectionType.TEXT:
-      selection.getPageElementRange().getPageElements().forEach((element) =>{
+      for (const element of selection.getPageElementRange().getPageElements()) {
         texts.push(element.asShape().getText());
-      });
+      }
       break;
   }
 
   // Translate all elements in-place.
-  texts.forEach((text)=> {
-    text.setText(LanguageApp.translate(text.asRenderedString(), '', targetLanguage));
-  });
+  for (const text of texts) {
+    text.setText(
+      LanguageApp.translate(text.asRenderedString(), "", targetLanguage),
+    );
+  }
 
   return texts.length;
 }

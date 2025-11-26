@@ -18,7 +18,7 @@
  * Tests createReport function of youtubeAnalytics.gs
  */
 function itShouldCreateReport() {
-  console.log('> itShouldCreateReport');
+  console.log("> itShouldCreateReport");
   createReport();
 }
 

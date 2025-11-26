@@ -34,9 +34,10 @@
  *     running in, inspect e.authMode.
  */
 function onOpen(e) {
-  DocumentApp.getUi().createAddonMenu()
-      .addItem('Start', 'showSidebar')
-      .addToUi();
+  DocumentApp.getUi()
+    .createAddonMenu()
+    .addItem("Start", "showSidebar")
+    .addToUi();
 }
 
 /**
@@ -60,8 +61,8 @@ function onInstall(e) {
  * the mobile add-on version.
  */
 function showSidebar() {
-  const ui = HtmlService.createHtmlOutputFromFile('sidebar')
-      .setTitle('Translate');
+  const ui =
+    HtmlService.createHtmlOutputFromFile("sidebar").setTitle("Translate");
   DocumentApp.getUi().showSidebar(ui);
 }
 
@@ -98,7 +99,7 @@ function getSelectedText() {
       }
     }
   }
-  if (!text.length) throw new Error('Please select some text.');
+  if (!text.length) throw new Error("Please select some text.");
   return text;
 }
 
@@ -114,8 +115,8 @@ function getSelectedText() {
 function getPreferences() {
   const userProperties = PropertiesService.getUserProperties();
   return {
-    originLang: userProperties.getProperty('originLang'),
-    destLang: userProperties.getProperty('destLang')
+    originLang: userProperties.getProperty("originLang"),
+    destLang: userProperties.getProperty("destLang"),
   };
 }
 
@@ -136,13 +137,13 @@ function getPreferences() {
 function getTextAndTranslation(origin, dest, savePrefs) {
   if (savePrefs) {
     PropertiesService.getUserProperties()
-        .setProperty('originLang', origin)
-        .setProperty('destLang', dest);
+      .setProperty("originLang", origin)
+      .setProperty("destLang", dest);
   }
-  const text = getSelectedText().join('\n');
+  const text = getSelectedText().join("\n");
   return {
     text: text,
-    translation: translateText(text, origin, dest)
+    translation: translateText(text, origin, dest),
   };
 }
 
@@ -160,9 +161,12 @@ function insertText(newText) {
   if (selection) {
     let replaced = false;
     const elements = selection.getSelectedElements();
-    if (elements.length === 1 && elements[0].getElement().getType() ===
-      DocumentApp.ElementType.INLINE_IMAGE) {
-      throw new Error('Can\'t insert text into an image.');
+    if (
+      elements.length === 1 &&
+      elements[0].getElement().getType() ===
+        DocumentApp.ElementType.INLINE_IMAGE
+    ) {
+      throw new Error("Can't insert text into an image.");
     }
     for (let i = 0; i < elements.length; ++i) {
       if (elements[i].isPartial()) {
@@ -215,17 +219,20 @@ function insertText(newText) {
     // If the cursor follows or preceds a non-space character, insert a space
     // between the character and the translation. Otherwise, just insert the
     // translation.
-    if (surroundingTextOffset > 0) {
-      if (surroundingText.charAt(surroundingTextOffset - 1) !== ' ') {
-        newText = ' ' + newText;
+    let textToInsert = newText;
+    if (surroundingText) {
+      if (surroundingTextOffset > 0) {
+        if (surroundingText.charAt(surroundingTextOffset - 1) !== " ") {
+          textToInsert = ` ${textToInsert}`;
+        }
+      }
+      if (surroundingTextOffset < surroundingText.length) {
+        if (surroundingText.charAt(surroundingTextOffset) !== " ") {
+          textToInsert += " ";
+        }
       }
     }
-    if (surroundingTextOffset < surroundingText.length) {
-      if (surroundingText.charAt(surroundingTextOffset) !== ' ') {
-        newText += ' ';
-      }
-    }
-    cursor.insertText(newText);
+    cursor.insertText(textToInsert);
   }
 }
 

@@ -18,26 +18,26 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current spreadsheet.
  */
 
-var _ = Underscore.load();
+const _ = Underscore.load();
 
 /**
  * TODO: Replace the following with the name of the service you are importing
  * from and the name of the add-on you are building, respectively.
  */
-var DATA_ALIAS = 'MyDataSource';
-var ADDON_NAME = 'YOUR_ADDON_NAME_HERE';
-var SIDEBAR_TITLE = 'Import Control Center';
-var MAX_SCHEDULED_REPORTS = 24;
-var IMPORT_PAGE_SIZE = 30;
+const DATA_ALIAS = "MyDataSource";
+const ADDON_NAME = "YOUR_ADDON_NAME_HERE";
+const SIDEBAR_TITLE = "Import Control Center";
+const MAX_SCHEDULED_REPORTS = 24;
+const IMPORT_PAGE_SIZE = 30;
 
 /**
  * Error code enum; this gets passed to the sidebar for use there as well.
  */
-var ERROR_CODES = {
+const ERROR_CODES = {
   AUTO_UPDATE_LIMIT: 1,
   ILLEGAL_EDIT: 2,
   ILLEGAL_DELETE: 3,
-  IMPORT_FAILED: 4
+  IMPORT_FAILED: 4,
 };
 
 /**
@@ -46,9 +46,9 @@ var ERROR_CODES = {
  */
 function onOpen(e) {
   SpreadsheetApp.getUi()
-      .createAddonMenu()
-      .addItem('Import control center', 'showSidebar')
-      .addToUi();
+    .createAddonMenu()
+    .addItem("Import control center", "showSidebar")
+    .addToUi();
 }
 
 /**
@@ -65,8 +65,8 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var service = getService();
-  var template = HtmlService.createTemplateFromFile('Sidebar');
+  const service = getService();
+  const template = HtmlService.createTemplateFromFile("Sidebar");
   template.user = Session.getEffectiveUser().getEmail();
   template.dataSource = DATA_ALIAS;
   template.isAuthorized = service.hasAccess();
@@ -74,8 +74,7 @@ function showSidebar() {
   if (!template.isAuthorized) {
     template.authorizationUrl = service.getAuthorizationUrl();
   }
-  var page = template.evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  const page = template.evaluate().setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(page);
 }
 
@@ -86,21 +85,21 @@ function showSidebar() {
  * @return {Object} a collection of saved report data and column options.
  */
 function getInitialDataForSidebar() {
-  var reportSet = getAllReports();
-  var reportList = [];
-  _.each(reportSet, function(val, key) {
-    reportList.push({'name': val, 'reportId': key});
+  const reportSet = getAllReports();
+  const reportList = [];
+  _.each(reportSet, (val, key) => {
+    reportList.push({ name: val, reportId: key });
   });
-  reportList.sort(function(a, b) {
+  reportList.sort((a, b) => {
     if (a.name > b.name) {
- return 1;
-}
+      return 1;
+    }
     if (a.name < b.name) {
- return -1;
-}
+      return -1;
+    }
     return 0;
   });
-  return {reports: reportList, columns: getColumnOptions()};
+  return { reports: reportList, columns: getColumnOptions() };
 }
 
 /**
@@ -110,7 +109,7 @@ function getInitialDataForSidebar() {
  * @return {object} The report config.
  */
 function switchToReport(reportId) {
-  var config = getReportConfig(reportId);
+  const config = getReportConfig(reportId);
   activateById(config.sheetId);
   return config;
 }
@@ -122,27 +121,29 @@ function switchToReport(reportId) {
  * @return {object} the (possibly updated) report configuration.
  */
 function runImport(reportId) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var config = getReportConfig(reportId);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let config = getReportConfig(reportId);
 
   // Acquire the sheet to place the import results in,
   // then clear and format it.
   // Update the saved config with sheet/time information.
-  var sheet = activateReportSheet(config);
-  var columnIds = getColumnIds(config);
-  var lastRun = new Date().toString();
+  const sheet = activateReportSheet(config);
+  const columnIds = getColumnIds(config);
+  const lastRun = new Date().toString();
   config = updateOnImport(config, sheet, lastRun);
 
   // Call for pages of API information to place in the sheet, one
   // page at a time.
-  var pageNumber = 0;
-  var firstRow = 2;
+  let pageNumber = 0;
+  let firstRow = 2;
   try {
-    var page;
+    let page;
     do {
       page = getDataPage(columnIds, pageNumber, IMPORT_PAGE_SIZE, config);
       if (page) {
-        sheet.getRange(firstRow, 1, page.length, page[0].length).setValues(page);
+        sheet
+          .getRange(firstRow, 1, page.length, page[0].length)
+          .setValues(page);
         firstRow += page.length;
         pageNumber++;
         SpreadsheetApp.flush();
@@ -153,10 +154,10 @@ function runImport(reportId) {
     throw ERROR_CODES.IMPORT_FAILED;
   }
 
-  for (var i = 1; i <= sheet.getLastColumn(); i++) {
+  for (let i = 1; i <= sheet.getLastColumn(); i++) {
     sheet.autoResizeColumn(i);
   }
-  ss.toast('Report ' + config.name + ' updated.');
+  ss.toast(`Report ${config.name} updated.`);
   return config;
 }
 
@@ -166,7 +167,7 @@ function runImport(reportId) {
  * @return {Object} the updated report configuration.
  */
 function saveReport(config) {
-  var existingConfig = getReportConfig(config.reportId);
+  const existingConfig = getReportConfig(config.reportId);
   if (existingConfig != null) {
     activateById(existingConfig.sheetId);
     // Check: users are not allowed to save edits to reports
@@ -181,7 +182,7 @@ function saveReport(config) {
     throw ERROR_CODES.AUTO_UPDATE_LIMIT;
   }
 
-  var result = saveReportConfig(config);
+  const result = saveReportConfig(config);
   adjustScheduleTrigger();
   return result;
 }
@@ -210,24 +211,23 @@ function removeReport(reportId) {
  * @return {Sheet}
  */
 function activateReportSheet(config) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, parseInt(config.sheetId));
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = getSheetById(ss, Number.parseInt(config.sheetId));
   if (sheet == null) {
     sheet = ss.insertSheet();
     sheet.setName(getUniqueSheetName(ss, config.name));
   }
   sheet.activate();
 
-  var headers = _.map(config.columns, function(col) {
-    return col.label;
-  });
+  const headers = _.map(config.columns, (col) => col.label);
   sheet.clear();
   sheet.clearNotes();
   sheet.setFrozenRows(1);
-  sheet.getRange('1:1')
-    .setFontWeight('bold')
-    .setBackground('#000000')
-    .setFontColor('#ffffff');
+  sheet
+    .getRange("1:1")
+    .setFontWeight("bold")
+    .setBackground("#000000")
+    .setFontColor("#ffffff");
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   return sheet;
 }
@@ -239,13 +239,14 @@ function activateReportSheet(config) {
  * ensures that every scheduled report will be updated once a day.
  */
 function respondToHourlyTrigger() {
-  var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
+  const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
   // Check if the actions of the trigger require authorizations that have not
   // been supplied yet -- if so, warn the active user via email (if possible).
   // This check is required when using triggers with add-ons to maintain
   // functional triggers.
-  if (authInfo.getAuthorizationStatus() ==
-      ScriptApp.AuthorizationStatus.REQUIRED) {
+  if (
+    authInfo.getAuthorizationStatus() === ScriptApp.AuthorizationStatus.REQUIRED
+  ) {
     // Re-authorization is required. In this case, the user needs to be alerted
     // that they need to reauthorize; the normal trigger action is not
     // conducted, since it authorization needs to be provided first. Send at
@@ -253,10 +254,12 @@ function respondToHourlyTrigger() {
     // of the add-on.
     sendReauthorizationRequest();
   } else {
-    var potentials = getScheduledReports(Session.getEffectiveUser().getEmail());
-    for (var i = 0; i < potentials.length; i++) {
-      var lastRun = potentials[i].lastRun;
-      if (!lastRun || isOlderThanADay(lastRun) ) {
+    const potentials = getScheduledReports(
+      Session.getEffectiveUser().getEmail(),
+    );
+    for (let i = 0; i < potentials.length; i++) {
+      const lastRun = potentials[i].lastRun;
+      if (!lastRun || isOlderThanADay(lastRun)) {
         runImport(potentials[i].reportId);
         return;
       }
@@ -271,24 +274,26 @@ function respondToHourlyTrigger() {
  * a day to prevent spamming the users of the add-on.
  */
 function sendReauthorizationRequest() {
-  var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
-  var properties = PropertiesService.getUserProperties();
-  var LAST_AUTH_EMAIL_KEY = 'Import.reauth.lastAuthEmailDate';
-  var lastAuthEmailDate = properties.getProperty(LAST_AUTH_EMAIL_KEY);
-  var today = new Date().toDateString();
-  if (lastAuthEmailDate != today) {
+  const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
+  const properties = PropertiesService.getUserProperties();
+  const LAST_AUTH_EMAIL_KEY = "Import.reauth.lastAuthEmailDate";
+  const lastAuthEmailDate = properties.getProperty(LAST_AUTH_EMAIL_KEY);
+  const today = new Date().toDateString();
+  if (lastAuthEmailDate !== today) {
     if (MailApp.getRemainingDailyQuota() > 0) {
-      var template =
-          HtmlService.createTemplateFromFile('AuthorizationEmail');
+      const template = HtmlService.createTemplateFromFile("AuthorizationEmail");
       template.url = authInfo.getAuthorizationUrl();
       template.addonName = ADDON_NAME;
-      var message = template.evaluate();
-      MailApp.sendEmail(Session.getEffectiveUser().getEmail(),
-        'Add-on Authorization Required',
-        message.getContent(), {
+      const message = template.evaluate();
+      MailApp.sendEmail(
+        Session.getEffectiveUser().getEmail(),
+        "Add-on Authorization Required",
+        message.getContent(),
+        {
           name: ADDON_NAME,
-          htmlBody: message.getContent()
-      });
+          htmlBody: message.getContent(),
+        },
+      );
     }
     properties.setProperty(LAST_AUTH_EMAIL_KEY, today);
   }
@@ -299,22 +304,23 @@ function sendReauthorizationRequest() {
  * by the current user are present; turn it off otherwise.
  */
 function adjustScheduleTrigger() {
-  var existingTriggerId = getTriggerId();
-  var user = Session.getEffectiveUser().getEmail();
-  var triggerNeeded = getScheduledReports(user).length > 0;
+  const existingTriggerId = getTriggerId();
+  const user = Session.getEffectiveUser().getEmail();
+  const triggerNeeded = getScheduledReports(user).length > 0;
 
   // Create a new trigger if required; delete existing trigger
   // if it is not needed.
   if (triggerNeeded && existingTriggerId == null) {
-    var trigger = ScriptApp.newTrigger('respondToHourlyTrigger')
-        .timeBased()
-        .everyHours(1)
-        .create();
+    const trigger = ScriptApp.newTrigger("respondToHourlyTrigger")
+      .timeBased()
+      .everyHours(1)
+      .create();
     saveTriggerId(trigger);
   } else if (!triggerNeeded && existingTriggerId != null) {
-    var existingTrigger = getUserTriggerById(
-        SpreadsheetApp.getActiveSpreadsheet(),
-        existingTriggerId);
+    const existingTrigger = getUserTriggerById(
+      SpreadsheetApp.getActiveSpreadsheet(),
+      existingTriggerId,
+    );
     if (existingTrigger != null) {
       ScriptApp.deleteTrigger(existingTrigger);
     }

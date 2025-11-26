@@ -5,7 +5,7 @@
  */
 function createContactsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const ss = SpreadsheetApp.openByUrl("ENTER SPREADSHEET URL HERE");
   const sheet = ss.getSheets()[0];
   const data = sheet.getDataRange().getValues();
 
@@ -13,10 +13,10 @@ function createContactsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Send a contact for each row.
-  data.forEach(function(row) {
+  for (const row of data) {
     const firstName = row[0];
     const lastName = row[1];
     const email = row[2];
     ContactsApp.createContact(firstName, lastName, email);
-  });
+  }
 }

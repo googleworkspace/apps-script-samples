@@ -20,20 +20,15 @@
  * @see https://developers.google.com/classroom/reference/rest/v1/courses/patch
  */
 function coursePatch(courseId) {
-  let course = {
-    'section': 'Period 3',
-    'room': '302'
+  const course = {
+    section: "Period 3",
+    room: "302",
   };
-  const mask = {
-    updateMask: 'section,room'
+  const options = {
+    updateMask: "section,room",
   };
-  try {
-    // Update section and room in course.
-    course = Classroom.Courses.patch(body=course, id=courseId, updateMask=mask);
-    console.log('Course "%s" updated.', course.name);
-  } catch (err) {
-    // TODO (developer) - Handle Courses.patch() exception
-    console.log('Failed to update the course. Error message: %s', err.message);
-  }
+  // Update section and room in course.
+  const updatedCourse = Classroom.Courses.patch(course, courseId, options);
+  console.log(`Course "${updatedCourse.name}" updated.`);
 }
 // [END classroom_patch_course]

@@ -26,13 +26,16 @@ function listUserProfiles() {
       // Print out the user ID and name of each
       for (let i = 0; i < profiles.items.length; i++) {
         const profile = profiles.items[i];
-        console.log('Found profile with ID %s and name "%s".',
-            profile.profileId, profile.userName);
+        console.log(
+          'Found profile with ID %s and name "%s".',
+          profile.profileId,
+          profile.userName,
+        );
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_doubleclick_list_user_profiles]
@@ -43,29 +46,32 @@ function listUserProfiles() {
  * Note the use of paging tokens to retrieve the whole list.
  */
 function listActiveCampaigns() {
-  const profileId = '1234567'; // Replace with your profile ID.
-  const fields = 'nextPageToken,campaigns(id,name)';
+  const profileId = "1234567"; // Replace with your profile ID.
+  const fields = "nextPageToken,campaigns(id,name)";
   let result;
   let pageToken;
   try {
     do {
       result = DoubleClickCampaigns.Campaigns.list(profileId, {
-        'archived': false,
-        'fields': fields,
-        'pageToken': pageToken
+        archived: false,
+        fields: fields,
+        pageToken: pageToken,
       });
       if (result.campaigns) {
         for (let i = 0; i < result.campaigns.length; i++) {
           const campaign = result.campaigns[i];
-          console.log('Found campaign with ID %s and name "%s".',
-              campaign.id, campaign.name);
+          console.log(
+            'Found campaign with ID %s and name "%s".',
+            campaign.id,
+            campaign.name,
+          );
         }
       }
       pageToken = result.nextPageToken;
     } while (pageToken);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_doubleclick_list_active_campaigns]
@@ -76,25 +82,29 @@ function listActiveCampaigns() {
  * The campaign is set to last for one month.
  */
 function createAdvertiserAndCampaign() {
-  const profileId = '1234567'; // Replace with your profile ID.
+  const profileId = "1234567"; // Replace with your profile ID.
 
   const advertiser = {
-    name: 'Example Advertiser',
-    status: 'APPROVED'
+    name: "Example Advertiser",
+    status: "APPROVED",
   };
 
   try {
-    const advertiserId = DoubleClickCampaigns.Advertisers
-        .insert(advertiser, profileId).id;
+    const advertiserId = DoubleClickCampaigns.Advertisers.insert(
+      advertiser,
+      profileId,
+    ).id;
 
     const landingPage = {
       advertiserId: advertiserId,
       archived: false,
-      name: 'Example landing page',
-      url: 'https://www.google.com'
+      name: "Example landing page",
+      url: "https://www.google.com",
     };
-    const landingPageId = DoubleClickCampaigns.AdvertiserLandingPages
-        .insert(landingPage, profileId).id;
+    const landingPageId = DoubleClickCampaigns.AdvertiserLandingPages.insert(
+      landingPage,
+      profileId,
+    ).id;
 
     const campaignStart = new Date();
     // End campaign after 1 month.
@@ -104,14 +114,14 @@ function createAdvertiserAndCampaign() {
     const campaign = {
       advertiserId: advertiserId,
       defaultLandingPageId: landingPageId,
-      name: 'Example campaign',
-      startDate: Utilities.formatDate(campaignStart, 'GMT', 'yyyy-MM-dd'),
-      endDate: Utilities.formatDate(campaignEnd, 'GMT', 'yyyy-MM-dd')
+      name: "Example campaign",
+      startDate: Utilities.formatDate(campaignStart, "GMT", "yyyy-MM-dd"),
+      endDate: Utilities.formatDate(campaignEnd, "GMT", "yyyy-MM-dd"),
     };
     DoubleClickCampaigns.Campaigns.insert(campaign, profileId);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_doubleclick_create_advertiser_and_campaign]

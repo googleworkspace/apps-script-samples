@@ -13,11 +13,11 @@
 // limitations under the License.
 
 // Global constants. Customize as needed.
-const formsAPIUrl = 'https://forms.googleapis.com/v1/forms/';
-const formId = '<YOUR_FORM_ID>';
-const topicName = 'projects/<YOUR_TOPIC_PATH>';
+const formsAPIUrl = "https://forms.googleapis.com/v1/forms/";
+const formId = "<YOUR_FORM_ID>";
+const topicName = "projects/<YOUR_TOPIC_PATH>";
 
-// To setup pub/sub topics, see: 
+// To setup pub/sub topics, see:
 //   https://cloud.google.com/pubsub/docs/building-pubsub-messaging-system
 
 /**
@@ -28,24 +28,24 @@ function create(title) {
   const accessToken = ScriptApp.getOAuthToken();
   const jsonTitle = JSON.stringify({
     info: {
-      title: title
-    }
+      title: title,
+    },
   });
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': jsonTitle
+    method: "post",
+    contentType: "application/json",
+    payload: jsonTitle,
   };
 
-  console.log('Forms API POST options was: ' + JSON.stringify(options));
+  console.log(`Forms API POST options was: ${JSON.stringify(options)}`);
   const response = UrlFetchApp.fetch(formsAPIUrl, options);
-  console.log('Response from Forms API was: ' + JSON.stringify(response));
+  console.log(`Response from Forms API was: ${JSON.stringify(response)}`);
 
-  return ('' + response);
+  return `${response}`;
 }
 
 /**
@@ -56,21 +56,20 @@ function get(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'get'
+    method: "get",
   };
 
   try {
     const response = UrlFetchApp.fetch(formsAPIUrl + formId, options);
-    console.log('Response from Forms API was: ' + response);
-    return ('' + response);
+    console.log(`Response from Forms API was: ${response}`);
+    return `${response}`;
   } catch (e) {
     console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e) +
-      '<br/><br/>Unable to find Form with formId:<br/>' + formId);
+    return `Error:${JSON.stringify(e)}<br/><br/>Unable to find Form with formId:<br/>${formId}`;
   }
 }
 
@@ -83,30 +82,35 @@ function batchUpdate(formId) {
 
   // Request body to add a description to a Form
   const update = {
-    'requests': [{
-      'updateFormInfo': {
-        'info': {
-          'description': 'Please complete this quiz based on this week\'s readings for class.'
+    requests: [
+      {
+        updateFormInfo: {
+          info: {
+            description:
+              "Please complete this quiz based on this week's readings for class.",
+          },
+          updateMask: "description",
         },
-        'updateMask': 'description'
-      }
-    }]
-  }
-
-  const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
-    },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': JSON.stringify(update),
-    'muteHttpExceptions': true,
+      },
+    ],
   };
 
-  const response = UrlFetchApp.fetch(formsAPIUrl + formId + ':batchUpdate',
-    options);
-  console.log('Response code from API: ' + response.getResponseCode());
-  return (response.getResponseCode());
+  const options = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify(update),
+    muteHttpExceptions: true,
+  };
+
+  const response = UrlFetchApp.fetch(
+    `${formsAPIUrl + formId}:batchUpdate`,
+    options,
+  );
+  console.log(`Response code from API: ${response.getResponseCode()}`);
+  return response.getResponseCode();
 }
 
 /**
@@ -117,21 +121,23 @@ function responsesGet(formId, responseId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'get'
+    method: "get",
   };
 
   try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses/' +
-      responseId, options);
-    console.log('Response from Forms.responses.get was: ' + response);
-    return ('' + response);
+    const response = UrlFetchApp.fetch(
+      `${formsAPIUrl + formId}/responses/${responseId}`,
+      options,
+    );
+    console.log(`Response from Forms.responses.get was: ${response}`);
+    return `${response}`;
   } catch (e) {
     console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e))
+    return `Error:${JSON.stringify(e)}`;
   }
 }
 
@@ -143,21 +149,23 @@ function responsesList(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'get'
+    method: "get",
   };
 
   try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'responses',
-      options);
-    console.log('Response from Forms.responses was: ' + response);
-    return ('' + response);
+    const response = UrlFetchApp.fetch(
+      `${formsAPIUrl + formId}/responses`,
+      options,
+    );
+    console.log(`Response from Forms.responses was: ${response}`);
+    return `${response}`;
   } catch (e) {
     console.log(JSON.stringify(e));
-    return ('Error:' + JSON.stringify(e))
+    return `Error:${JSON.stringify(e)}`;
   }
 }
 
@@ -169,33 +177,35 @@ function createWatch(formId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const myWatch = {
-    'watch': {
-      'target': {
-        'topic': {
-          'topicName': topicName
-        }
+    watch: {
+      target: {
+        topic: {
+          topicName: topicName,
+        },
       },
-      'eventType': 'RESPONSES',
-    }
+      eventType: "RESPONSES",
+    },
   };
-  console.log('myWatch is: ' + JSON.stringify(myWatch));
+  console.log(`myWatch is: ${JSON.stringify(myWatch)}`);
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': JSON.stringify(myWatch),
-    'muteHttpExceptions': false,
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify(myWatch),
+    muteHttpExceptions: false,
   };
-  console.log('options are: ' + JSON.stringify(options));
-  console.log('formsAPIURL was: ' + formsAPIUrl);
+  console.log(`options are: ${JSON.stringify(options)}`);
+  console.log(`formsAPIURL was: ${formsAPIUrl}`);
 
-  const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
-    options);
+  const response = UrlFetchApp.fetch(
+    `${formsAPIUrl + formId}/watches`,
+    options,
+  );
   console.log(response);
-  return ('' + response);
+  return `${response}`;
 }
 
 /**
@@ -205,51 +215,54 @@ function createWatch(formId) {
 function deleteWatch(formId, watchId) {
   const accessToken = ScriptApp.getOAuthToken();
 
-  console.log('formsAPIUrl is: ' + formsAPIUrl);
+  console.log(`formsAPIUrl is: ${formsAPIUrl}`);
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'delete',
-    'muteHttpExceptions': false,
+    method: "delete",
+    muteHttpExceptions: false,
   };
 
   try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
-      watchId, options);
+    const response = UrlFetchApp.fetch(
+      `${formsAPIUrl + formId}/watches/${watchId}`,
+      options,
+    );
     console.log(response);
-    return ('' + response);
+    return `${response}`;
   } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
+    console.log(`API Error: ${JSON.stringify(e)}`);
+    return JSON.stringify(e);
   }
-
 }
 
-/** 
+/**
  * Forms API Method: forms.watches.list
  * GET https://forms.googleapis.com/v1/forms/{formId}/watches
  */
 function watchesList(formId) {
-  console.log('formId is: ' + formId);
+  console.log(`formId is: ${formId}`);
   const accessToken = ScriptApp.getOAuthToken();
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'get'
+    method: "get",
   };
   try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches',
-      options);
+    const response = UrlFetchApp.fetch(
+      `${formsAPIUrl + formId}/watches`,
+      options,
+    );
     console.log(response);
-    return ('' + response);
+    return `${response}`;
   } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
+    console.log(`API Error: ${JSON.stringify(e)}`);
+    return JSON.stringify(e);
   }
 }
 
@@ -261,20 +274,22 @@ function renewWatch(formId, watchId) {
   const accessToken = ScriptApp.getOAuthToken();
 
   const options = {
-    'headers': {
-      Authorization: 'Bearer ' + accessToken,
-      Accept: 'application/json'
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
     },
-    'method': 'post'
+    method: "post",
   };
 
   try {
-    const response = UrlFetchApp.fetch(formsAPIUrl + formId + '/' + 'watches/' +
-      watchId + ':renew', options);
+    const response = UrlFetchApp.fetch(
+      `${formsAPIUrl + formId}/watches/${watchId}:renew`,
+      options,
+    );
     console.log(response);
-    return ('' + response);
+    return `${response}`;
   } catch (e) {
-    console.log('API Error: ' + JSON.stringify(e));
-    return (JSON.stringify(e));
+    console.log(`API Error: ${JSON.stringify(e)}`);
+    return JSON.stringify(e);
   }
 }

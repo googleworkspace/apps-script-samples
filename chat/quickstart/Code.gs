@@ -33,11 +33,13 @@ function listSpaces() {
     // Request response pages
     responsePage = Chat.Spaces.list({
       filter: filter,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     // Handle response pages
     if (responsePage.spaces) {
-      responsePage.spaces.forEach((space) => console.log(space));
+      for (const space of responsePage.spaces) {
+        console.log(space);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;

@@ -20,7 +20,7 @@
  */
 function listDriveActivity() {
   const request = {
-    pageSize: 10
+    pageSize: 10,
     // Use other parameter here if needed.
   };
   try {
@@ -28,10 +28,10 @@ function listDriveActivity() {
     const response = DriveActivity.Activity.query(request);
     const activities = response.activities;
     if (!activities || activities.length === 0) {
-      console.log('No activity.');
+      console.log("No activity.");
       return;
     }
-    console.log('Recent activity:');
+    console.log("Recent activity:");
     for (const activity of activities) {
       // get time information of activity.
       const time = getTimeInfo(activity);
@@ -42,11 +42,11 @@ function listDriveActivity() {
       // get target information of activity.
       const targets = activity.targets.map(getTargetInfo);
       // print the time,actor,action and targets of drive activity.
-      console.log('%s: %s, %s, %s', time, actors, action, targets);
+      console.log("%s: %s, %s, %s", time, actors, action, targets);
     }
   } catch (err) {
     // TODO (developer) - Handle error from drive activity API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 
@@ -58,7 +58,7 @@ function getOneOf(object) {
   for (const key in object) {
     return key;
   }
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -66,13 +66,13 @@ function getOneOf(object) {
  * @return {string} Returns a time associated with an activity.
  */
 function getTimeInfo(activity) {
-  if ('timestamp' in activity) {
+  if ("timestamp" in activity) {
     return activity.timestamp;
   }
-  if ('timeRange' in activity) {
+  if ("timeRange" in activity) {
     return activity.timeRange.endTime;
   }
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -88,10 +88,10 @@ function getActionInfo(actionDetail) {
  * @return {string}  Returns user information, or the type of user if not a known user.
  */
 function getUserInfo(user) {
-  if ('knownUser' in user) {
+  if ("knownUser" in user) {
     const knownUser = user.knownUser;
     const isMe = knownUser.isCurrentUser || false;
-    return isMe ? 'people/me' : knownUser.personName;
+    return isMe ? "people/me" : knownUser.personName;
   }
   return getOneOf(user);
 }
@@ -101,7 +101,7 @@ function getUserInfo(user) {
  * @return {string} Returns actor information, or the type of actor if not a user.
  */
 function getActorInfo(actor) {
-  if ('user' in actor) {
+  if ("user" in actor) {
     return getUserInfo(actor.user);
   }
   return getOneOf(actor);
@@ -112,19 +112,19 @@ function getActorInfo(actor) {
  * @return {string} Returns the type of a target and an associated title.
  */
 function getTargetInfo(target) {
-  if ('driveItem' in target) {
-    const title = target.driveItem.title || 'unknown';
-    return 'driveItem:"' + title + '"';
+  if ("driveItem" in target) {
+    const title = target.driveItem.title || "unknown";
+    return `driveItem:"${title}"`;
   }
-  if ('drive' in target) {
-    const title = target.drive.title || 'unknown';
-    return 'drive:"' + title + '"';
+  if ("drive" in target) {
+    const title = target.drive.title || "unknown";
+    return `drive:"${title}"`;
   }
-  if ('fileComment' in target) {
+  if ("fileComment" in target) {
     const parent = target.fileComment.parent || {};
-    const title = parent.title || 'unknown';
-    return 'fileComment:"' + title + '"';
+    const title = parent.title || "unknown";
+    return `fileComment:"${title}"`;
   }
-  return getOneOf(target) + ':unknown';
+  return `${getOneOf(target)}:unknown`;
 }
 // [END drive_activity_v2_quickstart]

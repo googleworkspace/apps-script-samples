@@ -18,14 +18,14 @@
  * runs all the test
  */
 function RUN_ALL_TESTS() {
-  console.log('> itShouldSetTextHelloWorld');
+  console.log("> itShouldSetTextHelloWorld");
   setTextHelloWorld();
-  console.log('> itShouldInsertText');
+  console.log("> itShouldInsertText");
   insertText();
-  console.log('> itShouldStyleText');
+  console.log("> itShouldStyleText");
   styleText();
-  console.log('> itShouldStyleParagraph');
+  console.log("> itShouldStyleParagraph");
   paragraphStyling();
-  console.log('> itShouldListStyling');
+  console.log("> itShouldListStyling");
   listStyling();
 }

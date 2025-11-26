@@ -20,10 +20,10 @@
  */
 function expectToExist(value) {
   if (!value) {
-    console.log('DNE');
+    console.log("DNE");
     return;
   }
-  console.log('TEST: Exists');
+  console.log("TEST: Exists");
 }
 
 /**
@@ -33,10 +33,10 @@ function expectToExist(value) {
  */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
-    console.log('TEST: actual: %s = expected: %s', actual, expected);
+    console.log("TEST: actual: %s = expected: %s", actual, expected);
     return;
   }
-  console.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log("TEST: actual: %s = expected: %s", actual, expected);
 }
 /**
  * Creates a presentation.
@@ -46,51 +46,56 @@ function expectToEqual(expected, actual) {
  */
 function addShape(presentationId, pageId) {
   // Create a new square textbox, using the supplied element ID.
-  const elementId = 'MyTextBox_01';
+  const elementId = "MyTextBox_01";
   const pt350 = {
     magnitude: 350,
-    unit: 'PT'
+    unit: "PT",
   };
-  const requests = [{
-    createShape: {
-      objectId: elementId,
-      shapeType: 'ELLIPSE',
-      elementProperties: {
-        pageObjectId: pageId,
-        size: {
-          height: pt350,
-          width: pt350
+  const requests = [
+    {
+      createShape: {
+        objectId: elementId,
+        shapeType: "ELLIPSE",
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            height: pt350,
+            width: pt350,
+          },
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 350,
+            translateY: 100,
+            unit: "PT",
+          },
         },
-        transform: {
-          scaleX: 1,
-          scaleY: 1,
-          translateX: 350,
-          translateY: 100,
-          unit: 'PT'
-        }
-      }
-    }
-  },
+      },
+    },
 
-  // Insert text into the box, using the supplied element ID.
-  {
-    insertText: {
-      objectId: elementId,
-      insertionIndex: 0,
-      text: 'Text Formatted!'
-    }
-  }];
+    // Insert text into the box, using the supplied element ID.
+    {
+      insertText: {
+        objectId: elementId,
+        insertionIndex: 0,
+        text: "Text Formatted!",
+      },
+    },
+  ];
 
   // Execute the request.
-  const createTextboxWithTextResponse = Slides.Presentations.batchUpdate({
-    requests: requests
-  }, presentationId);
-  const createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
-  console.log('Created textbox with ID: %s', createShapeResponse.objectId);
+  const createTextboxWithTextResponse = Slides.Presentations.batchUpdate(
+    {
+      requests: requests,
+    },
+    presentationId,
+  );
+  const createShapeResponse =
+    createTextboxWithTextResponse.replies[0].createShape;
+  console.log("Created textbox with ID: %s", createShapeResponse.objectId);
   // [END slides_create_textbox_with_text]
   return createShapeResponse.objectId;
 }
-
 
 /**
  * Runs all tests.
@@ -112,14 +117,13 @@ function itShouldCreateAPresentation() {
   deleteFileOnCleanup(presentationId);
 }
 
-
 /**
  * Creates a new slide.
  */
 function itShouldCreateASlide() {
-  console.log('> itShouldCreateASlide');
+  console.log("> itShouldCreateASlide");
   const presentationId = createPresentation();
-  const slideId=createSlide(presentationId);
+  const slideId = createSlide(presentationId);
   expectToExist(slideId);
   deleteFileOnCleanup(presentationId);
 }
@@ -129,7 +133,7 @@ function itShouldCreateASlide() {
  */
 function itShouldCreateATextboxWithText() {
   const presentationId = createPresentation();
-  const slide=createSlide(presentationId);
+  const slide = createSlide(presentationId);
   const pageId = slide.replies[0].createSlide.objectId;
   const response = addTextBox(presentationId, pageId);
   expectToEqual(2, response.replies.length);
@@ -143,7 +147,7 @@ function itShouldCreateATextboxWithText() {
  */
 function itShouldReadPage() {
   const presentationId = createPresentation();
-  const slide=createSlide(presentationId);
+  const slide = createSlide(presentationId);
   const pageId = slide.replies[0].createSlide.objectId;
   const response = readPageElementIds(presentationId, pageId);
   expectToEqual(3, response.pageElements.length);
@@ -154,10 +158,10 @@ function itShouldReadPage() {
  */
 function itShouldFormatShapes() {
   const presentationId = createPresentation();
-  const slide=createSlide(presentationId);
+  const slide = createSlide(presentationId);
   const pageId = slide.replies[0].createSlide.objectId;
-  const shapeId=addShape(presentationId, pageId);
-  const replies=formatShapeText(presentationId, shapeId);
+  const shapeId = addShape(presentationId, pageId);
+  const replies = formatShapeText(presentationId, shapeId);
   expectToExist(replies);
   deleteFileOnCleanup(presentationId);
 }

@@ -1,5 +1,5 @@
-let snippets = new Snippets();
-let helpers = new Helpers();
+const snippets = new Snippets();
+const helpers = new Helpers();
 
 /**
  * A simple exists assertion check. Expects a value to exist. Errors if DNE.
@@ -7,9 +7,9 @@ let helpers = new Helpers();
  */
 function expectToExist(value) {
   if (value) {
-    console.log('TEST: Exists');
+    console.log("TEST: Exists");
   } else {
-    throw new Error('TEST: DNE');
+    throw new Error("TEST: DNE");
   }
 }
 
@@ -20,9 +20,9 @@ function expectToExist(value) {
  * @param {any} expected The expected value.
  */
 function expectToEqual(actual, expected) {
-  console.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log("TEST: actual: %s = expected: %s", actual, expected);
   if (actual !== expected) {
-    console.log('TEST: actual: %s expected: %s', actual, expected);
+    console.log("TEST: actual: %s expected: %s", actual, expected);
   }
 }
 
@@ -45,7 +45,7 @@ function RUN_ALL_TESTS() {
  * Tests creating a spreadsheet.
  */
 function itShouldCreateASpreadsheet() {
-  const spreadsheetId = snippets.create('Title');
+  const spreadsheetId = snippets.create("Title");
   expectToExist(spreadsheetId);
   helpers.deleteFileOnCleanup(spreadsheetId);
 }
@@ -56,8 +56,12 @@ function itShouldCreateASpreadsheet() {
 function itShouldBatchUpdateASpreadsheet() {
   const spreadsheetId = helpers.createTestSpreadsheet();
   helpers.populateValues(spreadsheetId);
-  const result = snippets.batchUpdate(spreadsheetId, 'New Title',
-    'Hello', 'Goodbye');
+  const result = snippets.batchUpdate(
+    spreadsheetId,
+    "New Title",
+    "Hello",
+    "Goodbye",
+  );
   const replies = result.replies;
   expectToEqual(replies.length, 2);
   const findReplaceResponse = replies[1].findReplace;
@@ -70,7 +74,7 @@ function itShouldBatchUpdateASpreadsheet() {
 function itShouldGetSpreadsheetValues() {
   const spreadsheetId = helpers.createTestSpreadsheet();
   helpers.populateValues(spreadsheetId);
-  const result = snippets.getValues(spreadsheetId, 'A1:C2');
+  const result = snippets.getValues(spreadsheetId, "A1:C2");
   const values = result.values;
   expectToEqual(values.length, 2);
   expectToEqual(values[0].length, 3);
@@ -82,8 +86,7 @@ function itShouldGetSpreadsheetValues() {
 function itShouldBatchGetSpreadsheetValues() {
   const spreadsheetId = helpers.createTestSpreadsheet();
   helpers.populateValues(spreadsheetId);
-  const result = snippets.batchGetValues(spreadsheetId,
-    ['A1:A3', 'B1:C1']);
+  const result = snippets.batchGetValues(spreadsheetId, ["A1:A3", "B1:C1"]);
   expectToExist(result);
   expectToEqual(result.valueRanges.length, 2);
   expectToEqual(result.valueRanges[0].values.length, 3);
@@ -94,8 +97,10 @@ function itShouldBatchGetSpreadsheetValues() {
  */
 function itShouldUpdateSpreadsheetValues() {
   const spreadsheetId = helpers.createTestSpreadsheet();
-  const result = snippets.updateValues(spreadsheetId, 'A1:B2',
-    'USER_ENTERED', [['A', 'B'], ['C', 'D']]);
+  const result = snippets.updateValues(spreadsheetId, "A1:B2", "USER_ENTERED", [
+    ["A", "B"],
+    ["C", "D"],
+  ]);
   expectToEqual(result.updatedRows, 2);
   expectToEqual(result.updatedColumns, 2);
   expectToEqual(result.updatedCells, 4);
@@ -106,8 +111,15 @@ function itShouldUpdateSpreadsheetValues() {
  */
 function itShouldBatchUpdateSpreadsheetValues() {
   const spreadsheetId = helpers.createTestSpreadsheet();
-  const result = snippets.batchUpdateValues(spreadsheetId, 'A1:B2',
-    'USER_ENTERED', [['A', 'B'], ['C', 'D']]);
+  const result = snippets.batchUpdateValues(
+    spreadsheetId,
+    "A1:B2",
+    "USER_ENTERED",
+    [
+      ["A", "B"],
+      ["C", "D"],
+    ],
+  );
   expectToEqual(result.totalUpdatedRows, 2);
   expectToEqual(result.totalUpdatedColumns, 2);
   expectToEqual(result.totalUpdatedCells, 4);
@@ -119,8 +131,15 @@ function itShouldBatchUpdateSpreadsheetValues() {
 function itShouldAppendValuesToASpreadsheet() {
   const spreadsheetId = helpers.createTestSpreadsheet();
   helpers.populateValues(spreadsheetId);
-  const result = snippets.appendValues(spreadsheetId, 'Sheet1',
-    'USER_ENTERED', [['A', 'B'], ['C', 'D']]);
+  const result = snippets.appendValues(
+    spreadsheetId,
+    "Sheet1",
+    "USER_ENTERED",
+    [
+      ["A", "B"],
+      ["C", "D"],
+    ],
+  );
   const updates = result.updates;
   expectToEqual(updates.updatedRows, 2);
   expectToEqual(updates.updatedColumns, 2);

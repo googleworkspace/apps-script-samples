@@ -19,27 +19,38 @@
  * @see https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list
  */
 function listLogins() {
-  const userKey = 'all';
-  const applicationName = 'login';
+  const userKey = "all";
+  const applicationName = "login";
   const optionalArgs = {
-    maxResults: 10
+    maxResults: 10,
   };
   if (!AdminReports || !AdminReports.Activities) {
-    throw new Error('Enable the AdminReports Advanced Service.');
+    throw new Error("Enable the AdminReports Advanced Service.");
   }
   const response = AdminReports.Activities.list(
-      userKey, applicationName, optionalArgs);
+    userKey,
+    applicationName,
+    optionalArgs,
+  );
   const activities = response.items;
   if (!activities || activities.length === 0) {
-    console.log('No logins found.');
+    console.log("No logins found.");
     return;
   }
   // Print login events
-  console.log('Logins:');
+  console.log("Logins:");
   for (const activity of activities) {
-    if (activity.id?.time && activity.actor?.email && activity.events?.[0]?.name) {
-      console.log('%s: %s (%s)', activity.id.time, activity.actor.email,
-          activity.events[0].name);
+    if (
+      activity.id?.time &&
+      activity.actor?.email &&
+      activity.events?.[0]?.name
+    ) {
+      console.log(
+        "%s: %s (%s)",
+        activity.id.time,
+        activity.actor.email,
+        activity.events[0].name,
+      );
     }
   }
 }

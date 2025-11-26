@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-
 /**
  * Creates an add-on menu, the main entry point for this add-on
  */
 function onOpen() {
-  SpreadsheetApp.getUi().createAddonMenu()
-      .addItem('Login To Salesforce', 'login')
-      .addItem('Run SOQL Query', 'promptQuery')
-      .addSeparator()
-      .addItem('Logout From Salesforce', 'logout')
-      .addSeparator()
-      .addItem('Generate Invoices', 'generateInvoices')
-      .addItem('Generate Report', 'generateReport')
-      .addToUi();
+  SpreadsheetApp.getUi()
+    .createAddonMenu()
+    .addItem("Login To Salesforce", "login")
+    .addItem("Run SOQL Query", "promptQuery")
+    .addSeparator()
+    .addItem("Logout From Salesforce", "logout")
+    .addSeparator()
+    .addItem("Generate Invoices", "generateInvoices")
+    .addItem("Generate Report", "generateReport")
+    .addToUi();
 }
 
 /** Ensure the menu is created when the add-on is installed */
@@ -40,10 +40,13 @@ function onInstall() {
  * Salesforce.
  */
 function login() {
-  var salesforce = getSalesforceService();
+  const salesforce = getSalesforceService();
   if (!salesforce.hasAccess()) {
-    showLinkDialog(salesforce.getAuthorizationUrl(),
-        'Sign-in to Salesforce', 'Sign-in');
+    showLinkDialog(
+      salesforce.getAuthorizationUrl(),
+      "Sign-in to Salesforce",
+      "Sign-in",
+    );
   }
 }
 
@@ -55,7 +58,7 @@ function login() {
  * @param {string} title the title of the dialog
  */
 function showLinkDialog(url, message, title) {
-  var template = HtmlService.createTemplateFromFile('LinkDialog');
+  const template = HtmlService.createTemplateFromFile("LinkDialog");
   template.url = url;
   template.message = message;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate(), title);
@@ -68,13 +71,14 @@ function showLinkDialog(url, message, title) {
  * @return {Object} a Salesforce OAuth2 service
  */
 function getSalesforceService() {
-  return OAuth2.createService('salesforce')
+  return OAuth2.createService("salesforce")
     .setAuthorizationBaseUrl(
-        'https://login.salesforce.com/services/oauth2/authorize')
-    .setTokenUrl('https://login.salesforce.com/services/oauth2/token')
+      "https://login.salesforce.com/services/oauth2/authorize",
+    )
+    .setTokenUrl("https://login.salesforce.com/services/oauth2/token")
     .setClientId(SALESFORCE_CLIENT_ID)
     .setClientSecret(SALESFORCE_CLIENT_SECRET)
-    .setCallbackFunction('authCallback')
+    .setCallbackFunction("authCallback")
     .setPropertyStore(PropertiesService.getUserProperties());
 }
 
@@ -86,11 +90,11 @@ function getSalesforceService() {
  * @return {Object} HTMLOutput to render the callback as a web page
  */
 function authCallback(request) {
-  var salesforce = getSalesforceService();
-  var isAuthorized = salesforce.handleCallback(request);
-  var message = isAuthorized ?
-      'Success! You can close this tab and the dialog in Sheets.'
-      : 'Denied. You can close this tab and the dialog in Sheets.';
+  const salesforce = getSalesforceService();
+  const isAuthorized = salesforce.handleCallback(request);
+  const message = isAuthorized
+    ? "Success! You can close this tab and the dialog in Sheets."
+    : "Denied. You can close this tab and the dialog in Sheets.";
 
   return HtmlService.createHtmlOutput(message);
 }
@@ -101,11 +105,13 @@ function authCallback(request) {
  * sheet.
  */
 function promptQuery() {
-  var ui = SpreadsheetApp.getUi();
-  var response = ui.prompt('Run SOQL Query',
-      'Enter your query, ex: "select Id from Opportunity"',
-      ui.ButtonSet.OK_CANCEL);
-  var query = response.getResponseText();
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt(
+    "Run SOQL Query",
+    'Enter your query, ex: "select Id from Opportunity"',
+    ui.ButtonSet.OK_CANCEL,
+  );
+  const query = response.getResponseText();
   if (response.getSelectedButton() === ui.Button.OK) {
     executeQuery(query);
   }
@@ -117,28 +123,29 @@ function promptQuery() {
  * @param {string} query the SOQL to execute
  */
 function executeQuery(query) {
-  var response = fetchSoqlResults(query);
-  var outputSheet = SpreadsheetApp.getActive().insertSheet();
-  var records = response['records'];
-  var fields = getFields(records[0]);
+  const response = fetchSoqlResults(query);
+  const outputSheet = SpreadsheetApp.getActive().insertSheet();
+  const records = response.records;
+  const fields = getFields(records[0]);
 
   // Builds the new sheet's contents as a 2D array that can be passed in
   // to setValues() at once. This gives better performance than updating
   // a single cell at a time.
-  var outputValues = [];
+  const outputValues = [];
   outputValues.push(fields);
-  for (var i = 0; i < records.length; i++) {
-    var row = [];
-    var record = records[i];
-    for (var j = 0; j < fields.length; j++) {
-      var fieldName = fields[j];
+  for (let i = 0; i < records.length; i++) {
+    const row = [];
+    const record = records[i];
+    for (let j = 0; j < fields.length; j++) {
+      const fieldName = fields[j];
       row.push(record[fieldName]);
     }
     outputValues.push(row);
   }
 
-  outputSheet.getRange(1, 1, outputValues.length, fields.length)
-      .setValues(outputValues);
+  outputSheet
+    .getRange(1, 1, outputValues.length, fields.length)
+    .setValues(outputValues);
 }
 
 /**
@@ -148,22 +155,22 @@ function executeQuery(query) {
  * @return {Object} the API response from Salesforce, as a parsed JSON object.
  */
 function fetchSoqlResults(query) {
-  var salesforce = getSalesforceService();
+  const salesforce = getSalesforceService();
   if (!salesforce.hasAccess()) {
-    throw new Error('Please login first');
-  } else {
-    var params = {
-      'headers': {
-        'Authorization': 'Bearer ' + salesforce.getAccessToken(),
-        'Content-Type': 'application/json'
-      }
-    };
-    var url = 'https://' + SALESFORCE_INSTANCE +
-        '.salesforce.com/services/data/v30.0/query';
-    var response = UrlFetchApp.fetch(url +
-        '?q=' + encodeURIComponent(query), params);
-    return JSON.parse(response.getContentText());
+    throw new Error("Please login first");
   }
+  const params = {
+    headers: {
+      Authorization: `Bearer ${salesforce.getAccessToken()}`,
+      "Content-Type": "application/json",
+    },
+  };
+  const url = `https://${SALESFORCE_INSTANCE}.salesforce.com/services/data/v30.0/query`;
+  const response = UrlFetchApp.fetch(
+    `${url}?q=${encodeURIComponent(query)}`,
+    params,
+  );
+  return JSON.parse(response.getContentText());
 }
 
 /**
@@ -174,9 +181,9 @@ function fetchSoqlResults(query) {
  * @return {Array<string>} an array of string keys of that record
  */
 function getFields(record) {
-  var fields = [];
-  for (var field in record) {
-    if (record.hasOwnProperty(field) && field !== 'attributes') {
+  const fields = [];
+  for (const field in record) {
+    if (Object.hasOwn(record, field) && field !== "attributes") {
       fields.push(field);
     }
   }

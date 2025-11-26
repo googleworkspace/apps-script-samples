@@ -21,4 +21,3 @@ limitations under the License.
 function onHomepage(e) {
   return buildCard_GmailHome();
 }
-

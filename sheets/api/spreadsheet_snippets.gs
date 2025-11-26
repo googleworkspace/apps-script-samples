@@ -17,7 +17,7 @@
 /**
  * Google Sheets API Snippets.
  */
-function Snippets() {};
+function Snippets() {}
 
 // [START sheets_create]
 /**
@@ -29,7 +29,7 @@ Snippets.prototype.create = (title) => {
   // This code uses the Sheets Advanced Service, but for most use cases
   // the built-in method SpreadsheetApp.create() is more appropriate.
   try {
-    let sheet = Sheets.newSpreadsheet();
+    const sheet = Sheets.newSpreadsheet();
     sheet.properties = Sheets.newSpreadsheetProperties();
     sheet.properties.title = title;
     const spreadsheet = Sheets.Spreadsheets.create(sheet);
@@ -37,7 +37,7 @@ Snippets.prototype.create = (title) => {
     return spreadsheet.spreadsheetId;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_create]
@@ -51,42 +51,43 @@ Snippets.prototype.create = (title) => {
  * @param {string} replacement the string to replace the old data
  * @returns {*} the updated spreadsheet
  */
-Snippets.prototype.batchUpdate = (spreadsheetId, title,
-  find, replacement) => {
+Snippets.prototype.batchUpdate = (spreadsheetId, title, find, replacement) => {
   // This code uses the Sheets Advanced Service, but for most use cases
   // the built-in method SpreadsheetApp.getActiveSpreadsheet()
   //     .getRange(range).setValues(values) is more appropriate.
 
   try {
     // Change the spreadsheet's title.
-    let updateSpreadsheetPropertiesRequest =
+    const updateSpreadsheetPropertiesRequest =
       Sheets.newUpdateSpreadsheetPropertiesRequest();
     updateSpreadsheetPropertiesRequest.properties =
       Sheets.newSpreadsheetProperties();
     updateSpreadsheetPropertiesRequest.properties.title = title;
-    updateSpreadsheetPropertiesRequest.fields = 'title';
+    updateSpreadsheetPropertiesRequest.fields = "title";
 
     // Find and replace text.
-    let findReplaceRequest = Sheets.newFindReplaceRequest();
+    const findReplaceRequest = Sheets.newFindReplaceRequest();
     findReplaceRequest.find = find;
     findReplaceRequest.replacement = replacement;
     findReplaceRequest.allSheets = true;
 
-    let requests = [Sheets.newRequest(), Sheets.newRequest()];
+    const requests = [Sheets.newRequest(), Sheets.newRequest()];
     requests[0].updateSpreadsheetProperties =
       updateSpreadsheetPropertiesRequest;
     requests[1].findReplace = findReplaceRequest;
 
-    let batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
+    const batchUpdateRequest = Sheets.newBatchUpdateSpreadsheetRequest();
     batchUpdateRequest.requests = requests;
 
     // Add additional requests (operations)
-    const result =
-      Sheets.Spreadsheets.batchUpdate(batchUpdateRequest, spreadsheetId);
+    const result = Sheets.Spreadsheets.batchUpdate(
+      batchUpdateRequest,
+      spreadsheetId,
+    );
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_batch_update]
@@ -98,7 +99,7 @@ Snippets.prototype.batchUpdate = (spreadsheetId, title,
  * @param {string} range specifying the start and end cells of the range
  * @returns {*} Values in the range
  */
-Snippets.prototype.getValues = function(spreadsheetId, range) {
+Snippets.prototype.getValues = (spreadsheetId, range) => {
   // This code uses the Sheets Advanced Service, but for most use cases
   // the built-in method SpreadsheetApp.getActiveSpreadsheet()
   //     .getRange(range).getValues(values) is more appropriate.
@@ -108,7 +109,7 @@ Snippets.prototype.getValues = function(spreadsheetId, range) {
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_get_values]
@@ -120,8 +121,7 @@ Snippets.prototype.getValues = function(spreadsheetId, range) {
  * @param {list<string>} _ranges The span of ranges
  * @returns {*} spreadsheet information and values
  */
-Snippets.prototype.batchGetValues = (spreadsheetId,
-  _ranges) => {
+Snippets.prototype.batchGetValues = (spreadsheetId, _ranges) => {
   // This code uses the Sheets Advanced Service, but for most use cases
   // the built-in method SpreadsheetApp.getActiveSpreadsheet()
   //     .getRange(range).getValues(values) is more appropriate.
@@ -132,12 +132,13 @@ Snippets.prototype.batchGetValues = (spreadsheetId,
   ranges = _ranges;
   // [END_EXCLUDE]
   try {
-    const result =
-      Sheets.Spreadsheets.Values.batchGet(spreadsheetId, {ranges: ranges});
+    const result = Sheets.Spreadsheets.Values.batchGet(spreadsheetId, {
+      ranges: ranges,
+    });
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_batch_get_values]
@@ -153,15 +154,19 @@ Snippets.prototype.batchGetValues = (spreadsheetId,
  * @param {list<list<string>>} _values list of string lists to input
  * @returns {*} spreadsheet with updated values
  */
-Snippets.prototype.updateValues = (spreadsheetId, range,
-  valueInputOption, _values) => {
+Snippets.prototype.updateValues = (
+  spreadsheetId,
+  range,
+  valueInputOption,
+  _values,
+) => {
   // This code uses the Sheets Advanced Service, but for most use cases
   // the built-in method SpreadsheetApp.getActiveSpreadsheet()
   //     .getRange(range).setValues(values) is more appropriate.
   let values = [
     [
       // Cell values ...
-    ]
+    ],
     // Additional rows ...
   ];
   // [START_EXCLUDE silent]
@@ -169,14 +174,18 @@ Snippets.prototype.updateValues = (spreadsheetId, range,
   // [END_EXCLUDE]
 
   try {
-    let valueRange = Sheets.newValueRange();
+    const valueRange = Sheets.newValueRange();
     valueRange.values = values;
-    const result = Sheets.Spreadsheets.Values.update(valueRange,
-      spreadsheetId, range, {valueInputOption: valueInputOption});
+    const result = Sheets.Spreadsheets.Values.update(
+      valueRange,
+      spreadsheetId,
+      range,
+      { valueInputOption: valueInputOption },
+    );
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_update_values]
@@ -192,39 +201,44 @@ Snippets.prototype.updateValues = (spreadsheetId, range,
  * @param {list<list<string>>} _values list of string values to input
  * @returns {*} spreadsheet with updated values
  */
-Snippets.prototype.batchUpdateValues =
-  (spreadsheetId, range, valueInputOption,
-    _values) => {
-    // This code uses the Sheets Advanced Service, but for most use cases
-    // the built-in method SpreadsheetApp.getActiveSpreadsheet()
-    //     .getRange(range).setValues(values) is more appropriate.
-    let values = [
-      [
-        // Cell values ...
-      ]
-      // Additional rows ...
-    ];
-    // [START_EXCLUDE silent]
-    values = _values;
-    // [END_EXCLUDE]
+Snippets.prototype.batchUpdateValues = (
+  spreadsheetId,
+  range,
+  valueInputOption,
+  _values,
+) => {
+  // This code uses the Sheets Advanced Service, but for most use cases
+  // the built-in method SpreadsheetApp.getActiveSpreadsheet()
+  //     .getRange(range).setValues(values) is more appropriate.
+  let values = [
+    [
+      // Cell values ...
+    ],
+    // Additional rows ...
+  ];
+  // [START_EXCLUDE silent]
+  values = _values;
+  // [END_EXCLUDE]
 
-    try {
-      let valueRange = Sheets.newValueRange();
-      valueRange.range = range;
-      valueRange.values = values;
+  try {
+    const valueRange = Sheets.newValueRange();
+    valueRange.range = range;
+    valueRange.values = values;
 
-      let batchUpdateRequest = Sheets.newBatchUpdateValuesRequest();
-      batchUpdateRequest.data = valueRange;
-      batchUpdateRequest.valueInputOption = valueInputOption;
+    const batchUpdateRequest = Sheets.newBatchUpdateValuesRequest();
+    batchUpdateRequest.data = valueRange;
+    batchUpdateRequest.valueInputOption = valueInputOption;
 
-      const result = Sheets.Spreadsheets.Values.batchUpdate(batchUpdateRequest,
-        spreadsheetId);
-      return result;
-    } catch (err) {
-      // TODO (developer) - Handle exception
-      console.log('Failed with error %s', err.message);
-    }
-  };
+    const result = Sheets.Spreadsheets.Values.batchUpdate(
+      batchUpdateRequest,
+      spreadsheetId,
+    );
+    return result;
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log("Failed with error %s", err.message);
+  }
+};
 // [END sheets_batch_update_values]
 
 // [START sheets_append_values]
@@ -238,31 +252,39 @@ Snippets.prototype.batchUpdateValues =
  * @param {list<string>} _values list of rows of values to input
  * @returns {*} spreadsheet with appended values
  */
-Snippets.prototype.appendValues = (spreadsheetId, range,
-  valueInputOption, _values) => {
+Snippets.prototype.appendValues = (
+  spreadsheetId,
+  range,
+  valueInputOption,
+  _values,
+) => {
   let values = [
     [
       // Cell values ...
-    ]
+    ],
     // Additional rows ...
   ];
   // [START_EXCLUDE silent]
   values = _values;
   // [END_EXCLUDE]
   try {
-    let valueRange = Sheets.newRowData();
+    const valueRange = Sheets.newRowData();
     valueRange.values = values;
 
-    let appendRequest = Sheets.newAppendCellsRequest();
+    const appendRequest = Sheets.newAppendCellsRequest();
     appendRequest.sheetId = spreadsheetId;
     appendRequest.rows = [valueRange];
 
-    const result = Sheets.Spreadsheets.Values.append(valueRange, spreadsheetId,
-      range, {valueInputOption: valueInputOption});
+    const result = Sheets.Spreadsheets.Values.append(
+      valueRange,
+      spreadsheetId,
+      range,
+      { valueInputOption: valueInputOption },
+    );
     return result;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_append_values]
@@ -278,7 +300,7 @@ Snippets.prototype.pivotTable = (spreadsheetId) => {
     const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
 
     // Create two sheets for our pivot table, assume we have one.
-    let sheet = spreadsheet.getSheets()[0];
+    const sheet = spreadsheet.getSheets()[0];
     sheet.copyTo(spreadsheet);
 
     const sourceSheetId = spreadsheet.getSheets()[0].getSheetId();
@@ -287,7 +309,7 @@ Snippets.prototype.pivotTable = (spreadsheetId) => {
     // Create pivot table
     const pivotTable = Sheets.newPivotTable();
 
-    let gridRange = Sheets.newGridRange();
+    const gridRange = Sheets.newGridRange();
     gridRange.sheetId = sourceSheetId;
     gridRange.startRowIndex = 0;
     gridRange.startColumnIndex = 0;
@@ -295,52 +317,54 @@ Snippets.prototype.pivotTable = (spreadsheetId) => {
     gridRange.endColumnIndex = 7;
     pivotTable.source = gridRange;
 
-    let pivotRows = Sheets.newPivotGroup();
+    const pivotRows = Sheets.newPivotGroup();
     pivotRows.sourceColumnOffset = 1;
     pivotRows.showTotals = true;
-    pivotRows.sortOrder = 'ASCENDING';
+    pivotRows.sortOrder = "ASCENDING";
     pivotTable.rows = pivotRows;
 
-    let pivotColumns = Sheets.newPivotGroup();
+    const pivotColumns = Sheets.newPivotGroup();
     pivotColumns.sourceColumnOffset = 4;
-    pivotColumns.sortOrder = 'ASCENDING';
+    pivotColumns.sortOrder = "ASCENDING";
     pivotColumns.showTotals = true;
     pivotTable.columns = pivotColumns;
 
-    let pivotValue = Sheets.newPivotValue();
-    pivotValue.summarizeFunction = 'COUNTA';
+    const pivotValue = Sheets.newPivotValue();
+    pivotValue.summarizeFunction = "COUNTA";
     pivotValue.sourceColumnOffset = 4;
     pivotTable.values = [pivotValue];
 
     // Create other metadata for the updateCellsRequest
-    let cellData = Sheets.newCellData();
+    const cellData = Sheets.newCellData();
     cellData.pivotTable = pivotTable;
 
-    let rows = Sheets.newRowData();
+    const rows = Sheets.newRowData();
     rows.values = cellData;
 
-    let start = Sheets.newGridCoordinate();
+    const start = Sheets.newGridCoordinate();
     start.sheetId = targetSheetId;
     start.rowIndex = 0;
     start.columnIndex = 0;
 
-    let updateCellsRequest = Sheets.newUpdateCellsRequest();
+    const updateCellsRequest = Sheets.newUpdateCellsRequest();
     updateCellsRequest.rows = rows;
     updateCellsRequest.start = start;
-    updateCellsRequest.fields = 'pivotTable';
+    updateCellsRequest.fields = "pivotTable";
 
     // Batch update our spreadsheet
-    let batchUpdate = Sheets.newBatchUpdateSpreadsheetRequest();
-    let updateCellsRawRequest = Sheets.newRequest();
+    const batchUpdate = Sheets.newBatchUpdateSpreadsheetRequest();
+    const updateCellsRawRequest = Sheets.newRequest();
     updateCellsRawRequest.updateCells = updateCellsRequest;
     batchUpdate.requests = [updateCellsRawRequest];
-    const response = Sheets.Spreadsheets.batchUpdate(batchUpdate,
-      spreadsheetId);
+    const response = Sheets.Spreadsheets.batchUpdate(
+      batchUpdate,
+      spreadsheetId,
+    );
 
     return response;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_pivot_tables]
@@ -353,7 +377,7 @@ Snippets.prototype.pivotTable = (spreadsheetId) => {
  */
 Snippets.prototype.conditionalFormatting = (spreadsheetId) => {
   try {
-    let myRange = Sheets.newGridRange();
+    const myRange = Sheets.newGridRange();
     myRange.sheetId = 0;
     myRange.startRowIndex = 0;
     myRange.endRowIndex = 11;
@@ -361,58 +385,58 @@ Snippets.prototype.conditionalFormatting = (spreadsheetId) => {
     myRange.endColumnIndex = 4;
 
     // Request 1
-    let rule1ConditionalValue = Sheets.newConditionValue();
-    rule1ConditionalValue.userEnteredValue = '=GT($D2,median($D$2:$D$11))';
+    const rule1ConditionalValue = Sheets.newConditionValue();
+    rule1ConditionalValue.userEnteredValue = "=GT($D2,median($D$2:$D$11))";
 
-    let rule1ConditionFormat = Sheets.newCellFormat();
+    const rule1ConditionFormat = Sheets.newCellFormat();
     rule1ConditionFormat.textFormat = Sheets.newTextFormat();
     rule1ConditionFormat.textFormat.foregroundColor = Sheets.newColor();
     rule1ConditionFormat.textFormat.foregroundColor.red = 0.8;
 
-    let rule1Condition = Sheets.newBooleanCondition();
-    rule1Condition.type = 'CUSTOM_FORMULA';
+    const rule1Condition = Sheets.newBooleanCondition();
+    rule1Condition.type = "CUSTOM_FORMULA";
     rule1Condition.values = [rule1ConditionalValue];
 
-    let rule1BooleanRule = Sheets.newBooleanRule();
+    const rule1BooleanRule = Sheets.newBooleanRule();
     rule1BooleanRule.condition = rule1Condition;
     rule1BooleanRule.format = rule1ConditionFormat;
 
-    let rule1 = Sheets.newConditionalFormatRule();
+    const rule1 = Sheets.newConditionalFormatRule();
     rule1.ranges = [myRange];
     rule1.booleanRule = rule1BooleanRule;
 
-    let request1 = Sheets.newRequest();
-    let addConditionalFormatRuleRequest1 =
+    const request1 = Sheets.newRequest();
+    const addConditionalFormatRuleRequest1 =
       Sheets.newAddConditionalFormatRuleRequest();
     addConditionalFormatRuleRequest1.rule = rule1;
     addConditionalFormatRuleRequest1.index = 0;
     request1.addConditionalFormatRule = addConditionalFormatRuleRequest1;
 
     // Request 2
-    let rule2ConditionalValue = Sheets.newConditionValue();
-    rule2ConditionalValue.userEnteredValue = '=LT($D2,median($D$2:$D$11))';
+    const rule2ConditionalValue = Sheets.newConditionValue();
+    rule2ConditionalValue.userEnteredValue = "=LT($D2,median($D$2:$D$11))";
 
-    let rule2ConditionFormat = Sheets.newCellFormat();
+    const rule2ConditionFormat = Sheets.newCellFormat();
     rule2ConditionFormat.textFormat = Sheets.newTextFormat();
     rule2ConditionFormat.textFormat.foregroundColor = Sheets.newColor();
     rule2ConditionFormat.textFormat.foregroundColor.red = 1;
     rule2ConditionFormat.textFormat.foregroundColor.green = 0.4;
     rule2ConditionFormat.textFormat.foregroundColor.blue = 0.4;
 
-    let rule2Condition = Sheets.newBooleanCondition();
-    rule2Condition.type = 'CUSTOM_FORMULA';
+    const rule2Condition = Sheets.newBooleanCondition();
+    rule2Condition.type = "CUSTOM_FORMULA";
     rule2Condition.values = [rule2ConditionalValue];
 
-    let rule2BooleanRule = Sheets.newBooleanRule();
+    const rule2BooleanRule = Sheets.newBooleanRule();
     rule2BooleanRule.condition = rule2Condition;
     rule2BooleanRule.format = rule2ConditionFormat;
 
-    let rule2 = Sheets.newConditionalFormatRule();
+    const rule2 = Sheets.newConditionalFormatRule();
     rule2.ranges = [myRange];
     rule2.booleanRule = rule2BooleanRule;
 
-    let request2 = Sheets.newRequest();
-    let addConditionalFormatRuleRequest2 =
+    const request2 = Sheets.newRequest();
+    const addConditionalFormatRuleRequest2 =
       Sheets.newAddConditionalFormatRuleRequest();
     addConditionalFormatRuleRequest2.rule = rule2;
     addConditionalFormatRuleRequest2.index = 0;
@@ -420,14 +444,16 @@ Snippets.prototype.conditionalFormatting = (spreadsheetId) => {
 
     // Batch send the requests
     const requests = [request1, request2];
-    let batchUpdate = Sheets.newBatchUpdateSpreadsheetRequest();
+    const batchUpdate = Sheets.newBatchUpdateSpreadsheetRequest();
     batchUpdate.requests = requests;
-    const response =
-      Sheets.Spreadsheets.batchUpdate(batchUpdate, spreadsheetId);
+    const response = Sheets.Spreadsheets.batchUpdate(
+      batchUpdate,
+      spreadsheetId,
+    );
     return response;
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 };
 // [END sheets_conditional_formatting]

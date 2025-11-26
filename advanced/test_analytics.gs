@@ -15,13 +15,13 @@
  */
 
 // Replace with the required profileId
-const profileId = 'abcd';
+const profileId = "abcd";
 
 /**
  * Tests listAccounts function of analytics.gs
  */
 function itShouldListAccounts() {
-  console.log('> itShouldListAccounts');
+  console.log("> itShouldListAccounts");
   listAccounts();
 }
 
@@ -29,7 +29,7 @@ function itShouldListAccounts() {
  * Tests runReport function of analytics.gs
  */
 function itShouldRunReport() {
-  console.log('> itShouldRunReport');
+  console.log("> itShouldRunReport");
   runReport(profileId);
 }
 

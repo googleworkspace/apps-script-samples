@@ -36,9 +36,15 @@ function analyzeAndLabelEmailSentiment() {
   const labelNames = ["HAPPY TONE 😊", "NEUTRAL TONE 😐", "UPSET TONE 😡"];
 
   // Get or create labels for each sentiment
-  const positiveLabel = GmailApp.getUserLabelByName(labelNames[0]) || GmailApp.createLabel(labelNames[0]);
-  const neutralLabel = GmailApp.getUserLabelByName(labelNames[1]) || GmailApp.createLabel(labelNames[1]);
-  const negativeLabel = GmailApp.getUserLabelByName(labelNames[2]) || GmailApp.createLabel(labelNames[2]);
+  const positiveLabel =
+    GmailApp.getUserLabelByName(labelNames[0]) ||
+    GmailApp.createLabel(labelNames[0]);
+  const neutralLabel =
+    GmailApp.getUserLabelByName(labelNames[1]) ||
+    GmailApp.createLabel(labelNames[1]);
+  const negativeLabel =
+    GmailApp.getUserLabelByName(labelNames[2]) ||
+    GmailApp.createLabel(labelNames[2]);
 
   // Get the first 10 threads in the inbox
   const threads = GmailApp.getInboxThreads(0, 10);
@@ -55,11 +61,11 @@ function analyzeAndLabelEmailSentiment() {
       const sentiment = processSentiment(emailBody);
 
       // Apply the appropriate label based on the sentiment
-      if (sentiment === 'positive') {
+      if (sentiment === "positive") {
         thread.addLabel(positiveLabel);
-      } else if (sentiment === 'neutral') {
+      } else if (sentiment === "neutral") {
         thread.addLabel(neutralLabel);
-      } else if (sentiment === 'negative') {
+      } else if (sentiment === "negative") {
         thread.addLabel(negativeLabel);
       }
     }
@@ -78,29 +84,29 @@ function generateSampleEmails() {
   // Define sample emails
   const sampleEmails = [
     {
-      subject: 'Thank you for amazing service!',
-      body: 'Hi, I really enjoyed working with you. Thank you again!',
-      name: 'Customer A'
+      subject: "Thank you for amazing service!",
+      body: "Hi, I really enjoyed working with you. Thank you again!",
+      name: "Customer A",
     },
     {
-      subject: 'Request for information',
-      body: 'Hello, I need more information on your recent product launch. Thank you.',
-      name: 'Customer B'
+      subject: "Request for information",
+      body: "Hello, I need more information on your recent product launch. Thank you.",
+      name: "Customer B",
     },
     {
-      subject: 'Complaint!',
-      body: '',
+      subject: "Complaint!",
+      body: "",
       htmlBody: `<p>Hello, You are late in delivery, again.</p>
 <p>Please contact me ASAP before I cancel our subscription.</p>`,
-      name: 'Customer C'
-    }
+      name: "Customer C",
+    },
   ];
 
   // Send each sample email
   for (const email of sampleEmails) {
     GmailApp.sendEmail(userEmail, email.subject, email.body, {
       name: email.name,
-      htmlBody: email.htmlBody
+      htmlBody: email.htmlBody,
     });
   }
 

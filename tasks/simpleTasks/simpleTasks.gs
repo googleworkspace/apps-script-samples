@@ -19,8 +19,9 @@
  * @return {HtmlOutput} The HTML page to be served.
  */
 function doGet() {
-  return HtmlService.createTemplateFromFile('page').evaluate()
-      .setTitle('Simple Tasks');
+  return HtmlService.createTemplateFromFile("page")
+    .evaluate()
+    .setTitle("Simple Tasks");
 }
 
 /**
@@ -28,16 +29,14 @@ function doGet() {
  * @return {Array.<Object>} The task list data.
  */
 function getTaskLists() {
-  var taskLists = Tasks.Tasklists.list().getItems();
+  const taskLists = Tasks.Tasklists.list().getItems();
   if (!taskLists) {
     return [];
   }
-  return taskLists.map(function(taskList) {
-    return {
-      id: taskList.getId(),
-      name: taskList.getTitle()
-    };
-  });
+  return taskLists.map((taskList) => ({
+    id: taskList.getId(),
+    name: taskList.getTitle(),
+  }));
 }
 
 /**
@@ -46,20 +45,18 @@ function getTaskLists() {
  * @return {Array.<Object>} The task data.
  */
 function getTasks(taskListId) {
-  var tasks = Tasks.Tasks.list(taskListId).getItems();
+  const tasks = Tasks.Tasks.list(taskListId).getItems();
   if (!tasks) {
     return [];
   }
-  return tasks.map(function(task) {
-    return {
+  return tasks
+    .map((task) => ({
       id: task.getId(),
       title: task.getTitle(),
       notes: task.getNotes(),
-      completed: Boolean(task.getCompleted())
-    };
-  }).filter(function(task) {
-    return task.title;
-  });
+      completed: Boolean(task.getCompleted()),
+    }))
+    .filter((task) => task.title);
 }
 
 /**
@@ -69,11 +66,11 @@ function getTasks(taskListId) {
  * @param {Boolean} completed True if the task should be marked as complete, false otherwise.
  */
 function setCompleted(taskListId, taskId, completed) {
-  var task = Tasks.newTask();
+  const task = Tasks.newTask();
   if (completed) {
-    task.setStatus('completed');
+    task.setStatus("completed");
   } else {
-    task.setStatus('needsAction');
+    task.setStatus("needsAction");
     task.setCompleted(null);
   }
   Tasks.Tasks.patch(task, taskListId, taskId);
@@ -85,6 +82,6 @@ function setCompleted(taskListId, taskId, completed) {
  * @param {String} title The title of the new task.
  */
 function addTask(taskListId, title) {
-  var task = Tasks.newTask().setTitle(title);
+  const task = Tasks.newTask().setTitle(title);
   Tasks.Tasks.insert(task, taskListId);
 }

@@ -18,7 +18,7 @@
  * Tests createTimeDrivenTrigger function of trigger.gs
  */
 function itShouldCreateTimeDrivenTriggers() {
-  console.log('> itShouldCreateTimeDrivenTriggers');
+  console.log("> itShouldCreateTimeDrivenTriggers");
   createTimeDrivenTriggers();
 }
 
@@ -26,7 +26,7 @@ function itShouldCreateTimeDrivenTriggers() {
  * Tests createSpreadsheetOpenTrigger function of triggers.gs
  */
 function itShouldCreateSpreadsheetOpenTrigger() {
-  console.log('> itShouldCreateSpreadsheetOpenTrigger');
+  console.log("> itShouldCreateSpreadsheetOpenTrigger");
   createSpreadsheetOpenTrigger();
 }
 
@@ -34,7 +34,7 @@ function itShouldCreateSpreadsheetOpenTrigger() {
  * Tests deleteTrigger function of triggers.gs
  */
 function itShouldDeleteTrigger() {
-  console.log('> itShouldDeleteTrigger');
+  console.log("> itShouldDeleteTrigger");
   deleteTrigger();
 }
 

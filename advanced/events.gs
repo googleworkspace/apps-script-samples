@@ -38,7 +38,7 @@ function createSubscription(targetResource, eventTypes, pubsubTopic) {
     console.log(operation);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to create subscription with error %s', err.message);
+    console.log("Failed to create subscription with error %s", err.message);
   }
 }
 // [END events_create_subscription]
@@ -57,7 +57,7 @@ function listSubscriptions(filter) {
     console.log(response);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to list subscriptions with error %s', err.message);
+    console.log("Failed to list subscriptions with error %s", err.message);
   }
 }
 // [END events_list_subscriptions]
@@ -76,7 +76,7 @@ function getSubscription(name) {
     console.log(subscription);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to get subscription with error %s', err.message);
+    console.log("Failed to get subscription with error %s", err.message);
   }
 }
 // [END events_get_subscription]
@@ -92,14 +92,17 @@ function getSubscription(name) {
  */
 function patchSubscription(name) {
   try {
-    const operation = WorkspaceEvents.Subscriptions.patch({
-      // Setting the TTL to 0 seconds extends the subscription to its maximum expiration time.
-      ttl: '0s',
-    }, name);
+    const operation = WorkspaceEvents.Subscriptions.patch(
+      {
+        // Setting the TTL to 0 seconds extends the subscription to its maximum expiration time.
+        ttl: "0s",
+      },
+      name,
+    );
     console.log(operation);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to update subscription with error %s', err.message);
+    console.log("Failed to update subscription with error %s", err.message);
   }
 }
 // [END events_patch_subscription]
@@ -119,7 +122,7 @@ function reactivateSubscription(name) {
     console.log(operation);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to reactivate subscription with error %s', err.message);
+    console.log("Failed to reactivate subscription with error %s", err.message);
   }
 }
 // [END events_reactivate_subscription]
@@ -138,7 +141,7 @@ function deleteSubscription(name) {
     console.log(operation);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to delete subscription with error %s', err.message);
+    console.log("Failed to delete subscription with error %s", err.message);
   }
 }
 // [END events_delete_subscription]
@@ -158,7 +161,7 @@ function getOperation(name) {
     console.log(operation);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to get operation with error %s', err.message);
+    console.log("Failed to get operation with error %s", err.message);
   }
 }
 // [END events_get_operation]

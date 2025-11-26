@@ -20,15 +20,15 @@
  * @return {Array} list of potential columns.
  */
 function getColumnOptions() {
-  var columns = [];
+  const columns = [];
 
   // TODO: Replace this section, adding a column entry for each data of
   // interest. id should be an identifier that can be used to locate
   // the data in the data request response, and label should be the name
   // to associate with that data in the UI.
-  columns.push({id: 'DATA_ITEM1_ID', label: 'Data Item 1 label'});
-  columns.push({id: 'DATA_ITEM2_ID', label: 'Data Item 2 label'});
-  columns.push({id: 'DATA_ITEM3_ID', label: 'Data Item 3 label'});
+  columns.push({ id: "DATA_ITEM1_ID", label: "Data Item 1 label" });
+  columns.push({ id: "DATA_ITEM2_ID", label: "Data Item 2 label" });
+  columns.push({ id: "DATA_ITEM3_ID", label: "Data Item 3 label" });
 
   return columns;
 }
@@ -48,7 +48,7 @@ function getColumnOptions() {
  * @return {object[]|null} Pages of data.
  */
 function getDataPage(columns, pageNumber, pageSize, opt_settings) {
-  var data = null;
+  const data = null;
   /**
    * TODO: This function needs to be implemented based on the particular
    * details of the data source you are extracting data from. For example,
@@ -80,5 +80,5 @@ function getDataPage(columns, pageNumber, pageSize, opt_settings) {
    *
    */
 
-   return data;
+  return data;
 }

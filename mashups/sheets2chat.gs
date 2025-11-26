@@ -25,31 +25,37 @@ function sendChatMessageOnEdit(e) {
   // Construct the message to send, based on the old and new value of the cell.
   let changeMessage;
   if (oldValue && value) {
-    changeMessage = Utilities.formatString('changed from "%s" to "%s"',
-        oldValue, value);
+    changeMessage = Utilities.formatString(
+      'changed from "%s" to "%s"',
+      oldValue,
+      value,
+    );
   } else if (value) {
     changeMessage = Utilities.formatString('set to "%s"', value);
   } else {
-    changeMessage = 'cleared';
+    changeMessage = "cleared";
   }
   const message = Utilities.formatString(
-      'The range %s was %s. <%s|Open spreadsheet>.',
-      range.getA1Notation(), changeMessage, ss.getUrl());
+    "The range %s was %s. <%s|Open spreadsheet>.",
+    range.getA1Notation(),
+    changeMessage,
+    ss.getUrl(),
+  );
 
   // Follow these steps to create an incomming webhook URL for your chat room:
   // https://developers.google.com/hangouts/chat/how-tos/webhooks#define_an_incoming_webhook
-  const webhookUrl = 'ENTER INCOMMING WEBHOOK URL HERE';
+  const webhookUrl = "ENTER INCOMMING WEBHOOK URL HERE";
 
   // Use the spreadsheet's ID as a thread key, so that all messages go into the
   // same thread.
-  const url = webhookUrl + '&threadKey=' + ss.getId();
+  const url = `${webhookUrl}&threadKey=${ss.getId()}`;
 
   // Send the message.
   UrlFetchApp.fetch(url, {
-    method: 'post',
-    contentType: 'application/json',
+    method: "post",
+    contentType: "application/json",
     payload: JSON.stringify({
-      text: message
-    })
+      text: message,
+    }),
   });
 }

@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 // Replace with your project ID
-const PROJECT_ID = '[ADD YOUR GCP PROJECT ID HERE]';
+const PROJECT_ID = "[ADD YOUR GCP PROJECT ID HERE]";
 
 // Location for your Vertex AI model
-const VERTEX_AI_LOCATION = 'us-central1';
+const VERTEX_AI_LOCATION = "us-central1";
 
 // Model ID to use for sentiment analysis
-const MODEL_ID = 'gemini-2.5-flash';
+const MODEL_ID = "gemini-2.5-flash";
 
 /**
  * Sends the email text to Vertex AI for sentiment analysis.
@@ -40,10 +40,10 @@ function processSentiment(emailText) {
         role: "user",
         parts: [
           {
-            text: `Analyze the sentiment of the following message: ${emailText}`
-          }
-        ]
-      }
+            text: `Analyze the sentiment of the following message: ${emailText}`,
+          },
+        ],
+      },
     ],
     generationConfig: {
       temperature: 0.9,
@@ -55,22 +55,22 @@ function processSentiment(emailText) {
         properties: {
           response: {
             type: "string",
-            enum: ["positive", "negative", "neutral"]
-          }
-        }
-      }
-    }
+            enum: ["positive", "negative", "neutral"],
+          },
+        },
+      },
+    },
   };
 
   // Prepare the request options
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${ScriptApp.getOAuthToken()}`
+      Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
     },
-    contentType: 'application/json',
+    contentType: "application/json",
     muteHttpExceptions: true, // Set to true to inspect the error response
-    payload: JSON.stringify(payload)
+    payload: JSON.stringify(payload),
   };
 
   // Make the API request
@@ -78,7 +78,9 @@ function processSentiment(emailText) {
 
   // Parse the response. There are two levels of JSON responses to parse.
   const parsedResponse = JSON.parse(response.getContentText());
-  const sentimentResponse = JSON.parse(parsedResponse.candidates[0].content.parts[0].text).response;
+  const sentimentResponse = JSON.parse(
+    parsedResponse.candidates[0].content.parts[0].text,
+  ).response;
 
   // Return the sentiment
   return sentimentResponse;

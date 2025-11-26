@@ -22,7 +22,7 @@
 // For more information on app authentication, see
 // https://developers.google.com/workspace/chat/authenticate-authorize-chat-app
 
-const APP_AUTH_OAUTH_SCOPES = ['https://www.googleapis.com/auth/chat.bot'];
+const APP_AUTH_OAUTH_SCOPES = ["https://www.googleapis.com/auth/chat.bot"];
 // Warning: This example uses a service account private key, it should always be stored in a
 // secure location.
 const SERVICE_ACCOUNT = {
@@ -54,7 +54,7 @@ function getService_() {
  */
 function getHeaderWithAppCredentials() {
   return {
-    'Authorization': `Bearer ${getService_().getAccessToken()}`
+    Authorization: `Bearer ${getService_().getAccessToken()}`,
   };
 }
 

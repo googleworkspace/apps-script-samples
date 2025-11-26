@@ -18,7 +18,7 @@
  * Tests listQueries function of doubleclickbidmanager.gs
  */
 function itShouldListQueries() {
-  console.log('> itShouldListQueries');
+  console.log("> itShouldListQueries");
   listQueries();
 }
 
@@ -26,7 +26,7 @@ function itShouldListQueries() {
  * Tests createAndRunQuery function of doubleclickbidmanager.gs
  */
 function itShouldCreateAndRunQuery() {
-  console.log('> itShouldCreateAndRunQuery');
+  console.log("> itShouldCreateAndRunQuery");
   createAndRunQuery();
 }
 
@@ -34,7 +34,7 @@ function itShouldCreateAndRunQuery() {
  * Tests fetchReport function of doubleclickbidmanager.gs
  */
 function itShouldFetchReport() {
-  console.log('> itShouldFetchReport');
+  console.log("> itShouldFetchReport");
   fetchReport();
 }
 

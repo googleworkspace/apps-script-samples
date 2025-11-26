@@ -23,14 +23,14 @@ function courseUpdate(courseId) {
   try {
     // Get the course using course ID
     let course = Classroom.Courses.get(courseId);
-    course.section = 'Period 3';
-    course.room = '302';
+    course.section = "Period 3";
+    course.room = "302";
     // Update the course
     course = Classroom.Courses.update(course, courseId);
     console.log('Course "%s" updated.', course.name);
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed to update the course with error %s', e.message);
+    console.log("Failed to update the course with error %s", e.message);
   }
 }
 // [END classroom_update_course]

@@ -20,32 +20,49 @@
  */
 function restaurantLocationsMap() {
   // Get the sheet named 'restaurants'
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('restaurants');
+  const sheet =
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("restaurants");
 
   // Store the restaurant name and address data in a 2-dimensional array called
   // restaurantInfo. This is the data in cells A2:B4
-  var restaurantInfo = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
+  const restaurantInfo = sheet
+    .getRange(2, 1, sheet.getLastRow() - 1, 2)
+    .getValues();
 
   // Create a new StaticMap
-  var restaurantMap = Maps.newStaticMap();
+  const restaurantMap = Maps.newStaticMap();
 
   // Create a new UI Application, which we use to display the map
-  var ui = UiApp.createApplication();
+  const ui = UiApp.createApplication();
 
   // Create a grid widget to use for displaying the text of the restaurant names
   // and addresses. Start by populating the header row in the grid.
-  var grid = ui.createGrid(restaurantInfo.length + 1, 3);
-  grid.setWidget(0, 0, ui.createLabel('Store #').setStyleAttribute('fontWeight', 'bold'));
-  grid.setWidget(0, 1, ui.createLabel('Store Name').setStyleAttribute('fontWeight', 'bold'));
-  grid.setWidget(0, 2, ui.createLabel('Address').setStyleAttribute('fontWeight', 'bold'));
+  const grid = ui.createGrid(restaurantInfo.length + 1, 3);
+  grid.setWidget(
+    0,
+    0,
+    ui.createLabel("Store #").setStyleAttribute("fontWeight", "bold"),
+  );
+  grid.setWidget(
+    0,
+    1,
+    ui.createLabel("Store Name").setStyleAttribute("fontWeight", "bold"),
+  );
+  grid.setWidget(
+    0,
+    2,
+    ui.createLabel("Address").setStyleAttribute("fontWeight", "bold"),
+  );
 
   // For each entry in restaurantInfo, create a map marker with the address and
   // the style we want. Also add the address info for this restaurant to the
   // grid widget.
-  for (var i = 0; i < restaurantInfo.length; i++) {
-    restaurantMap.setMarkerStyle(Maps.StaticMap.MarkerSize.MID,
-                                 Maps.StaticMap.Color.GREEN,
-                                 i + 1);
+  for (let i = 0; i < restaurantInfo.length; i++) {
+    restaurantMap.setMarkerStyle(
+      Maps.StaticMap.MarkerSize.MID,
+      Maps.StaticMap.Color.GREEN,
+      i + 1,
+    );
     restaurantMap.addMarker(restaurantInfo[i][1]);
 
     grid.setWidget(i + 1, 0, ui.createLabel((i + 1).toString()));
@@ -56,7 +73,9 @@ function restaurantLocationsMap() {
   // Create a Flow Panel widget. We add the map and the grid to this panel.
   // The height needs to be able to accomodate the number of restaurants, so we
   // use a calculation to scale it based on the number of restaurants.
-  var panel = ui.createFlowPanel().setSize('500px', 515 + (restaurantInfo.length * 25) + 'px');
+  const panel = ui
+    .createFlowPanel()
+    .setSize("500px", `${515 + restaurantInfo.length * 25}px`);
 
   // Get the URL of the restaurant map and use that to create an image and add
   // it to the panel. Next add the grid to the panel.
@@ -66,9 +85,9 @@ function restaurantLocationsMap() {
   // Finally, add the panel widget to our UI instance, and set its height,
   // width, and title.
   ui.add(panel);
-  ui.setHeight(515 + (restaurantInfo.length * 25));
+  ui.setHeight(515 + restaurantInfo.length * 25);
   ui.setWidth(500);
-  ui.setTitle('Restaurant Locations');
+  ui.setTitle("Restaurant Locations");
 
   // Make the UI visible in the spreadsheet.
   SpreadsheetApp.getActiveSpreadsheet().show(ui);
@@ -82,72 +101,75 @@ function restaurantLocationsMap() {
  */
 function getDrivingDirections() {
   // Set starting and ending addresses
-  var start = '1600 Amphitheatre Pkwy, Mountain View, CA 94043';
-  var end = '345 Spear St, San Francisco, CA 94105';
+  const start = "1600 Amphitheatre Pkwy, Mountain View, CA 94043";
+  const end = "345 Spear St, San Francisco, CA 94105";
 
   // These regular expressions will be used to strip out
   // unneeded HTML tags
-  var r1 = new RegExp('<b>', 'g');
-  var r2 = new RegExp('</b>', 'g');
-  var r3 = new RegExp('<div style="font-size:0.9em">', 'g');
-  var r4 = new RegExp('</div>', 'g');
+  const r1 = /<b>/g;
+  const r2 = /<\/b>/g;
+  const r3 = /<div style="font-size:0.9em">/g;
+  const r4 = /<\/div>/g;
 
   // points is used for storing the points in the step-by-step directions
-  var points = [];
+  let points = [];
 
   // currentLabel is used for number the steps in the directions
-  var currentLabel = 0;
+  let currentLabel = 0;
 
   // This will be the map on which we display the path
-  var map = Maps.newStaticMap().setSize(500, 350);
+  const map = Maps.newStaticMap().setSize(500, 350);
 
   // Create a new UI Application, which we use to display the map
-  var ui = UiApp.createApplication();
+  const ui = UiApp.createApplication();
   // Create a Flow Panel widget, which we use for the directions text
-  var directionsPanel = ui.createFlowPanel();
+  const directionsPanel = ui.createFlowPanel();
 
   // Create a new DirectionFinder with our start and end addresses, and request the directions
   // The response is a JSON object, which contains the directions
-  var directions = Maps.newDirectionFinder().setOrigin(start).setDestination(end).getDirections();
+  const directions = Maps.newDirectionFinder()
+    .setOrigin(start)
+    .setDestination(end)
+    .getDirections();
 
   // Much of this code is based on the template referenced in
   // http://googleappsdeveloper.blogspot.com/2010/06/automatically-generate-maps-and.html
-  for (var i in directions.routes) {
-    for (var j in directions.routes[i].legs) {
-      for (var k in directions.routes[i].legs[j].steps) {
+  for (const i in directions.routes) {
+    for (const j in directions.routes[i].legs) {
+      for (const k in directions.routes[i].legs[j].steps) {
         // Parse out the current step in the directions
-        var step = directions.routes[i].legs[j].steps[k];
+        const step = directions.routes[i].legs[j].steps[k];
 
         // Call Maps.decodePolyline() to decode the polyline for
         // this step into an array of latitudes and longitudes
-        var path = Maps.decodePolyline(step.polyline.points);
+        const path = Maps.decodePolyline(step.polyline.points);
         points = points.concat(path);
 
         // Pull out the direction information from step.html_instructions
         // Because we only want to display text, we will strip out the
         // HTML tags that are present in the html_instructions
-        var text = step.html_instructions;
-        text = text.replace(r1, ' ');
-        text = text.replace(r2, ' ');
-        text = text.replace(r3, ' ');
-        text = text.replace(r4, ' ');
+        let text = step.html_instructions;
+        text = text.replace(r1, " ");
+        text = text.replace(r2, " ");
+        text = text.replace(r3, " ");
+        text = text.replace(r4, " ");
 
         // Add each step in the directions to the directionsPanel
-        directionsPanel.add(ui.createLabel((++currentLabel) + ' - ' + text));
+        directionsPanel.add(ui.createLabel(`${++currentLabel} - ${text}`));
       }
     }
   }
 
   // be conservative and only sample 100 times to create our polyline path
-  var lpoints=[];
+  let lpoints = [];
   if (points.length < 200) {
     lpoints = points;
   } else {
-    var pCount = (points.length / 2);
-    var step = parseInt(pCount / 100);
-    for (var i = 0; i < 100; ++i) {
+    const pCount = points.length / 2;
+    const step = Number.parseInt(pCount / 100);
+    for (let i = 0; i < 100; ++i) {
       lpoints.push(points[i * step * 2]);
-      lpoints.push(points[(i * step * 2) + 1]);
+      lpoints.push(points[i * step * 2 + 1]);
     }
   }
 
@@ -155,14 +177,14 @@ function getDrivingDirections() {
   if (lpoints.length > 0) {
     // Maps.encodePolyline turns an array of latitudes and longitudes
     // into an encoded polyline
-    var pline = Maps.encodePolyline(lpoints);
+    const pline = Maps.encodePolyline(lpoints);
 
     // Once we have the encoded polyline, add that path to the map
     map.addPath(pline);
   }
 
   // Create a FlowPanel to hold the map
-  var panel = ui.createFlowPanel().setSize('500px', '350px');
+  const panel = ui.createFlowPanel().setSize("500px", "350px");
 
   // Get the URL of the map and use that to create an image and add
   // it to the panel.
@@ -173,7 +195,7 @@ function getDrivingDirections() {
   ui.add(directionsPanel);
 
   // Next set the title, height, and width of the UI instance
-  ui.setTitle('Driving Directions');
+  ui.setTitle("Driving Directions");
   ui.setHeight(525);
   ui.setWidth(500);
 
@@ -188,33 +210,37 @@ function getDrivingDirections() {
  */
 function analyzeLocations() {
   // Select the sheet named 'geocoder and elevation'
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('geocoder and elevation');
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    "geocoder and elevation",
+  );
 
   // Store the address data in an array called
   // locationInfo. This is the data in cells A2:A20
-  var locationInfo = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
+  const locationInfo = sheet
+    .getRange(2, 1, sheet.getLastRow() - 1, 1)
+    .getValues();
 
   // Set up some values to use for comparisons.
   // latitudes run from -90 to 90, so we start with a max of -90 for comparison
-  var maxLatitude = -90;
-  var indexOfMaxLatitude = 0;
+  let maxLatitude = -90;
+  let indexOfMaxLatitude = 0;
 
   // Set the starting max elevation to 0, or sea level
-  var maxElevation = 0;
-  var indexOfMaxElevation = 0;
+  let maxElevation = 0;
+  let indexOfMaxElevation = 0;
 
   // geoResults will hold the JSON results array that we get when calling geocode()
-  var geoResults;
+  let geoResults;
 
   // elevationResults will hold the results object that we get when calling sampleLocation()
-  var elevationResults;
+  let elevationResults;
 
   // lat and lng will temporarily hold the latitude and longitude of each
   // address
-  var lat;
-  var lng;
+  let lat;
+  let lng;
 
-  for (var i = 0; i < locationInfo.length; i++) {
+  for (let i = 0; i < locationInfo.length; i++) {
     // Get the latitude and longitude for an address. For more details on
     // the JSON results array, geoResults, see
     // http://code.google.com/apis/maps/documentation/geocoding/#Results
@@ -228,7 +254,10 @@ function analyzeLocations() {
     // elevation. For more details on the JSON-formatted results object,
     // elevationResults, see
     // http://code.google.com/apis/maps/documentation/elevation/#ElevationResponses
-    elevationResults = Maps.newElevationSampler().sampleLocation(parseFloat(lat), parseFloat(lng));
+    elevationResults = Maps.newElevationSampler().sampleLocation(
+      Number.parseFloat(lat),
+      Number.parseFloat(lng),
+    );
 
     // Check to see if the current latitude is greater than our max latitude
     // so far. If so, set maxLatitude and indexOfMaxLatitude
@@ -240,7 +269,10 @@ function analyzeLocations() {
     // Check if elevationResults has a good status and also if the current
     // elevation is greater than the max elevation so far. If so, set
     // maxElevation and indexOfMaxElevation
-    if (elevationResults.status == 'OK' && elevationResults.results[0].elevation > maxElevation) {
+    if (
+      elevationResults.status === "OK" &&
+      elevationResults.results[0].elevation > maxElevation
+    ) {
       maxElevation = elevationResults.results[0].elevation;
       indexOfMaxElevation = i;
     }
@@ -248,9 +280,8 @@ function analyzeLocations() {
 
   // User Browser.msgBox as a simple way to display the info about highest
   // elevation and northernmost office.
-  Browser.msgBox('The US Google office with the highest elevation is: ' +
-    locationInfo[indexOfMaxElevation] +
-    '. The northernmost US Google office is: ' +
-    locationInfo[indexOfMaxLatitude]);
+  Browser.msgBox(
+    `The US Google office with the highest elevation is: ${locationInfo[indexOfMaxElevation]}. The northernmost US Google office is: ${locationInfo[indexOfMaxLatitude]}`,
+  );
 }
 // [END apps_script_sheets_analyze_locations]

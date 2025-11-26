@@ -26,13 +26,16 @@ function listQueries() {
       // Print out the ID and name of each
       for (let i = 0; i < queries.queries.length; i++) {
         const query = queries.queries[i];
-        console.log('Found query with ID %s and name "%s".',
-            query.queryId, query.metadata.title);
+        console.log(
+          'Found query with ID %s and name "%s".',
+          query.queryId,
+          query.metadata.title,
+        );
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_dcbm_list_queries]
@@ -46,51 +49,56 @@ function createAndRunQuery() {
   let execution;
   //We leave the default date range blank for the report run to
   //use the value defined during query creation
-  let defaultDateRange = {}
-  let partnerId = "1234567" //Replace with your Partner ID
-  let query = {
-    "metadata": {
-      "title": "Apps Script Example Report",
-      "dataRange": {
-        "range": "YEAR_TO_DATE"
+  const defaultDateRange = {};
+  const partnerId = "1234567"; //Replace with your Partner ID
+  const query = {
+    metadata: {
+      title: "Apps Script Example Report",
+      dataRange: {
+        range: "YEAR_TO_DATE",
       },
-      "format": "CSV"
+      format: "CSV",
     },
-    "params": {
-      "type": "STANDARD",
-      "groupBys": [
+    params: {
+      type: "STANDARD",
+      groupBys: [
         "FILTER_PARTNER",
         "FILTER_PARTNER_NAME",
         "FILTER_ADVERTISER",
         "FILTER_ADVERTISER_NAME",
       ],
-      "filters": [
-        {"type": "FILTER_PARTNER","value": partnerId}
-      ],
-      "metrics": [
-        "METRIC_IMPRESSIONS"
-      ]
+      filters: [{ type: "FILTER_PARTNER", value: partnerId }],
+      metrics: ["METRIC_IMPRESSIONS"],
     },
-    "schedule": {
-      "frequency": "ONE_TIME"
-    }
-  }
+    schedule: {
+      frequency: "ONE_TIME",
+    },
+  };
 
   try {
     result = DoubleClickBidManager.Queries.create(query);
     if (result.queryId) {
-      console.log('Created query with ID %s and name "%s".',
-          result.queryId, result.metadata.title);
-      execution = DoubleClickBidManager.Queries.run(defaultDateRange, result.queryId);
-      if(execution.key){
-        console.log('Created query report with query ID %s and report ID "%s".',
-          execution.key.queryId, execution.key.reportId);
+      console.log(
+        'Created query with ID %s and name "%s".',
+        result.queryId,
+        result.metadata.title,
+      );
+      execution = DoubleClickBidManager.Queries.run(
+        defaultDateRange,
+        result.queryId,
+      );
+      if (execution.key) {
+        console.log(
+          'Created query report with query ID %s and report ID "%s".',
+          execution.key.queryId,
+          execution.key.reportId,
+        );
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log(e)
-    console.log('Failed with error: %s', e.error);
+    console.log(e);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_dcbm_create_and_run_query]
@@ -100,27 +108,32 @@ function createAndRunQuery() {
  * Fetches a report file
  */
 function fetchReport() {
-  const queryId = '1234567'; // Replace with your query ID.
+  const queryId = "1234567"; // Replace with your query ID.
   const orderBy = "key.reportId desc";
 
   try {
-    const report = DoubleClickBidManager.Queries.Reports.list(queryId, {orderBy:orderBy});
-    if(report.reports){
+    const report = DoubleClickBidManager.Queries.Reports.list(queryId, {
+      orderBy: orderBy,
+    });
+    if (report.reports) {
       const firstReport = report.reports[0];
-      if(firstReport.metadata.status.state == 'DONE'){
-        const reportFile = UrlFetchApp.fetch(firstReport.metadata.googleCloudStoragePath)
-        console.log("Printing report content to log...")
-        console.log(reportFile.getContentText())
-      }
-      else{
-        console.log("Report status is %s, and is not available for download", firstReport.metadata.status.state)
+      if (firstReport.metadata.status.state === "DONE") {
+        const reportFile = UrlFetchApp.fetch(
+          firstReport.metadata.googleCloudStoragePath,
+        );
+        console.log("Printing report content to log...");
+        console.log(reportFile.getContentText());
+      } else {
+        console.log(
+          "Report status is %s, and is not available for download",
+          firstReport.metadata.status.state,
+        );
       }
     }
-
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log(e)
-    console.log('Failed with error: %s', e.error);
+    console.log(e);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_dcbm_fetch_report]

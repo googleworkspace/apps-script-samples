@@ -21,7 +21,8 @@
  * @param {string} body The body of the email.
  * @returns {string} The prompt for classifying an email.
  */
-const classifyEmailPrompt = (subject, body) => `
+const classifyEmailPrompt = (subject, body) =>
+  `
 Objective: You are an AI assistant tasked with classifying email threads. Analyze the entire email thread provided below and determine the single most appropriate classification label. Your response must conform to the provided schema.
 
 **Classification Labels & Descriptions:**
@@ -70,9 +71,9 @@ function classifyEmail(subject, messages) {
     body.push(`Message ${i + 1}:`);
     body.push(`From: ${message.getFrom()}`);
     body.push(`To:${message.getTo()}`);
-    body.push('Body:');
+    body.push("Body:");
     body.push(message.getPlainBody());
-    body.push('---');
+    body.push("---");
   }
 
   // Prepare the request payload
@@ -82,10 +83,10 @@ function classifyEmail(subject, messages) {
         role: "user",
         parts: [
           {
-            text: classifyEmailPrompt(subject, body.join('\n'))
-          }
-        ]
-      }
+            text: classifyEmailPrompt(subject, body.join("\n")),
+          },
+        ],
+      },
     ],
     generationConfig: {
       temperature: 0,
@@ -103,22 +104,22 @@ function classifyEmail(subject, messages) {
             enum: Object.keys(classificationLabels),
           },
           reason: {
-            type: 'string'
-          }
-        }
-      }
-    }
+            type: "string",
+          },
+        },
+      },
+    },
   };
 
   // Prepare the request options
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${ScriptApp.getOAuthToken()}`
+      Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
     },
-    contentType: 'application/json',
+    contentType: "application/json",
     muteHttpExceptions: true, // Set to true to inspect the error response
-    payload: JSON.stringify(payload)
+    payload: JSON.stringify(payload),
   };
 
   // Make the API request
@@ -130,4 +131,3 @@ function classifyEmail(subject, messages) {
   const classification = JSON.parse(text);
   return classification;
 }
-

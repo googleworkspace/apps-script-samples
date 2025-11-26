@@ -16,8 +16,9 @@
  * Runs when the document is opened.
  */
 function onOpen() {
-  DocumentApp.getUi().createMenu('Inspector')
-    .addItem('Show sidebar', 'showSidebar')
+  DocumentApp.getUi()
+    .createMenu("Inspector")
+    .addItem("Show sidebar", "showSidebar")
     .addToUi();
 }
 
@@ -26,9 +27,11 @@ function onOpen() {
  */
 function showSidebar() {
   DocumentApp.getUi().showSidebar(
-    HtmlService.createTemplateFromFile('Sidebar').evaluate()
-      .setTitle('Cursor Inspector')
-      .setWidth(350));
+    HtmlService.createTemplateFromFile("Sidebar")
+      .evaluate()
+      .setTitle("Cursor Inspector")
+      .setWidth(350),
+  );
 }
 
 /**
@@ -45,28 +48,28 @@ function include(file) {
  * @return {Object} The infomration.
  */
 function getDocumentInfo() {
-  var document = DocumentApp.getActiveDocument();
-  var cursor = document.getCursor();
-  var selection = document.getSelection();
-  var result = {};
+  const document = DocumentApp.getActiveDocument();
+  const cursor = document.getCursor();
+  const selection = document.getSelection();
+  const result = {};
   if (cursor) {
     result.cursor = {
       element: getElementInfo(cursor.getElement()),
       offset: cursor.getOffset(),
       surroundingText: cursor.getSurroundingText().getText(),
-      surroundingTextOffset: cursor.getSurroundingTextOffset()
+      surroundingTextOffset: cursor.getSurroundingTextOffset(),
     };
   }
   if (selection) {
     result.selection = {
-      selectedElements: selection.getSelectedElements().map(function(selectedElement) {
-        return {
+      selectedElements: selection
+        .getSelectedElements()
+        .map((selectedElement) => ({
           element: getElementInfo(selectedElement.getElement()),
           partial: selectedElement.isPartial(),
           startOffset: selectedElement.getStartOffset(),
-          endOffsetInclusive: selectedElement.getEndOffsetInclusive()
-        };
-      })
+          endOffsetInclusive: selectedElement.getEndOffsetInclusive(),
+        })),
     };
   }
   return result;
@@ -79,6 +82,6 @@ function getDocumentInfo() {
  */
 function getElementInfo(element) {
   return {
-    type: String(element.getType())
+    type: String(element.getType()),
   };
 }

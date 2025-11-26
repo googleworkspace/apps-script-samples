@@ -19,11 +19,9 @@
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeOAuth2() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.OAUTH2)
-      .build();
+  return cc.newAuthTypeResponse().setAuthType(cc.AuthType.OAUTH2).build();
 }
 // [END apps_script_data_studio_get_auth_type_oauth2]
 
@@ -32,12 +30,13 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypePathUserPass() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.PATH_USER_PASS)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.PATH_USER_PASS)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_path_user_pass]
 
@@ -46,12 +45,13 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeUserPass() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.USER_PASS)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_PASS)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_pass]
 
@@ -60,12 +60,13 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeUserToken() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.USER_TOKEN)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_TOKEN)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_token]
 
@@ -74,12 +75,13 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeKey() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.KEY)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.KEY)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_key]
 
@@ -88,11 +90,9 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeNone() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.NONE)
-      .build();
+  return cc.newAuthTypeResponse().setAuthType(cc.AuthType.NONE).build();
 }
 // [END apps_script_data_studio_get_auth_type_none]
 
@@ -100,7 +100,7 @@ function getAuthType() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthOAuth2() {
   getOAuthService().reset();
 }
 // [END apps_script_data_studio_auth_reset_oauth2]
@@ -109,11 +109,11 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthPathUser() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.path');
-  userProperties.deleteProperty('dscc.username');
-  userProperties.deleteProperty('dscc.password');
+  userProperties.deleteProperty("dscc.path");
+  userProperties.deleteProperty("dscc.username");
+  userProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_path_user]
 
@@ -121,10 +121,10 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthUser() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.username');
-  userProperties.deleteProperty('dscc.password');
+  userProperties.deleteProperty("dscc.username");
+  userProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_user]
 
@@ -132,10 +132,10 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthUserToken() {
   const userTokenProperties = PropertiesService.getUserProperties();
-  userTokenProperties.deleteProperty('dscc.username');
-  userTokenProperties.deleteProperty('dscc.password');
+  userTokenProperties.deleteProperty("dscc.username");
+  userTokenProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_user_token]
 
@@ -143,9 +143,9 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthKey() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.key');
+  userProperties.deleteProperty("dscc.key");
 }
 // [END apps_script_data_studio_auth_reset_key]
 
@@ -154,7 +154,7 @@ function resetAuth() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidOAuth2() {
   return getOAuthService().hasAccess();
 }
 // [END apps_script_data_studio_auth_valid_oauth2]
@@ -164,11 +164,11 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidPathUserPass() {
   const userProperties = PropertiesService.getUserProperties();
-  const path = userProperties.getProperty('dscc.path');
-  const userName = userProperties.getProperty('dscc.username');
-  const password = userProperties.getProperty('dscc.password');
+  const path = userProperties.getProperty("dscc.path");
+  const userName = userProperties.getProperty("dscc.username");
+  const password = userProperties.getProperty("dscc.password");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(path, userName, password);
@@ -180,10 +180,10 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidUserPass() {
   const userProperties = PropertiesService.getUserProperties();
-  const userName = userProperties.getProperty('dscc.username');
-  const password = userProperties.getProperty('dscc.password');
+  const userName = userProperties.getProperty("dscc.username");
+  const password = userProperties.getProperty("dscc.password");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(userName, password);
@@ -195,10 +195,10 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidUserToken() {
   const userProperties = PropertiesService.getUserProperties();
-  const userName = userProperties.getProperty('dscc.username');
-  const token = userProperties.getProperty('dscc.token');
+  const userName = userProperties.getProperty("dscc.username");
+  const token = userProperties.getProperty("dscc.token");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and token are correct.
   return validateCredentials(userName, token);
@@ -210,9 +210,9 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidKey() {
   const userProperties = PropertiesService.getUserProperties();
-  const key = userProperties.getProperty('dscc.key');
+  const key = userProperties.getProperty("dscc.key");
   // This assumes you have a validateKey function that can validate
   // if the key is valid.
   return validateKey(key);
@@ -225,15 +225,15 @@ function isAuthValid() {
  * @return {Service} The OAuth Service
  */
 function getOAuthService() {
-  return OAuth2.createService('exampleService')
-      .setAuthorizationBaseUrl('...')
-      .setTokenUrl('...')
-      .setClientId('...')
-      .setClientSecret('...')
-      .setPropertyStore(PropertiesService.getUserProperties())
-      .setCallbackFunction('authCallback')
-      .setScope('...');
-};
+  return OAuth2.createService("exampleService")
+    .setAuthorizationBaseUrl("...")
+    .setTokenUrl("...")
+    .setClientId("...")
+    .setClientSecret("...")
+    .setPropertyStore(PropertiesService.getUserProperties())
+    .setCallbackFunction("authCallback")
+    .setScope("...");
+}
 // [END apps_script_data_studio_auth_library]
 
 // [START apps_script_data_studio_auth_callback]
@@ -245,11 +245,10 @@ function getOAuthService() {
 function authCallback(request) {
   const authorized = getOAuthService().handleCallback(request);
   if (authorized) {
-    return HtmlService.createHtmlOutput('Success! You can close this tab.');
-  } else {
-    return HtmlService.createHtmlOutput('Denied. You can close this tab');
-  };
-};
+    return HtmlService.createHtmlOutput("Success! You can close this tab.");
+  }
+  return HtmlService.createHtmlOutput("Denied. You can close this tab");
+}
 // [END apps_script_data_studio_auth_callback]
 
 // [START apps_script_data_studio_auth_urls]
@@ -269,7 +268,7 @@ function get3PAuthorizationUrls() {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsPathUserPass(request) {
   const creds = request.userPass;
   const path = creds.path;
   const username = creds.username;
@@ -282,15 +281,15 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(path, username, password);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.path', path);
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.password', password);
+  userProperties.setProperty("dscc.path", path);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.password", password);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_path_user_pass]
@@ -301,7 +300,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsUserPass(request) {
   const creds = request.userPass;
   const username = creds.username;
   const password = creds.password;
@@ -313,14 +312,14 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(username, password);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.password', password);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.password", password);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_user_pass]
@@ -331,7 +330,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsUserToken(request) {
   const creds = request.userToken;
   const username = creds.username;
   const token = creds.token;
@@ -343,14 +342,14 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(username, token);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.token', token);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.token", token);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_user_token]
@@ -361,7 +360,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsKey(request) {
   const key = request.key;
 
   // Optional
@@ -371,13 +370,13 @@ function setCredentials(request) {
   const validKey = checkForValidKey(key);
   if (!validKey) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.key', key);
+  userProperties.setProperty("dscc.key", key);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_key]

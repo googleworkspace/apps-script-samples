@@ -14,94 +14,127 @@
  * limitations under the License.
  */
 function setTextHelloWorld() {
-// [START apps_script_slides_hello]
+  // [START apps_script_slides_hello]
   try {
     // Get the first slide of active presentation
     const slide = SlidesApp.getActivePresentation().getSlides()[0];
     // Insert shape in the slide with dimensions
-    const shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
+    const shape = slide.insertShape(
+      SlidesApp.ShapeType.TEXT_BOX,
+      100,
+      200,
+      300,
+      60,
+    );
     const textRange = shape.getText();
     // Set text in TEXT_BOX
-    textRange.setText('Hello world!');
-    console.log('Start: ' + textRange.getStartIndex() + '; End: ' +
-      textRange.getEndIndex() + '; Content: ' + textRange.asString());
+    textRange.setText("Hello world!");
+    console.log(
+      `Start: ${textRange.getStartIndex()}; End: ${textRange.getEndIndex()}; Content: ${textRange.asString()}`,
+    );
     const subRange = textRange.getRange(0, 5);
-    console.log('Sub-range Start: ' + subRange.getStartIndex() + '; Sub-range End: ' +
-      subRange.getEndIndex() + '; Sub-range Content: ' + subRange.asString());
+    console.log(
+      `Sub-range Start: ${subRange.getStartIndex()}; Sub-range End: ${subRange.getEndIndex()}; Sub-range Content: ${subRange.asString()}`,
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
-// [END apps_script_slides_hello]
+  // [END apps_script_slides_hello]
 }
 /**
  * Insert Text in shape.
  */
 function insertText() {
-// [START apps_script_slides_insert_text]
+  // [START apps_script_slides_insert_text]
   try {
     // Get the first slide of active presentation
     const slide = SlidesApp.getActivePresentation().getSlides()[0];
     // Insert shape in the slide with dimensions
-    const shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
+    const shape = slide.insertShape(
+      SlidesApp.ShapeType.TEXT_BOX,
+      100,
+      200,
+      300,
+      60,
+    );
     const textRange = shape.getText();
-    textRange.setText('Hello world!');
+    textRange.setText("Hello world!");
     textRange.clear(6, 11);
     // Insert text in TEXT_BOX
-    textRange.insertText(6, 'galaxy');
-    console.log('Start: ' + textRange.getStartIndex() + '; End: ' +
-      textRange.getEndIndex() + '; Content: ' + textRange.asString());
+    textRange.insertText(6, "galaxy");
+    console.log(
+      `Start: ${textRange.getStartIndex()}; End: ${textRange.getEndIndex()}; Content: ${textRange.asString()}`,
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
-// [END apps_script_slides_insert_text]
+  // [END apps_script_slides_insert_text]
 }
 /**
  * Style the text
  */
 function styleText() {
-// [START apps_script_slides_style_text]
+  // [START apps_script_slides_style_text]
   try {
     // Get the first slide of active presentation
     const slide = SlidesApp.getActivePresentation().getSlides()[0];
     // Insert shape in the slide with dimensions
-    const shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 100, 200, 300, 60);
+    const shape = slide.insertShape(
+      SlidesApp.ShapeType.TEXT_BOX,
+      100,
+      200,
+      300,
+      60,
+    );
     const textRange = shape.getText();
     // Set text in TEXT_BOX
-    textRange.setText('Hello ');
+    textRange.setText("Hello ");
     // Append text in TEXT_BOX
-    const insertedText = textRange.appendText('world!');
+    const insertedText = textRange.appendText("world!");
     // Style the text with url,bold
-    insertedText.getTextStyle()
-        .setBold(true)
-        .setLinkUrl('www.example.com')
-        .setForegroundColor('#ff0000');
+    insertedText
+      .getTextStyle()
+      .setBold(true)
+      .setLinkUrl("www.example.com")
+      .setForegroundColor("#ff0000");
     const helloRange = textRange.getRange(0, 5);
-    console.log('Text: ' + helloRange.asString() + '; Bold: ' + helloRange.getTextStyle().isBold());
-    console.log('Text: ' + insertedText.asString() + '; Bold: ' +
-      insertedText.getTextStyle().isBold());
-    console.log('Text: ' + textRange.asString() + '; Bold: ' + textRange.getTextStyle().isBold());
+    console.log(
+      `Text: ${helloRange.asString()}; Bold: ${helloRange.getTextStyle().isBold()}`,
+    );
+    console.log(
+      `Text: ${insertedText.asString()}; Bold: ${insertedText.getTextStyle().isBold()}`,
+    );
+    console.log(
+      `Text: ${textRange.asString()}; Bold: ${textRange.getTextStyle().isBold()}`,
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
-// [END apps_script_slides_style_text]
+  // [END apps_script_slides_style_text]
 }
 
 /**
  * Style the paragraph
  */
 function paragraphStyling() {
-// [START apps_script_slides_paragraph_styling]
+  // [START apps_script_slides_paragraph_styling]
   try {
     // Get the first slide of active presentation
     const slide = SlidesApp.getActivePresentation().getSlides()[0];
     // Insert shape in the slide with dimensions
-    const shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 50, 50, 300, 300);
+    const shape = slide.insertShape(
+      SlidesApp.ShapeType.TEXT_BOX,
+      50,
+      50,
+      300,
+      300,
+    );
     const textRange = shape.getText();
     // Set the text in the shape/TEXT_BOX
-    textRange.setText('Paragraph 1\nParagraph2\nParagraph 3\nParagraph 4');
+    textRange.setText("Paragraph 1\nParagraph2\nParagraph 3\nParagraph 4");
     const paragraphs = textRange.getParagraphs();
     // Style the paragraph alignment center.
     for (let i = 0; i <= 3; i++) {
@@ -110,36 +143,47 @@ function paragraphStyling() {
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
-// [END apps_script_slides_paragraph_styling]
+  // [END apps_script_slides_paragraph_styling]
 }
 /**
  * Style the list
  */
 function listStyling() {
-// [START apps_script_slides_list_styling]
+  // [START apps_script_slides_list_styling]
   try {
     // Get the first slide of active presentation
     const slide = SlidesApp.getActivePresentation().getSlides()[0];
     // Insert shape in the slide with dimensions
-    const shape = slide.insertShape(SlidesApp.ShapeType.TEXT_BOX, 50, 50, 300, 300);
+    const shape = slide.insertShape(
+      SlidesApp.ShapeType.TEXT_BOX,
+      50,
+      50,
+      300,
+      300,
+    );
     // Add and style the list
     const textRange = shape.getText();
-    textRange.appendText('Item 1\n')
-        .appendText('\tItem 2\n')
-        .appendText('\t\tItem 3\n')
-        .appendText('Item 4');
+    textRange
+      .appendText("Item 1\n")
+      .appendText("\tItem 2\n")
+      .appendText("\t\tItem 3\n")
+      .appendText("Item 4");
     // Preset patterns of glyphs for lists in text.
-    textRange.getListStyle().applyListPreset(SlidesApp.ListPreset.DIGIT_ALPHA_ROMAN);
+    textRange
+      .getListStyle()
+      .applyListPreset(SlidesApp.ListPreset.DIGIT_ALPHA_ROMAN);
     const paragraphs = textRange.getParagraphs();
     for (let i = 0; i < paragraphs.length; i++) {
       const listStyle = paragraphs[i].getRange().getListStyle();
-      console.log('Paragraph ' + (i + 1) + '\'s nesting level: ' + listStyle.getNestingLevel());
+      console.log(
+        `Paragraph ${i + 1}'s nesting level: ${listStyle.getNestingLevel()}`,
+      );
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
-// [END apps_script_slides_list_styling]
+  // [END apps_script_slides_list_styling]
 }

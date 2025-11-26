@@ -18,17 +18,16 @@
  * Lists the registries for the configured project and region.
  */
 function listRegistries() {
-  const projectId = 'your-project-id';
-  const cloudRegion = 'us-central1';
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const projectId = "your-project-id";
+  const cloudRegion = "us-central1";
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
 
   const response = CloudIoT.Projects.Locations.Registries.list(parent);
   console.log(response);
   if (response.deviceRegistries) {
-    response.deviceRegistries.forEach(
-        function(registry) {
-          console.log(registry.id);
-        });
+    for (const registry of response.deviceRegistries) {
+      console.log(registry.id);
+    }
   }
 }
 // [END apps_script_iot_list_registries]
@@ -38,24 +37,29 @@ function listRegistries() {
  * Creates a registry.
  */
 function createRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
-  const topic = 'your-pubsub-topic';
+  const cloudRegion = "us-central1";
+  const name = "your-registry-name";
+  const projectId = "your-project-id";
+  const topic = "your-pubsub-topic";
 
-  const pubsubTopic = 'projects/' + projectId + '/topics/' + topic;
+  const pubsubTopic = `projects/${projectId}/topics/${topic}`;
 
   const registry = {
-    'eventNotificationConfigs': [{
-      // From - https://console.cloud.google.com/cloudpubsub
-      pubsubTopicName: pubsubTopic
-    }],
-    'id': name
+    eventNotificationConfigs: [
+      {
+        // From - https://console.cloud.google.com/cloudpubsub
+        pubsubTopicName: pubsubTopic,
+      },
+    ],
+    id: name,
   };
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
 
-  const response = CloudIoT.Projects.Locations.Registries.create(registry, parent);
-  console.log('Created registry: ' + response.id);
+  const response = CloudIoT.Projects.Locations.Registries.create(
+    registry,
+    parent,
+  );
+  console.log(`Created registry: ${response.id}`);
 }
 // [END apps_script_iot_create_registry]
 
@@ -64,15 +68,15 @@ function createRegistry() {
  * Describes a registry.
  */
 function getRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  const cloudRegion = "us-central1";
+  const name = "your-registry-name";
+  const projectId = "your-project-id";
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
   const response = CloudIoT.Projects.Locations.Registries.get(registryName);
-  console.log('Retrieved registry: ' + response.id);
+  console.log(`Retrieved registry: ${response.id}`);
 }
 // [END apps_script_iot_get_registry]
 
@@ -81,16 +85,16 @@ function getRegistry() {
  * Deletes a registry.
  */
 function deleteRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  const cloudRegion = "us-central1";
+  const name = "your-registry-name";
+  const projectId = "your-project-id";
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
   const response = CloudIoT.Projects.Locations.Registries.remove(registryName);
   // Successfully removed registry if exception was not thrown.
-  console.log('Deleted registry: ' + name);
+  console.log(`Deleted registry: ${name}`);
 }
 // [END apps_script_iot_delete_registry]
 
@@ -99,21 +103,21 @@ function deleteRegistry() {
  * Lists the devices in the given registry.
  */
 function listDevicesForRegistry() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-registry-name';
-  const projectId = 'your-project-id';
+  const cloudRegion = "us-central1";
+  const name = "your-registry-name";
+  const projectId = "your-project-id";
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion;
-  const registryName = parent + '/registries/' + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
-  const response = CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
+  const response =
+    CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
 
-  console.log('Registry contains the following devices: ');
+  console.log("Registry contains the following devices: ");
   if (response.devices) {
-    response.devices.forEach(
-        function(device) {
-          console.log('\t' + device.id);
-        });
+    for (const device of response.devices) {
+      console.log(`\t${device.id}`);
+    }
   }
 }
 // [END apps_script_iot_list_devices]
@@ -123,24 +127,27 @@ function listDevicesForRegistry() {
  * Creates a device without credentials.
  */
 function createDevice() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  const cloudRegion = "us-central1";
+  const name = "your-device-name";
+  const projectId = "your-project-id";
+  const registry = "your-registry-name";
 
-  console.log('Creating device: ' + name + ' in Registry: ' + registry);
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  console.log(`Creating device: ${name} in Registry: ${registry}`);
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
 
   const device = {
     id: name,
     gatewayConfig: {
-      gatewayType: 'NON_GATEWAY',
-      gatewayAuthMethod: 'ASSOCIATION_ONLY'
-    }
+      gatewayType: "NON_GATEWAY",
+      gatewayAuthMethod: "ASSOCIATION_ONLY",
+    },
   };
 
-  const response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
-  console.log('Created device:' + response.name);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.create(
+    device,
+    parent,
+  );
+  console.log(`Created device:${response.name}`);
 }
 // [END apps_script_iot_create_unauth_device]
 
@@ -155,34 +162,39 @@ function createRsaDevice() {
   //
   // **NOTE** Be sure to insert the newline charaters in the string constant.
   const cert =
-      '-----BEGIN CERTIFICATE-----\n' +
-      'your-PUBLIC-certificate-b64-bytes\n' +
-      '...\n' +
-      'more-PUBLIC-certificate-b64-bytes==\n' +
-      '-----END CERTIFICATE-----\n';
+    "-----BEGIN CERTIFICATE-----\n" +
+    "your-PUBLIC-certificate-b64-bytes\n" +
+    "...\n" +
+    "more-PUBLIC-certificate-b64-bytes==\n" +
+    "-----END CERTIFICATE-----\n";
 
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  const cloudRegion = "us-central1";
+  const name = "your-device-name";
+  const projectId = "your-project-id";
+  const registry = "your-registry-name";
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
   const device = {
     id: name,
     gatewayConfig: {
-      gatewayType: 'NON_GATEWAY',
-      gatewayAuthMethod: 'ASSOCIATION_ONLY'
+      gatewayType: "NON_GATEWAY",
+      gatewayAuthMethod: "ASSOCIATION_ONLY",
     },
-    credentials: [{
-      publicKey: {
-        format: 'RSA_X509_PEM',
-        key: cert
-      }
-    }]
+    credentials: [
+      {
+        publicKey: {
+          format: "RSA_X509_PEM",
+          key: cert,
+        },
+      },
+    ],
   };
 
-  const response = CloudIoT.Projects.Locations.Registries.Devices.create(device, parent);
-  console.log('Created device:' + response.name);
+  const response = CloudIoT.Projects.Locations.Registries.Devices.create(
+    device,
+    parent,
+  );
+  console.log(`Created device:${response.name}`);
 }
 // [END apps_script_iot_create_rsa_device]
 
@@ -191,17 +203,17 @@ function createRsaDevice() {
  * Deletes a device from the given registry.
  */
 function deleteDevice() {
-  const cloudRegion = 'us-central1';
-  const name = 'your-device-name';
-  const projectId = 'your-project-id';
-  const registry = 'your-registry-name';
+  const cloudRegion = "us-central1";
+  const name = "your-device-name";
+  const projectId = "your-project-id";
+  const registry = "your-registry-name";
 
-  const parent = 'projects/' + projectId + '/locations/' + cloudRegion + '/registries/' + registry;
-  const deviceName = parent + '/devices/' + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
+  const deviceName = `${parent}/devices/${name}`;
 
-  const response = CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
+  const response =
+    CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
   // If no exception thrown, device was successfully removed
-  console.log('Successfully deleted device: ' + deviceName);
+  console.log(`Successfully deleted device: ${deviceName}`);
 }
 // [END apps_script_iot_delete_device]
-

@@ -21,113 +21,129 @@ function Helpers() {
   this.filesToDelete = [];
 }
 
-Helpers.prototype.reset = function() {
+Helpers.prototype.reset = function () {
   this.filesToDelete = [];
 };
 
-Helpers.prototype.deleteFileOnCleanup = function(id) {
+Helpers.prototype.deleteFileOnCleanup = function (id) {
   this.filesToDelete.push(id);
 };
 
-Helpers.prototype.cleanup = function() {
+Helpers.prototype.cleanup = function () {
   this.filesToDelete.forEach(Drive.Files.remove);
 };
 
-Helpers.prototype.createTestPresentation = function() {
+Helpers.prototype.createTestPresentation = function () {
   const presentation = Slides.Presentations.create({
-    title: 'Test Preso'
+    title: "Test Preso",
   });
   this.deleteFileOnCleanup(presentation.presentationId);
   return presentation.presentationId;
 };
 
-Helpers.prototype.addSlides = function(presentationId, num, layout) {
-  let requests = [];
-  let slideIds = [];
+Helpers.prototype.addSlides = (presentationId, num, layout) => {
+  const requests = [];
+  const slideIds = [];
   for (let i = 0; i < num; ++i) {
-    slideIds.push('slide_' + i);
+    slideIds.push(`slide_${i}`);
     requests.push({
       createSlide: {
         objectId: slideIds[i],
         slideLayoutReference: {
-          predefinedLayout: layout
-        }
-      }
+          predefinedLayout: layout,
+        },
+      },
     });
   }
-  Slides.Presentations.batchUpdate({requests: requests}, presentationId);
+  Slides.Presentations.batchUpdate({ requests: requests }, presentationId);
   return slideIds;
 };
 
-Helpers.prototype.createTestTextbox = function(presentationId, pageId, callback) {
-  const boxId = 'MyTextBox_01';
+Helpers.prototype.createTestTextbox = (presentationId, pageId, callback) => {
+  const boxId = "MyTextBox_01";
   const pt350 = {
     magnitude: 350,
-    unit: 'PT'
+    unit: "PT",
   };
-  const requests = [{
-    createShape: {
-      objectId: boxId,
-      shapeType: 'TEXT_BOX',
-      elementProperties: {
-        pageObjectId: pageId,
-        size: {
-          height: pt350,
-          width: pt350
+  const requests = [
+    {
+      createShape: {
+        objectId: boxId,
+        shapeType: "TEXT_BOX",
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            height: pt350,
+            width: pt350,
+          },
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 350,
+            translateY: 100,
+            unit: "PT",
+          },
         },
-        transform: {
-          scaleX: 1,
-          scaleY: 1,
-          translateX: 350,
-          translateY: 100,
-          unit: 'PT'
-        }
-      }
-    }
-  }, {
-    insertText: {
-      objectId: boxId,
-      insertionIndex: 0,
-      text: 'New Box Text Inserted'
-    }
-  }];
-  const createTextboxResponse = Slides.Presentations.batchUpdate({
-    requests: requests
-  }, presentationId);
+      },
+    },
+    {
+      insertText: {
+        objectId: boxId,
+        insertionIndex: 0,
+        text: "New Box Text Inserted",
+      },
+    },
+  ];
+  const createTextboxResponse = Slides.Presentations.batchUpdate(
+    {
+      requests: requests,
+    },
+    presentationId,
+  );
   return createTextboxResponse.replies[0].createShape.objectId;
 };
 
-Helpers.prototype.createTestSheetsChart = function(presentationId, pageId,
-                                                   spreadsheetId, sheetChartId, callback) {
-  const chartId = 'MyChart_01';
+Helpers.prototype.createTestSheetsChart = (
+  presentationId,
+  pageId,
+  spreadsheetId,
+  sheetChartId,
+  callback,
+) => {
+  const chartId = "MyChart_01";
   const emu4M = {
     magnitude: 4000000,
-    unit: 'EMU'
+    unit: "EMU",
   };
-  const requests = [{
-    createSheetsChart: {
-      objectId: chartId,
-      spreadsheetId: spreadsheetId,
-      chartId: sheetChartId,
-      linkingMode: 'LINKED',
-      elementProperties: {
-        pageObjectId: pageId,
-        size: {
-          height: emu4M,
-          width: emu4M
+  const requests = [
+    {
+      createSheetsChart: {
+        objectId: chartId,
+        spreadsheetId: spreadsheetId,
+        chartId: sheetChartId,
+        linkingMode: "LINKED",
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            height: emu4M,
+            width: emu4M,
+          },
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 100000,
+            translateY: 100000,
+            unit: "EMU",
+          },
         },
-        transform: {
-          scaleX: 1,
-          scaleY: 1,
-          translateX: 100000,
-          translateY: 100000,
-          unit: 'EMU'
-        }
-      }
-    }
-  }];
-  const createSheetsChartResponse = Slides.Presentations.batchUpdate({
-    requests: requests
-  }, presentationId);
+      },
+    },
+  ];
+  const createSheetsChartResponse = Slides.Presentations.batchUpdate(
+    {
+      requests: requests,
+    },
+    presentationId,
+  );
   return createSheetsChartResponse.replies[0].createSheetsChart.objectId;
 };

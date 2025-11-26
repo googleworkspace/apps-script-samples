@@ -18,7 +18,7 @@
  * Tests listPartners function of displayvideo.gs
  */
 function itShouldListPartners() {
-  console.log('> itShouldListPartners');
+  console.log("> itShouldListPartners");
   listPartners();
 }
 
@@ -26,7 +26,7 @@ function itShouldListPartners() {
  * Tests listActiveCampaigns function of displayvideo.gs
  */
 function itShouldListActiveCampaigns() {
-  console.log('> itShouldListActiveCampaigns');
+  console.log("> itShouldListActiveCampaigns");
   listActiveCampaigns();
 }
 
@@ -34,7 +34,7 @@ function itShouldListActiveCampaigns() {
  * Tests updateLineItemName function of displayvideo.gs
  */
 function itShouldUpdateLineItemName() {
-  console.log('> itShouldUpdateLineItemName');
+  console.log("> itShouldUpdateLineItemName");
   updateLineItemName();
 }
 

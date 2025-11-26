@@ -19,7 +19,7 @@ limitations under the License.
  * @return {CardService.Card} The card to show to the user.
  */
 
-function analyzeSentiment(){
+function analyzeSentiment() {
   emailSentiment();
   return buildCard_GmailHome(true);
 }
@@ -27,7 +27,7 @@ function analyzeSentiment(){
 /**
  * Gets the last 10 threads in the inbox and the corresponding messages.
  * Fetches the label that should be applied to negative messages.
- * The processSentiment is called on each message 
+ * The processSentiment is called on each message
  * and tested with RegExp to check for a negative answer from the model
  */
 
@@ -37,11 +37,11 @@ function emailSentiment() {
   const label_upset = GmailApp.getUserLabelByName("UPSET TONE 😡");
   let currentPrediction;
 
-  for (let i = 0 ; i < msgs.length; i++) {
+  for (let i = 0; i < msgs.length; i++) {
     for (let j = 0; j < msgs[i].length; j++) {
-      let emailText = msgs[i][j].getPlainBody();
+      const emailText = msgs[i][j].getPlainBody();
       currentPrediction = processSentiment(emailText);
-      if(currentPrediction === true){
+      if (currentPrediction === true) {
         label_upset.addToThread(msgs[i][j].getThread());
       }
     }

@@ -11,8 +11,8 @@
 function onEdit() {
   const range = SpreadsheetApp.getActiveRange();
   const value = range.getValue();
-  if (typeof value === 'string') {
-    const translated = LanguageApp.translate(value, '', 'en');
+  if (typeof value === "string") {
+    const translated = LanguageApp.translate(value, "", "en");
     range.setNote(translated);
   }
 }

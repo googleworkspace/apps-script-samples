@@ -24,16 +24,15 @@ function listCalendars() {
   do {
     calendars = Calendar.CalendarList.list({
       maxResults: 100,
-      pageToken: pageToken
-
+      pageToken: pageToken,
     });
     if (!calendars.items || calendars.items.length === 0) {
-      console.log('No calendars found.');
+      console.log("No calendars found.");
       return;
     }
     // Print the calendar id and calendar summary
     for (const calendar of calendars.items) {
-      console.log('%s (ID: %s)', calendar.summary, calendar.id);
+      console.log("%s (ID: %s)", calendar.summary, calendar.id);
     }
     pageToken = calendars.nextPageToken;
   } while (pageToken);
@@ -46,33 +45,33 @@ function listCalendars() {
  * @see https://developers.google.com/calendar/api/v3/reference/events/insert
  */
 function createEvent() {
-  const calendarId = 'primary';
+  const calendarId = "primary";
   const start = getRelativeDate(1, 12);
   const end = getRelativeDate(1, 13);
   // event details for creating event.
   let event = {
-    summary: 'Lunch Meeting',
-    location: 'The Deli',
-    description: 'To discuss our plans for the presentation next week.',
+    summary: "Lunch Meeting",
+    location: "The Deli",
+    description: "To discuss our plans for the presentation next week.",
     start: {
-      dateTime: start.toISOString()
+      dateTime: start.toISOString(),
     },
     end: {
-      dateTime: end.toISOString()
+      dateTime: end.toISOString(),
     },
     attendees: [
-      {email: 'gduser1@workspacesample.dev'},
-      {email: 'gduser2@workspacesample.dev'}
+      { email: "gduser1@workspacesample.dev" },
+      { email: "gduser2@workspacesample.dev" },
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11
+    colorId: 11,
   };
   try {
     // call method to insert/create new event in provided calandar
     event = Calendar.Events.insert(event, calendarId);
-    console.log('Event ID: ' + event.id);
+    console.log(`Event ID: ${event.id}`);
   } catch (err) {
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 
@@ -100,27 +99,27 @@ function getRelativeDate(daysOffset, hour) {
  * @see https://developers.google.com/calendar/api/v3/reference/events/list
  */
 function listNext10Events() {
-  const calendarId = 'primary';
+  const calendarId = "primary";
   const now = new Date();
   const events = Calendar.Events.list(calendarId, {
     timeMin: now.toISOString(),
     singleEvents: true,
-    orderBy: 'startTime',
-    maxResults: 10
+    orderBy: "startTime",
+    maxResults: 10,
   });
   if (!events.items || events.items.length === 0) {
-    console.log('No events found.');
+    console.log("No events found.");
     return;
   }
   for (const event of events.items) {
     if (event.start.date) {
       // All-day event.
       const start = new Date(event.start.date);
-      console.log('%s (%s)', event.summary, start.toLocaleDateString());
+      console.log("%s (%s)", event.summary, start.toLocaleDateString());
       continue;
     }
     const start = new Date(event.start.dateTime);
-    console.log('%s (%s)', event.summary, start.toLocaleString());
+    console.log("%s (%s)", event.summary, start.toLocaleString());
   }
 }
 // [END calendar_list_events]
@@ -138,9 +137,9 @@ function listNext10Events() {
 function logSyncedEvents(calendarId, fullSync) {
   const properties = PropertiesService.getUserProperties();
   const options = {
-    maxResults: 100
+    maxResults: 100,
   };
-  const syncToken = properties.getProperty('syncToken');
+  const syncToken = properties.getProperty("syncToken");
   if (syncToken && !fullSync) {
     options.syncToken = syncToken;
   } else {
@@ -157,34 +156,36 @@ function logSyncedEvents(calendarId, fullSync) {
     } catch (e) {
       // Check to see if the sync token was invalidated by the server;
       // if so, perform a full sync instead.
-      if (e.message === 'Sync token is no longer valid, a full sync is required.') {
-        properties.deleteProperty('syncToken');
+      if (
+        e.message === "Sync token is no longer valid, a full sync is required."
+      ) {
+        properties.deleteProperty("syncToken");
         logSyncedEvents(calendarId, true);
         return;
       }
       throw new Error(e.message);
     }
     if (events.items && events.items.length === 0) {
-      console.log('No events found.');
+      console.log("No events found.");
       return;
     }
     for (const event of events.items) {
-      if (event.status === 'cancelled') {
-        console.log('Event id %s was cancelled.', event.id);
+      if (event.status === "cancelled") {
+        console.log("Event id %s was cancelled.", event.id);
         return;
       }
       if (event.start.date) {
         const start = new Date(event.start.date);
-        console.log('%s (%s)', event.summary, start.toLocaleDateString());
+        console.log("%s (%s)", event.summary, start.toLocaleDateString());
         return;
       }
       // Events that don't last all day; they have defined start times.
       const start = new Date(event.start.dateTime);
-      console.log('%s (%s)', event.summary, start.toLocaleString());
+      console.log("%s (%s)", event.summary, start.toLocaleString());
     }
     pageToken = events.nextPageToken;
   } while (pageToken);
-  properties.setProperty('syncToken', events.nextSyncToken);
+  properties.setProperty("syncToken", events.nextSyncToken);
 }
 // [END calendar_log_synced_events]
 
@@ -200,44 +201,44 @@ function logSyncedEvents(calendarId, fullSync) {
  * to the etag of the new event when it was created.
  */
 function conditionalUpdate() {
-  const calendarId = 'primary';
+  const calendarId = "primary";
   const start = getRelativeDate(1, 12);
   const end = getRelativeDate(1, 13);
   let event = {
-    summary: 'Lunch Meeting',
-    location: 'The Deli',
-    description: 'To discuss our plans for the presentation next week.',
+    summary: "Lunch Meeting",
+    location: "The Deli",
+    description: "To discuss our plans for the presentation next week.",
     start: {
-      dateTime: start.toISOString()
+      dateTime: start.toISOString(),
     },
     end: {
-      dateTime: end.toISOString()
+      dateTime: end.toISOString(),
     },
     attendees: [
-      {email: 'gduser1@workspacesample.dev'},
-      {email: 'gduser2@workspacesample.dev'}
+      { email: "gduser1@workspacesample.dev" },
+      { email: "gduser2@workspacesample.dev" },
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11
+    colorId: 11,
   };
   event = Calendar.Events.insert(event, calendarId);
-  console.log('Event ID: ' + event.getId());
+  console.log(`Event ID: ${event.getId()}`);
   // Wait 30 seconds to see if the event has been updated outside this script.
   Utilities.sleep(30 * 1000);
   // Try to update the event, on the condition that the event state has not
   // changed since the event was created.
-  event.location = 'The Coffee Shop';
+  event.location = "The Coffee Shop";
   try {
     event = Calendar.Events.update(
-        event,
-        calendarId,
-        event.id,
-        {},
-        {'If-Match': event.etag}
+      event,
+      calendarId,
+      event.id,
+      {},
+      { "If-Match": event.etag },
     );
-    console.log('Successfully updated event: ' + event.id);
+    console.log(`Successfully updated event: ${event.id}`);
   } catch (e) {
-    console.log('Fetch threw an exception: ' + e);
+    console.log(`Fetch threw an exception: ${e}`);
   }
 }
 // [END calendar_conditional_update]
@@ -252,38 +253,43 @@ function conditionalUpdate() {
  * to the etag of the last known state of the event.
  */
 function conditionalFetch() {
-  const calendarId = 'primary';
+  const calendarId = "primary";
   const start = getRelativeDate(1, 12);
   const end = getRelativeDate(1, 13);
   let event = {
-    summary: 'Lunch Meeting',
-    location: 'The Deli',
-    description: 'To discuss our plans for the presentation next week.',
+    summary: "Lunch Meeting",
+    location: "The Deli",
+    description: "To discuss our plans for the presentation next week.",
     start: {
-      dateTime: start.toISOString()
+      dateTime: start.toISOString(),
     },
     end: {
-      dateTime: end.toISOString()
+      dateTime: end.toISOString(),
     },
     attendees: [
-      {email: 'gduser1@workspacesample.dev'},
-      {email: 'gduser2@workspacesample.dev'}
+      { email: "gduser1@workspacesample.dev" },
+      { email: "gduser2@workspacesample.dev" },
     ],
     // Red background. Use Calendar.Colors.get() for the full list.
-    colorId: 11
+    colorId: 11,
   };
   try {
     // insert event
     event = Calendar.Events.insert(event, calendarId);
-    console.log('Event ID: ' + event.getId());
+    console.log(`Event ID: ${event.getId()}`);
     // Re-fetch the event each second, but only get a result if it has changed.
     for (let i = 0; i < 30; i++) {
       Utilities.sleep(1000);
-      event = Calendar.Events.get(calendarId, event.id, {}, {'If-None-Match': event.etag});
-      console.log('New event description: ' + event.start.dateTime);
+      event = Calendar.Events.get(
+        calendarId,
+        event.id,
+        {},
+        { "If-None-Match": event.etag },
+      );
+      console.log(`New event description: ${event.start.dateTime}`);
     }
   } catch (e) {
-    console.log('Fetch threw an exception: ' + e);
+    console.log(`Fetch threw an exception: ${e}`);
   }
 }
 // [END calendar_conditional_fetch]

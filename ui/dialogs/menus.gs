@@ -20,13 +20,12 @@
  * Creates a custom menu.
  */
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
+  const ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
-  ui.createMenu('Custom Menu')
-    .addItem('First item', 'menuItem1')
+  ui.createMenu("Custom Menu")
+    .addItem("First item", "menuItem1")
     .addSeparator()
-    .addSubMenu(ui.createMenu('Sub-menu')
-      .addItem('Second item', 'menuItem2'))
+    .addSubMenu(ui.createMenu("Sub-menu").addItem("Second item", "menuItem2"))
     .addToUi();
 }
 
@@ -35,7 +34,7 @@ function onOpen() {
  */
 function menuItem1() {
   SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-    .alert('You clicked the first menu item!');
+    .alert("You clicked the first menu item!");
 }
 
 /**
@@ -43,7 +42,7 @@ function menuItem1() {
  */
 function menuItem2() {
   SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-    .alert('You clicked the second menu item!');
+    .alert("You clicked the second menu item!");
 }
 // [END apps_script_menu]
 
@@ -52,7 +51,7 @@ function menuItem2() {
  * Shows a message box to the user.
  */
 function showMessageBox() {
-  Browser.msgBox('You clicked it!');
+  Browser.msgBox("You clicked it!");
 }
 // [END apps_script_show_message_box]
 
@@ -61,7 +60,7 @@ function showMessageBox() {
  * A function that can be invoked from a Google Sites link.
  */
 function sitesLink() {
-  var recipient = Session.getActiveUser().getEmail();
-  GmailApp.sendEmail(recipient, 'Email from your site', 'You clicked a link!');
+  const recipient = Session.getActiveUser().getEmail();
+  GmailApp.sendEmail(recipient, "Email from your site", "You clicked a link!");
 }
 // [END apps_script_sites_link]

@@ -21,14 +21,14 @@
 function getConnections() {
   try {
     // Get the list of connections/contacts of user's profile
-    const people = People.People.Connections.list('people/me', {
-      personFields: 'names,emailAddresses'
+    const people = People.People.Connections.list("people/me", {
+      personFields: "names,emailAddresses",
     });
     // Print the connections/contacts
-    console.log('Connections: %s', JSON.stringify(people, null, 2));
+    console.log("Connections: %s", JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developers) - Handle exception here
-    console.log('Failed to get the connection with an error %s', err.message);
+    console.log("Failed to get the connection with an error %s", err.message);
   }
 }
 // [END people_get_connections]
@@ -42,14 +42,14 @@ function getSelf() {
   try {
     // Get own user's profile using People.getBatchGet() method
     const people = People.People.getBatchGet({
-      resourceNames: ['people/me'],
-      personFields: 'names,emailAddresses'
+      resourceNames: ["people/me"],
+      personFields: "names,emailAddresses",
       // Use other query parameter here if needed
     });
-    console.log('Myself: %s', JSON.stringify(people, null, 2));
+    console.log("Myself: %s", JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developer) -Handle exception
-    console.log('Failed to get own profile with an error %s', err.message);
+    console.log("Failed to get own profile with an error %s", err.message);
   }
 }
 // [END people_get_self_profile]
@@ -63,14 +63,14 @@ function getSelf() {
 function getAccount(accountId) {
   try {
     // Get the Account details using account ID.
-    const people = People.People.get('people/' + accountId, {
-      personFields: 'names,emailAddresses'
+    const people = People.People.get(`people/${accountId}`, {
+      personFields: "names,emailAddresses",
     });
     // Print the profile details of Account.
-    console.log('Public Profile: %s', JSON.stringify(people, null, 2));
+    console.log("Public Profile: %s", JSON.stringify(people, null, 2));
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to get account with an error %s', err.message);
+    console.log("Failed to get account with an error %s", err.message);
   }
 }
 // [END people_get_account]
@@ -86,12 +86,15 @@ function getContactGroup(name) {
   try {
     const people = People.ContactGroups.list();
     // Finds the contact group for the person where the name matches.
-    const group = people['contactGroups'].find((group) => group['name'] === name);
+    const group = people.contactGroups.find((group) => group.name === name);
     // Prints the contact group
-    console.log('Group: %s', JSON.stringify(group, null, 2));
+    console.log("Group: %s", JSON.stringify(group, null, 2));
   } catch (err) {
     // TODO (developers) - Handle exception
-    console.log('Failed to get the contact group with an error %s', err.message);
+    console.log(
+      "Failed to get the contact group with an error %s",
+      err.message,
+    );
   }
 }
 
@@ -107,17 +110,19 @@ function getContactGroup(name) {
 function getContactByEmail(email) {
   try {
     // Gets the person with that email address by iterating over all contacts.
-    const people = People.People.Connections.list('people/me', {
-      personFields: 'names,emailAddresses'
+    const people = People.People.Connections.list("people/me", {
+      personFields: "names,emailAddresses",
     });
-    const contact = people['connections'].find((connection) => {
-      return connection['emailAddresses'].some((emailAddress) => emailAddress['value'] === email);
+    const contact = people.connections.find((connection) => {
+      return connection.emailAddresses.some(
+        (emailAddress) => emailAddress.value === email,
+      );
     });
     // Prints the contact.
-    console.log('Contact: %s', JSON.stringify(contact, null, 2));
+    console.log("Contact: %s", JSON.stringify(contact, null, 2));
   } catch (err) {
     // TODO (developers) - Handle exception
-    console.log('Failed to get the connection with an error %s', err.message);
+    console.log("Failed to get the connection with an error %s", err.message);
   }
 }
 
@@ -133,12 +138,12 @@ function getFullName() {
     // Gets the person by specifying resource name/account ID
     // in the first parameter of People.People.get.
     // This example gets the person for the user running the script.
-    const people = People.People.get('people/me', {personFields: 'names'});
+    const people = People.People.get("people/me", { personFields: "names" });
     // Prints the full name (given name + family name)
-    console.log(`${people['names'][0]['givenName']} ${people['names'][0]['familyName']}`);
+    console.log(`${people.names[0].givenName} ${people.names[0].familyName}`);
   } catch (err) {
     // TODO (developers) - Handle exception
-    console.log('Failed to get the connection with an error %s', err.message);
+    console.log("Failed to get the connection with an error %s", err.message);
   }
 }
 
@@ -154,12 +159,14 @@ function getPhoneNumbers() {
     // Gets the person by specifying resource name/account ID
     // in the first parameter of People.People.get.
     // This example gets the person for the user running the script.
-    const people = People.People.get('people/me', {personFields: 'phoneNumbers'});
+    const people = People.People.get("people/me", {
+      personFields: "phoneNumbers",
+    });
     // Prints the phone numbers.
-    console.log(people['phoneNumbers']);
+    console.log(people.phoneNumbers);
   } catch (err) {
     // TODO (developers) - Handle exception
-    console.log('Failed to get the connection with an error %s', err.message);
+    console.log("Failed to get the connection with an error %s", err.message);
   }
 }
 
@@ -175,14 +182,18 @@ function getPhone() {
     // Gets the person by specifying resource name/account ID
     // in the first parameter of People.People.get.
     // This example gets the person for the user running the script.
-    const people = People.People.get('people/me', {personFields: 'phoneNumbers'});
+    const people = People.People.get("people/me", {
+      personFields: "phoneNumbers",
+    });
     // Gets phone number by type, such as home or work.
-    const phoneNumber = people['phoneNumbers'].find((phone) => phone['type'] === 'home')['value'];
+    const phoneNumber = people.phoneNumbers.find(
+      (phone) => phone.type === "home",
+    ).value;
     // Prints the phone numbers.
     console.log(phoneNumber);
   } catch (err) {
     // TODO (developers) - Handle exception
-    console.log('Failed to get the connection with an error %s', err.message);
+    console.log("Failed to get the connection with an error %s", err.message);
   }
 }
 

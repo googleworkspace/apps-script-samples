@@ -28,20 +28,21 @@
  * A global constant String holding the title of the add-on. This is
  * used to identify the add-on in the notification emails.
  */
-const ADDON_TITLE = 'Form Notifications';
+const ADDON_TITLE = "Form Notifications";
 
 /**
  * A global constant 'notice' text to include with each email
  * notification.
  */
-const NOTICE = 'Form Notifications was created as an sample add-on, and is' +
-  ' meant for' +
-'demonstration purposes only. It should not be used for complex or important' +
-'workflows. The number of notifications this add-on produces are limited by the' +
-'owner\'s available email quota; it will not send email notifications if the' +
-'owner\'s daily email quota has been exceeded. Collaborators using this add-on on' +
-'the same form will be able to adjust the notification settings, but will not be' +
-'able to disable the notification triggers set by other collaborators.';
+const NOTICE =
+  "Form Notifications was created as an sample add-on, and is" +
+  " meant for" +
+  "demonstration purposes only. It should not be used for complex or important" +
+  "workflows. The number of notifications this add-on produces are limited by the" +
+  "owner's available email quota; it will not send email notifications if the" +
+  "owner's daily email quota has been exceeded. Collaborators using this add-on on" +
+  "the same form will be able to adjust the notification settings, but will not be" +
+  "able to disable the notification triggers set by other collaborators.";
 
 /**
  * Adds a custom menu to the active form to show the add-on sidebar.
@@ -53,13 +54,13 @@ const NOTICE = 'Form Notifications was created as an sample add-on, and is' +
 function onOpen(e) {
   try {
     FormApp.getUi()
-        .createAddonMenu()
-        .addItem('Configure notifications', 'showSidebar')
-        .addItem('About', 'showAbout')
-        .addToUi();
+      .createAddonMenu()
+      .addItem("Configure notifications", "showSidebar")
+      .addItem("About", "showAbout")
+      .addToUi();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -82,12 +83,14 @@ function onInstall(e) {
  */
 function showSidebar() {
   try {
-    const ui = HtmlService.createHtmlOutputFromFile('sidebar')
-        .setTitle('Form Notifications');
+    const ui =
+      HtmlService.createHtmlOutputFromFile("sidebar").setTitle(
+        "Form Notifications",
+      );
     FormApp.getUi().showSidebar(ui);
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -97,13 +100,13 @@ function showSidebar() {
  */
 function showAbout() {
   try {
-    const ui = HtmlService.createHtmlOutputFromFile('about')
-        .setWidth(420)
-        .setHeight(270);
-    FormApp.getUi().showModalDialog(ui, 'About Form Notifications');
+    const ui = HtmlService.createHtmlOutputFromFile("about")
+      .setWidth(420)
+      .setHeight(270);
+    FormApp.getUi().showModalDialog(ui, "About Form Notifications");
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -120,7 +123,7 @@ function saveSettings(settings) {
     adjustFormSubmitTrigger();
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -149,13 +152,13 @@ function getSettings() {
     for (let i = 0; i < textItems.length; i++) {
       settings.textItems.push({
         title: textItems[i].getTitle(),
-        id: textItems[i].getId()
+        id: textItems[i].getId(),
       });
     }
     return settings;
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -168,8 +171,8 @@ function adjustFormSubmitTrigger() {
     const triggers = ScriptApp.getUserTriggers(form);
     const settings = PropertiesService.getDocumentProperties();
     const triggerNeeded =
-      settings.getProperty('creatorNotify') === 'true' ||
-      settings.getProperty('respondentNotify') === 'true';
+      settings.getProperty("creatorNotify") === "true" ||
+      settings.getProperty("respondentNotify") === "true";
 
     // Create a new trigger if required; delete existing trigger
     // if it is not needed.
@@ -181,16 +184,16 @@ function adjustFormSubmitTrigger() {
       }
     }
     if (triggerNeeded && !existingTrigger) {
-      const trigger = ScriptApp.newTrigger('respondToFormSubmit')
-          .forForm(form)
-          .onFormSubmit()
-          .create();
+      const trigger = ScriptApp.newTrigger("respondToFormSubmit")
+        .forForm(form)
+        .onFormSubmit()
+        .create();
     } else if (!triggerNeeded && existingTrigger) {
       ScriptApp.deleteTrigger(existingTrigger);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -211,8 +214,10 @@ function respondToFormSubmit(e) {
     // been supplied yet -- if so, warn the active user via email (if possible).
     // This check is required when using triggers with add-ons to maintain
     // functional triggers.
-    if (authInfo.getAuthorizationStatus() ===
-      ScriptApp.AuthorizationStatus.REQUIRED) {
+    if (
+      authInfo.getAuthorizationStatus() ===
+      ScriptApp.AuthorizationStatus.REQUIRED
+    ) {
       // Re-authorization is required. In this case, the user needs to be alerted
       // that they need to reauthorize; the normal trigger action is not
       // conducted, since authorization needs to be provided first. Send at
@@ -225,23 +230,24 @@ function respondToFormSubmit(e) {
 
       // Check if the form creator needs to be notified; if so, construct and
       // send the notification.
-      if (settings.getProperty('creatorNotify') === 'true') {
+      if (settings.getProperty("creatorNotify") === "true") {
         sendCreatorNotification();
       }
 
       // Check if the form respondent needs to be notified; if so, construct and
       // send the notification. Be sure to respect the remaining email quota.
-      if (settings.getProperty('respondentNotify') === 'true' &&
-        MailApp.getRemainingDailyQuota() > 0) {
+      if (
+        settings.getProperty("respondentNotify") === "true" &&
+        MailApp.getRemainingDailyQuota() > 0
+      ) {
         sendRespondentNotification(e.response);
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
-
 
 /**
  * Called when the user needs to reauthorize. Sends the user of the
@@ -253,27 +259,30 @@ function sendReauthorizationRequest() {
   try {
     const settings = PropertiesService.getDocumentProperties();
     const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
-    const lastAuthEmailDate = settings.getProperty('lastAuthEmailDate');
+    const lastAuthEmailDate = settings.getProperty("lastAuthEmailDate");
     const today = new Date().toDateString();
     if (lastAuthEmailDate !== today) {
       if (MailApp.getRemainingDailyQuota() > 0) {
         const template =
-          HtmlService.createTemplateFromFile('authorizationEmail');
+          HtmlService.createTemplateFromFile("authorizationEmail");
         template.url = authInfo.getAuthorizationUrl();
         template.notice = NOTICE;
         const message = template.evaluate();
-        MailApp.sendEmail(Session.getEffectiveUser().getEmail(),
-            'Authorization Required',
-            message.getContent(), {
-              name: ADDON_TITLE,
-              htmlBody: message.getContent()
-            });
+        MailApp.sendEmail(
+          Session.getEffectiveUser().getEmail(),
+          "Authorization Required",
+          message.getContent(),
+          {
+            name: ADDON_TITLE,
+            htmlBody: message.getContent(),
+          },
+        );
       }
-      settings.setProperty('lastAuthEmailDate', today);
+      settings.setProperty("lastAuthEmailDate", today);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -286,8 +295,8 @@ function sendCreatorNotification() {
   try {
     const form = FormApp.getActiveForm();
     const settings = PropertiesService.getDocumentProperties();
-    let responseStep = settings.getProperty('responseStep');
-    responseStep = responseStep ? parseInt(responseStep) : 10;
+    let responseStep = settings.getProperty("responseStep");
+    responseStep = responseStep ? Number.parseInt(responseStep) : 10;
 
     // If the total number of form responses is an even multiple of the
     // response step setting, send a notification email(s) to the form
@@ -295,10 +304,11 @@ function sendCreatorNotification() {
     // will be sent when there are 10, 20, 30, etc. total form responses
     // received.
     if (form.getResponses().length % responseStep === 0) {
-      const addresses = settings.getProperty('creatorEmail').split(',');
+      const addresses = settings.getProperty("creatorEmail").split(",");
       if (MailApp.getRemainingDailyQuota() > addresses.length) {
-        const template =
-          HtmlService.createTemplateFromFile('creatorNotification');
+        const template = HtmlService.createTemplateFromFile(
+          "creatorNotification",
+        );
         template.summary = form.getSummaryUrl();
         template.responses = form.getResponses().length;
         template.title = form.getTitle();
@@ -306,17 +316,20 @@ function sendCreatorNotification() {
         template.formUrl = form.getEditUrl();
         template.notice = NOTICE;
         const message = template.evaluate();
-        MailApp.sendEmail(settings.getProperty('creatorEmail'),
-            form.getTitle() + ': Form submissions detected',
-            message.getContent(), {
-              name: ADDON_TITLE,
-              htmlBody: message.getContent()
-            });
+        MailApp.sendEmail(
+          settings.getProperty("creatorEmail"),
+          `${form.getTitle()}: Form submissions detected`,
+          message.getContent(),
+          {
+            name: ADDON_TITLE,
+            htmlBody: message.getContent(),
+          },
+        );
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -330,26 +343,31 @@ function sendRespondentNotification(response) {
   try {
     const form = FormApp.getActiveForm();
     const settings = PropertiesService.getDocumentProperties();
-    const emailId = settings.getProperty('respondentEmailItemId');
-    const emailItem = form.getItemById(parseInt(emailId));
-    const respondentEmail = response.getResponseForItem(emailItem)
-        .getResponse();
+    const emailId = settings.getProperty("respondentEmailItemId");
+    const emailItem = form.getItemById(Number.parseInt(emailId));
+    const respondentEmail = response
+      .getResponseForItem(emailItem)
+      .getResponse();
     if (respondentEmail) {
-      const template =
-        HtmlService.createTemplateFromFile('respondentNotification');
-      template.paragraphs = settings.getProperty('responseText').split('\n');
+      const template = HtmlService.createTemplateFromFile(
+        "respondentNotification",
+      );
+      template.paragraphs = settings.getProperty("responseText").split("\n");
       template.notice = NOTICE;
       const message = template.evaluate();
-      MailApp.sendEmail(respondentEmail,
-          settings.getProperty('responseSubject'),
-          message.getContent(), {
-            name: form.getTitle(),
-            htmlBody: message.getContent()
-          });
+      MailApp.sendEmail(
+        respondentEmail,
+        settings.getProperty("responseSubject"),
+        message.getContent(),
+        {
+          name: form.getTitle(),
+          htmlBody: message.getContent(),
+        },
+      );
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_forms_notifications_quickstart]

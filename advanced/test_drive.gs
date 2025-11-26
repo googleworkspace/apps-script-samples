@@ -21,9 +21,9 @@
  */
 function expectToExist(value) {
   if (value) {
-    console.log('TEST: Exists');
+    console.log("TEST: Exists");
   } else {
-    throw new Error('TEST: DNE');
+    throw new Error("TEST: DNE");
   }
 }
 
@@ -34,9 +34,9 @@ function expectToExist(value) {
  * To test drive.gs please add drive services
  */
 function expectToEqual(actual, expected) {
-  console.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log("TEST: actual: %s = expected: %s", actual, expected);
   if (actual !== expected) {
-    console.log('TEST: actual: %s expected: %s', actual, expected);
+    console.log("TEST: actual: %s expected: %s", actual, expected);
   }
 }
 
@@ -46,8 +46,8 @@ function expectToEqual(actual, expected) {
  * To test drive.gs please add drive services
  */
 function createTestFolder() {
-  DriveApp.createFolder('test1');
-  DriveApp.createFolder('test2');
+  DriveApp.createFolder("test1");
+  DriveApp.createFolder("test2");
 }
 
 /**
@@ -56,7 +56,7 @@ function createTestFolder() {
  * To test drive.gs please add drive services
  */
 function fileCleanUp() {
-  DriveApp.getFilesByName('google_logo.png').next().setTrashed(true);
+  DriveApp.getFilesByName("google_logo.png").next().setTrashed(true);
 }
 
 /**
@@ -65,8 +65,8 @@ function fileCleanUp() {
  * To test getFoldersByName() please add drive services
  */
 function folderCleanUp() {
-  DriveApp.getFoldersByName('test1').next().setTrashed(true);
-  DriveApp.getFoldersByName('test2').next().setTrashed(true);
+  DriveApp.getFoldersByName("test1").next().setTrashed(true);
+  DriveApp.getFoldersByName("test2").next().setTrashed(true);
 }
 
 /**
@@ -79,7 +79,7 @@ function folderCleanUp() {
  */
 function checkUploadFile() {
   uploadFile();
-  const fileId = DriveApp.getFilesByName('google_logo.png').next().getId();
+  const fileId = DriveApp.getFilesByName("google_logo.png").next().getId();
   expectToExist(fileId);
   return fileId;
 }
@@ -93,7 +93,7 @@ function checkListRootFolders() {
   const folders = DriveApp.getFolders();
   while (folders.hasNext()) {
     const folder = folders.next();
-    console.log(folder.getName() + ' ' + folder.getId());
+    console.log(`${folder.getName()} ${folder.getId()}`);
   }
   listRootFolders();
   folderCleanUp();
@@ -105,8 +105,10 @@ function checkListRootFolders() {
  */
 function checkAddCustomProperty(fileId) {
   addCustomProperty(fileId);
-  expectToEqual(Drive.Properties.get(fileId, 'department',
-      {visibility: 'PUBLIC'}).value, 'Sales');
+  expectToEqual(
+    Drive.Properties.get(fileId, "department", { visibility: "PUBLIC" }).value,
+    "Sales",
+  );
 }
 
 /**

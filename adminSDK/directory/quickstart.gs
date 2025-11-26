@@ -20,27 +20,27 @@
  */
 function listUsers() {
   const optionalArgs = {
-    customer: 'my_customer',
+    customer: "my_customer",
     maxResults: 10,
-    orderBy: 'email'
+    orderBy: "email",
   };
   if (!AdminDirectory || !AdminDirectory.Users) {
-    throw new Error('Enable the AdminDirectory Advanced Service.');
+    throw new Error("Enable the AdminDirectory Advanced Service.");
   }
   const response = AdminDirectory.Users.list(optionalArgs);
   const users = response.users;
   if (!users || users.length === 0) {
-    console.log('No users found.');
+    console.log("No users found.");
     return;
   }
   // Print the list of user's full name and email
-  console.log('Users:');
+  console.log("Users:");
   for (const user of users) {
     if (user.primaryEmail) {
       if (user.name?.fullName) {
-        console.log('%s (%s)', user.primaryEmail, user.name.fullName);
+        console.log("%s (%s)", user.primaryEmail, user.name.fullName);
       } else {
-        console.log('%s', user.primaryEmail);
+        console.log("%s", user.primaryEmail);
       }
     }
   }

@@ -28,7 +28,7 @@ function sendEmails() {
     for (const row of data) {
       const emailAddress = row[0]; // First column
       const message = row[1]; // Second column
-      const subject = 'Sending emails from a Spreadsheet';
+      const subject = "Sending emails from a Spreadsheet";
       MailApp.sendEmail(emailAddress, subject, message); // Send emails to emailAddresses which are presents in First column
     }
   } catch (err) {
@@ -42,7 +42,7 @@ function sendEmails() {
  * Sends non-duplicate emails with data from the current spreadsheet.
  */
 function sendNonDuplicateEmails() {
-  const EMAIL_SENT = 'email sent'; //This constant is used to write the message in Column C of Sheet
+  const EMAIL_SENT = "email sent"; //This constant is used to write the message in Column C of Sheet
   try {
     const sheet = SpreadsheetApp.getActiveSheet(); // Get the active sheet in spreadsheet
     const startRow = 2; // First row of data to process
@@ -55,11 +55,11 @@ function sendNonDuplicateEmails() {
       const message = row[1]; // Second column
       const emailSent = row[2]; // Third column
       if (emailSent === EMAIL_SENT) {
-        console.log('Email already sent');
+        console.log("Email already sent");
         return;
       }
-      const subject = 'Sending emails from a Spreadsheet';
-      MailApp.sendEmail(emailAddress, subject, message);// Send emails to emailAddresses which are presents in First column
+      const subject = "Sending emails from a Spreadsheet";
+      MailApp.sendEmail(emailAddress, subject, message); // Send emails to emailAddresses which are presents in First column
       sheet.getRange(startRow + i, 3).setValue(EMAIL_SENT);
       SpreadsheetApp.flush(); // Make sure the cell is updated right away in case the script is interrupted
     }

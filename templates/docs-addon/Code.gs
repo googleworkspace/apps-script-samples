@@ -18,8 +18,8 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current document.
  */
 
-var DIALOG_TITLE = 'Example Dialog';
-var SIDEBAR_TITLE = 'Example Sidebar';
+const DIALOG_TITLE = "Example Dialog";
+const SIDEBAR_TITLE = "Example Sidebar";
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -28,10 +28,10 @@ var SIDEBAR_TITLE = 'Example Sidebar';
  */
 function onOpen(e) {
   DocumentApp.getUi()
-      .createAddonMenu()
-      .addItem('Show sidebar', 'showSidebar')
-      .addItem('Show dialog', 'showDialog')
-      .addToUi();
+    .createAddonMenu()
+    .addItem("Show sidebar", "showSidebar")
+    .addItem("Show dialog", "showDialog")
+    .addToUi();
 }
 
 /**
@@ -49,9 +49,9 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile('Sidebar')
-      .evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  const ui = HtmlService.createTemplateFromFile("Sidebar")
+    .evaluate()
+    .setTitle(SIDEBAR_TITLE);
   DocumentApp.getUi().showSidebar(ui);
 }
 
@@ -60,10 +60,10 @@ function showSidebar() {
  * project file.
  */
 function showDialog() {
-  var ui = HtmlService.createTemplateFromFile('Dialog')
-      .evaluate()
-      .setWidth(400)
-      .setHeight(150);
+  const ui = HtmlService.createTemplateFromFile("Dialog")
+    .evaluate()
+    .setWidth(400)
+    .setHeight(150);
   DocumentApp.getUi().showModalDialog(ui, DIALOG_TITLE);
 }
 

@@ -22,13 +22,14 @@
  */
 function createPresentation() {
   try {
-    const presentation =
-      Slides.Presentations.create({'title': 'MyNewPresentation'});
-    console.log('Created presentation with ID: ' + presentation.presentationId);
+    const presentation = Slides.Presentations.create({
+      title: "MyNewPresentation",
+    });
+    console.log(`Created presentation with ID: ${presentation.presentationId}`);
     return presentation.presentationId;
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_create_presentation]
@@ -44,23 +45,29 @@ function createSlide(presentationId) {
   // You can specify the ID to use for the slide, as long as it's unique.
   const pageId = Utilities.getUuid();
 
-  const requests = [{
-    'createSlide': {
-      'objectId': pageId,
-      'insertionIndex': 1,
-      'slideLayoutReference': {
-        'predefinedLayout': 'TITLE_AND_TWO_COLUMNS'
-      }
-    }
-  }];
+  const requests = [
+    {
+      createSlide: {
+        objectId: pageId,
+        insertionIndex: 1,
+        slideLayoutReference: {
+          predefinedLayout: "TITLE_AND_TWO_COLUMNS",
+        },
+      },
+    },
+  ];
   try {
-    const slide =
-      Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-    console.log('Created Slide with ID: ' + slide.replies[0].createSlide.objectId);
+    const slide = Slides.Presentations.batchUpdate(
+      { requests: requests },
+      presentationId,
+    );
+    console.log(
+      `Created Slide with ID: ${slide.replies[0].createSlide.objectId}`,
+    );
     return slide;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_create_slide]
@@ -77,13 +84,14 @@ function readPageElementIds(presentationId, pageId) {
   // You can use a field mask to limit the data the API retrieves
   // in a get request, or what fields are updated in an batchUpdate.
   try {
-    const response = Slides.Presentations.Pages.get(
-        presentationId, pageId, {'fields': 'pageElements.objectId'});
+    const response = Slides.Presentations.Pages.get(presentationId, pageId, {
+      fields: "pageElements.objectId",
+    });
     console.log(response);
     return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_read_page]
@@ -101,47 +109,53 @@ function addTextBox(presentationId, pageId) {
   // as long as the ID is unique.
   const pageElementId = Utilities.getUuid();
 
-  const requests = [{
-    'createShape': {
-      'objectId': pageElementId,
-      'shapeType': 'TEXT_BOX',
-      'elementProperties': {
-        'pageObjectId': pageId,
-        'size': {
-          'width': {
-            'magnitude': 150,
-            'unit': 'PT'
+  const requests = [
+    {
+      createShape: {
+        objectId: pageElementId,
+        shapeType: "TEXT_BOX",
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            width: {
+              magnitude: 150,
+              unit: "PT",
+            },
+            height: {
+              magnitude: 50,
+              unit: "PT",
+            },
           },
-          'height': {
-            'magnitude': 50,
-            'unit': 'PT'
-          }
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 200,
+            translateY: 100,
+            unit: "PT",
+          },
         },
-        'transform': {
-          'scaleX': 1,
-          'scaleY': 1,
-          'translateX': 200,
-          'translateY': 100,
-          'unit': 'PT'
-        }
-      }
-    }
-  }, {
-    'insertText': {
-      'objectId': pageElementId,
-      'text': 'My Added Text Box',
-      'insertionIndex': 0
-    }
-  }];
+      },
+    },
+    {
+      insertText: {
+        objectId: pageElementId,
+        text: "My Added Text Box",
+        insertionIndex: 0,
+      },
+    },
+  ];
   try {
-    const response =
-      Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
-    console.log('Created Textbox with ID: ' +
-      response.replies[0].createShape.objectId);
+    const response = Slides.Presentations.batchUpdate(
+      { requests: requests },
+      presentationId,
+    );
+    console.log(
+      `Created Textbox with ID: ${response.replies[0].createShape.objectId}`,
+    );
     return response;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_add_text_box]
@@ -155,37 +169,41 @@ function addTextBox(presentationId, pageId) {
  * @see https://developers.google.com/slides/api/reference/rest/v1/presentations/batchUpdate
  */
 function formatShapeText(presentationId, shapeId) {
-  const requests = [{
-    'updateTextStyle': {
-      'objectId': shapeId,
-      'fields': 'foregroundColor,bold,italic,fontFamily,fontSize,underline',
-      'style': {
-        'foregroundColor': {
-          'opaqueColor': {
-            'themeColor': 'ACCENT5'
-          }
+  const requests = [
+    {
+      updateTextStyle: {
+        objectId: shapeId,
+        fields: "foregroundColor,bold,italic,fontFamily,fontSize,underline",
+        style: {
+          foregroundColor: {
+            opaqueColor: {
+              themeColor: "ACCENT5",
+            },
+          },
+          bold: true,
+          italic: true,
+          underline: true,
+          fontFamily: "Corsiva",
+          fontSize: {
+            magnitude: 18,
+            unit: "PT",
+          },
         },
-        'bold': true,
-        'italic': true,
-        'underline': true,
-        'fontFamily': 'Corsiva',
-        'fontSize': {
-          'magnitude': 18,
-          'unit': 'PT'
-        }
+        textRange: {
+          type: "ALL",
+        },
       },
-      'textRange': {
-        'type': 'ALL'
-      }
-    }
-  }];
+    },
+  ];
   try {
-    const response =
-      Slides.Presentations.batchUpdate({'requests': requests}, presentationId);
+    const response = Slides.Presentations.batchUpdate(
+      { requests: requests },
+      presentationId,
+    );
     return response.replies;
   } catch (e) {
     // TODO (developer) - Handle Exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_format_shape_text]
@@ -203,7 +221,9 @@ function saveThumbnailImage(i) {
     const presentation = SlidesApp.getActivePresentation();
     // Get the thumbnail of specified page
     const thumbnail = Slides.Presentations.Pages.getThumbnail(
-        presentation.getId(), presentation.getSlides()[i].getObjectId());
+      presentation.getId(),
+      presentation.getSlides()[i].getObjectId(),
+    );
     // fetch the  URL to the thumbnail image.
     const response = UrlFetchApp.fetch(thumbnail.contentUrl);
     const image = response.getBlob();
@@ -212,7 +232,7 @@ function saveThumbnailImage(i) {
     console.log(file.getUrl());
   } catch (e) {
     // TODO (developer) - Handle Exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END apps_script_slides_save_thumbnail]

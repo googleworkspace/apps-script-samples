@@ -57,27 +57,33 @@ function hyperlink(thread) {
  * @param {!Spreadsheet} ss The spreadsheet to add the table to.
  */
 function addTable(ss) {
-  const values = Object.keys(classificationLabels).map(label => {
+  const values = Object.keys(classificationLabels).map((label) => {
     return { userEnteredValue: label };
   });
   const addTableRequest = {
-    requests: [{
-      addTable: {
-        table: {
-          name: 'Email classification',
-          range: {
-            sheetId: 0,
-            startColumnIndex: 0,
-            endColumnIndex: 2,
+    requests: [
+      {
+        addTable: {
+          table: {
+            name: "Email classification",
+            range: {
+              sheetId: 0,
+              startColumnIndex: 0,
+              endColumnIndex: 2,
+            },
+            columnProperties: [
+              {
+                columnIndex: 1,
+                columnType: "DROPDOWN",
+                dataValidationRule: {
+                  condition: { type: "ONE_OF_LIST", values: values },
+                },
+              },
+            ],
           },
-          columnProperties: [{
-            columnIndex: 1,
-            columnType: 'DROPDOWN',
-            dataValidationRule: { condition: { type: 'ONE_OF_LIST', values: values } }
-          }],
-        }
-      }
-    }]
+        },
+      },
+    ],
   };
 
   Sheets.Spreadsheets.batchUpdate(addTableRequest, ss.getId());
