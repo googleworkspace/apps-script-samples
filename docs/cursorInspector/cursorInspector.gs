@@ -48,10 +48,10 @@ function include(file) {
  * @return {Object} The infomration.
  */
 function getDocumentInfo() {
-  var document = DocumentApp.getActiveDocument();
-  var cursor = document.getCursor();
-  var selection = document.getSelection();
-  var result = {};
+  const document = DocumentApp.getActiveDocument();
+  const cursor = document.getCursor();
+  const selection = document.getSelection();
+  const result = {};
   if (cursor) {
     result.cursor = {
       element: getElementInfo(cursor.getElement()),

@@ -46,7 +46,7 @@ function postMessageWithAppCredentials(spaceName) {
       spaceName,
       {},
       // Authenticate with the service account token.
-      { Authorization: "Bearer " + appToken },
+      { Authorization: `Bearer ${appToken}` },
     );
   } catch (err) {
     // TODO (developer) - Handle exception

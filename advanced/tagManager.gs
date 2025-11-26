@@ -27,7 +27,7 @@ function createContainerVersion(accountPath) {
   try {
     const container = TagManager.Accounts.Containers.create(
       {
-        name: "appscript tagmanager container " + date.getTime(),
+        name: `appscript tagmanager container ${date.getTime()}`,
         usageContext: ["WEB"],
       },
       accountPath,
@@ -148,13 +148,13 @@ function createAndReauthorizeUserEnvironment(version) {
       },
       containerPath,
     );
-    console.log("Original user environment: " + environment);
+    console.log(`Original user environment: ${environment}`);
     // Reauthorizes the user environment that points to a container version.
     TagManager.Accounts.Containers.Environments.reauthorize(
       {},
       environment.path,
     );
-    console.log("Reauthorized user environment: " + environment);
+    console.log(`Reauthorized user environment: ${environment}`);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
     console.log("Failed with error: $s", e.error);
@@ -178,12 +178,7 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
         for (let j = 0; j < containerAccesses.length; j++) {
           const containerAccess = containerAccesses[j];
           console.log(
-            "emailAddress:" +
-              userPermission.emailAddress +
-              " containerId:" +
-              containerAccess.containerId +
-              " containerAccess:" +
-              containerAccess.permission,
+            `emailAddress:${userPermission.emailAddress} containerId:${containerAccess.containerId} containerAccess:${containerAccess.permission}`,
           );
         }
       }

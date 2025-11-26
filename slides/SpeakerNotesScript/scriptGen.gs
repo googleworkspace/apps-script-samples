@@ -44,7 +44,7 @@ function onOpen(e) {
  */
 function generateSlidesScript() {
   const presentation = SlidesApp.getActivePresentation();
-  const docTitle = presentation.getName() + " Script";
+  const docTitle = `${presentation.getName()} Script`;
   const slides = presentation.getSlides();
 
   // Creates a document in the user's home Drive directory.
@@ -59,7 +59,7 @@ function generateSlidesScript() {
   // into the document body.
   for (let i = 0; i < slides.length; i++) {
     const section = docBody
-      .appendParagraph("Slide " + (i + 1))
+      .appendParagraph(`Slide ${i + 1}`)
       .setHeading(DocumentApp.ParagraphHeading.HEADING2);
 
     const notes = slides[i]
@@ -71,7 +71,7 @@ function generateSlidesScript() {
   }
 
   SlidesApp.getUi().alert(
-    speakerNotesDoc.getName() + " has been created in your Drive files.",
+    `${speakerNotesDoc.getName()} has been created in your Drive files.`,
   );
 }
 // [END apps_script_slides_speaker_notes_script]

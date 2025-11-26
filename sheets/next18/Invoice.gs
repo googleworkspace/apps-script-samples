@@ -20,15 +20,15 @@
  * amount owed is the 4th selected column.
  */
 function generateInvoices() {
-  var range = SpreadsheetApp.getActiveRange();
-  var values = range.getDisplayValues();
-  var sheet = SpreadsheetApp.getActiveSheet();
+  const range = SpreadsheetApp.getActiveRange();
+  const values = range.getDisplayValues();
+  const sheet = SpreadsheetApp.getActiveSheet();
 
-  for (var i = 0; i < values.length; i++) {
-    var row = values[i];
-    var accountId = row[0];
-    var amount = row[3];
-    var invoiceUrl = generateInvoice(accountId, amount);
+  for (let i = 0; i < values.length; i++) {
+    const row = values[i];
+    const accountId = row[0];
+    const amount = row[3];
+    const invoiceUrl = generateInvoice(accountId, amount);
     sheet
       .getRange(range.getRow() + i, range.getLastColumn() + 1)
       .setValue(invoiceUrl);
@@ -44,21 +44,21 @@ function generateInvoices() {
  * @return {string} the url of the created invoice
  */
 function generateInvoice(accountId, amount) {
-  var folder = DriveApp.getFolderById(INVOICES_FOLDER);
-  var copied = DriveApp.getFileById(INVOICE_TEMPLATE).makeCopy(
-    "Invoice for " + accountId,
+  const folder = DriveApp.getFolderById(INVOICES_FOLDER);
+  const copied = DriveApp.getFileById(INVOICE_TEMPLATE).makeCopy(
+    `Invoice for ${accountId}`,
     folder,
   );
-  var invoice = DocumentApp.openById(copied.getId());
-  var results = fetchSoqlResults(
-    "select Name, BillingAddress from Account where Id = '" + accountId + "'",
+  const invoice = DocumentApp.openById(copied.getId());
+  const results = fetchSoqlResults(
+    `select Name, BillingAddress from Account where Id = '${accountId}'`,
   );
-  var account = results["records"][0];
+  const account = results.records[0];
 
-  invoice.getBody().replaceText("{{account name}}", account["Name"]);
+  invoice.getBody().replaceText("{{account name}}", account.Name);
   invoice
     .getBody()
-    .replaceText("{{account address}}", account["BillingAddress"]["street"]);
+    .replaceText("{{account address}}", account.BillingAddress.street);
   invoice
     .getBody()
     .replaceText(
@@ -74,8 +74,8 @@ function generateInvoice(accountId, amount) {
  * Generates a report in Google Slides with a chart generated from the sheet.
  */
 function generateReport() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var chart = sheet
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const chart = sheet
     .newChart()
     .asColumnChart()
     .addRange(sheet.getRange("A:A"))
@@ -95,15 +95,15 @@ function generateReport() {
   // Force the chart to be created before adding it to the presentation
   SpreadsheetApp.flush();
 
-  var preso = SlidesApp.create("Invoicing Report");
-  var titleSlide = preso.getSlides()[0];
+  const preso = SlidesApp.create("Invoicing Report");
+  const titleSlide = preso.getSlides()[0];
 
-  var titleShape = titleSlide
+  const titleShape = titleSlide
     .getPlaceholder(SlidesApp.PlaceholderType.CENTERED_TITLE)
     .asShape();
   titleShape.getText().setText("Invoicing Report");
 
-  var newSlide = preso.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+  const newSlide = preso.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   newSlide.insertSheetsChart(chart);
 
   showLinkDialog(preso.getUrl(), "Open report", "Report created");

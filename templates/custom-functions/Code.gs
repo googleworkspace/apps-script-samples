@@ -27,7 +27,7 @@
  * @customfunction
  */
 function SAY_HELLO(name) {
-  return "Hello " + name;
+  return `Hello ${name}`;
 }
 
 /**
@@ -40,10 +40,11 @@ function SAY_HELLO(name) {
  * @customfunction
  */
 function INCREMENT(input) {
-  if (input instanceof Array) {
+  if (Array.isArray(input)) {
     // Recurse to process an array.
     return input.map(INCREMENT);
-  } else if (!(typeof input === "number")) {
+  }
+  if (!(typeof input === "number")) {
     throw new Error("Input contains a cell value that is not a number");
   }
   // Otherwise process as a single value.
@@ -60,13 +61,13 @@ function INCREMENT(input) {
  * @customfunction
  */
 function CORNER_SUM(input) {
-  if (!(input instanceof Array)) {
+  if (!Array.isArray(input)) {
     // Handle non-range inputs by putting them in an array.
     return CORNER_SUM([[input]]); // eslint-disable-line new-cap
   }
   // Range processing here.
-  var maxRowIndex = input.length - 1;
-  var maxColIndex = input[0].length - 1;
+  const maxRowIndex = input.length - 1;
+  const maxColIndex = input[0].length - 1;
   return (
     input[0][0] +
     input[0][maxColIndex] +
@@ -86,14 +87,14 @@ function CORNER_SUM(input) {
  * @customfunction
  */
 function POWERS_AND_ROOTS(input) {
-  if (input instanceof Array) {
+  if (Array.isArray(input)) {
     throw new Error("Invalid: Range input not permitted");
   }
   // Value processing and range generation here.
-  var headers = ["x", input + "^x", input + "^(1/x)"];
-  var result = [headers];
-  for (var i = 1; i <= 10; i++) {
-    result.push([i, Math.pow(input, i), Math.pow(input, 1 / i)]);
+  const headers = ["x", `${input}^x`, `${input}^(1/x)`];
+  const result = [headers];
+  for (let i = 1; i <= 10; i++) {
+    result.push([i, input ** i, input ** (1 / i)]);
   }
   return result;
 }
@@ -111,9 +112,9 @@ function GET_DAY_OF_YEAR(date) {
     throw new Error("Invalid: Date input required");
   }
   // Date processing here.
-  var firstOfYear = new Date(date.getFullYear(), 0, 0);
-  var diff = date - firstOfYear;
-  var oneDay = 1000 * 60 * 60 * 24;
+  const firstOfYear = new Date(date.getFullYear(), 0, 0);
+  const diff = date - firstOfYear;
+  const oneDay = 1000 * 60 * 60 * 24;
   return Math.floor(diff / oneDay);
 }
 
@@ -133,16 +134,16 @@ function CONVERT_DURATION_TO_SECONDS(duration) {
   // Getting elapsed times from duration-formatted cells in Sheets requires
   // subtracting the reference date from the cell value (while correcting for
   // timezones).
-  var spreadsheetTimezone =
+  const spreadsheetTimezone =
     SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
-  var dateString = Utilities.formatDate(
+  const dateString = Utilities.formatDate(
     duration,
     spreadsheetTimezone,
     "EEE, d MMM yyyy HH:mm:ss",
   );
-  var date = new Date(dateString);
-  var epoch = new Date("Dec 30, 1899 00:00:00");
-  var durationInMilliseconds = date.getTime() - epoch.getTime();
+  const date = new Date(dateString);
+  const epoch = new Date("Dec 30, 1899 00:00:00");
+  const durationInMilliseconds = date.getTime() - epoch.getTime();
 
   // Duration processing here.
   return Math.round(durationInMilliseconds / 1000);

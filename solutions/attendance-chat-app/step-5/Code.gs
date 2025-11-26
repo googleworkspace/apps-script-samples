@@ -8,13 +8,12 @@
 function onAddToSpace(event) {
   console.info(event);
 
-  var message = "";
+  let message = "";
 
   if (event.space.type === "DM") {
-    message =
-      "Thank you for adding me to a DM, " + event.user.displayName + "!";
+    message = `Thank you for adding me to a DM, ${event.user.displayName}!`;
   } else {
-    message = "Thank you for adding me to " + event.space.displayName;
+    message = `Thank you for adding me to ${event.space.displayName}`;
   }
 
   return { text: message };
@@ -59,12 +58,12 @@ function createCardResponse(widgets) {
  * @return JSON-formatted response
  */
 function onMessage(event) {
-  var userMessage = event.message.text;
+  const userMessage = event.message.text;
 
-  var widgets = [
+  const widgets = [
     {
       textParagraph: {
-        text: "You said: " + userMessage,
+        text: `You said: ${userMessage}`,
       },
     },
   ];

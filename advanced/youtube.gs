@@ -120,11 +120,11 @@ function addSubscription() {
   } catch (e) {
     if (e.message.match("subscriptionDuplicate")) {
       console.log(
-        "Cannot subscribe; already subscribed to channel: " + channelId,
+        `Cannot subscribe; already subscribed to channel: ${channelId}`,
       );
     } else {
       // TODO (developer) - Handle exception
-      console.log("Error adding subscription: " + e.message);
+      console.log(`Error adding subscription: ${e.message}`);
     }
   }
 }
@@ -153,7 +153,7 @@ function getYouTubeVideosJSON(query) {
 
   return youTubeResults.items.map((item) => {
     return {
-      url: "https://youtu.be/" + item.id.videoId,
+      url: `https://youtu.be/${item.id.videoId}`,
       title: item.snippet.title,
       thumbnailUrl: item.snippet.thumbnails.high.url,
     };

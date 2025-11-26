@@ -23,9 +23,8 @@ function sendEmailWithInlineImage(toAddress) {
   const options = {};
   const imageName = "cat_emoji";
   // The URL "cid:cat_emoji" means that the inline attachment named "cat_emoji" would be used.
-  options["htmlBody"] =
-    'Welcome! <img src="cid:' + imageName + '" alt="Cat Emoji" />';
-  options["inlineImages"] = {
+  options.htmlBody = `Welcome! <img src="cid:${imageName}" alt="Cat Emoji" />`;
+  options.inlineImages = {
     [imageName]: Utilities.newBlob(getImageBinary(), "image/png", imageName),
   };
   GmailApp.sendEmail(toAddress, "Welcome!", "Welcome!", options);

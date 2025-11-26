@@ -86,12 +86,12 @@ function credentialsForVertexAI() {
 
   const service = OAuth2.createService("Vertex")
     .setTokenUrl('https://oauth2.googleapis.com/token')
-    .setPrivateKey(parsedCredentials['private_key'])
-    .setIssuer(parsedCredentials['client_email'])
+    .setPrivateKey(parsedCredentials.private_key)
+    .setIssuer(parsedCredentials.client_email)
     .setPropertyStore(PropertiesService.getScriptProperties())
     .setScope("https://www.googleapis.com/auth/cloud-platform");
   return {
-    projectId: parsedCredentials['project_id'],
+    projectId: parsedCredentials.project_id,
     accessToken: service.getAccessToken(),
   }
 }

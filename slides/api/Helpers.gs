@@ -45,7 +45,7 @@ Helpers.prototype.addSlides = (presentationId, num, layout) => {
   const requests = [];
   const slideIds = [];
   for (let i = 0; i < num; ++i) {
-    slideIds.push("slide_" + i);
+    slideIds.push(`slide_${i}`);
     requests.push({
       createSlide: {
         objectId: slideIds[i],

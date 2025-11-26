@@ -15,7 +15,7 @@
  */
 
 // [START apps_script_data_studio_caas_example]
-var sqlString =
+const sqlString =
   "" +
   "SELECT " +
   "  _TABLE_SUFFIX AS yyyymm, " +
@@ -38,8 +38,8 @@ var sqlString =
  * @return {Config} The Community Connector config.
  */
 function getConfig(request) {
-  var cc = DataStudioApp.createCommunityConnector();
-  var config = cc.getConfig();
+  const cc = DataStudioApp.createCommunityConnector();
+  const config = cc.getConfig();
 
   config
     .newTextInput()
@@ -65,9 +65,9 @@ function getConfig(request) {
  * @return {Fields} The Community Connector fields.
  */
 function getFields() {
-  var cc = DataStudioApp.createCommunityConnector();
-  var fields = cc.getFields();
-  var types = cc.FieldType;
+  const cc = DataStudioApp.createCommunityConnector();
+  const fields = cc.getFields();
+  const types = cc.FieldType;
 
   fields
     .newDimension()
@@ -109,10 +109,10 @@ function getSchema(request) {
  * @return {object} The data response.
  */
 function getData(request) {
-  var url = request.configParams && request.configParams.url;
-  var projectId = request.configParams && request.configParams.projectId;
-  var authToken = ScriptApp.getOAuthToken();
-  var response = {
+  const url = request.configParams?.url;
+  const projectId = request.configParams?.projectId;
+  const authToken = ScriptApp.getOAuthToken();
+  const response = {
     dataConfig: {
       type: "BIGQUERY",
       bigQueryConnectorConfig: {
@@ -135,7 +135,7 @@ function getData(request) {
               type: "INT64",
             },
             parameterValue: {
-              value: "" + 1000,
+              value: `${1000}`,
             },
           },
         ],
@@ -153,7 +153,7 @@ function getData(request) {
  * @return {object} The auth type.
  */
 function getAuthType() {
-  var cc = DataStudioApp.createCommunityConnector();
+  const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse().setAuthType(cc.AuthType.NONE).build();
 }
 // [END apps_script_data_studio_caas_example]

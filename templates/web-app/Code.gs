@@ -25,7 +25,7 @@
  * @return {HTML} The web app's HTML.
  */
 function doGet(e) {
-  var template = HtmlService.createTemplateFromFile("Index");
+  const template = HtmlService.createTemplateFromFile("Index");
 
   // Retrieve and process any URL parameters, as necessary.
   if (e.parameter.folderId) {
@@ -49,24 +49,24 @@ function doGet(e) {
  *     the root folder name.
  */
 function getFolderContents(folderId) {
-  var topFolder;
-  var contents = {
+  let topFolder;
+  const contents = {
     children: [],
   };
 
-  if (folderId == "root") {
+  if (folderId === "root") {
     topFolder = DriveApp.getRootFolder();
   } else {
     // May throw exception if the folderId is invalid or app
     // doesn't have permission to access.
     topFolder = DriveApp.getFolderById(folderId);
   }
-  contents.rootName = topFolder.getName() + "/";
+  contents.rootName = `${topFolder.getName()}/`;
 
-  var files = topFolder.getFiles();
-  var numFiles = 0;
+  const files = topFolder.getFiles();
+  let numFiles = 0;
   while (files.hasNext() && numFiles < 20) {
-    var file = files.next();
+    const file = files.next();
     contents.children.push(file.getName());
     numFiles++;
   }

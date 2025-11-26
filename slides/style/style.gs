@@ -30,21 +30,11 @@ function setTextHelloWorld() {
     // Set text in TEXT_BOX
     textRange.setText("Hello world!");
     console.log(
-      "Start: " +
-        textRange.getStartIndex() +
-        "; End: " +
-        textRange.getEndIndex() +
-        "; Content: " +
-        textRange.asString(),
+      `Start: ${textRange.getStartIndex()}; End: ${textRange.getEndIndex()}; Content: ${textRange.asString()}`,
     );
     const subRange = textRange.getRange(0, 5);
     console.log(
-      "Sub-range Start: " +
-        subRange.getStartIndex() +
-        "; Sub-range End: " +
-        subRange.getEndIndex() +
-        "; Sub-range Content: " +
-        subRange.asString(),
+      `Sub-range Start: ${subRange.getStartIndex()}; Sub-range End: ${subRange.getEndIndex()}; Sub-range Content: ${subRange.asString()}`,
     );
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -74,12 +64,7 @@ function insertText() {
     // Insert text in TEXT_BOX
     textRange.insertText(6, "galaxy");
     console.log(
-      "Start: " +
-        textRange.getStartIndex() +
-        "; End: " +
-        textRange.getEndIndex() +
-        "; Content: " +
-        textRange.asString(),
+      `Start: ${textRange.getStartIndex()}; End: ${textRange.getEndIndex()}; Content: ${textRange.asString()}`,
     );
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -116,22 +101,13 @@ function styleText() {
       .setForegroundColor("#ff0000");
     const helloRange = textRange.getRange(0, 5);
     console.log(
-      "Text: " +
-        helloRange.asString() +
-        "; Bold: " +
-        helloRange.getTextStyle().isBold(),
+      `Text: ${helloRange.asString()}; Bold: ${helloRange.getTextStyle().isBold()}`,
     );
     console.log(
-      "Text: " +
-        insertedText.asString() +
-        "; Bold: " +
-        insertedText.getTextStyle().isBold(),
+      `Text: ${insertedText.asString()}; Bold: ${insertedText.getTextStyle().isBold()}`,
     );
     console.log(
-      "Text: " +
-        textRange.asString() +
-        "; Bold: " +
-        textRange.getTextStyle().isBold(),
+      `Text: ${textRange.asString()}; Bold: ${textRange.getTextStyle().isBold()}`,
     );
   } catch (err) {
     // TODO (developer) - Handle exception
@@ -202,10 +178,7 @@ function listStyling() {
     for (let i = 0; i < paragraphs.length; i++) {
       const listStyle = paragraphs[i].getRange().getListStyle();
       console.log(
-        "Paragraph " +
-          (i + 1) +
-          "'s nesting level: " +
-          listStyle.getNestingLevel(),
+        `Paragraph ${i + 1}'s nesting level: ${listStyle.getNestingLevel()}`,
       );
     }
   } catch (err) {

@@ -25,7 +25,7 @@ function createPresentation() {
     const presentation = Slides.Presentations.create({
       title: "MyNewPresentation",
     });
-    console.log("Created presentation with ID: " + presentation.presentationId);
+    console.log(`Created presentation with ID: ${presentation.presentationId}`);
     return presentation.presentationId;
   } catch (e) {
     // TODO (developer) - Handle exception
@@ -62,7 +62,7 @@ function createSlide(presentationId) {
       presentationId,
     );
     console.log(
-      "Created Slide with ID: " + slide.replies[0].createSlide.objectId,
+      `Created Slide with ID: ${slide.replies[0].createSlide.objectId}`,
     );
     return slide;
   } catch (e) {
@@ -150,7 +150,7 @@ function addTextBox(presentationId, pageId) {
       presentationId,
     );
     console.log(
-      "Created Textbox with ID: " + response.replies[0].createShape.objectId,
+      `Created Textbox with ID: ${response.replies[0].createShape.objectId}`,
     );
     return response;
   } catch (e) {

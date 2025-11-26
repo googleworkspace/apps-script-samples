@@ -18,18 +18,18 @@
 
 // Salesforce OAuth configuration, which you get by creating a developer project
 // with OAuth authentication on Salesforce.
-var SALESFORCE_CLIENT_ID = "<FILL IN WITH YOUR CLIENT ID>";
-var SALESFORCE_CLIENT_SECRET = "<FILL IN WITH YOUR CLIENT SECRET>";
+const SALESFORCE_CLIENT_ID = "<FILL IN WITH YOUR CLIENT ID>";
+const SALESFORCE_CLIENT_SECRET = "<FILL IN WITH YOUR CLIENT SECRET>";
 
 // The Salesforce instance to talk to.
-var SALESFORCE_INSTANCE = "na1";
+const SALESFORCE_INSTANCE = "na1";
 
 /* Invoice generation config */
 
 // The ID of a Google Doc that is used as a template. Defaults to
 // https://docs.google.com/document/d/1awKvXXMOQomdD68PGMpP5j1kNZwk_2Z0wBbwUgjKKws/view
-var INVOICE_TEMPLATE = "1awKvXXMOQomdD68PGMpP5j1kNZwk_2Z0wBbwUgjKKws";
+const INVOICE_TEMPLATE = "1awKvXXMOQomdD68PGMpP5j1kNZwk_2Z0wBbwUgjKKws";
 
 // The ID of a Drive folder that the generated invoices are created in. Create
 // a new folder that your Google account has edit access to.
-var INVOICES_FOLDER = "";
+const INVOICES_FOLDER = "";

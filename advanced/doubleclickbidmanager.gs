@@ -117,7 +117,7 @@ function fetchReport() {
     });
     if (report.reports) {
       const firstReport = report.reports[0];
-      if (firstReport.metadata.status.state == "DONE") {
+      if (firstReport.metadata.status.state === "DONE") {
         const reportFile = UrlFetchApp.fetch(
           firstReport.metadata.googleCloudStoragePath,
         );

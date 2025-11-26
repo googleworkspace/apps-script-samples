@@ -114,17 +114,17 @@ function getActorInfo(actor) {
 function getTargetInfo(target) {
   if ("driveItem" in target) {
     const title = target.driveItem.title || "unknown";
-    return 'driveItem:"' + title + '"';
+    return `driveItem:"${title}"`;
   }
   if ("drive" in target) {
     const title = target.drive.title || "unknown";
-    return 'drive:"' + title + '"';
+    return `drive:"${title}"`;
   }
   if ("fileComment" in target) {
     const parent = target.fileComment.parent || {};
     const title = parent.title || "unknown";
-    return 'fileComment:"' + title + '"';
+    return `fileComment:"${title}"`;
   }
-  return getOneOf(target) + ":unknown";
+  return `${getOneOf(target)}:unknown`;
 }
 // [END drive_activity_v2_quickstart]

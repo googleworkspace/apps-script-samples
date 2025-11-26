@@ -35,10 +35,10 @@ function itShouldCreateEvent() {
  */
 function itShouldGetRelativeDate() {
   console.log("> itShouldGetRelativeDate");
-  console.log("no offset: " + getRelativeDate(0, 0));
-  console.log("4 hour offset: " + getRelativeDate(0, 4));
-  console.log("1 day offset: " + getRelativeDate(1, 0));
-  console.log("1 day and 3 hour off set: " + getRelativeDate(1, 3));
+  console.log(`no offset: ${getRelativeDate(0, 0)}`);
+  console.log(`4 hour offset: ${getRelativeDate(0, 4)}`);
+  console.log(`1 day offset: ${getRelativeDate(1, 0)}`);
+  console.log(`1 day and 3 hour off set: ${getRelativeDate(1, 3)}`);
 }
 
 /**

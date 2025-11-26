@@ -20,7 +20,7 @@
 function listRegistries() {
   const projectId = "your-project-id";
   const cloudRegion = "us-central1";
-  const parent = "projects/" + projectId + "/locations/" + cloudRegion;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
 
   const response = CloudIoT.Projects.Locations.Registries.list(parent);
   console.log(response);
@@ -42,7 +42,7 @@ function createRegistry() {
   const projectId = "your-project-id";
   const topic = "your-pubsub-topic";
 
-  const pubsubTopic = "projects/" + projectId + "/topics/" + topic;
+  const pubsubTopic = `projects/${projectId}/topics/${topic}`;
 
   const registry = {
     eventNotificationConfigs: [
@@ -53,13 +53,13 @@ function createRegistry() {
     ],
     id: name,
   };
-  const parent = "projects/" + projectId + "/locations/" + cloudRegion;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
 
   const response = CloudIoT.Projects.Locations.Registries.create(
     registry,
     parent,
   );
-  console.log("Created registry: " + response.id);
+  console.log(`Created registry: ${response.id}`);
 }
 // [END apps_script_iot_create_registry]
 
@@ -72,11 +72,11 @@ function getRegistry() {
   const name = "your-registry-name";
   const projectId = "your-project-id";
 
-  const parent = "projects/" + projectId + "/locations/" + cloudRegion;
-  const registryName = parent + "/registries/" + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
   const response = CloudIoT.Projects.Locations.Registries.get(registryName);
-  console.log("Retrieved registry: " + response.id);
+  console.log(`Retrieved registry: ${response.id}`);
 }
 // [END apps_script_iot_get_registry]
 
@@ -89,12 +89,12 @@ function deleteRegistry() {
   const name = "your-registry-name";
   const projectId = "your-project-id";
 
-  const parent = "projects/" + projectId + "/locations/" + cloudRegion;
-  const registryName = parent + "/registries/" + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
   const response = CloudIoT.Projects.Locations.Registries.remove(registryName);
   // Successfully removed registry if exception was not thrown.
-  console.log("Deleted registry: " + name);
+  console.log(`Deleted registry: ${name}`);
 }
 // [END apps_script_iot_delete_registry]
 
@@ -107,8 +107,8 @@ function listDevicesForRegistry() {
   const name = "your-registry-name";
   const projectId = "your-project-id";
 
-  const parent = "projects/" + projectId + "/locations/" + cloudRegion;
-  const registryName = parent + "/registries/" + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}`;
+  const registryName = `${parent}/registries/${name}`;
 
   const response =
     CloudIoT.Projects.Locations.Registries.Devices.list(registryName);
@@ -116,7 +116,7 @@ function listDevicesForRegistry() {
   console.log("Registry contains the following devices: ");
   if (response.devices) {
     response.devices.forEach((device) => {
-      console.log("\t" + device.id);
+      console.log(`\t${device.id}`);
     });
   }
 }
@@ -132,14 +132,8 @@ function createDevice() {
   const projectId = "your-project-id";
   const registry = "your-registry-name";
 
-  console.log("Creating device: " + name + " in Registry: " + registry);
-  const parent =
-    "projects/" +
-    projectId +
-    "/locations/" +
-    cloudRegion +
-    "/registries/" +
-    registry;
+  console.log(`Creating device: ${name} in Registry: ${registry}`);
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
 
   const device = {
     id: name,
@@ -153,7 +147,7 @@ function createDevice() {
     device,
     parent,
   );
-  console.log("Created device:" + response.name);
+  console.log(`Created device:${response.name}`);
 }
 // [END apps_script_iot_create_unauth_device]
 
@@ -179,13 +173,7 @@ function createRsaDevice() {
   const projectId = "your-project-id";
   const registry = "your-registry-name";
 
-  const parent =
-    "projects/" +
-    projectId +
-    "/locations/" +
-    cloudRegion +
-    "/registries/" +
-    registry;
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
   const device = {
     id: name,
     gatewayConfig: {
@@ -206,7 +194,7 @@ function createRsaDevice() {
     device,
     parent,
   );
-  console.log("Created device:" + response.name);
+  console.log(`Created device:${response.name}`);
 }
 // [END apps_script_iot_create_rsa_device]
 
@@ -220,18 +208,12 @@ function deleteDevice() {
   const projectId = "your-project-id";
   const registry = "your-registry-name";
 
-  const parent =
-    "projects/" +
-    projectId +
-    "/locations/" +
-    cloudRegion +
-    "/registries/" +
-    registry;
-  const deviceName = parent + "/devices/" + name;
+  const parent = `projects/${projectId}/locations/${cloudRegion}/registries/${registry}`;
+  const deviceName = `${parent}/devices/${name}`;
 
   const response =
     CloudIoT.Projects.Locations.Registries.Devices.remove(deviceName);
   // If no exception thrown, device was successfully removed
-  console.log("Successfully deleted device: " + deviceName);
+  console.log(`Successfully deleted device: ${deviceName}`);
 }
 // [END apps_script_iot_delete_device]

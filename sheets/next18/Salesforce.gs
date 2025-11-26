@@ -40,7 +40,7 @@ function onInstall() {
  * Salesforce.
  */
 function login() {
-  var salesforce = getSalesforceService();
+  const salesforce = getSalesforceService();
   if (!salesforce.hasAccess()) {
     showLinkDialog(
       salesforce.getAuthorizationUrl(),
@@ -58,7 +58,7 @@ function login() {
  * @param {string} title the title of the dialog
  */
 function showLinkDialog(url, message, title) {
-  var template = HtmlService.createTemplateFromFile("LinkDialog");
+  const template = HtmlService.createTemplateFromFile("LinkDialog");
   template.url = url;
   template.message = message;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate(), title);
@@ -90,9 +90,9 @@ function getSalesforceService() {
  * @return {Object} HTMLOutput to render the callback as a web page
  */
 function authCallback(request) {
-  var salesforce = getSalesforceService();
-  var isAuthorized = salesforce.handleCallback(request);
-  var message = isAuthorized
+  const salesforce = getSalesforceService();
+  const isAuthorized = salesforce.handleCallback(request);
+  const message = isAuthorized
     ? "Success! You can close this tab and the dialog in Sheets."
     : "Denied. You can close this tab and the dialog in Sheets.";
 
@@ -105,13 +105,13 @@ function authCallback(request) {
  * sheet.
  */
 function promptQuery() {
-  var ui = SpreadsheetApp.getUi();
-  var response = ui.prompt(
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt(
     "Run SOQL Query",
     'Enter your query, ex: "select Id from Opportunity"',
     ui.ButtonSet.OK_CANCEL,
   );
-  var query = response.getResponseText();
+  const query = response.getResponseText();
   if (response.getSelectedButton() === ui.Button.OK) {
     executeQuery(query);
   }
@@ -123,21 +123,21 @@ function promptQuery() {
  * @param {string} query the SOQL to execute
  */
 function executeQuery(query) {
-  var response = fetchSoqlResults(query);
-  var outputSheet = SpreadsheetApp.getActive().insertSheet();
-  var records = response["records"];
-  var fields = getFields(records[0]);
+  const response = fetchSoqlResults(query);
+  const outputSheet = SpreadsheetApp.getActive().insertSheet();
+  const records = response.records;
+  const fields = getFields(records[0]);
 
   // Builds the new sheet's contents as a 2D array that can be passed in
   // to setValues() at once. This gives better performance than updating
   // a single cell at a time.
-  var outputValues = [];
+  const outputValues = [];
   outputValues.push(fields);
-  for (var i = 0; i < records.length; i++) {
-    var row = [];
-    var record = records[i];
-    for (var j = 0; j < fields.length; j++) {
-      var fieldName = fields[j];
+  for (let i = 0; i < records.length; i++) {
+    const row = [];
+    const record = records[i];
+    for (let j = 0; j < fields.length; j++) {
+      const fieldName = fields[j];
       row.push(record[fieldName]);
     }
     outputValues.push(row);
@@ -155,26 +155,22 @@ function executeQuery(query) {
  * @return {Object} the API response from Salesforce, as a parsed JSON object.
  */
 function fetchSoqlResults(query) {
-  var salesforce = getSalesforceService();
+  const salesforce = getSalesforceService();
   if (!salesforce.hasAccess()) {
     throw new Error("Please login first");
-  } else {
-    var params = {
-      headers: {
-        Authorization: "Bearer " + salesforce.getAccessToken(),
-        "Content-Type": "application/json",
-      },
-    };
-    var url =
-      "https://" +
-      SALESFORCE_INSTANCE +
-      ".salesforce.com/services/data/v30.0/query";
-    var response = UrlFetchApp.fetch(
-      url + "?q=" + encodeURIComponent(query),
-      params,
-    );
-    return JSON.parse(response.getContentText());
   }
+  const params = {
+    headers: {
+      Authorization: `Bearer ${salesforce.getAccessToken()}`,
+      "Content-Type": "application/json",
+    },
+  };
+  const url = `https://${SALESFORCE_INSTANCE}.salesforce.com/services/data/v30.0/query`;
+  const response = UrlFetchApp.fetch(
+    `${url}?q=${encodeURIComponent(query)}`,
+    params,
+  );
+  return JSON.parse(response.getContentText());
 }
 
 /**
@@ -185,8 +181,8 @@ function fetchSoqlResults(query) {
  * @return {Array<string>} an array of string keys of that record
  */
 function getFields(record) {
-  var fields = [];
-  for (var field in record) {
+  const fields = [];
+  for (const field in record) {
     if (record.hasOwnProperty(field) && field !== "attributes") {
       fields.push(field);
     }

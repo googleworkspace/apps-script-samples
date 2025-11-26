@@ -29,9 +29,9 @@ function onOpen() {
  * Shows an alert dialog.
  */
 function showAlert() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
+  const ui = SpreadsheetApp.getUi(); // Same variations.
 
-  var result = ui.alert(
+  const result = ui.alert(
     "Please confirm",
     "Are you sure you want to continue?",
     ui.ButtonSet.YES_NO,
@@ -63,20 +63,20 @@ function onOpen() {
  * Shows a prompt dialog.
  */
 function showPrompt() {
-  var ui = SpreadsheetApp.getUi(); // Same variations.
+  const ui = SpreadsheetApp.getUi(); // Same variations.
 
-  var result = ui.prompt(
+  const result = ui.prompt(
     "Let's get to know each other!",
     "Please enter your name:",
     ui.ButtonSet.OK_CANCEL,
   );
 
   // Process the user's response.
-  var button = result.getSelectedButton();
-  var text = result.getResponseText();
+  const button = result.getSelectedButton();
+  const text = result.getResponseText();
   if (button === ui.Button.OK) {
     // User clicked "OK".
-    ui.alert("Your name is " + text + ".");
+    ui.alert(`Your name is ${text}.`);
   } else if (button === ui.Button.CANCEL) {
     // User clicked "Cancel".
     ui.alert("I didn't get your name.");
@@ -102,7 +102,7 @@ function onOpen() {
  * Shows a custom dialog.
  */
 function showDialog() {
-  var html = HtmlService.createHtmlOutputFromFile("Page")
+  const html = HtmlService.createHtmlOutputFromFile("Page")
     .setWidth(400)
     .setHeight(300);
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
@@ -125,7 +125,7 @@ function onOpen() {
  * Shows a custom sidebar.
  */
 function showSidebar() {
-  var html = HtmlService.createHtmlOutputFromFile("Page")
+  const html = HtmlService.createHtmlOutputFromFile("Page")
     .setTitle("My custom sidebar")
     .setWidth(300);
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.

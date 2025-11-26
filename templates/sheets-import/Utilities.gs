@@ -31,8 +31,8 @@ function include(filename) {
  * @return {Boolean}
  */
 function isOlderThanADay(dateStr) {
-  var now = new Date().getTime();
-  var then = Date.parse(dateStr);
+  const now = new Date().getTime();
+  const then = Date.parse(dateStr);
   return then + 24 * 60 * 60 * 1000 < now;
 }
 
@@ -45,9 +45,9 @@ function isOlderThanADay(dateStr) {
  *   user properties.
  */
 function saveObjectToProperties(prefix, obj) {
-  var properties = PropertiesService.getDocumentProperties();
+  const properties = PropertiesService.getDocumentProperties();
   _.each(obj, (val, key) => {
-    var propKey = prefix + "." + key;
+    const propKey = `${prefix}.${key}`;
     properties.setProperty(propKey, JSON.stringify(val));
   });
 }
@@ -62,14 +62,14 @@ function saveObjectToProperties(prefix, obj) {
  *   properties service. Will return null if the prefix is unrecognized.
  */
 function getObjectFromProperties(prefix) {
-  var properties = PropertiesService.getDocumentProperties();
-  var obj = {};
+  const properties = PropertiesService.getDocumentProperties();
+  const obj = {};
   _.each(properties.getProperties(), (val, key) => {
     if (key.indexOf(prefix) > -1) {
       obj[key.substr(prefix.length + 1)] = JSON.parse(val);
     }
   });
-  if (_.keys(obj).length == 0) {
+  if (_.keys(obj).length === 0) {
     return null;
   }
   return obj;
@@ -81,7 +81,7 @@ function getObjectFromProperties(prefix) {
  * @param {String} prefix label of properties to remove.
  */
 function deleteObjectFromProperties(prefix) {
-  var properties = PropertiesService.getDocumentProperties();
+  const properties = PropertiesService.getDocumentProperties();
   _.each(properties.getProperties(), (val, key) => {
     if (key.indexOf(prefix) > -1) {
       properties.deleteProperty(key);
@@ -108,8 +108,8 @@ function getSheetById(ss, sheetId) {
   if (sheetId === null) {
     return null;
   }
-  var sheets = ss.getSheets();
-  for (var i = 0; i < sheets.length; i++) {
+  const sheets = ss.getSheets();
+  for (let i = 0; i < sheets.length; i++) {
     if (sheets[i].getSheetId() === sheetId) {
       return sheets[i];
     }
@@ -129,10 +129,10 @@ function getSheetById(ss, sheetId) {
  *     given base title.
  */
 function getUniqueSheetName(spreadsheet, baseName) {
-  var sheetName = baseName;
-  var i = 2;
+  let sheetName = baseName;
+  let i = 2;
   while (spreadsheet.getSheetByName(sheetName) != null) {
-    sheetName = baseName + " " + i++;
+    sheetName = `${baseName} ${i++}`;
   }
   return sheetName;
 }
@@ -146,9 +146,9 @@ function getUniqueSheetName(spreadsheet, baseName) {
  * @return {Trigger} corresponding user trigger, or null if not found.
  */
 function getUserTriggerById(spreadsheet, triggerId) {
-  var triggers = ScriptApp.getUserTriggers(spreadsheet);
-  for (var i = 0; i < triggers.length; i++) {
-    if (triggers[i].getUniqueId() == triggerId) {
+  const triggers = ScriptApp.getUserTriggers(spreadsheet);
+  for (let i = 0; i < triggers.length; i++) {
+    if (triggers[i].getUniqueId() === triggerId) {
       return triggers[i];
     }
   }
@@ -161,8 +161,8 @@ function getUserTriggerById(spreadsheet, triggerId) {
  * @param {String} sheetId the sheet ID.
  */
 function activateById(sheetId) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, Number.parseInt(sheetId));
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = getSheetById(ss, Number.parseInt(sheetId));
   if (sheet != null) {
     sheet.activate();
   }

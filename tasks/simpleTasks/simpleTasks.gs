@@ -29,7 +29,7 @@ function doGet() {
  * @return {Array.<Object>} The task list data.
  */
 function getTaskLists() {
-  var taskLists = Tasks.Tasklists.list().getItems();
+  const taskLists = Tasks.Tasklists.list().getItems();
   if (!taskLists) {
     return [];
   }
@@ -45,7 +45,7 @@ function getTaskLists() {
  * @return {Array.<Object>} The task data.
  */
 function getTasks(taskListId) {
-  var tasks = Tasks.Tasks.list(taskListId).getItems();
+  const tasks = Tasks.Tasks.list(taskListId).getItems();
   if (!tasks) {
     return [];
   }
@@ -66,7 +66,7 @@ function getTasks(taskListId) {
  * @param {Boolean} completed True if the task should be marked as complete, false otherwise.
  */
 function setCompleted(taskListId, taskId, completed) {
-  var task = Tasks.newTask();
+  const task = Tasks.newTask();
   if (completed) {
     task.setStatus("completed");
   } else {
@@ -82,6 +82,6 @@ function setCompleted(taskListId, taskId, completed) {
  * @param {String} title The title of the new task.
  */
 function addTask(taskListId, title) {
-  var task = Tasks.newTask().setTitle(title);
+  const task = Tasks.newTask().setTitle(title);
   Tasks.Tasks.insert(task, taskListId);
 }

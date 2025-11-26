@@ -18,8 +18,8 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current document.
  */
 
-var DIALOG_TITLE = "Example Dialog";
-var SIDEBAR_TITLE = "Example Sidebar";
+const DIALOG_TITLE = "Example Dialog";
+const SIDEBAR_TITLE = "Example Sidebar";
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -49,7 +49,7 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile("Sidebar")
+  const ui = HtmlService.createTemplateFromFile("Sidebar")
     .evaluate()
     .setTitle(SIDEBAR_TITLE);
   DocumentApp.getUi().showSidebar(ui);
@@ -60,7 +60,7 @@ function showSidebar() {
  * project file.
  */
 function showDialog() {
-  var ui = HtmlService.createTemplateFromFile("Dialog")
+  const ui = HtmlService.createTemplateFromFile("Dialog")
     .evaluate()
     .setWidth(400)
     .setHeight(150);

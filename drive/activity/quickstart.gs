@@ -18,24 +18,23 @@
  * Lists activity for a Drive user.
  */
 function listActivity() {
-  var optionalArgs = {
+  const optionalArgs = {
     source: "drive.google.com",
     "drive.ancestorId": "root",
     pageSize: 10,
   };
-  var response = AppsActivity.Activities.list(optionalArgs);
-  var activities = response.activities;
+  const response = AppsActivity.Activities.list(optionalArgs);
+  const activities = response.activities;
   if (activities && activities.length > 0) {
     console.log("Recent activity:");
     for (i = 0; i < activities.length; i++) {
-      var activity = activities[i];
-      var event = activity.combinedEvent;
-      var user = event.user;
-      var target = event.target;
+      const activity = activities[i];
+      const event = activity.combinedEvent;
+      const user = event.user;
+      const target = event.target;
       if (user == null || target == null) {
-        continue;
       } else {
-        var time = new Date(Number(event.eventTimeMillis));
+        const time = new Date(Number(event.eventTimeMillis));
         console.log(
           "%s: %s, %s, %s (%s)",
           time,

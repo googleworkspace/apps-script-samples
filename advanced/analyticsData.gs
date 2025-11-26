@@ -43,7 +43,7 @@ function runReport() {
 
     const report = AnalyticsData.Properties.runReport(
       request,
-      "properties/" + propertyId,
+      `properties/${propertyId}`,
     );
     if (!report.rows) {
       console.log("No rows returned.");

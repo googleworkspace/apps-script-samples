@@ -257,7 +257,7 @@ function textMerging(templatePresentationId, dataSpreadsheetId) {
       const totalPortfolio = row[11]; // total portfolio in column 12
 
       // Duplicate the template presentation using the Drive API.
-      const copyTitle = customerName + " presentation";
+      const copyTitle = `${customerName} presentation`;
       let copyFile = {
         title: copyTitle,
         parents: [{ id: "root" }],
@@ -291,7 +291,7 @@ function textMerging(templatePresentationId, dataSpreadsheetId) {
               text: "{{total-portfolio}}",
               matchCase: true,
             },
-            replaceText: totalPortfolio + "",
+            replaceText: `${totalPortfolio}`,
           },
         },
       ];
@@ -341,7 +341,7 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
   const logoUrl = imageUrl;
   const customerGraphicUrl = imageUrl;
 
-  const copyTitle = customerName + " presentation";
+  const copyTitle = `${customerName} presentation`;
   let copyFile = {
     title: copyTitle,
     parents: [{ id: "root" }],

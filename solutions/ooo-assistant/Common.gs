@@ -40,8 +40,7 @@ function help(featureName = UNIVERSAL_ACTION) {
         widgets: [
           {
             decoratedText: {
-              text:
-                "Hi! 👋 Feel free to use the following " + featureName + "s:",
+              text: `Hi! 👋 Feel free to use the following ${featureName}s:`,
               wrapText: true,
             },
           },

@@ -26,7 +26,7 @@ function onOpen() {
     SpreadsheetApp.getActive().addMenu("Conference", menu);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -54,7 +54,7 @@ function setUpConference_() {
     ss.removeMenu("Conference");
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -67,7 +67,7 @@ function setUpConference_() {
 function setUpCalendar_(values, range) {
   try {
     const cal = CalendarApp.createCalendar("Conference Calendar");
-    for (var i = 1; i < values.length; i++) {
+    for (let i = 1; i < values.length; i++) {
       const session = values[i];
       const title = session[0];
       const start = joinDateAndTime_(session[1], session[2]);
@@ -84,7 +84,7 @@ function setUpCalendar_(values, range) {
     ScriptProperties.setProperty("calId", cal.getId());
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -134,17 +134,17 @@ function setUpForm_(ss, values) {
     for (const day of schedule) {
       const header = form
         .addSectionHeaderItem()
-        .setTitle("Sessions for " + day);
+        .setTitle(`Sessions for ${day}`);
       for (const time of schedule[day]) {
         const item = form
           .addMultipleChoiceItem()
-          .setTitle(time + " " + day)
+          .setTitle(`${time} ${day}`)
           .setChoiceValues(schedule[day][time]);
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -157,8 +157,8 @@ function setUpForm_(ss, values) {
  */
 function onFormSubmit(e) {
   const user = {
-    name: e.namedValues["Name"][0],
-    email: e.namedValues["Email"][0],
+    name: e.namedValues.Name[0],
+    email: e.namedValues.Email[0],
   };
 
   // Grab the session data again so that we can match it to the user's choices.
@@ -173,7 +173,7 @@ function onFormSubmit(e) {
       const title = session[0];
       const day = session[1].toLocaleDateString();
       const time = session[2].toLocaleTimeString();
-      const timeslot = time + " " + day;
+      const timeslot = `${time} ${day}`;
 
       // For every selection in the response, find the matching timeslot and
       // title in the spreadsheet and add the session data to the response array.
@@ -185,7 +185,7 @@ function onFormSubmit(e) {
     sendDoc_(user, response);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -203,7 +203,7 @@ function sendInvites_(user, response) {
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 
@@ -215,7 +215,7 @@ function sendInvites_(user, response) {
 function sendDoc_(user, response) {
   try {
     const doc = DocumentApp.create(
-      "Conference Itinerary for " + user.name,
+      `Conference Itinerary for ${user.name}`,
     ).addEditor(user.email);
     const body = doc.getBody();
     let table = [["Session", "Date", "Time", "Location"]];
@@ -238,12 +238,12 @@ function sendDoc_(user, response) {
     MailApp.sendEmail({
       to: user.email,
       subject: doc.getName(),
-      body: "Thanks for registering! Here's your itinerary: " + doc.getUrl(),
+      body: `Thanks for registering! Here's your itinerary: ${doc.getUrl()}`,
       attachments: doc.getAs(MimeType.PDF),
     });
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log("Failed with error: %s" + e.error);
+    console.log(`Failed with error: %s${e.error}`);
   }
 }
 // [END apps_script_sheets_custom_form_responses_quickstart]

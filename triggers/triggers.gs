@@ -37,7 +37,7 @@ function onOpen(e) {
 function onEdit(e) {
   // Set a comment on the edited cell to indicate when it was changed.
   const range = e.range;
-  range.setNote("Last modified: " + new Date());
+  range.setNote(`Last modified: ${new Date()}`);
 }
 // [END apps_script_triggers_onedit]
 // [START apps_script_triggers_onselectionchange]

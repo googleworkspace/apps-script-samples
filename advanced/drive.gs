@@ -107,7 +107,7 @@ function addAppProperty(fileId) {
  */
 function listRevisions(fileId) {
   let revisions;
-  const pageToken = null;
+  let pageToken = null;
   do {
     try {
       revisions = Drive.Revisions.list(fileId, {

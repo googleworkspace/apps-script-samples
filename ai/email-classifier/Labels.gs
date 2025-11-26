@@ -104,7 +104,7 @@ function removeLabels() {
 
     if (gmailLabel) {
       gmailLabel.deleteLabel();
-      delete classificationLabel.gmailLabel;
+      classificationLabel.gmailLabel = undefined;
     }
   }
   console.log("Labels removed.");

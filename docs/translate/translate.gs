@@ -221,7 +221,7 @@ function insertText(newText) {
     // translation.
     if (surroundingTextOffset > 0) {
       if (surroundingText.charAt(surroundingTextOffset - 1) !== " ") {
-        newText = " " + newText;
+        newText = ` ${newText}`;
       }
     }
     if (surroundingTextOffset < surroundingText.length) {

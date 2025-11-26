@@ -69,7 +69,7 @@ function createEvent() {
   try {
     // call method to insert/create new event in provided calandar
     event = Calendar.Events.insert(event, calendarId);
-    console.log("Event ID: " + event.id);
+    console.log(`Event ID: ${event.id}`);
   } catch (err) {
     console.log("Failed with error %s", err.message);
   }
@@ -222,7 +222,7 @@ function conditionalUpdate() {
     colorId: 11,
   };
   event = Calendar.Events.insert(event, calendarId);
-  console.log("Event ID: " + event.getId());
+  console.log(`Event ID: ${event.getId()}`);
   // Wait 30 seconds to see if the event has been updated outside this script.
   Utilities.sleep(30 * 1000);
   // Try to update the event, on the condition that the event state has not
@@ -236,9 +236,9 @@ function conditionalUpdate() {
       {},
       { "If-Match": event.etag },
     );
-    console.log("Successfully updated event: " + event.id);
+    console.log(`Successfully updated event: ${event.id}`);
   } catch (e) {
-    console.log("Fetch threw an exception: " + e);
+    console.log(`Fetch threw an exception: ${e}`);
   }
 }
 // [END calendar_conditional_update]
@@ -276,7 +276,7 @@ function conditionalFetch() {
   try {
     // insert event
     event = Calendar.Events.insert(event, calendarId);
-    console.log("Event ID: " + event.getId());
+    console.log(`Event ID: ${event.getId()}`);
     // Re-fetch the event each second, but only get a result if it has changed.
     for (let i = 0; i < 30; i++) {
       Utilities.sleep(1000);
@@ -286,10 +286,10 @@ function conditionalFetch() {
         {},
         { "If-None-Match": event.etag },
       );
-      console.log("New event description: " + event.start.dateTime);
+      console.log(`New event description: ${event.start.dateTime}`);
     }
   } catch (e) {
-    console.log("Fetch threw an exception: " + e);
+    console.log(`Fetch threw an exception: ${e}`);
   }
 }
 // [END calendar_conditional_fetch]

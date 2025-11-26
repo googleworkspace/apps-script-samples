@@ -18,8 +18,8 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current form.
  */
 
-var DIALOG_TITLE = "Example Dialog";
-var SIDEBAR_TITLE = "Example Sidebar";
+const DIALOG_TITLE = "Example Dialog";
+const SIDEBAR_TITLE = "Example Sidebar";
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -49,7 +49,7 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile("Sidebar")
+  const ui = HtmlService.createTemplateFromFile("Sidebar")
     .evaluate()
     .setTitle(SIDEBAR_TITLE);
   FormApp.getUi().showSidebar(ui);
@@ -60,7 +60,7 @@ function showSidebar() {
  * project file.
  */
 function showDialog() {
-  var ui = HtmlService.createTemplateFromFile("Dialog")
+  const ui = HtmlService.createTemplateFromFile("Dialog")
     .evaluate()
     .setWidth(350)
     .setHeight(180);
@@ -75,7 +75,7 @@ function showDialog() {
  */
 function addFormItem(itemData) {
   // Use data collected from sidebar to manipulate the form.
-  var form = FormApp.getActiveForm();
+  const form = FormApp.getActiveForm();
   switch (itemData.type) {
     case "Date":
       form.addDateItem().setTitle(itemData.name);
@@ -98,7 +98,7 @@ function addFormItem(itemData) {
  */
 function getTriggerState() {
   // Retrieve and return the information requested by the dialog.
-  var properties = PropertiesService.getDocumentProperties();
+  const properties = PropertiesService.getDocumentProperties();
   return properties.getProperty("triggerId") != null;
 }
 
@@ -112,15 +112,15 @@ function adjustFormSubmitTrigger(enableTrigger) {
   // Use data collected from dialog to manipulate form.
 
   // Determine existing state of trigger on the server.
-  var form = FormApp.getActiveForm();
-  var properties = PropertiesService.getDocumentProperties();
-  var triggerId = properties.getProperty("triggerId");
+  const form = FormApp.getActiveForm();
+  const properties = PropertiesService.getDocumentProperties();
+  const triggerId = properties.getProperty("triggerId");
 
   if (!enableTrigger && triggerId != null) {
     // Delete the existing trigger.
-    var triggers = ScriptApp.getUserTriggers(form);
-    for (var i = 0; i < triggers.length; i++) {
-      if (triggers[i].getUniqueId() == triggerId) {
+    const triggers = ScriptApp.getUserTriggers(form);
+    for (let i = 0; i < triggers.length; i++) {
+      if (triggers[i].getUniqueId() === triggerId) {
         ScriptApp.deleteTrigger(triggers[i]);
         break;
       }
@@ -128,7 +128,7 @@ function adjustFormSubmitTrigger(enableTrigger) {
     properties.deleteProperty("triggerId");
   } else if (enableTrigger && triggerId == null) {
     // Create a new trigger.
-    var trigger = ScriptApp.newTrigger("respondToFormSubmit")
+    const trigger = ScriptApp.newTrigger("respondToFormSubmit")
       .forForm(form)
       .onFormSubmit()
       .create();
@@ -146,20 +146,17 @@ function adjustFormSubmitTrigger(enableTrigger) {
  */
 function respondToFormSubmit(e) {
   if (MailApp.getRemainingDailyQuota() > 0) {
-    var form = FormApp.getActiveForm();
-    var message =
-      "There have been " +
-      form.getResponses().length +
-      " response(s) so far. Latest Response:\n";
-    var itemResponses = e.response.getItemResponses();
-    for (var i = 0; i < itemResponses.length; i++) {
-      var itemTitle = itemResponses[i].getItem().getTitle();
-      var itemResponse = JSON.stringify(itemResponses[i].getResponse());
-      message += itemTitle + ": " + itemResponse + "\n";
+    const form = FormApp.getActiveForm();
+    let message = `There have been ${form.getResponses().length} response(s) so far. Latest Response:\n`;
+    const itemResponses = e.response.getItemResponses();
+    for (let i = 0; i < itemResponses.length; i++) {
+      const itemTitle = itemResponses[i].getItem().getTitle();
+      const itemResponse = JSON.stringify(itemResponses[i].getResponse());
+      message += `${itemTitle}: ${itemResponse}\n`;
     }
     MailApp.sendEmail(
       Session.getEffectiveUser().getEmail(),
-      "Form response received for form " + form.getTitle(),
+      `Form response received for form ${form.getTitle()}`,
       message,
       { name: "Forms Add-on Template" },
     );

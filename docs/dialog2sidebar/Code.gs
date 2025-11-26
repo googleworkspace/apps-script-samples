@@ -28,7 +28,7 @@ function onOpen() {
  * Shows the sidebar in the document.
  */
 function showSidebar() {
-  var page = HtmlService.createTemplateFromFile("Sidebar")
+  const page = HtmlService.createTemplateFromFile("Sidebar")
     .evaluate()
     .setTitle("Sidebar");
   DocumentApp.getUi().showSidebar(page);
@@ -39,10 +39,10 @@ function showSidebar() {
  * @return {string} The dialog ID.
  */
 function openDialog() {
-  var dialogId = Utilities.base64Encode(Math.random());
-  var template = HtmlService.createTemplateFromFile("Dialog");
+  const dialogId = Utilities.base64Encode(Math.random());
+  const template = HtmlService.createTemplateFromFile("Dialog");
   template.dialogId = dialogId;
-  var page = template.evaluate().setTitle("Dialog");
+  const page = template.evaluate().setTitle("Dialog");
   DocumentApp.getUi().showDialog(page);
   return dialogId;
 }

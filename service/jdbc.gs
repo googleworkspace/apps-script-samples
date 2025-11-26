@@ -26,8 +26,8 @@ const userPwd = "user_password";
 const db = "database_name";
 
 const root = "root";
-const instanceUrl = "jdbc:google:mysql://" + connectionName;
-const dbUrl = instanceUrl + "/" + db;
+const instanceUrl = `jdbc:google:mysql://${connectionName}`;
+const dbUrl = `${instanceUrl}/${db}`;
 
 // [START apps_script_jdbc_create]
 /**
@@ -36,7 +36,7 @@ const dbUrl = instanceUrl + "/" + db;
 function createDatabase() {
   try {
     const conn = Jdbc.getCloudSqlConnection(instanceUrl, root, rootPwd);
-    conn.createStatement().execute("CREATE DATABASE " + db);
+    conn.createStatement().execute(`CREATE DATABASE ${db}`);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
     console.log("Failed with an error %s", err.message);
@@ -55,7 +55,7 @@ function createUser() {
     stmt.setString(2, userPwd);
     stmt.execute();
 
-    conn.createStatement().execute("GRANT ALL ON `%`.* TO " + user);
+    conn.createStatement().execute(`GRANT ALL ON \`%\`.* TO ${user}`);
   } catch (err) {
     // TODO(developer) - Handle exception from the API
     console.log("Failed with an error %s", err.message);
@@ -115,8 +115,8 @@ function writeManyRecords() {
       "INSERT INTO entries " + "(guestName, content) values (?, ?)",
     );
     for (let i = 0; i < 500; i++) {
-      stmt.setString(1, "Name " + i);
-      stmt.setString(2, "Hello, world " + i);
+      stmt.setString(1, `Name ${i}`);
+      stmt.setString(2, `Hello, world ${i}`);
       stmt.addBatch();
     }
 
@@ -147,7 +147,7 @@ function writeManyRecordsUsingExecuteBatch() {
     );
     const params = [];
     for (let i = 0; i < 500; i++) {
-      params.push(["Name " + i, "Hello, world " + i]);
+      params.push([`Name ${i}`, `Hello, world ${i}`]);
     }
 
     const batch = stmt.executeBatch(params);
@@ -179,7 +179,7 @@ function readFromTable() {
     while (results.next()) {
       let rowString = "";
       for (let col = 0; col < numCols; col++) {
-        rowString += results.getString(col + 1) + "\t";
+        rowString += `${results.getString(col + 1)}\t`;
       }
       console.log(rowString);
     }

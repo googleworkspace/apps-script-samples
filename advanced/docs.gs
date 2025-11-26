@@ -24,7 +24,7 @@ function createDocument() {
   try {
     // Create document with title
     const document = Docs.Documents.create({ title: "My New Document" });
-    console.log("Created document with ID: " + document.documentId);
+    console.log(`Created document with ID: ${document.documentId}`);
     return document.documentId;
   } catch (e) {
     // TODO (developer) - Handle exception

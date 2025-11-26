@@ -45,7 +45,7 @@ function measuringExecutionTime() {
     myFunction(parameters); // Function to time.
   } catch (e) {
     // Logs an ERROR message.
-    console.error("myFunction() yielded an error: " + e);
+    console.error(`myFunction() yielded an error: ${e}`);
   }
   console.timeEnd(label); // Stops the timer, logs execution duration.
 }
@@ -58,11 +58,11 @@ function measuringExecutionTime() {
  * @param {string} email The email to send with the row data.
  */
 function emailDataRow(rowNumber, email) {
-  console.log("Emailing data row " + rowNumber + " to " + email);
+  console.log(`Emailing data row ${rowNumber} to ${email}`);
   const sheet = SpreadsheetApp.getActiveSheet();
   const data = sheet.getDataRange().getValues();
   const rowData = data[rowNumber - 1].join(" ");
-  console.log("Row " + rowNumber + " data: " + rowData);
-  MailApp.sendEmail(email, "Data in row " + rowNumber, rowData);
+  console.log(`Row ${rowNumber} data: ${rowData}`);
+  MailApp.sendEmail(email, `Data in row ${rowNumber}`, rowData);
 }
 // [END apps_script_logging_sheet_information]

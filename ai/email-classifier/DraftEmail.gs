@@ -135,7 +135,7 @@ function extractHtmlContent(textString) {
   // ` ``` ` (literal end marker)
   // `s` flag makes '.' match any character including newlines.
   const match = textString.match(/```html(.*?)```/s);
-  if (match && match[1]) {
+  if (match?.[1]) {
     return match[1]; // Return the content of the first capturing group
   }
   return null; // Or an empty string, depending on desired behavior if not found

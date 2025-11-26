@@ -38,47 +38,42 @@ function slidesSelectionTypes() {
       break;
     case SlidesApp.SelectionType.CURRENT_PAGE:
       currentPage = selection.getCurrentPage();
-      console.log("Selection is a page with ID: " + currentPage.getObjectId());
+      console.log(`Selection is a page with ID: ${currentPage.getObjectId()}`);
       break;
-    case SlidesApp.SelectionType.PAGE_ELEMENT:
+    case SlidesApp.SelectionType.PAGE_ELEMENT: {
       const pageElements = selection.getPageElementRange().getPageElements();
-      console.log(
-        "There are " + pageElements.length + " page elements selected.",
-      );
+      console.log(`There are ${pageElements.length} page elements selected.`);
       break;
-    case SlidesApp.SelectionType.TEXT:
+    }
+    case SlidesApp.SelectionType.TEXT: {
       const tableCellRange = selection.getTableCellRange();
       if (tableCellRange !== null) {
         const tableCell = tableCellRange.getTableCells()[0];
         console.log(
-          "Selected text is in a table at row " +
-            tableCell.getRowIndex() +
-            ", column " +
-            tableCell.getColumnIndex(),
+          `Selected text is in a table at row ${tableCell.getRowIndex()}, column ${tableCell.getColumnIndex()}`,
         );
       }
       const textRange = selection.getTextRange();
       if (textRange.getStartIndex() === textRange.getEndIndex()) {
-        console.log("Text cursor position: " + textRange.getStartIndex());
+        console.log(`Text cursor position: ${textRange.getStartIndex()}`);
       } else {
         console.log(
-          "Selection is a text range from: " +
-            textRange.getStartIndex() +
-            " to: " +
-            textRange.getEndIndex() +
-            " is selected",
+          `Selection is a text range from: ${textRange.getStartIndex()} to: ${textRange.getEndIndex()} is selected`,
         );
       }
       break;
-    case SlidesApp.SelectionType.TABLE_CELL:
+    }
+    case SlidesApp.SelectionType.TABLE_CELL: {
       const tableCells = selection.getTableCellRange().getTableCells();
       const table = tableCells[0].getParentTable();
-      console.log("There are " + tableCells.length + " table cells selected.");
+      console.log(`There are ${tableCells.length} table cells selected.`);
       break;
-    case SlidesApp.SelectionType.PAGE:
+    }
+    case SlidesApp.SelectionType.PAGE: {
       const pages = selection.getPageRange().getPages();
-      console.log("There are " + pages.length + " pages selected.");
+      console.log(`There are ${pages.length} pages selected.`);
       break;
+    }
     default:
       break;
   }

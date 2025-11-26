@@ -49,7 +49,7 @@ function buildCard_GmailHome(notifyOk = false) {
    * the user about the successful execution of the Add-on.
    */
 
-  if (notifyOk == true) {
+  if (notifyOk === true) {
     const fixedFooter = CardService.newFixedFooter().setPrimaryButton(
       CardService.newTextButton()
         .setText("Analysis complete")

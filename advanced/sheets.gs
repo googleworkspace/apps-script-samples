@@ -118,8 +118,7 @@ function addSheet(spreadsheetId = yourspreadsheetId) {
       spreadsheetId,
     );
     console.log(
-      "Created sheet with ID: " +
-        response.replies[0].addSheet.properties.sheetId,
+      `Created sheet with ID: ${response.replies[0].addSheet.properties.sheetId}`,
     );
   } catch (e) {
     // TODO (developer) - Handle exception

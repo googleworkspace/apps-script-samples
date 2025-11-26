@@ -9,7 +9,7 @@ function testSchemas() {
 
     MailApp.sendEmail({
       to: Session.getActiveUser().getEmail(),
-      subject: "Test Email markup - " + new Date(),
+      subject: `Test Email markup - ${new Date()}`,
       htmlBody: htmlBody,
     });
   } catch (err) {

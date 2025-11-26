@@ -37,7 +37,7 @@ function createReport() {
     "subscribersGained",
   ];
   const result = YouTubeAnalytics.Reports.query({
-    ids: "channel==" + channelId,
+    ids: `channel==${channelId}`,
     startDate: formatDateString(lastMonth),
     endDate: formatDateString(today),
     metrics: metrics.join(","),

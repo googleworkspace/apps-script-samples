@@ -95,7 +95,7 @@ function loadCsv() {
   const csvFileId = "0BwzA1Orbvy5WMXFLaTR1Z1p2UDg";
 
   // Create the table.
-  const tableId = "pets_" + new Date().getTime();
+  const tableId = `pets_${new Date().getTime()}`;
   let table = {
     tableReference: {
       projectId: projectId,

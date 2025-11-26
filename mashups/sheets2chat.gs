@@ -48,7 +48,7 @@ function sendChatMessageOnEdit(e) {
 
   // Use the spreadsheet's ID as a thread key, so that all messages go into the
   // same thread.
-  const url = webhookUrl + "&threadKey=" + ss.getId();
+  const url = `${webhookUrl}&threadKey=${ss.getId()}`;
 
   // Send the message.
   UrlFetchApp.fetch(url, {

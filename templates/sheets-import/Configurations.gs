@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-var REPORT_SET_KEY = "Import.ReportSet";
-var SCHEDULE_TRIGGER_ID = "Import.scheduled.triggerId";
+const REPORT_SET_KEY = "Import.ReportSet";
+const SCHEDULE_TRIGGER_ID = "Import.scheduled.triggerId";
 
 /**
  * Update type enum used when adding or deleting a report.
  */
-var UPDATE_TYPE = {
+const UPDATE_TYPE = {
   ADD: 1,
   REMOVE: 2,
 };
@@ -33,14 +33,14 @@ var UPDATE_TYPE = {
  *   or null if no such report exists.
  */
 function getReportConfig(reportId) {
-  var config = getObjectFromProperties(reportId);
+  const config = getObjectFromProperties(reportId);
   if (!config) {
     return null;
   }
   // Sheet name may have been changed manually, so
   // get the current one.
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getSheetById(ss, Number.parseInt(config.sheetId));
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = getSheetById(ss, Number.parseInt(config.sheetId));
   config.sheetName = !sheet ? null : sheet.getName();
   return config;
 }
@@ -52,7 +52,7 @@ function getReportConfig(reportId) {
  * @return {object} The saved configuration.
  */
 function saveReportConfig(config) {
-  var previous = getReportConfig(config.reportId);
+  const previous = getReportConfig(config.reportId);
   if (config.reportId === "new-report") {
     config.reportId = newReportId();
     config.lastRun = null;
@@ -86,8 +86,8 @@ function canEditReport(config) {
     return false;
   }
   return (
-    config.scheduled == false ||
-    Session.getEffectiveUser().getEmail() == config.owner
+    config.scheduled === false ||
+    Session.getEffectiveUser().getEmail() === config.owner
   );
 }
 
@@ -99,13 +99,13 @@ function canEditReport(config) {
  * would be exceeded.
  */
 function isOverScheduleLimit(config) {
-  var previous = getReportConfig(config.reportId);
-  var currentUser = Session.getEffectiveUser().getEmail();
-  var isScheduled = config == null ? false : config.scheduled;
-  var wasScheduled = previous == null ? false : previous.scheduled;
+  const previous = getReportConfig(config.reportId);
+  const currentUser = Session.getEffectiveUser().getEmail();
+  const isScheduled = config == null ? false : config.scheduled;
+  const wasScheduled = previous == null ? false : previous.scheduled;
   return (
     isScheduled &&
-    wasScheduled != true &&
+    wasScheduled !== true &&
     getScheduledReports(currentUser).length >= MAX_SCHEDULED_REPORTS
   );
 }
@@ -116,7 +116,7 @@ function isOverScheduleLimit(config) {
  * @return {Object}
  */
 function getAllReports() {
-  var properties = PropertiesService.getDocumentProperties();
+  const properties = PropertiesService.getDocumentProperties();
   return JSON.parse(properties.getProperty(REPORT_SET_KEY));
 }
 
@@ -129,10 +129,10 @@ function getAllReports() {
  *   reports.
  */
 function getScheduledReports(opt_user) {
-  var scheduledReports = [];
+  const scheduledReports = [];
   _.keys(getAllReports()).forEach((reportId) => {
-    var config = getReportConfig(reportId);
-    if (config && config.scheduled && (!opt_user || opt_user == config.owner)) {
+    const config = getReportConfig(reportId);
+    if (config?.scheduled && (!opt_user || opt_user === config.owner)) {
       scheduledReports.push(config);
     }
   });
@@ -148,16 +148,16 @@ function getScheduledReports(opt_user) {
  * @param {String} reportName report name (only needed for ADD).
  */
 function updateReportSet(updateType, reportId, reportName) {
-  var properties = PropertiesService.getDocumentProperties();
-  var lock = LockService.getDocumentLock();
+  const properties = PropertiesService.getDocumentProperties();
+  const lock = LockService.getDocumentLock();
   lock.waitLock(2000);
-  var reportSet = JSON.parse(properties.getProperty(REPORT_SET_KEY));
+  let reportSet = JSON.parse(properties.getProperty(REPORT_SET_KEY));
   if (reportSet == null) {
     reportSet = {};
   }
-  if (updateType == UPDATE_TYPE.ADD) {
+  if (updateType === UPDATE_TYPE.ADD) {
     reportSet[reportId] = reportName;
-  } else if (updateType == UPDATE_TYPE.REMOVE) {
+  } else if (updateType === UPDATE_TYPE.REMOVE) {
     delete reportSet[reportId];
   }
   properties.setProperty(REPORT_SET_KEY, JSON.stringify(reportSet));
@@ -175,7 +175,7 @@ function updateReportSet(updateType, reportId, reportName) {
  * @return {Object} the updated report configuration.
  */
 function updateOnImport(config, sheet, lastRun) {
-  var update = {
+  const update = {
     sheetId: sheet.getSheetId().toString(),
     lastRun: lastRun,
   };
@@ -199,7 +199,7 @@ function getColumnIds(config) {
  * @return {string|null} the trigger ID or null if the trigger is not set.
  */
 function getTriggerId() {
-  var properties = PropertiesService.getUserProperties();
+  const properties = PropertiesService.getUserProperties();
   return properties.getProperty(SCHEDULE_TRIGGER_ID);
 }
 
@@ -208,7 +208,7 @@ function getTriggerId() {
  * @param {Trigger} trigger the trigger whose ID should be saved.
  */
 function saveTriggerId(trigger) {
-  var properties = PropertiesService.getUserProperties();
+  const properties = PropertiesService.getUserProperties();
   properties.setProperty(SCHEDULE_TRIGGER_ID, trigger.getUniqueId());
 }
 
@@ -216,6 +216,6 @@ function saveTriggerId(trigger) {
  * Remove the saved trigger ID.
  */
 function removeTriggerId() {
-  var properties = PropertiesService.getUserProperties();
+  const properties = PropertiesService.getUserProperties();
   properties.deleteProperty(SCHEDULE_TRIGGER_ID);
 }

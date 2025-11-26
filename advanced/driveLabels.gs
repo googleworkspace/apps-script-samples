@@ -80,8 +80,7 @@ function listLabelsOnDriveItem(fileId) {
 
     appliedLabels.labels.forEach((appliedLabel) => {
       // Resource name of the label at the applied revision.
-      const labelName =
-        "labels/" + appliedLabel.id + "@" + appliedLabel.revisionId;
+      const labelName = `labels/${appliedLabel.id}@${appliedLabel.revisionId}`;
 
       console.log("Fetching Label: %s", labelName);
       const label = DriveLabels.Labels.get(labelName, {
@@ -92,7 +91,7 @@ function listLabelsOnDriveItem(fileId) {
 
       Object.keys(appliedLabel.fields).forEach((fieldId) => {
         const fieldValue = appliedLabel.fields[fieldId];
-        const field = label.fields.find((f) => f.id == fieldId);
+        const field = label.fields.find((f) => f.id === fieldId);
 
         console.log(
           `Field ID: ${field.id}, Display Name: ${field.properties.displayName}`,
@@ -107,7 +106,7 @@ function listLabelsOnDriveItem(fileId) {
           case "dateString":
             console.log("Date: %s", fieldValue.dateString[0]);
             break;
-          case "user":
+          case "user": {
             const user = fieldValue.user
               .map((user) => {
                 return `${user.emailAddress}: ${user.displayName}`;
@@ -115,7 +114,8 @@ function listLabelsOnDriveItem(fileId) {
               .join(", ");
             console.log(`User: ${user}`);
             break;
-          case "selection":
+          }
+          case "selection": {
             const choices = fieldValue.selection.map((choiceId) => {
               return field.selectionOptions.choices.find(
                 (choice) => choice.id === choiceId,
@@ -128,6 +128,7 @@ function listLabelsOnDriveItem(fileId) {
               .join(", ");
             console.log(`Selection: ${selection}`);
             break;
+          }
           default:
             console.log("Unknown: %s", fieldValue.valueType);
             console.log(fieldValue.value);

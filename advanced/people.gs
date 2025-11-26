@@ -63,7 +63,7 @@ function getSelf() {
 function getAccount(accountId) {
   try {
     // Get the Account details using account ID.
-    const people = People.People.get("people/" + accountId, {
+    const people = People.People.get(`people/${accountId}`, {
       personFields: "names,emailAddresses",
     });
     // Print the profile details of Account.
@@ -86,9 +86,7 @@ function getContactGroup(name) {
   try {
     const people = People.ContactGroups.list();
     // Finds the contact group for the person where the name matches.
-    const group = people["contactGroups"].find(
-      (group) => group["name"] === name,
-    );
+    const group = people.contactGroups.find((group) => group.name === name);
     // Prints the contact group
     console.log("Group: %s", JSON.stringify(group, null, 2));
   } catch (err) {
@@ -115,9 +113,9 @@ function getContactByEmail(email) {
     const people = People.People.Connections.list("people/me", {
       personFields: "names,emailAddresses",
     });
-    const contact = people["connections"].find((connection) => {
-      return connection["emailAddresses"].some(
-        (emailAddress) => emailAddress["value"] === email,
+    const contact = people.connections.find((connection) => {
+      return connection.emailAddresses.some(
+        (emailAddress) => emailAddress.value === email,
       );
     });
     // Prints the contact.
@@ -142,9 +140,7 @@ function getFullName() {
     // This example gets the person for the user running the script.
     const people = People.People.get("people/me", { personFields: "names" });
     // Prints the full name (given name + family name)
-    console.log(
-      `${people["names"][0]["givenName"]} ${people["names"][0]["familyName"]}`,
-    );
+    console.log(`${people.names[0].givenName} ${people.names[0].familyName}`);
   } catch (err) {
     // TODO (developers) - Handle exception
     console.log("Failed to get the connection with an error %s", err.message);
@@ -167,7 +163,7 @@ function getPhoneNumbers() {
       personFields: "phoneNumbers",
     });
     // Prints the phone numbers.
-    console.log(people["phoneNumbers"]);
+    console.log(people.phoneNumbers);
   } catch (err) {
     // TODO (developers) - Handle exception
     console.log("Failed to get the connection with an error %s", err.message);
@@ -190,9 +186,9 @@ function getPhone() {
       personFields: "phoneNumbers",
     });
     // Gets phone number by type, such as home or work.
-    const phoneNumber = people["phoneNumbers"].find(
-      (phone) => phone["type"] === "home",
-    )["value"];
+    const phoneNumber = people.phoneNumbers.find(
+      (phone) => phone.type === "home",
+    ).value;
     // Prints the phone numbers.
     console.log(phoneNumber);
   } catch (err) {

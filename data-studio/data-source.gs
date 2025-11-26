@@ -15,7 +15,7 @@
  */
 
 // [START apps_script_data_studio_params]
-var configParams = [
+const configParams = [
   {
     type: "TEXTINPUT",
     name: "ZipCode",

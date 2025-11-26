@@ -3,7 +3,7 @@ function doGet() {
 }
 
 function processForm(formObject) {
-  var formBlob = formObject.myFile;
-  var driveFile = DriveApp.createFile(formBlob);
+  const formBlob = formObject.myFile;
+  const driveFile = DriveApp.createFile(formBlob);
   return driveFile.getUrl();
 }

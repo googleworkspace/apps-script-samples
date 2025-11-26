@@ -20,7 +20,7 @@
  * @return {Array} list of potential columns.
  */
 function getColumnOptions() {
-  var columns = [];
+  const columns = [];
 
   // TODO: Replace this section, adding a column entry for each data of
   // interest. id should be an identifier that can be used to locate
@@ -48,7 +48,7 @@ function getColumnOptions() {
  * @return {object[]|null} Pages of data.
  */
 function getDataPage(columns, pageNumber, pageSize, opt_settings) {
-  var data = null;
+  const data = null;
   /**
    * TODO: This function needs to be implemented based on the particular
    * details of the data source you are extracting data from. For example,

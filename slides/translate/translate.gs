@@ -63,7 +63,7 @@ function getElementTexts(elements) {
             texts = texts.concat(getElementTexts(child));
           });
         break;
-      case SlidesApp.PageElementType.TABLE:
+      case SlidesApp.PageElementType.TABLE: {
         const table = element.asTable();
         for (let y = 0; y < table.getNumColumns(); ++y) {
           for (let x = 0; x < table.getNumRows(); ++x) {
@@ -71,6 +71,7 @@ function getElementTexts(elements) {
           }
         }
         break;
+      }
       case SlidesApp.PageElementType.SHAPE:
         texts.push(element.asShape().getText());
         break;
@@ -99,10 +100,11 @@ function translateSelectedElements(targetLanguage) {
           texts = texts.concat(getElementTexts(page.getPageElements()));
         });
       break;
-    case SlidesApp.SelectionType.PAGE_ELEMENT:
+    case SlidesApp.SelectionType.PAGE_ELEMENT: {
       const pageElements = selection.getPageElementRange().getPageElements();
       texts = texts.concat(getElementTexts(pageElements));
       break;
+    }
     case SlidesApp.SelectionType.TABLE_CELL:
       selection
         .getTableCellRange()

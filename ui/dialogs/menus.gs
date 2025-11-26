@@ -20,7 +20,7 @@
  * Creates a custom menu.
  */
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
+  const ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
   ui.createMenu("Custom Menu")
     .addItem("First item", "menuItem1")
@@ -60,7 +60,7 @@ function showMessageBox() {
  * A function that can be invoked from a Google Sites link.
  */
 function sitesLink() {
-  var recipient = Session.getActiveUser().getEmail();
+  const recipient = Session.getActiveUser().getEmail();
   GmailApp.sendEmail(recipient, "Email from your site", "You clicked a link!");
 }
 // [END apps_script_sites_link]

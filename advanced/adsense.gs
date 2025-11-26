@@ -115,7 +115,7 @@ function generateReport(accountName, adClientReportingDimensionId) {
   const report = AdSense.Accounts.Reports.generate(accountName, {
     // Specify the desired ad client using a filter.
     filters: [
-      "AD_CLIENT_ID==" + escapeFilterParameter(adClientReportingDimensionId),
+      `AD_CLIENT_ID==${escapeFilterParameter(adClientReportingDimensionId)}`,
     ],
     metrics: [
       "PAGE_VIEWS",
@@ -170,9 +170,9 @@ function escapeFilterParameter(parameter) {
  */
 function dateToJson(paramName, value) {
   return {
-    [paramName + ".year"]: value.getFullYear(),
-    [paramName + ".month"]: value.getMonth() + 1,
-    [paramName + ".day"]: value.getDate(),
+    [`${paramName}.year`]: value.getFullYear(),
+    [`${paramName}.month`]: value.getMonth() + 1,
+    [`${paramName}.day`]: value.getDate(),
   };
 }
 

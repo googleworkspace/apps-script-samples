@@ -116,7 +116,7 @@ function runReport(profileId) {
     "yyyy-MM-dd",
   );
 
-  const tableId = "ga:" + profileId;
+  const tableId = `ga:${profileId}`;
   const metric = "ga:visits";
   const options = {
     dimensions: "ga:source,ga:keyword",

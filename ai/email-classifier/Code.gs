@@ -42,7 +42,7 @@ function main() {
 
   // Construct the search query
   const query = `is:unread after:${formattedDate} in:inbox`;
-  console.log("Searching for emails with query: " + query);
+  console.log(`Searching for emails with query: ${query}`);
 
   // Search for threads matching the query
   // Note: GmailApp.search() returns threads where *at least one* message

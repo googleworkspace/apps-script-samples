@@ -44,7 +44,7 @@ function throwConnectorError(message, userSafe) {
       ? userSafe
       : false;
   if (userSafe) {
-    message = "DS_USER:" + message;
+    message = `DS_USER:${message}`;
   }
 
   throw new Error(message);

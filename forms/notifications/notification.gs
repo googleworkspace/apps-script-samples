@@ -318,7 +318,7 @@ function sendCreatorNotification() {
         const message = template.evaluate();
         MailApp.sendEmail(
           settings.getProperty("creatorEmail"),
-          form.getTitle() + ": Form submissions detected",
+          `${form.getTitle()}: Form submissions detected`,
           message.getContent(),
           {
             name: ADDON_TITLE,

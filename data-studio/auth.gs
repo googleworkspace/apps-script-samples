@@ -246,9 +246,8 @@ function authCallback(request) {
   const authorized = getOAuthService().handleCallback(request);
   if (authorized) {
     return HtmlService.createHtmlOutput("Success! You can close this tab.");
-  } else {
-    return HtmlService.createHtmlOutput("Denied. You can close this tab");
   }
+  return HtmlService.createHtmlOutput("Denied. You can close this tab");
 }
 // [END apps_script_data_studio_auth_callback]
 

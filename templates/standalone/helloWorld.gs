@@ -37,7 +37,7 @@ function createAndSendDocument() {
     const subject = doc.getName();
 
     // Append a new string to the "url" variable to use as an email body.
-    const body = "Link to your doc: " + url;
+    const body = `Link to your doc: ${url}`;
 
     // Send yourself an email with a link to the document.
     GmailApp.sendEmail(email, subject, body);

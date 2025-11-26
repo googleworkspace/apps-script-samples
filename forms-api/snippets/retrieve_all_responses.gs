@@ -19,17 +19,17 @@
 
   // Get OAuth Token
  const OAuthToken = ScriptApp.getOAuthToken();
- console.log('OAuth token is: ' + OAuthToken);
- const formsAPIUrl = 'https://forms.googleapis.com/v1/forms/' + formId + '/' + 'responses';
- console.log('formsAPIUrl is: ' + formsAPIUrl);
+ console.log(`OAuth token is: ${OAuthToken}`);
+ const formsAPIUrl = `https://forms.googleapis.com/v1/forms/${formId}/responses`;
+ console.log(`formsAPIUrl is: ${formsAPIUrl}`);
  const options = {
     'headers': {
-      Authorization: 'Bearer ' + OAuthToken,
+      Authorization: `Bearer ${OAuthToken}`,
       Accept: 'application/json'
     },
     'method': 'get'
   };  
 const response = UrlFetchApp.fetch(formsAPIUrl, options);
- console.log('Response from forms.responses was: ' + response);
+ console.log(`Response from forms.responses was: ${response}`);
 }
 # [END forms_retrieve_all_responses]

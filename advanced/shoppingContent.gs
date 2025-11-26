@@ -80,13 +80,13 @@ function productList() {
         pageToken: pageToken,
         maxResults: maxResults,
       });
-      console.log("Page " + pageNum);
+      console.log(`Page ${pageNum}`);
       if (products.resources) {
         for (let i = 0; i < products.resources.length; i++) {
-          console.log("Item [" + i + "] ==> " + products.resources[i]);
+          console.log(`Item [${i}] ==> ${products.resources[i]}`);
         }
       } else {
-        console.log("No more products in account " + merchantId);
+        console.log(`No more products in account ${merchantId}`);
       }
       pageToken = products.nextPageToken;
       pageNum++;
