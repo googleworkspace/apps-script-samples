@@ -21,8 +21,8 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "lint": "biome check .",
-    "format": "biome check --write .",
+    "lint": "tsx .github/scripts/biome-gs.ts lint",
+    "format": "tsx .github/scripts/biome-gs.ts format",
     "check": "tsx .github/scripts/check-gs.ts"
   },
   "type": "module",
