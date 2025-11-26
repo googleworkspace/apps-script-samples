@@ -89,7 +89,7 @@ async function main() {
 
     // 2. Run Biome
     const biomeArgs =
-      command === "format" ? "check --write --unsafe ." : "check .";
+      command === "format" ? "check --write ." : "check .";
     console.log(`Running biome ${biomeArgs}...`);
     try {
       const { stdout, stderr } = await execAsync(
@@ -98,9 +98,10 @@ async function main() {
       );
       if (stdout) console.log(stdout.replace(/\.gs\.js/g, ".gs"));
       if (stderr) console.error(stderr.replace(/\.gs\.js/g, ".gs"));
-    } catch (e: any) {
-      if (e.stdout) console.log(e.stdout.replace(/\.gs\.js/g, ".gs"));
-      if (e.stderr) console.error(e.stderr.replace(/\.gs\.js/g, ".gs"));
+    } catch (e: unknown) {
+      const err = e as { stdout?: string; stderr?: string };
+      if (err.stdout) console.log(err.stdout.replace(/\.gs\.js/g, ".gs"));
+      if (err.stderr) console.error(err.stderr.replace(/\.gs\.js/g, ".gs"));
       // Don't exit yet, we need to restore files
     }
   } catch (err) {
