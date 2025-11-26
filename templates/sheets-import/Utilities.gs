@@ -31,9 +31,9 @@ function include(filename) {
  * @return {Boolean}
  */
 function isOlderThanADay(dateStr) {
-  var now = (new Date()).getTime();
+  var now = new Date().getTime();
   var then = Date.parse(dateStr);
-  return (then + 24 * 60 * 60 * 1000) < now;
+  return then + 24 * 60 * 60 * 1000 < now;
 }
 
 /**
@@ -46,9 +46,9 @@ function isOlderThanADay(dateStr) {
  */
 function saveObjectToProperties(prefix, obj) {
   var properties = PropertiesService.getDocumentProperties();
-  _.each(obj, function(val, key) {
-      var propKey = prefix + '.' + key;
-      properties.setProperty(propKey, JSON.stringify(val));
+  _.each(obj, function (val, key) {
+    var propKey = prefix + "." + key;
+    properties.setProperty(propKey, JSON.stringify(val));
   });
 }
 
@@ -64,7 +64,7 @@ function saveObjectToProperties(prefix, obj) {
 function getObjectFromProperties(prefix) {
   var properties = PropertiesService.getDocumentProperties();
   var obj = {};
-  _.each(properties.getProperties(), function(val, key) {
+  _.each(properties.getProperties(), function (val, key) {
     if (key.indexOf(prefix) > -1) {
       obj[key.substr(prefix.length + 1)] = JSON.parse(val);
     }
@@ -82,7 +82,7 @@ function getObjectFromProperties(prefix) {
  */
 function deleteObjectFromProperties(prefix) {
   var properties = PropertiesService.getDocumentProperties();
-  _.each(properties.getProperties(), function(val, key) {
+  _.each(properties.getProperties(), function (val, key) {
     if (key.indexOf(prefix) > -1) {
       properties.deleteProperty(key);
     }
@@ -132,7 +132,7 @@ function getUniqueSheetName(spreadsheet, baseName) {
   var sheetName = baseName;
   var i = 2;
   while (spreadsheet.getSheetByName(sheetName) != null) {
-      sheetName = baseName + ' ' + i++;
+    sheetName = baseName + " " + i++;
   }
   return sheetName;
 }

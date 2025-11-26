@@ -24,17 +24,21 @@ function listTaskLists() {
     const taskLists = Tasks.Tasklists.list();
     // If taskLists are available then print all tasklists.
     if (!taskLists.items) {
-      console.log('No task lists found.');
+      console.log("No task lists found.");
       return;
     }
     // Print the tasklist title and tasklist id.
     for (let i = 0; i < taskLists.items.length; i++) {
       const taskList = taskLists.items[i];
-      console.log('Task list with title "%s" and ID "%s" was found.', taskList.title, taskList.id);
+      console.log(
+        'Task list with title "%s" and ID "%s" was found.',
+        taskList.title,
+        taskList.id,
+      );
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Task API
-    console.log('Failed with an error %s ', err.message);
+    console.log("Failed with an error %s ", err.message);
   }
 }
 // [END tasks_lists_task_lists]
@@ -51,17 +55,21 @@ function listTasks(taskListId) {
     const tasks = Tasks.Tasks.list(taskListId);
     // If tasks are available then print all task of given tasklists.
     if (!tasks.items) {
-      console.log('No tasks found.');
+      console.log("No tasks found.");
       return;
     }
     // Print the task title and task id of specified tasklist.
     for (let i = 0; i < tasks.items.length; i++) {
       const task = tasks.items[i];
-      console.log('Task with title "%s" and ID "%s" was found.', task.title, task.id);
+      console.log(
+        'Task with title "%s" and ID "%s" was found.',
+        task.title,
+        task.id,
+      );
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Task API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 // [END tasks_list_tasks]
@@ -75,8 +83,8 @@ function listTasks(taskListId) {
 function addTask(taskListId) {
   // Task details with title and notes for inserting new task
   let task = {
-    title: 'Pick up dry cleaning',
-    notes: 'Remember to get this done!'
+    title: "Pick up dry cleaning",
+    notes: "Remember to get this done!",
   };
   try {
     // Call insert method with taskDetails and taskListId to insert Task to specified tasklist.
@@ -85,7 +93,7 @@ function addTask(taskListId) {
     console.log('Task with ID "%s" was created.', task.id);
   } catch (err) {
     // TODO (developer) - Handle exception from Tasks.insert() of Task API
-    console.log('Failed with an error %s', err.message);
+    console.log("Failed with an error %s", err.message);
   }
 }
 // [END tasks_add_task]

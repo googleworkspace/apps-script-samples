@@ -24,12 +24,12 @@ var params = [];
 
 const jsonString = JSON.stringify(configJSON);
 const encoded = encodeURIComponent(jsonString);
-params.push('connectorConfig=' + encoded);
+params.push("connectorConfig=" + encoded);
 
-params.push('reportTemplateId=' + templateId);
+params.push("reportTemplateId=" + templateId);
 
-params.push('connectorId=' + deploymentId);
+params.push("connectorId=" + deploymentId);
 
-const joinedParams = params.join('&');
-const URL = 'https://datastudio.google.com/datasources/create?' + joinedParams;
+const joinedParams = params.join("&");
+const URL = "https://datastudio.google.com/datasources/create?" + joinedParams;
 // [END apps_script_data_studio_links]

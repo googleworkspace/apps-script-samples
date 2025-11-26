@@ -15,14 +15,14 @@
  */
 
 // Replace with correct values
-const accountName = 'account name';
-const clientName = 'ad client name';
+const accountName = "account name";
+const clientName = "ad client name";
 
 /**
  * Tests listAccounts function of adsense.gs
  */
 function itShouldListAccounts() {
-  console.log('> itShouldListAccounts');
+  console.log("> itShouldListAccounts");
   listAccounts();
 }
 
@@ -30,7 +30,7 @@ function itShouldListAccounts() {
  * Tests listAdClients function of adsense.gs
  */
 function itShouldListAdClients() {
-  console.log('> itShouldListAdClients');
+  console.log("> itShouldListAdClients");
   listAdClients(accountName);
 }
 
@@ -38,7 +38,7 @@ function itShouldListAdClients() {
  * Tests listAdUnits function of adsense.gs
  */
 function itShouldListAdUnits() {
-  console.log('> itShouldListAdUnits');
+  console.log("> itShouldListAdUnits");
   listAdUnits(clientName);
 }
 

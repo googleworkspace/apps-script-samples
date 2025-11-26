@@ -6,7 +6,7 @@
  */
 function createDocsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const ss = SpreadsheetApp.openByUrl("ENTER SPREADSHEET URL HERE");
   const sheet = ss.getSheets()[0];
   /** @type {string[][]} */
   const data = sheet.getDataRange().getValues();
@@ -15,13 +15,13 @@ function createDocsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a document for each row.
-  data.forEach(function(row) {
+  data.forEach(function (row) {
     const title = row[0];
     const content = row[1];
     const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    const emails = emailsStr.split(',').map(function(email) {
+    const emails = emailsStr.split(",").map(function (email) {
       return email.trim();
     });
 

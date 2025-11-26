@@ -21,9 +21,7 @@
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.OAUTH2)
-      .build();
+  return cc.newAuthTypeResponse().setAuthType(cc.AuthType.OAUTH2).build();
 }
 // [END apps_script_data_studio_get_auth_type_oauth2]
 
@@ -34,10 +32,11 @@ function getAuthType() {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.PATH_USER_PASS)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.PATH_USER_PASS)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_path_user_pass]
 
@@ -48,10 +47,11 @@ function getAuthType() {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.USER_PASS)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_PASS)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_pass]
 
@@ -62,10 +62,11 @@ function getAuthType() {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.USER_TOKEN)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.USER_TOKEN)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_user_token]
 
@@ -76,10 +77,11 @@ function getAuthType() {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.KEY)
-      .setHelpUrl('https://www.example.org/connector-auth-help')
-      .build();
+  return cc
+    .newAuthTypeResponse()
+    .setAuthType(cc.AuthType.KEY)
+    .setHelpUrl("https://www.example.org/connector-auth-help")
+    .build();
 }
 // [END apps_script_data_studio_get_auth_type_key]
 
@@ -90,9 +92,7 @@ function getAuthType() {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.NONE)
-      .build();
+  return cc.newAuthTypeResponse().setAuthType(cc.AuthType.NONE).build();
 }
 // [END apps_script_data_studio_get_auth_type_none]
 
@@ -111,9 +111,9 @@ function resetAuth() {
  */
 function resetAuth() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.path');
-  userProperties.deleteProperty('dscc.username');
-  userProperties.deleteProperty('dscc.password');
+  userProperties.deleteProperty("dscc.path");
+  userProperties.deleteProperty("dscc.username");
+  userProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_path_user]
 
@@ -123,8 +123,8 @@ function resetAuth() {
  */
 function resetAuth() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.username');
-  userProperties.deleteProperty('dscc.password');
+  userProperties.deleteProperty("dscc.username");
+  userProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_user]
 
@@ -134,8 +134,8 @@ function resetAuth() {
  */
 function resetAuth() {
   const userTokenProperties = PropertiesService.getUserProperties();
-  userTokenProperties.deleteProperty('dscc.username');
-  userTokenProperties.deleteProperty('dscc.password');
+  userTokenProperties.deleteProperty("dscc.username");
+  userTokenProperties.deleteProperty("dscc.password");
 }
 // [END apps_script_data_studio_auth_reset_user_token]
 
@@ -145,7 +145,7 @@ function resetAuth() {
  */
 function resetAuth() {
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.deleteProperty('dscc.key');
+  userProperties.deleteProperty("dscc.key");
 }
 // [END apps_script_data_studio_auth_reset_key]
 
@@ -166,9 +166,9 @@ function isAuthValid() {
  */
 function isAuthValid() {
   const userProperties = PropertiesService.getUserProperties();
-  const path = userProperties.getProperty('dscc.path');
-  const userName = userProperties.getProperty('dscc.username');
-  const password = userProperties.getProperty('dscc.password');
+  const path = userProperties.getProperty("dscc.path");
+  const userName = userProperties.getProperty("dscc.username");
+  const password = userProperties.getProperty("dscc.password");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(path, userName, password);
@@ -182,8 +182,8 @@ function isAuthValid() {
  */
 function isAuthValid() {
   const userProperties = PropertiesService.getUserProperties();
-  const userName = userProperties.getProperty('dscc.username');
-  const password = userProperties.getProperty('dscc.password');
+  const userName = userProperties.getProperty("dscc.username");
+  const password = userProperties.getProperty("dscc.password");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and password are correct.
   return validateCredentials(userName, password);
@@ -197,8 +197,8 @@ function isAuthValid() {
  */
 function isAuthValid() {
   const userProperties = PropertiesService.getUserProperties();
-  const userName = userProperties.getProperty('dscc.username');
-  const token = userProperties.getProperty('dscc.token');
+  const userName = userProperties.getProperty("dscc.username");
+  const token = userProperties.getProperty("dscc.token");
   // This assumes you have a validateCredentials function that
   // can validate if the userName and token are correct.
   return validateCredentials(userName, token);
@@ -212,7 +212,7 @@ function isAuthValid() {
  */
 function isAuthValid() {
   const userProperties = PropertiesService.getUserProperties();
-  const key = userProperties.getProperty('dscc.key');
+  const key = userProperties.getProperty("dscc.key");
   // This assumes you have a validateKey function that can validate
   // if the key is valid.
   return validateKey(key);
@@ -225,15 +225,15 @@ function isAuthValid() {
  * @return {Service} The OAuth Service
  */
 function getOAuthService() {
-  return OAuth2.createService('exampleService')
-      .setAuthorizationBaseUrl('...')
-      .setTokenUrl('...')
-      .setClientId('...')
-      .setClientSecret('...')
-      .setPropertyStore(PropertiesService.getUserProperties())
-      .setCallbackFunction('authCallback')
-      .setScope('...');
-};
+  return OAuth2.createService("exampleService")
+    .setAuthorizationBaseUrl("...")
+    .setTokenUrl("...")
+    .setClientId("...")
+    .setClientSecret("...")
+    .setPropertyStore(PropertiesService.getUserProperties())
+    .setCallbackFunction("authCallback")
+    .setScope("...");
+}
 // [END apps_script_data_studio_auth_library]
 
 // [START apps_script_data_studio_auth_callback]
@@ -245,11 +245,11 @@ function getOAuthService() {
 function authCallback(request) {
   const authorized = getOAuthService().handleCallback(request);
   if (authorized) {
-    return HtmlService.createHtmlOutput('Success! You can close this tab.');
+    return HtmlService.createHtmlOutput("Success! You can close this tab.");
   } else {
-    return HtmlService.createHtmlOutput('Denied. You can close this tab');
-  };
-};
+    return HtmlService.createHtmlOutput("Denied. You can close this tab");
+  }
+}
 // [END apps_script_data_studio_auth_callback]
 
 // [START apps_script_data_studio_auth_urls]
@@ -282,15 +282,15 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(path, username, password);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.path', path);
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.password', password);
+  userProperties.setProperty("dscc.path", path);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.password", password);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_path_user_pass]
@@ -313,14 +313,14 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(username, password);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.password', password);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.password", password);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_user_pass]
@@ -343,14 +343,14 @@ function setCredentials(request) {
   const validCreds = checkForValidCreds(username, token);
   if (!validCreds) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.username', username);
-  userProperties.setProperty('dscc.token', token);
+  userProperties.setProperty("dscc.username", username);
+  userProperties.setProperty("dscc.token", token);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_user_token]
@@ -371,13 +371,13 @@ function setCredentials(request) {
   const validKey = checkForValidKey(key);
   if (!validKey) {
     return {
-      errorCode: 'INVALID_CREDENTIALS'
+      errorCode: "INVALID_CREDENTIALS",
     };
   }
   const userProperties = PropertiesService.getUserProperties();
-  userProperties.setProperty('dscc.key', key);
+  userProperties.setProperty("dscc.key", key);
   return {
-    errorCode: 'NONE'
+    errorCode: "NONE",
   };
 }
 // [END apps_script_data_studio_auth_set_credentials_key]

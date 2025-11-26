@@ -21,29 +21,33 @@
  */
 function claimYourVideoWithMonetizePolicy() {
   // The ID of the content owner that you are acting on behalf of.
-  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  const onBehalfOfContentOwner = "replaceWithYourContentOwnerID";
   // A YouTube video ID to claim. In this example, the video must be uploaded
   // to one of your onBehalfOfContentOwner's linked channels.
-  const videoId = 'replaceWithYourVideoID';
-  const assetId = 'replaceWithYourAssetID';
+  const videoId = "replaceWithYourVideoID";
+  const assetId = "replaceWithYourAssetID";
   const claimToInsert = {
-    'videoId': videoId,
-    'assetId': assetId,
-    'contentType': 'audiovisual',
+    videoId: videoId,
+    assetId: assetId,
+    contentType: "audiovisual",
     // Set the claim policy to monetize. You can also specify a policy ID here
     // instead of policy rules.
     // For details, please refer to the YouTube Content ID API Policies
     // documentation:
     // https://developers.google.com/youtube/partner/docs/v1/policies
-    'policy': {'rules': [{'action': 'monetize'}]}
+    policy: { rules: [{ action: "monetize" }] },
   };
   try {
-    const claimInserted = YouTubeContentId.Claims.insert(claimToInsert,
-        {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    console.log('Claim created on video %s: %s', videoId, claimInserted);
+    const claimInserted = YouTubeContentId.Claims.insert(claimToInsert, {
+      onBehalfOfContentOwner: onBehalfOfContentOwner,
+    });
+    console.log("Claim created on video %s: %s", videoId, claimInserted);
   } catch (e) {
-    console.log('Failed to create claim on video %s, error: %s',
-        videoId, e.message);
+    console.log(
+      "Failed to create claim on video %s, error: %s",
+      videoId,
+      e.message,
+    );
   }
 }
 // [END apps_script_youtube_claim]
@@ -56,30 +60,33 @@ function claimYourVideoWithMonetizePolicy() {
  */
 function updateAssetOwnership() {
   // The ID of the content owner that you are acting on behalf of.
-  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  const onBehalfOfContentOwner = "replaceWithYourContentOwnerID";
   // Replace values with your asset id
-  const assetId = 'replaceWithYourAssetID';
+  const assetId = "replaceWithYourAssetID";
   // The new ownership here would replace your existing ownership on the asset.
   const myAssetOwnership = {
-    'general': [
+    general: [
       {
-        'ratio': 100,
-        'owner': onBehalfOfContentOwner,
-        'type': 'include',
-        'territories': [
-          'US',
-          'CA'
-        ]
-      }
-    ]
+        ratio: 100,
+        owner: onBehalfOfContentOwner,
+        type: "include",
+        territories: ["US", "CA"],
+      },
+    ],
   };
   try {
-    const updatedOwnership = YouTubeContentId.Ownership.update(myAssetOwnership,
-        assetId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    console.log('Ownership updated on asset %s: %s', assetId, updatedOwnership);
+    const updatedOwnership = YouTubeContentId.Ownership.update(
+      myAssetOwnership,
+      assetId,
+      { onBehalfOfContentOwner: onBehalfOfContentOwner },
+    );
+    console.log("Ownership updated on asset %s: %s", assetId, updatedOwnership);
   } catch (e) {
-    console.log('Ownership update failed on asset %s, error: %s',
-        assetId, e.message);
+    console.log(
+      "Ownership update failed on asset %s, error: %s",
+      assetId,
+      e.message,
+    );
   }
 }
 // [END apps_script_youtube_update_asset_ownership]
@@ -92,19 +99,22 @@ function updateAssetOwnership() {
  */
 function releaseClaim() {
   // The ID of the content owner that you are acting on behalf of.
-  const onBehalfOfContentOwner = 'replaceWithYourContentOwnerID';
+  const onBehalfOfContentOwner = "replaceWithYourContentOwnerID";
   // The ID of the claim to be released.
-  const claimId = 'replaceWithYourClaimID';
+  const claimId = "replaceWithYourClaimID";
   // To release the claim, change the resource's status to inactive.
   const claimToBeReleased = {
-    'status': 'inactive'
+    status: "inactive",
   };
   try {
-    const claimReleased = YouTubeContentId.Claims.patch(claimToBeReleased,
-        claimId, {'onBehalfOfContentOwner': onBehalfOfContentOwner});
-    console.log('Claim %s was released: %s', claimId, claimReleased);
+    const claimReleased = YouTubeContentId.Claims.patch(
+      claimToBeReleased,
+      claimId,
+      { onBehalfOfContentOwner: onBehalfOfContentOwner },
+    );
+    console.log("Claim %s was released: %s", claimId, claimReleased);
   } catch (e) {
-    console.log('Failed to release claim %s, error: %s', claimId, e.message);
+    console.log("Failed to release claim %s, error: %s", claimId, e.message);
   }
 }
 // [END apps_script_youtube_release_claim]

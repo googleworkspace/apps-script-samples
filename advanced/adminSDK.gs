@@ -23,19 +23,19 @@ function listAllUsers() {
   let page;
   do {
     page = AdminDirectory.Users.list({
-      domain: 'example.com',
-      orderBy: 'givenName',
+      domain: "example.com",
+      orderBy: "givenName",
       maxResults: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     const users = page.users;
     if (!users) {
-      console.log('No users found.');
+      console.log("No users found.");
       return;
     }
     // Print the user's full name and email.
     for (const user of users) {
-      console.log('%s (%s)', user.name.fullName, user.primaryEmail);
+      console.log("%s (%s)", user.name.fullName, user.primaryEmail);
     }
     pageToken = page.nextPageToken;
   } while (pageToken);
@@ -49,13 +49,13 @@ function listAllUsers() {
  */
 function getUser() {
   // TODO (developer) - Replace userEmail value with yours
-  const userEmail = 'liz@example.com';
+  const userEmail = "liz@example.com";
   try {
     const user = AdminDirectory.Users.get(userEmail);
-    console.log('User data:\n %s', JSON.stringify(user, null, 2));
+    console.log("User data:\n %s", JSON.stringify(user, null, 2));
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_get_users]
@@ -69,20 +69,20 @@ function getUser() {
 function addUser() {
   let user = {
     // TODO (developer) - Replace primaryEmail value with yours
-    primaryEmail: 'liz@example.com',
+    primaryEmail: "liz@example.com",
     name: {
-      givenName: 'Elizabeth',
-      familyName: 'Smith'
+      givenName: "Elizabeth",
+      familyName: "Smith",
     },
     // Generate a random password string.
-    password: Math.random().toString(36)
+    password: Math.random().toString(36),
   };
   try {
     user = AdminDirectory.Users.insert(user);
-    console.log('User %s created with ID %s.', user.primaryEmail, user.id);
+    console.log("User %s created with ID %s.", user.primaryEmail, user.id);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_add_user]
@@ -94,16 +94,16 @@ function addUser() {
  */
 function createAlias() {
   // TODO (developer) - Replace userEmail value with yours
-  const userEmail = 'liz@example.com';
+  const userEmail = "liz@example.com";
   let alias = {
-    alias: 'chica@example.com'
+    alias: "chica@example.com",
   };
   try {
     alias = AdminDirectory.Users.Aliases.insert(alias, userEmail);
-    console.log('Created alias %s for user %s.', alias.alias, userEmail);
+    console.log("Created alias %s for user %s.", alias.alias, userEmail);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_create_alias]
@@ -118,18 +118,18 @@ function listAllGroups() {
   let page;
   do {
     page = AdminDirectory.Groups.list({
-      domain: 'example.com',
+      domain: "example.com",
       maxResults: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     const groups = page.groups;
     if (!groups) {
-      console.log('No groups found.');
+      console.log("No groups found.");
       return;
     }
     // Print group name and email.
     for (const group of groups) {
-      console.log('%s (%s)', group.name, group.email);
+      console.log("%s (%s)", group.name, group.email);
     }
     pageToken = page.nextPageToken;
   } while (pageToken);
@@ -143,19 +143,23 @@ function listAllGroups() {
  */
 function addGroupMember() {
   // TODO (developer) - Replace userEmail value with yours
-  const userEmail = 'liz@example.com';
+  const userEmail = "liz@example.com";
   // TODO (developer) - Replace groupEmail value with yours
-  const groupEmail = 'bookclub@example.com';
+  const groupEmail = "bookclub@example.com";
   const member = {
     email: userEmail,
-    role: 'MEMBER'
+    role: "MEMBER",
   };
   try {
     AdminDirectory.Members.insert(member, groupEmail);
-    console.log('User %s added as a member of group %s.', userEmail, groupEmail);
+    console.log(
+      "User %s added as a member of group %s.",
+      userEmail,
+      groupEmail,
+    );
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_add_group_member]
@@ -168,10 +172,10 @@ function addGroupMember() {
  */
 function migrateMessages() {
   // TODO (developer) - Replace groupId value with yours
-  const groupId = 'exampleGroup@example.com';
+  const groupId = "exampleGroup@example.com";
   const messagesToMigrate = getRecentMessagesContent();
   for (const messageContent of messagesToMigrate) {
-    const contentBlob = Utilities.newBlob(messageContent, 'message/rfc822');
+    const contentBlob = Utilities.newBlob(messageContent, "message/rfc822");
     AdminGroupsMigration.Archive.insert(groupId, contentBlob);
   }
 }
@@ -206,13 +210,13 @@ function getRecentMessagesContent() {
  */
 function getGroupSettings() {
   // TODO (developer) - Replace groupId value with yours
-  const groupId = 'exampleGroup@example.com';
+  const groupId = "exampleGroup@example.com";
   try {
     const group = AdminGroupsSettings.Groups.get(groupId);
     console.log(JSON.stringify(group, null, 2));
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_get_group_setting]
@@ -224,14 +228,14 @@ function getGroupSettings() {
  * @see https://developers.google.com/admin-sdk/groups-settings/v1/reference/groups/patch
  */
 function updateGroupSettings() {
-  const groupId = 'exampleGroup@example.com';
+  const groupId = "exampleGroup@example.com";
   try {
     const group = AdminGroupsSettings.newGroups();
-    group.description = 'Newly changed group description';
+    group.description = "Newly changed group description";
     AdminGroupsSettings.Groups.patch(group, groupId);
   } catch (err) {
     // TODO (developer)- Handle exception from the API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_admin_sdk_update_group_setting]
@@ -243,22 +247,30 @@ function updateGroupSettings() {
  * list of results.
  */
 function getLicenseAssignments() {
-  const productId = 'Google-Apps';
-  const customerId = 'example.com';
+  const productId = "Google-Apps";
+  const customerId = "example.com";
   let assignments = [];
   let pageToken = null;
   do {
-    const response = AdminLicenseManager.LicenseAssignments.listForProduct(productId, customerId, {
-      maxResults: 500,
-      pageToken: pageToken
-    });
+    const response = AdminLicenseManager.LicenseAssignments.listForProduct(
+      productId,
+      customerId,
+      {
+        maxResults: 500,
+        pageToken: pageToken,
+      },
+    );
     assignments = assignments.concat(response.items);
     pageToken = response.nextPageToken;
   } while (pageToken);
   // Print the productId and skuId
   for (const assignment of assignments) {
-    console.log('userId: %s, productId: %s, skuId: %s',
-        assignment.userId, assignment.productId, assignment.skuId);
+    console.log(
+      "userId: %s, productId: %s, skuId: %s",
+      assignment.userId,
+      assignment.productId,
+      assignment.skuId,
+    );
   }
 }
 // [END apps_script_admin_sdk_get_license_assignments]
@@ -271,16 +283,19 @@ function getLicenseAssignments() {
  * https://developers.google.com/admin-sdk/licensing/reference/rest/v1/licenseAssignments/insert
  */
 function insertLicenseAssignment() {
-  const productId = 'Google-Apps';
-  const skuId = 'Google-Vault';
-  const userId = 'marty@hoverboard.net';
+  const productId = "Google-Apps";
+  const skuId = "Google-Vault";
+  const userId = "marty@hoverboard.net";
   try {
-    const results = AdminLicenseManager.LicenseAssignments
-        .insert({userId: userId}, productId, skuId);
+    const results = AdminLicenseManager.LicenseAssignments.insert(
+      { userId: userId },
+      productId,
+      skuId,
+    );
     console.log(results);
   } catch (e) {
     // TODO (developer) - Handle exception.
-    console.log('Failed with an error %s ', e.message);
+    console.log("Failed with an error %s ", e.message);
   }
 }
 // [END apps_script_admin_sdk_insert_license_assignment]
@@ -301,11 +316,11 @@ function generateLoginActivityReport() {
   let pageToken;
   let page;
   do {
-    page = AdminReports.Activities.list('all', 'login', {
+    page = AdminReports.Activities.list("all", "login", {
       startTime: startTime,
       endTime: endTime,
       maxResults: 500,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     const items = page.items;
     if (items) {
@@ -313,7 +328,7 @@ function generateLoginActivityReport() {
         const row = [
           new Date(item.id.time),
           item.actor.email,
-          item.events[0].name
+          item.events[0].name,
         ];
         rows.push(row);
       }
@@ -322,20 +337,20 @@ function generateLoginActivityReport() {
   } while (pageToken);
 
   if (rows.length === 0) {
-    console.log('No results returned.');
+    console.log("No results returned.");
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('Google Workspace Login Report');
+  const spreadsheet = SpreadsheetApp.create("Google Workspace Login Report");
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
-  const headers = ['Time', 'User', 'Login Result'];
+  const headers = ["Time", "User", "Login Result"];
   sheet.appendRow(headers);
 
   // Append the results.
   sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
 
-  console.log('Report spreadsheet created: %s', spreadsheet.getUrl());
+  console.log("Report spreadsheet created: %s", spreadsheet.getUrl());
 }
 // [END apps_script_admin_sdk_generate_login_activity_report]
 
@@ -350,21 +365,21 @@ function generateUserUsageReport() {
   const today = new Date();
   const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
   const timezone = Session.getScriptTimeZone();
-  const date = Utilities.formatDate(oneWeekAgo, timezone, 'yyyy-MM-dd');
+  const date = Utilities.formatDate(oneWeekAgo, timezone, "yyyy-MM-dd");
 
   const parameters = [
-    'accounts:last_login_time',
-    'gmail:num_emails_received',
-    'drive:num_items_created'
+    "accounts:last_login_time",
+    "gmail:num_emails_received",
+    "drive:num_items_created",
   ];
   const rows = [];
   let pageToken;
   let page;
   do {
-    page = AdminReports.UserUsageReport.get('all', date, {
-      parameters: parameters.join(','),
+    page = AdminReports.UserUsageReport.get("all", date, {
+      parameters: parameters.join(","),
       maxResults: 500,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     if (page.warnings) {
       for (const warning of page.warnings) {
@@ -378,9 +393,9 @@ function generateUserUsageReport() {
         const row = [
           report.date,
           report.entity.userEmail,
-          parameterValues['accounts:last_login_time'],
-          parameterValues['gmail:num_emails_received'],
-          parameterValues['drive:num_items_created']
+          parameterValues["accounts:last_login_time"],
+          parameterValues["gmail:num_emails_received"],
+          parameterValues["drive:num_items_created"],
         ];
         rows.push(row);
       }
@@ -389,21 +404,28 @@ function generateUserUsageReport() {
   } while (pageToken);
 
   if (rows.length === 0) {
-    console.log('No results returned.');
+    console.log("No results returned.");
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('Google Workspace User Usage Report');
+  const spreadsheet = SpreadsheetApp.create(
+    "Google Workspace User Usage Report",
+  );
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
-  const headers = ['Date', 'User', 'Last Login', 'Num Emails Received',
-    'Num Drive Files Created'];
+  const headers = [
+    "Date",
+    "User",
+    "Last Login",
+    "Num Emails Received",
+    "Num Drive Files Created",
+  ];
   sheet.appendRow(headers);
 
   // Append the results.
   sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
 
-  console.log('Report spreadsheet created: %s', spreadsheet.getUrl());
+  console.log("Report spreadsheet created: %s", spreadsheet.getUrl());
 }
 
 /**
@@ -442,14 +464,18 @@ function getSubscriptions() {
   let pageToken;
   do {
     result = AdminReseller.Subscriptions.list({
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     for (const sub of result.subscriptions) {
       const creationDate = new Date();
       creationDate.setUTCSeconds(sub.creationTime);
-      console.log('customer ID: %s, date created: %s, plan name: %s, sku id: %s',
-          sub.customerId, creationDate.toDateString(), sub.plan.planName,
-          sub.skuId);
+      console.log(
+        "customer ID: %s, date created: %s, plan name: %s, sku id: %s",
+        sub.customerId,
+        creationDate.toDateString(),
+        sub.plan.planName,
+        sub.skuId,
+      );
     }
     pageToken = result.nextPageToken;
   } while (pageToken);

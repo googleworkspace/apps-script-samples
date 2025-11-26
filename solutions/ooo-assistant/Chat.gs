@@ -21,7 +21,7 @@ const APP_COMMAND = "app command";
  * @param {Object} event the event object from Google Workspace Add On
  */
 function onAddedToSpace(event) {
-    return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
+  return sendCreateMessageAction(createCardMessage(help(APP_COMMAND)));
 }
 
 /**
@@ -53,17 +53,25 @@ function onAppCommand(event) {
  */
 function onRemovedFromSpace(event) {
   const space = event.chat.removedFromSpacePayload.space;
-  console.info(`Chat app removed from ${(space.name || "this chat")}`);
+  console.info(`Chat app removed from ${space.name || "this chat"}`);
 }
 
 // ----------------------
 // Util functions
 // ----------------------
 
-function createTextMessage(text) { return { text: text }; }
+function createTextMessage(text) {
+  return { text: text };
+}
 
-function createCardMessage(card) { return { cardsV2: [{ card: card }]}; }
+function createCardMessage(card) {
+  return { cardsV2: [{ card: card }] };
+}
 
 function sendCreateMessageAction(message) {
-  return { hostAppDataAction: { chatDataAction: { createMessageAction: { message: message }}}};
+  return {
+    hostAppDataAction: {
+      chatDataAction: { createMessageAction: { message: message } },
+    },
+  };
 }

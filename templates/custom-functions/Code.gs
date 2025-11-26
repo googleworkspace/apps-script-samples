@@ -27,7 +27,7 @@
  * @customfunction
  */
 function SAY_HELLO(name) {
-  return 'Hello ' + name;
+  return "Hello " + name;
 }
 
 /**
@@ -43,8 +43,8 @@ function INCREMENT(input) {
   if (input instanceof Array) {
     // Recurse to process an array.
     return input.map(INCREMENT);
-  } else if (!(typeof input === 'number')) {
-    throw new Error('Input contains a cell value that is not a number');
+  } else if (!(typeof input === "number")) {
+    throw new Error("Input contains a cell value that is not a number");
   }
   // Otherwise process as a single value.
   return input + 1;
@@ -67,8 +67,12 @@ function CORNER_SUM(input) {
   // Range processing here.
   var maxRowIndex = input.length - 1;
   var maxColIndex = input[0].length - 1;
-  return input[0][0] + input[0][maxColIndex] +
-      input[maxRowIndex][0] + input[maxRowIndex][maxColIndex];
+  return (
+    input[0][0] +
+    input[0][maxColIndex] +
+    input[maxRowIndex][0] +
+    input[maxRowIndex][maxColIndex]
+  );
 }
 
 /**
@@ -83,13 +87,13 @@ function CORNER_SUM(input) {
  */
 function POWERS_AND_ROOTS(input) {
   if (input instanceof Array) {
-    throw new Error('Invalid: Range input not permitted');
+    throw new Error("Invalid: Range input not permitted");
   }
   // Value processing and range generation here.
-  var headers = ['x', input + '^x', input + '^(1/x)'];
+  var headers = ["x", input + "^x", input + "^(1/x)"];
   var result = [headers];
   for (var i = 1; i <= 10; i++) {
-    result.push([i, Math.pow(input, i), Math.pow(input, 1/i)]);
+    result.push([i, Math.pow(input, i), Math.pow(input, 1 / i)]);
   }
   return result;
 }
@@ -104,7 +108,7 @@ function POWERS_AND_ROOTS(input) {
  */
 function GET_DAY_OF_YEAR(date) {
   if (!(date instanceof Date)) {
-    throw new Error('Invalid: Date input required');
+    throw new Error("Invalid: Date input required");
   }
   // Date processing here.
   var firstOfYear = new Date(date.getFullYear(), 0, 0);
@@ -123,18 +127,21 @@ function GET_DAY_OF_YEAR(date) {
  */
 function CONVERT_DURATION_TO_SECONDS(duration) {
   if (!(duration instanceof Date)) {
-    throw new Error('Invalid: Duration input required');
+    throw new Error("Invalid: Duration input required");
   }
 
   // Getting elapsed times from duration-formatted cells in Sheets requires
   // subtracting the reference date from the cell value (while correcting for
   // timezones).
   var spreadsheetTimezone =
-      SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
-  var dateString = Utilities.formatDate(duration, spreadsheetTimezone,
-      'EEE, d MMM yyyy HH:mm:ss');
+    SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+  var dateString = Utilities.formatDate(
+    duration,
+    spreadsheetTimezone,
+    "EEE, d MMM yyyy HH:mm:ss",
+  );
   var date = new Date(dateString);
-  var epoch = new Date('Dec 30, 1899 00:00:00');
+  var epoch = new Date("Dec 30, 1899 00:00:00");
   var durationInMilliseconds = date.getTime() - epoch.getTime();
 
   // Duration processing here.

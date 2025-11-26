@@ -19,7 +19,7 @@
  * @return {string} spreadsheet
  */
 function createTestSpreadsheet() {
-  const spreadsheet = SpreadsheetApp.create('Test Spreadsheet');
+  const spreadsheet = SpreadsheetApp.create("Test Spreadsheet");
   for (let i = 0; i < 3; ++i) {
     spreadsheet.appendRow([1, 2, 3]);
   }
@@ -39,10 +39,10 @@ function populateValues(spreadsheetId) {
   for (let i = 0; i < 10; ++i) {
     values[i] = [];
     for (let j = 0; j < 10; ++j) {
-      values[i].push('Hello');
+      values[i].push("Hello");
     }
   }
-  const range = 'A1:J10';
+  const range = "A1:J10";
   SpreadsheetApp.openById(spreadsheetId).getRange(range).setValues(values);
   SpreadsheetApp.flush();
 }
@@ -51,7 +51,7 @@ function populateValues(spreadsheetId) {
  * Test emailDataRow of logging.gs
  */
 function itShouldEmailDataRow() {
-  console.log('> itShouldEmailDataRow');
+  console.log("> itShouldEmailDataRow");
   const email = Session.getActiveUser().getEmail();
   const spreadsheetId = createTestSpreadsheet();
   populateValues(spreadsheetId);
@@ -63,7 +63,7 @@ function itShouldEmailDataRow() {
  * runs all the functions of logging.gs
  */
 function RUN_ALL_TESTS() {
-  console.log('> itShouldMeasureExecutionTime');
+  console.log("> itShouldMeasureExecutionTime");
   measuringExecutionTime();
   itShouldEmailDataRow();
 }

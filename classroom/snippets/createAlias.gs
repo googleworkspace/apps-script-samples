@@ -19,23 +19,28 @@
  */
 function createAlias() {
   let course = {
-    id: 'p:bio_101',
-    name: '10th Grade Biology',
-    section: 'Period 2',
-    descriptionHeading: 'Welcome to 10th Grade Biology',
-    description: 'We\'ll be learning about the structure of living creatures from a combination ' +
-      'of textbooks, guest lectures, and lab work. Expect to be excited!',
-    room: '301',
-    ownerId: 'me',
-    courseState: 'PROVISIONED'
+    id: "p:bio_101",
+    name: "10th Grade Biology",
+    section: "Period 2",
+    descriptionHeading: "Welcome to 10th Grade Biology",
+    description:
+      "We'll be learning about the structure of living creatures from a combination " +
+      "of textbooks, guest lectures, and lab work. Expect to be excited!",
+    room: "301",
+    ownerId: "me",
+    courseState: "PROVISIONED",
   };
   try {
     // Create the course using course details.
     course = Classroom.Courses.create(course);
-    console.log('Course created: %s (%s)', course.name, course.id);
+    console.log("Course created: %s (%s)", course.name, course.id);
   } catch (err) {
     // TODO (developer) - Handle Courses.create() exception
-    console.log('Failed to create course %s with an error %s', course.name, err.message);
+    console.log(
+      "Failed to create course %s with an error %s",
+      course.name,
+      err.message,
+    );
   }
 }
 // [END classroom_create_alias]

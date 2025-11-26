@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 // See https://support.coinbase.com/customer/en/portal/articles/1914910-how-can-i-generate-api-keys-within-coinbase-commerce-
-var COINBASE_API_TOKEN = ''; // TODO
+var COINBASE_API_TOKEN = ""; // TODO
 /**
  * Get's the bitcoin price at a date.
  *
@@ -29,12 +29,15 @@ function BTC(date) {
     dateObject = new Date(date);
   }
   var dateString = Utilities.formatDate(dateObject, "GMT", "yyyy-MM-dd");
-  var res = UrlFetchApp.fetch("https://api.coinbase.com/v2/prices/BTC-USD/spot?date=" + dateString, {
-     headers: {
-      "CB-VERSION": "2016-10-10",
-      Authorization: "Bearer " + COINBASE_API_TOKEN
-    }
-  });
+  var res = UrlFetchApp.fetch(
+    "https://api.coinbase.com/v2/prices/BTC-USD/spot?date=" + dateString,
+    {
+      headers: {
+        "CB-VERSION": "2016-10-10",
+        Authorization: "Bearer " + COINBASE_API_TOKEN,
+      },
+    },
+  );
   var json = JSON.parse(res.getContentText());
   return json.data.amount;
 }

@@ -21,7 +21,7 @@ function listAccounts() {
   try {
     const accounts = Analytics.Management.Accounts.list();
     if (!accounts.items || !accounts.items.length) {
-      console.log('No accounts found.');
+      console.log("No accounts found.");
       return;
     }
 
@@ -34,7 +34,7 @@ function listAccounts() {
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -46,20 +46,23 @@ function listWebProperties(accountId) {
   try {
     const webProperties = Analytics.Management.Webproperties.list(accountId);
     if (!webProperties.items || !webProperties.items.length) {
-      console.log('\tNo web properties found.');
+      console.log("\tNo web properties found.");
       return;
     }
     for (let i = 0; i < webProperties.items.length; i++) {
       const webProperty = webProperties.items[i];
-      console.log('\tWeb Property: name "%s", id "%s".',
-          webProperty.name, webProperty.id);
+      console.log(
+        '\tWeb Property: name "%s", id "%s".',
+        webProperty.name,
+        webProperty.id,
+      );
 
       // List profiles in the web property.
       listProfiles(accountId, webProperty.id);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 
@@ -73,21 +76,22 @@ function listProfiles(accountId, webPropertyId) {
   // due to the number of accounts or profiles you have, you may be able to
   // avoid it by adding a Utilities.sleep(1000) statement here.
   try {
-    const profiles = Analytics.Management.Profiles.list(accountId,
-        webPropertyId);
+    const profiles = Analytics.Management.Profiles.list(
+      accountId,
+      webPropertyId,
+    );
 
     if (!profiles.items || !profiles.items.length) {
-      console.log('\t\tNo web properties found.');
+      console.log("\t\tNo web properties found.");
       return;
     }
     for (let i = 0; i < profiles.items.length; i++) {
       const profile = profiles.items[i];
-      console.log('\t\tProfile: name "%s", id "%s".', profile.name,
-          profile.id);
+      console.log('\t\tProfile: name "%s", id "%s".', profile.name, profile.id);
     }
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_analytics_accounts]
@@ -101,28 +105,39 @@ function runReport(profileId) {
   const today = new Date();
   const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-  const startDate = Utilities.formatDate(oneWeekAgo, Session.getScriptTimeZone(),
-      'yyyy-MM-dd');
-  const endDate = Utilities.formatDate(today, Session.getScriptTimeZone(),
-      'yyyy-MM-dd');
+  const startDate = Utilities.formatDate(
+    oneWeekAgo,
+    Session.getScriptTimeZone(),
+    "yyyy-MM-dd",
+  );
+  const endDate = Utilities.formatDate(
+    today,
+    Session.getScriptTimeZone(),
+    "yyyy-MM-dd",
+  );
 
-  const tableId = 'ga:' + profileId;
-  const metric = 'ga:visits';
+  const tableId = "ga:" + profileId;
+  const metric = "ga:visits";
   const options = {
-    'dimensions': 'ga:source,ga:keyword',
-    'sort': '-ga:visits,ga:source',
-    'filters': 'ga:medium==organic',
-    'max-results': 25
+    dimensions: "ga:source,ga:keyword",
+    sort: "-ga:visits,ga:source",
+    filters: "ga:medium==organic",
+    "max-results": 25,
   };
-  const report = Analytics.Data.Ga.get(tableId, startDate, endDate, metric,
-      options);
+  const report = Analytics.Data.Ga.get(
+    tableId,
+    startDate,
+    endDate,
+    metric,
+    options,
+  );
 
   if (!report.rows) {
-    console.log('No rows returned.');
+    console.log("No rows returned.");
     return;
   }
 
-  const spreadsheet = SpreadsheetApp.create('Google Analytics Report');
+  const spreadsheet = SpreadsheetApp.create("Google Analytics Report");
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
@@ -132,10 +147,10 @@ function runReport(profileId) {
   sheet.appendRow(headers);
 
   // Append the results.
-  sheet.getRange(2, 1, report.rows.length, headers.length)
-      .setValues(report.rows);
+  sheet
+    .getRange(2, 1, report.rows.length, headers.length)
+    .setValues(report.rows);
 
-  console.log('Report spreadsheet created: %s',
-      spreadsheet.getUrl());
+  console.log("Report spreadsheet created: %s", spreadsheet.getUrl());
 }
 // [END apps_script_analytics_reports]

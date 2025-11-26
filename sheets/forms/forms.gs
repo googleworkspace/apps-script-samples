@@ -19,12 +19,14 @@
  * A special function that inserts a custom menu when the spreadsheet opens.
  */
 function onOpen() {
-  const menu = [{name: 'Set up conference', functionName: 'setUpConference_'}];
+  const menu = [
+    { name: "Set up conference", functionName: "setUpConference_" },
+  ];
   try {
-    SpreadsheetApp.getActive().addMenu('Conference', menu);
+    SpreadsheetApp.getActive().addMenu("Conference", menu);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -34,23 +36,25 @@ function onOpen() {
  * to react to form responses.
  */
 function setUpConference_() {
-  if (ScriptProperties.getProperty('calId')) {
-    Browser.msgBox('Your conference is already set up. Look in Google Drive!');
+  if (ScriptProperties.getProperty("calId")) {
+    Browser.msgBox("Your conference is already set up. Look in Google Drive!");
   }
 
   try {
     const ss = SpreadsheetApp.getActive();
-    const sheet = ss.getSheetByName('Conference Setup');
+    const sheet = ss.getSheetByName("Conference Setup");
     const range = sheet.getDataRange();
     const values = range.getValues();
     setUpCalendar_(values, range);
     setUpForm_(ss, values);
-    ScriptApp.newTrigger('onFormSubmit').forSpreadsheet(ss).onFormSubmit()
-        .create();
-    ss.removeMenu('Conference');
+    ScriptApp.newTrigger("onFormSubmit")
+      .forSpreadsheet(ss)
+      .onFormSubmit()
+      .create();
+    ss.removeMenu("Conference");
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -62,24 +66,25 @@ function setUpConference_() {
  */
 function setUpCalendar_(values, range) {
   try {
-    const cal = CalendarApp.createCalendar('Conference Calendar');
+    const cal = CalendarApp.createCalendar("Conference Calendar");
     for (var i = 1; i < values.length; i++) {
       const session = values[i];
       const title = session[0];
       const start = joinDateAndTime_(session[1], session[2]);
       const end = joinDateAndTime_(session[1], session[3]);
-      const options = {location: session[4], sendInvites: true};
-      const event = cal.createEvent(title, start, end, options)
-          .setGuestsCanSeeGuests(false);
+      const options = { location: session[4], sendInvites: true };
+      const event = cal
+        .createEvent(title, start, end, options)
+        .setGuestsCanSeeGuests(false);
       session[5] = event.getId();
     }
     range.setValues(values);
 
     // Store the ID for the Calendar, which is needed to retrieve events by ID.
-    ScriptProperties.setProperty('calId', cal.getId());
+    ScriptProperties.setProperty("calId", cal.getId());
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -122,21 +127,24 @@ function setUpForm_(ss, values) {
 
   try {
     // Create the form and add a multiple-choice question for each timeslot.
-    const form = FormApp.create('Conference Form');
+    const form = FormApp.create("Conference Form");
     form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
-    form.addTextItem().setTitle('Name').setRequired(true);
-    form.addTextItem().setTitle('Email').setRequired(true);
+    form.addTextItem().setTitle("Name").setRequired(true);
+    form.addTextItem().setTitle("Email").setRequired(true);
     for (const day of schedule) {
-      const header = form.addSectionHeaderItem().setTitle(
-          'Sessions for ' + day);
+      const header = form
+        .addSectionHeaderItem()
+        .setTitle("Sessions for " + day);
       for (const time of schedule[day]) {
-        const item = form.addMultipleChoiceItem().setTitle(time + ' ' + day)
-            .setChoiceValues(schedule[day][time]);
+        const item = form
+          .addMultipleChoiceItem()
+          .setTitle(time + " " + day)
+          .setChoiceValues(schedule[day][time]);
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -148,20 +156,24 @@ function setUpForm_(ss, values) {
  *     see https://developers.google.com/apps-script/understanding_events
  */
 function onFormSubmit(e) {
-  const user = {name: e.namedValues['Name'][0],
-    email: e.namedValues['Email'][0]};
+  const user = {
+    name: e.namedValues["Name"][0],
+    email: e.namedValues["Email"][0],
+  };
 
   // Grab the session data again so that we can match it to the user's choices.
   const response = [];
   try {
     values = SpreadsheetApp.getActive()
-        .getSheetByName('Conference Setup').getDataRange().getValues();
+      .getSheetByName("Conference Setup")
+      .getDataRange()
+      .getValues();
     for (let i = 1; i < values.length; i++) {
       const session = values[i];
       const title = session[0];
       const day = session[1].toLocaleDateString();
       const time = session[2].toLocaleTimeString();
-      const timeslot = time + ' ' + day;
+      const timeslot = time + " " + day;
 
       // For every selection in the response, find the matching timeslot and
       // title in the spreadsheet and add the session data to the response array.
@@ -173,7 +185,7 @@ function onFormSubmit(e) {
     sendDoc_(user, response);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -184,14 +196,14 @@ function onFormSubmit(e) {
  */
 function sendInvites_(user, response) {
   try {
-    const id = ScriptProperties.getProperty('calId');
+    const id = ScriptProperties.getProperty("calId");
     const cal = CalendarApp.getCalendarById(id);
     for (let i = 0; i < response.length; i++) {
       cal.getEventSeriesById(response[i][5]).addGuest(user.email);
     }
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -202,16 +214,22 @@ function sendInvites_(user, response) {
  */
 function sendDoc_(user, response) {
   try {
-    const doc = DocumentApp.create('Conference Itinerary for ' + user.name)
-        .addEditor(user.email);
+    const doc = DocumentApp.create(
+      "Conference Itinerary for " + user.name,
+    ).addEditor(user.email);
     const body = doc.getBody();
-    let table = [['Session', 'Date', 'Time', 'Location']];
+    let table = [["Session", "Date", "Time", "Location"]];
     for (let i = 0; i < response.length; i++) {
-      table.push([response[i][0], response[i][1].toLocaleDateString(),
-        response[i][2].toLocaleTimeString(), response[i][4]]);
+      table.push([
+        response[i][0],
+        response[i][1].toLocaleDateString(),
+        response[i][2].toLocaleTimeString(),
+        response[i][4],
+      ]);
     }
-    body.insertParagraph(0, doc.getName())
-        .setHeading(DocumentApp.ParagraphHeading.HEADING1);
+    body
+      .insertParagraph(0, doc.getName())
+      .setHeading(DocumentApp.ParagraphHeading.HEADING1);
     table = body.appendTable(table);
     table.getRow(0).editAsText().setBold(true);
     doc.saveAndClose();
@@ -220,13 +238,12 @@ function sendDoc_(user, response) {
     MailApp.sendEmail({
       to: user.email,
       subject: doc.getName(),
-      body: 'Thanks for registering! Here\'s your itinerary: ' + doc.getUrl(),
-      attachments: doc.getAs(MimeType.PDF)
+      body: "Thanks for registering! Here's your itinerary: " + doc.getUrl(),
+      attachments: doc.getAs(MimeType.PDF),
     });
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 // [END apps_script_sheets_custom_form_responses_quickstart]
-

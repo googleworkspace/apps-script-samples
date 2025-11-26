@@ -28,18 +28,21 @@ function main() {
   const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
   // Create a Sheet
-  const headers = ['Subject', 'Classification', 'Reason'];
+  const headers = ["Subject", "Classification", "Reason"];
   const spreadsheet = createSheetWithHeaders(headers);
 
   // Format the date for the Gmail search query (YYYY/MM/DD)
   // Using Utilities.formatDate ensures correct formatting based on script
   // timezone
   const formattedDate = Utilities.formatDate(
-      sevenDaysAgo, Session.getScriptTimeZone(), 'yyyy/MM/dd');
+    sevenDaysAgo,
+    Session.getScriptTimeZone(),
+    "yyyy/MM/dd",
+  );
 
   // Construct the search query
   const query = `is:unread after:${formattedDate} in:inbox`;
-  console.log('Searching for emails with query: ' + query);
+  console.log("Searching for emails with query: " + query);
 
   // Search for threads matching the query
   // Note: GmailApp.search() returns threads where *at least one* message
@@ -50,14 +53,14 @@ function main() {
   for (const thread of threads) {
     const messages = thread.getMessages();
     const subject = thread.getFirstMessageSubject();
-    const {classification, reason} = classifyEmail(subject, messages);
+    const { classification, reason } = classifyEmail(subject, messages);
     console.log(`Classification: ${classification}, Reason: ${reason}`);
 
     thread.addLabel(classificationLabels[classification].gmailLabel);
 
-    if (classification === 'needs-response') {
+    if (classification === "needs-response") {
       const draft = draftEmail(subject, messages);
-      thread.createDraftReplyAll(null, {htmlBody: draft});
+      thread.createDraftReplyAll(null, { htmlBody: draft });
     }
 
     addDataToSheet(spreadsheet, hyperlink(thread), classification, reason);

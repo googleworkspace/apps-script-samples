@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-
 /**
  * Tests createDatabase function of jdbc.gs
  */
 function itShouldCreateDatabase() {
-  console.log('itShouldCreateDatabase');
+  console.log("itShouldCreateDatabase");
   createDatabase();
 }
 
@@ -27,7 +26,7 @@ function itShouldCreateDatabase() {
  * Tests createUser function of jdbc.gs
  */
 function itShouldCreateUser() {
-  console.log('itShouldCreateUser');
+  console.log("itShouldCreateUser");
   createUser();
 }
 
@@ -35,7 +34,7 @@ function itShouldCreateUser() {
  * Tests createTable function of jdbc.gs
  */
 function itShouldCreateTable() {
-  console.log('itShouldCreateTable');
+  console.log("itShouldCreateTable");
   createTable();
 }
 
@@ -43,7 +42,7 @@ function itShouldCreateTable() {
  * Tests writeOneRecord function of jdbc.gs
  */
 function itShouldWriteOneRecord() {
-  console.log('itShouldWriteOneRecord');
+  console.log("itShouldWriteOneRecord");
   writeOneRecord();
 }
 
@@ -51,7 +50,7 @@ function itShouldWriteOneRecord() {
  * Tests writeManyRecords function of jdbc.gs
  */
 function itShouldWriteManyRecords() {
-  console.log('itShouldWriteManyRecords');
+  console.log("itShouldWriteManyRecords");
   writeManyRecords();
 }
 
@@ -59,16 +58,15 @@ function itShouldWriteManyRecords() {
  * Tests writeManyRecordsUsingExecuteBatch function of jdbc.gs
  */
 function itShouldWriteManyRecordsUsingExecuteBatch() {
-  console.log('itShouldWriteManyRecordsUsingExecuteBatch');
+  console.log("itShouldWriteManyRecordsUsingExecuteBatch");
   writeManyRecordsUsingExecuteBatch();
 }
-
 
 /**
  * Tests readFromTable function of jdbc.gs
  */
 function itShouldReadFromTable() {
-  console.log('itShouldReadFromTable');
+  console.log("itShouldReadFromTable");
   readFromTable();
 }
 
@@ -76,7 +74,7 @@ function itShouldReadFromTable() {
  * Tests readFromTableUsingGetRows function of jdbc.gs
  */
 function itShouldReadFromTableUsingGetRows() {
-  console.log('itShouldReadFromTableUsingGetRows');
+  console.log("itShouldReadFromTableUsingGetRows");
   readFromTableUsingGetRows();
 }
 

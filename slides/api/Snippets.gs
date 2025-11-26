@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const title = 'my title';
+const title = "my title";
 
 // [START slides_create_presentation]
 /**
@@ -23,16 +23,19 @@ const title = 'my title';
 function createPresentation() {
   try {
     const presentation = Slides.Presentations.create({
-      title: title
+      title: title,
     });
-    console.log('Created presentation with ID: %s', presentation.presentationId);
+    console.log(
+      "Created presentation with ID: %s",
+      presentation.presentationId,
+    );
 
     return presentation;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_presentation]
 
 // [START slides_copy_presentation]
@@ -42,11 +45,11 @@ function createPresentation() {
  * @returns {*} the copy's presentation id
  */
 function copyPresentation(presentationId) {
-  const copyTitle = 'Copy Title';
+  const copyTitle = "Copy Title";
 
   let copyFile = {
     title: copyTitle,
-    parents: [{id: 'root'}]
+    parents: [{ id: "root" }],
   };
   try {
     copyFile = Drive.Files.copy(copyFile, presentationId);
@@ -56,9 +59,9 @@ function copyPresentation(presentationId) {
     return presentationCopyId;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_copy_presentation]
 
 // [START slides_create_slide]
@@ -71,31 +74,39 @@ function copyPresentation(presentationId) {
 function createSlide(presentationId, pageId) {
   // See Presentation.insertSlide(...) to learn how to add a slide using SlidesApp.
   // http://developers.google.com/apps-script/reference/slides/presentation#appendslidelayout
-  const requests = [{
-    createSlide: {
-      objectId: pageId,
-      insertionIndex: '1',
-      slideLayoutReference: {
-        predefinedLayout: 'TITLE_AND_TWO_COLUMNS'
-      }
-    }
-  }];
+  const requests = [
+    {
+      createSlide: {
+        objectId: pageId,
+        insertionIndex: "1",
+        slideLayoutReference: {
+          predefinedLayout: "TITLE_AND_TWO_COLUMNS",
+        },
+      },
+    },
+  ];
 
   // If you wish to populate the slide with elements, add element create requests here,
   // using the pageId.
 
   // Execute the request.
   try {
-    const createSlideResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Created slide with ID: %s', createSlideResponse.replies[0].createSlide.objectId);
+    const createSlideResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log(
+      "Created slide with ID: %s",
+      createSlideResponse.replies[0].createSlide.objectId,
+    );
     return createSlideResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_slide]
 
 // [START slides_create_textbox_with_text]
@@ -106,56 +117,60 @@ function createSlide(presentationId, pageId) {
  * @returns {*}
  */
 function createTextboxWithText(presentationId, pageId) {
-  const elementId = 'MyTextBox_01';
+  const elementId = "MyTextBox_01";
   const pt350 = {
     magnitude: 350,
-    unit: 'PT'
+    unit: "PT",
   };
   const requests = [
     {
       createShape: {
         objectId: elementId,
-        shapeType: 'TEXT_BOX',
+        shapeType: "TEXT_BOX",
         elementProperties: {
           pageObjectId: pageId,
           size: {
             height: pt350,
-            width: pt350
+            width: pt350,
           },
           transform: {
             scaleX: 1,
             scaleY: 1,
             translateX: 350,
             translateY: 100,
-            unit: 'PT'
-          }
-        }
-      }
+            unit: "PT",
+          },
+        },
+      },
     },
     // Insert text into the box, using the supplied element ID.
     {
       insertText: {
         objectId: elementId,
         insertionIndex: 0,
-        text: 'New Box Text Inserted!'
-      }
-    }
+        text: "New Box Text Inserted!",
+      },
+    },
   ];
 
   // Execute the request.
   try {
-    const createTextboxWithTextResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    const createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
-    console.log('Created textbox with ID: %s', createShapeResponse.objectId);
+    const createTextboxWithTextResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    const createShapeResponse =
+      createTextboxWithTextResponse.replies[0].createShape;
+    console.log("Created textbox with ID: %s", createShapeResponse.objectId);
 
     return createTextboxWithTextResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_textbox_with_text]
 
 // [START slides_create_image]
@@ -167,12 +182,13 @@ function createTextboxWithText(presentationId, pageId) {
  */
 function createImage(presentationId, pageId) {
   let requests = [];
-  const imageId = 'MyImage_01';
-  const imageUrl = 'https://www.google.com/images/branding/googlelogo/2x/' +
-      'googlelogo_color_272x92dp.png';
+  const imageId = "MyImage_01";
+  const imageUrl =
+    "https://www.google.com/images/branding/googlelogo/2x/" +
+    "googlelogo_color_272x92dp.png";
   const emu4M = {
     magnitude: 4000000,
-    unit: 'EMU'
+    unit: "EMU",
   };
   requests.push({
     createImage: {
@@ -182,34 +198,40 @@ function createImage(presentationId, pageId) {
         pageObjectId: pageId,
         size: {
           height: emu4M,
-          width: emu4M
+          width: emu4M,
         },
         transform: {
           scaleX: 1,
           scaleY: 1,
           translateX: 100000,
           translateY: 100000,
-          unit: 'EMU'
-        }
-      }
-    }
+          unit: "EMU",
+        },
+      },
+    },
   });
 
   // Execute the request.
   try {
-    const response = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
+    const response = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
 
     const createImageResponse = response.replies;
-    console.log('Created image with ID: %s', createImageResponse[0].createImage.objectId);
+    console.log(
+      "Created image with ID: %s",
+      createImageResponse[0].createImage.objectId,
+    );
 
     return createImageResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_image]
 
 // [START slides_text_merging]
@@ -221,9 +243,11 @@ function createImage(presentationId, pageId) {
  */
 function textMerging(templatePresentationId, dataSpreadsheetId) {
   let responses = [];
-  const dataRangeNotation = 'Customers!A2:M6';
+  const dataRangeNotation = "Customers!A2:M6";
   try {
-    let values = SpreadsheetApp.openById(dataSpreadsheetId).getRange(dataRangeNotation).getValues();
+    let values = SpreadsheetApp.openById(dataSpreadsheetId)
+      .getRange(dataRangeNotation)
+      .getValues();
 
     // For each record, create a new merged presentation.
     for (let i = 0; i < values.length; ++i) {
@@ -233,64 +257,76 @@ function textMerging(templatePresentationId, dataSpreadsheetId) {
       const totalPortfolio = row[11]; // total portfolio in column 12
 
       // Duplicate the template presentation using the Drive API.
-      const copyTitle = customerName + ' presentation';
+      const copyTitle = customerName + " presentation";
       let copyFile = {
         title: copyTitle,
-        parents: [{id: 'root'}]
+        parents: [{ id: "root" }],
       };
       copyFile = Drive.Files.copy(copyFile, templatePresentationId);
       const presentationCopyId = copyFile.id;
 
       // Create the text merge (replaceAllText) requests for this presentation.
-      const requests = [{
-        replaceAllText: {
-          containsText: {
-            text: '{{customer-name}}',
-            matchCase: true
+      const requests = [
+        {
+          replaceAllText: {
+            containsText: {
+              text: "{{customer-name}}",
+              matchCase: true,
+            },
+            replaceText: customerName,
           },
-          replaceText: customerName
-        }
-      }, {
-        replaceAllText: {
-          containsText: {
-            text: '{{case-description}}',
-            matchCase: true
+        },
+        {
+          replaceAllText: {
+            containsText: {
+              text: "{{case-description}}",
+              matchCase: true,
+            },
+            replaceText: caseDescription,
           },
-          replaceText: caseDescription
-        }
-      }, {
-        replaceAllText: {
-          containsText: {
-            text: '{{total-portfolio}}',
-            matchCase: true
+        },
+        {
+          replaceAllText: {
+            containsText: {
+              text: "{{total-portfolio}}",
+              matchCase: true,
+            },
+            replaceText: totalPortfolio + "",
           },
-          replaceText: totalPortfolio + ''
-        }
-      }];
+        },
+      ];
 
       // Execute the requests for this presentation.
-      const result = Slides.Presentations.batchUpdate({
-        requests: requests
-      }, presentationCopyId);
+      const result = Slides.Presentations.batchUpdate(
+        {
+          requests: requests,
+        },
+        presentationCopyId,
+      );
       // Count the total number of replacements made.
       let numReplacements = 0;
-      result.replies.forEach(function(reply) {
+      result.replies.forEach(function (reply) {
         numReplacements += reply.replaceAllText.occurrencesChanged;
       });
-      console.log('Created presentation for %s with ID: %s', customerName, presentationCopyId);
-      console.log('Replaced %s text instances', numReplacements);
+      console.log(
+        "Created presentation for %s with ID: %s",
+        customerName,
+        presentationCopyId,
+      );
+      console.log("Replaced %s text instances", numReplacements);
       // [START_EXCLUDE silent]
       responses.push(result.replies);
-      if (responses.length === values.length) { // return for the last value
+      if (responses.length === values.length) {
+        // return for the last value
         return responses;
       }
       // [END_EXCLUDE]
     }
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_text_merging]
 
 // [START slides_image_merging]
@@ -305,10 +341,10 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
   const logoUrl = imageUrl;
   const customerGraphicUrl = imageUrl;
 
-  const copyTitle = customerName + ' presentation';
+  const copyTitle = customerName + " presentation";
   let copyFile = {
     title: copyTitle,
-    parents: [{id: 'root'}]
+    parents: [{ id: "root" }],
   };
 
   try {
@@ -316,43 +352,49 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
     const presentationCopyId = copyFile.id;
 
     // Create the image merge (replaceAllShapesWithImage) requests.
-    const requests = [{
-      replaceAllShapesWithImage: {
-        imageUrl: logoUrl,
-        imageReplaceMethod: 'CENTER_INSIDE',
-        containsText: {
-          text: '{{company-logo}}',
-          matchCase: true
-        }
-      }
-    }, {
-      replaceAllShapesWithImage: {
-        imageUrl: customerGraphicUrl,
-        imageReplaceMethod: 'CENTER_INSIDE',
-        containsText: {
-          text: '{{customer-graphic}}',
-          matchCase: true
-        }
-      }
-    }];
+    const requests = [
+      {
+        replaceAllShapesWithImage: {
+          imageUrl: logoUrl,
+          imageReplaceMethod: "CENTER_INSIDE",
+          containsText: {
+            text: "{{company-logo}}",
+            matchCase: true,
+          },
+        },
+      },
+      {
+        replaceAllShapesWithImage: {
+          imageUrl: customerGraphicUrl,
+          imageReplaceMethod: "CENTER_INSIDE",
+          containsText: {
+            text: "{{customer-graphic}}",
+            matchCase: true,
+          },
+        },
+      },
+    ];
 
     // Execute the requests for this presentation.
-    let batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationCopyId);
+    let batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationCopyId,
+    );
     let numReplacements = 0;
-    batchUpdateResponse.replies.forEach(function(reply) {
+    batchUpdateResponse.replies.forEach(function (reply) {
       numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
     });
-    console.log('Created merged presentation with ID: %s', presentationCopyId);
-    console.log('Replaced %s shapes with images.', numReplacements);
+    console.log("Created merged presentation with ID: %s", presentationCopyId);
+    console.log("Replaced %s shapes with images.", numReplacements);
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_image_merging]
 
 // [START slides_simple_text_replace]
@@ -364,34 +406,40 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
  * @returns {*}
  */
 function simpleTextReplace(presentationId, shapeId, replacementText) {
-  const requests = [{
-    deleteText: {
-      objectId: shapeId,
-      textRange: {
-        type: 'ALL'
-      }
-    }
-  }, {
-    insertText: {
-      objectId: shapeId,
-      insertionIndex: 0,
-      text: replacementText
-    }
-  }];
+  const requests = [
+    {
+      deleteText: {
+        objectId: shapeId,
+        textRange: {
+          type: "ALL",
+        },
+      },
+    },
+    {
+      insertText: {
+        objectId: shapeId,
+        insertionIndex: 0,
+        text: replacementText,
+      },
+    },
+  ];
 
   // Execute the requests.
   try {
-    const batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Replaced text in shape with ID: %s', shapeId);
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log("Replaced text in shape with ID: %s", shapeId);
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_simple_text_replace]
 
 // [START slides_text_style_update]
@@ -404,76 +452,83 @@ function simpleTextReplace(presentationId, shapeId, replacementText) {
  * @returns {*}
  */
 function textStyleUpdate(presentationId, shapeId) {
-  const requests = [{
-    updateTextStyle: {
-      objectId: shapeId,
-      textRange: {
-        type: 'FIXED_RANGE',
-        startIndex: 0,
-        endIndex: 5
-      },
-      style: {
-        bold: true,
-        italic: true
-      },
-      fields: 'bold,italic'
-    }
-  }, {
-    updateTextStyle: {
-      objectId: shapeId,
-      textRange: {
-        type: 'FIXED_RANGE',
-        startIndex: 5,
-        endIndex: 10
-      },
-      style: {
-        fontFamily: 'Times New Roman',
-        fontSize: {
-          magnitude: 14,
-          unit: 'PT'
+  const requests = [
+    {
+      updateTextStyle: {
+        objectId: shapeId,
+        textRange: {
+          type: "FIXED_RANGE",
+          startIndex: 0,
+          endIndex: 5,
         },
-        foregroundColor: {
-          opaqueColor: {
-            rgbColor: {
-              blue: 1.0,
-              green: 0.0,
-              red: 0.0
-            }
-          }
-        }
+        style: {
+          bold: true,
+          italic: true,
+        },
+        fields: "bold,italic",
       },
-      fields: 'foregroundColor,fontFamily,fontSize'
-    }
-  }, {
-    updateTextStyle: {
-      objectId: shapeId,
-      textRange: {
-        type: 'FIXED_RANGE',
-        startIndex: 10,
-        endIndex: 15
+    },
+    {
+      updateTextStyle: {
+        objectId: shapeId,
+        textRange: {
+          type: "FIXED_RANGE",
+          startIndex: 5,
+          endIndex: 10,
+        },
+        style: {
+          fontFamily: "Times New Roman",
+          fontSize: {
+            magnitude: 14,
+            unit: "PT",
+          },
+          foregroundColor: {
+            opaqueColor: {
+              rgbColor: {
+                blue: 1.0,
+                green: 0.0,
+                red: 0.0,
+              },
+            },
+          },
+        },
+        fields: "foregroundColor,fontFamily,fontSize",
       },
-      style: {
-        link: {
-          url: 'www.example.com'
-        }
+    },
+    {
+      updateTextStyle: {
+        objectId: shapeId,
+        textRange: {
+          type: "FIXED_RANGE",
+          startIndex: 10,
+          endIndex: 15,
+        },
+        style: {
+          link: {
+            url: "www.example.com",
+          },
+        },
+        fields: "link",
       },
-      fields: 'link'
-    }
-  }];
+    },
+  ];
 
   // Execute the requests.
   try {
-    const batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Updated the text style for shape with ID: %s', shapeId);
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log("Updated the text style for shape with ID: %s", shapeId);
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_text_style_update]
 
 // [START slides_create_bulleted_text]
@@ -481,29 +536,34 @@ function textStyleUpdate(presentationId, shapeId) {
  * Add arrow-diamond-disc bullets to all text in the shape.
  */
 function createBulletedText(presentationId, shapeId) {
-  const requests = [{
-    createParagraphBullets: {
-      objectId: shapeId,
-      textRange: {
-        type: 'ALL'
+  const requests = [
+    {
+      createParagraphBullets: {
+        objectId: shapeId,
+        textRange: {
+          type: "ALL",
+        },
+        bulletPreset: "BULLET_ARROW_DIAMOND_DISC",
       },
-      bulletPreset: 'BULLET_ARROW_DIAMOND_DISC'
-    }
-  }];
+    },
+  ];
 
   // Execute the requests.
   try {
-    const batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Added bullets to text in shape with ID: %s', shapeId);
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log("Added bullets to text in shape with ID: %s", shapeId);
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_bulleted_text]
 
 // [START slides_create_sheets_chart]
@@ -520,45 +580,50 @@ function createBulletedText(presentationId, shapeId) {
 function createSheetsChart(presentationId, pageId, shapeId, sheetChartId) {
   const emu4M = {
     magnitude: 4000000,
-    unit: 'EMU'
+    unit: "EMU",
   };
-  const presentationChartId = 'MyEmbeddedChart';
-  const requests = [{
-    createSheetsChart: {
-      objectId: presentationChartId,
-      spreadsheetId: shapeId,
-      chartId: sheetChartId,
-      linkingMode: 'LINKED',
-      elementProperties: {
-        pageObjectId: pageId,
-        size: {
-          height: emu4M,
-          width: emu4M
+  const presentationChartId = "MyEmbeddedChart";
+  const requests = [
+    {
+      createSheetsChart: {
+        objectId: presentationChartId,
+        spreadsheetId: shapeId,
+        chartId: sheetChartId,
+        linkingMode: "LINKED",
+        elementProperties: {
+          pageObjectId: pageId,
+          size: {
+            height: emu4M,
+            width: emu4M,
+          },
+          transform: {
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 100000,
+            translateY: 100000,
+            unit: "EMU",
+          },
         },
-        transform: {
-          scaleX: 1,
-          scaleY: 1,
-          translateX: 100000,
-          translateY: 100000,
-          unit: 'EMU'
-        }
-      }
-    }
-  }];
+      },
+    },
+  ];
 
   // Execute the request.
   try {
-    const batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Added a linked Sheets chart with ID: %s', presentationChartId);
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log("Added a linked Sheets chart with ID: %s", presentationChartId);
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_create_sheets_chart]
 
 // [START slides_refresh_sheets_chart]
@@ -569,23 +634,31 @@ function createSheetsChart(presentationId, pageId, shapeId, sheetChartId) {
  * @returns {*}
  */
 function refreshSheetsChart(presentationId, presentationChartId) {
-  const requests = [{
-    refreshSheetsChart: {
-      objectId: presentationChartId
-    }
-  }];
+  const requests = [
+    {
+      refreshSheetsChart: {
+        objectId: presentationChartId,
+      },
+    },
+  ];
 
   // Execute the request.
   try {
-    const batchUpdateResponse = Slides.Presentations.batchUpdate({
-      requests: requests
-    }, presentationId);
-    console.log('Refreshed a linked Sheets chart with ID: %s', presentationChartId);
+    const batchUpdateResponse = Slides.Presentations.batchUpdate(
+      {
+        requests: requests,
+      },
+      presentationId,
+    );
+    console.log(
+      "Refreshed a linked Sheets chart with ID: %s",
+      presentationChartId,
+    );
 
     return batchUpdateResponse;
   } catch (err) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', err.error);
+    console.log("Failed with error: %s", err.error);
   }
-};
+}
 // [END slides_refresh_sheets_chart]

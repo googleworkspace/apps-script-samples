@@ -25,18 +25,17 @@
  * @return {HTML} The web app's HTML.
  */
 function doGet(e) {
-  var template = HtmlService.createTemplateFromFile('Index');
+  var template = HtmlService.createTemplateFromFile("Index");
 
   // Retrieve and process any URL parameters, as necessary.
   if (e.parameter.folderId) {
     template.folderId = e.parameter.folderId;
   } else {
-    template.folderId = 'root';
+    template.folderId = "root";
   }
 
   // Build and return HTML in IFRAME sandbox mode.
-  return template.evaluate()
-      .setTitle('Web App Window Title');
+  return template.evaluate().setTitle("Web App Window Title");
 }
 
 /**
@@ -52,17 +51,17 @@ function doGet(e) {
 function getFolderContents(folderId) {
   var topFolder;
   var contents = {
-    children: []
+    children: [],
   };
 
-  if (folderId == 'root') {
+  if (folderId == "root") {
     topFolder = DriveApp.getRootFolder();
   } else {
     // May throw exception if the folderId is invalid or app
     // doesn't have permission to access.
     topFolder = DriveApp.getFolderById(folderId);
   }
-  contents.rootName = topFolder.getName() + '/';
+  contents.rootName = topFolder.getName() + "/";
 
   var files = topFolder.getFiles();
   var numFiles = 0;

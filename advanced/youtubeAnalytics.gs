@@ -20,8 +20,8 @@
  */
 function createReport() {
   // Retrieve info about the user's YouTube channel.
-  const channels = YouTube.Channels.list('id,contentDetails', {
-    mine: true
+  const channels = YouTube.Channels.list("id,contentDetails", {
+    mine: true,
   });
   const channelId = channels.items[0].id;
 
@@ -31,39 +31,39 @@ function createReport() {
   const lastMonth = new Date(today.getTime() - oneMonthInMillis);
 
   const metrics = [
-    'views',
-    'estimatedMinutesWatched',
-    'averageViewDuration',
-    'subscribersGained'
+    "views",
+    "estimatedMinutesWatched",
+    "averageViewDuration",
+    "subscribersGained",
   ];
   const result = YouTubeAnalytics.Reports.query({
-    ids: 'channel==' + channelId,
+    ids: "channel==" + channelId,
     startDate: formatDateString(lastMonth),
     endDate: formatDateString(today),
-    metrics: metrics.join(','),
-    dimensions: 'day',
-    sort: 'day'
+    metrics: metrics.join(","),
+    dimensions: "day",
+    sort: "day",
   });
 
   if (!result.rows) {
-    console.log('No rows returned.');
+    console.log("No rows returned.");
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('YouTube Analytics Report');
+  const spreadsheet = SpreadsheetApp.create("YouTube Analytics Report");
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
-  const headers = result.columnHeaders.map((columnHeader)=> {
+  const headers = result.columnHeaders.map((columnHeader) => {
     return formatColumnName(columnHeader.name);
   });
   sheet.appendRow(headers);
 
   // Append the results.
-  sheet.getRange(2, 1, result.rows.length, headers.length)
-      .setValues(result.rows);
+  sheet
+    .getRange(2, 1, result.rows.length, headers.length)
+    .setValues(result.rows);
 
-  console.log('Report spreadsheet created: %s',
-      spreadsheet.getUrl());
+  console.log("Report spreadsheet created: %s", spreadsheet.getUrl());
 }
 
 /**
@@ -72,7 +72,7 @@ function createReport() {
  * @return {string} The formatted date.
  */
 function formatDateString(date) {
-  return Utilities.formatDate(date, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  return Utilities.formatDate(date, Session.getScriptTimeZone(), "yyyy-MM-dd");
 }
 
 /**
@@ -82,7 +82,7 @@ function formatDateString(date) {
  * @example "averageViewPercentage" becomes "Average View Percentage".
  */
 function formatColumnName(columnName) {
-  let name = columnName.replace(/([a-z])([A-Z])/g, '$1 $2');
+  let name = columnName.replace(/([a-z])([A-Z])/g, "$1 $2");
   name = name.slice(0, 1).toUpperCase() + name.slice(1);
   return name;
 }

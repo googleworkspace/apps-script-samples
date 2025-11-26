@@ -21,11 +21,11 @@
  */
 function postMessageWithUserCredentials(spaceName) {
   try {
-    const message = {'text': 'Hello world!'};
+    const message = { text: "Hello world!" };
     Chat.Spaces.Messages.create(message, spaceName);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to create message with error %s', err.message);
+    console.log("Failed to create message with error %s", err.message);
   }
 }
 // [END chat_post_message_with_user_credentials]
@@ -40,16 +40,17 @@ function postMessageWithAppCredentials(spaceName) {
     // See https://developers.google.com/chat/api/guides/auth/service-accounts
     // for details on how to obtain a service account OAuth token.
     const appToken = getToken_();
-    const message = {'text': 'Hello world!'};
+    const message = { text: "Hello world!" };
     Chat.Spaces.Messages.create(
-        message,
-        spaceName,
-        {},
-        // Authenticate with the service account token.
-        {'Authorization': 'Bearer ' + appToken});
+      message,
+      spaceName,
+      {},
+      // Authenticate with the service account token.
+      { Authorization: "Bearer " + appToken },
+    );
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to create message with error %s', err.message);
+    console.log("Failed to create message with error %s", err.message);
   }
 }
 // [END chat_post_message_with_app_credentials]
@@ -62,11 +63,11 @@ function postMessageWithAppCredentials(spaceName) {
 function getSpace(spaceName) {
   try {
     const space = Chat.Spaces.get(spaceName);
-    console.log('Space display name: %s', space.displayName);
-    console.log('Space type: %s', space.spaceType);
+    console.log("Space display name: %s", space.displayName);
+    console.log("Space type: %s", space.spaceType);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to get space with error %s', err.message);
+    console.log("Failed to get space with error %s", err.message);
   }
 }
 // [END chat_get_space]
@@ -77,11 +78,11 @@ function getSpace(spaceName) {
  */
 function createSpace() {
   try {
-    const space = {'displayName': 'New Space', 'spaceType': 'SPACE'};
+    const space = { displayName: "New Space", spaceType: "SPACE" };
     Chat.Spaces.create(space);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed to create space with error %s', err.message);
+    console.log("Failed to create space with error %s", err.message);
   }
 }
 // [END chat_create_space]
@@ -98,21 +99,24 @@ function listMemberships(spaceName) {
     do {
       response = Chat.Spaces.Members.list(spaceName, {
         pageSize: 10,
-        pageToken: pageToken
+        pageToken: pageToken,
       });
       if (!response.memberships || response.memberships.length === 0) {
         pageToken = response.nextPageToken;
         continue;
       }
-      response.memberships.forEach((membership) => console.log(
-          'Member resource name: %s (type: %s)',
+      response.memberships.forEach((membership) =>
+        console.log(
+          "Member resource name: %s (type: %s)",
           membership.name,
-          membership.member.type));
+          membership.member.type,
+        ),
+      );
       pageToken = response.nextPageToken;
     } while (pageToken);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END chat_list_memberships]

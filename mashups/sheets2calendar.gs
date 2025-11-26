@@ -6,7 +6,7 @@
  */
 function createEventsFromSpreadsheet() {
   // Open the spreadsheet and get the data.
-  const ss = SpreadsheetApp.openByUrl('ENTER SPREADSHEET URL HERE');
+  const ss = SpreadsheetApp.openByUrl("ENTER SPREADSHEET URL HERE");
   const sheet = ss.getSheets()[0];
   /** @type {string[][]} */
   const data = sheet.getDataRange().getValues();
@@ -15,13 +15,13 @@ function createEventsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create an event for each row.
-  data.forEach(function(row) {
+  data.forEach(function (row) {
     const title = row[0];
     const description = row[1];
     const emailsStr = row[2];
 
     // Split the emails into an array and remove extra whitespace.
-    const emails = emailsStr.split(',').map(function(email) {
+    const emails = emailsStr.split(",").map(function (email) {
       return email.trim();
     });
 
@@ -37,9 +37,10 @@ function createEventsFromSpreadsheet() {
     end.setMinutes(end.getMinutes() + 30);
 
     // Create the calendar event and invite the guests.
-    const event = CalendarApp.createEvent(title, start, end)
-        .setDescription(description);
-    emails.forEach(function(email) {
+    const event = CalendarApp.createEvent(title, start, end).setDescription(
+      description,
+    );
+    emails.forEach(function (email) {
       event.addGuest(email);
     });
 

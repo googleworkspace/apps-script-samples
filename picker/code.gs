@@ -38,7 +38,7 @@ function showPicker() {
 }
 // Ensure the Drive API is enabled.
 if (!Drive) {
-  throw new Error('Please enable the Drive advanced service.');
+  throw new Error("Please enable the Drive advanced service.");
 }
 
 /**
@@ -47,7 +47,7 @@ if (!Drive) {
  * @return {Object} The file resource.
  */
 function getFile(fileId) {
-  return Drive.Files.get(fileId, {fields: '*'});
+  return Drive.Files.get(fileId, { fields: "*" });
 }
 
 /**

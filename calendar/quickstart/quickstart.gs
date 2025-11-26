@@ -19,14 +19,14 @@
  * @see https://developers.google.com/calendar/api/v3/reference/events/list
  */
 function listUpcomingEvents() {
-  const calendarId = 'primary';
+  const calendarId = "primary";
   // Add query parameters in optionalArgs
   const optionalArgs = {
-    timeMin: (new Date()).toISOString(),
+    timeMin: new Date().toISOString(),
     showDeleted: false,
     singleEvents: true,
     maxResults: 10,
-    orderBy: 'startTime'
+    orderBy: "startTime",
     // use other optional query parameter here as needed.
   };
   try {
@@ -34,7 +34,7 @@ function listUpcomingEvents() {
     const response = Calendar.Events.list(calendarId, optionalArgs);
     const events = response.items;
     if (events.length === 0) {
-      console.log('No upcoming events found');
+      console.log("No upcoming events found");
       return;
     }
     // Print the calendar events
@@ -43,11 +43,11 @@ function listUpcomingEvents() {
       if (!when) {
         when = event.start.date;
       }
-      console.log('%s (%s)', event.summary, when);
+      console.log("%s (%s)", event.summary, when);
     }
   } catch (err) {
     // TODO (developer) - Handle exception from Calendar API
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END calendar_quickstart]

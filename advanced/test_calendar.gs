@@ -18,7 +18,7 @@
  * Tests listCalendars function of calendar.gs
  */
 function itShouldListCalendars() {
-  console.log('> itShouldListCalendars');
+  console.log("> itShouldListCalendars");
   listCalendars();
 }
 
@@ -26,7 +26,7 @@ function itShouldListCalendars() {
  * Tests createEvent function of calendars.gs
  */
 function itShouldCreateEvent() {
-  console.log('> itShouldCreateEvent');
+  console.log("> itShouldCreateEvent");
   createEvent();
 }
 
@@ -34,18 +34,18 @@ function itShouldCreateEvent() {
  * Tests gerRelativeDate function of calendar.gs
  */
 function itShouldGetRelativeDate() {
-  console.log('> itShouldGetRelativeDate');
-  console.log('no offset: ' + getRelativeDate(0, 0));
-  console.log('4 hour offset: ' + getRelativeDate(0, 4));
-  console.log('1 day offset: ' + getRelativeDate(1, 0));
-  console.log('1 day and 3 hour off set: ' + getRelativeDate(1, 3));
+  console.log("> itShouldGetRelativeDate");
+  console.log("no offset: " + getRelativeDate(0, 0));
+  console.log("4 hour offset: " + getRelativeDate(0, 4));
+  console.log("1 day offset: " + getRelativeDate(1, 0));
+  console.log("1 day and 3 hour off set: " + getRelativeDate(1, 3));
 }
 
 /**
  * Tests listNext10Events function of calendar.gs
  */
 function itShouldListNext10Events() {
-  console.log('> itShouldListNext10Events');
+  console.log("> itShouldListNext10Events");
   listNext10Events();
 }
 
@@ -53,16 +53,16 @@ function itShouldListNext10Events() {
  * Tests logSyncedEvents function of calendar.gs
  */
 function itShouldLogSyncedEvents() {
-  console.log('> itShouldLogSyncedEvents');
-  logSyncedEvents('primary', true);
-  logSyncedEvents('primary', false);
+  console.log("> itShouldLogSyncedEvents");
+  logSyncedEvents("primary", true);
+  logSyncedEvents("primary", false);
 }
 
 /**
  * Tests conditionalUpdate function of calendar.gs
  */
 function itShouldConditionalUpdate() {
-  console.log('> itShouldConditionalUpdate (takes 30 seconds)');
+  console.log("> itShouldConditionalUpdate (takes 30 seconds)");
   conditionalUpdate();
 }
 
@@ -70,7 +70,7 @@ function itShouldConditionalUpdate() {
  * Tests conditionalFetch function of calendar.gs
  */
 function itShouldConditionalFetch() {
-  console.log('> itShouldConditionalFetch');
+  console.log("> itShouldConditionalFetch");
   conditionalFetch();
 }
 

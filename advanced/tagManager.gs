@@ -26,52 +26,58 @@ function createContainerVersion(accountPath) {
   // sure the container is unique.
   try {
     const container = TagManager.Accounts.Containers.create(
-        {
-          'name': 'appscript tagmanager container ' + date.getTime(),
-          'usageContext': ['WEB']
-        },
-        accountPath);
+      {
+        name: "appscript tagmanager container " + date.getTime(),
+        usageContext: ["WEB"],
+      },
+      accountPath,
+    );
     const containerPath = container.path;
     // Creates a workspace in the container to track entity changes.
     const workspace = TagManager.Accounts.Containers.Workspaces.create(
-        {'name': 'appscript workspace', 'description': 'appscript workspace'},
-        containerPath);
+      { name: "appscript workspace", description: "appscript workspace" },
+      containerPath,
+    );
     const workspacePath = workspace.path;
     // Creates a random value variable.
     const variable = TagManager.Accounts.Containers.Workspaces.Variables.create(
-        {'name': 'apps script variable', 'type': 'r'},
-        workspacePath);
+      { name: "apps script variable", type: "r" },
+      workspacePath,
+    );
     // Creates a trigger that fires on any page view.
     const trigger = TagManager.Accounts.Containers.Workspaces.Triggers.create(
-        {'name': 'apps script trigger', 'type': 'PAGEVIEW'},
-        workspacePath);
+      { name: "apps script trigger", type: "PAGEVIEW" },
+      workspacePath,
+    );
     // Creates a arbitary pixel that fires the tag on all page views.
     const tag = TagManager.Accounts.Containers.Workspaces.Tags.create(
-        {
-          'name': 'apps script tag',
-          'type': 'img',
-          'liveOnly': false,
-          'parameter': [
-            {'type': 'boolean', 'key': 'useCacheBuster', 'value': 'true'}, {
-              'type': 'template',
-              'key': 'cacheBusterQueryParam',
-              'value': 'gtmcb'
-            },
-            {'type': 'template', 'key': 'url', 'value': '//example.com'}
-          ],
-          'firingTriggerId': [trigger.triggerId]
-        },
-        workspacePath);
+      {
+        name: "apps script tag",
+        type: "img",
+        liveOnly: false,
+        parameter: [
+          { type: "boolean", key: "useCacheBuster", value: "true" },
+          {
+            type: "template",
+            key: "cacheBusterQueryParam",
+            value: "gtmcb",
+          },
+          { type: "template", key: "url", value: "//example.com" },
+        ],
+        firingTriggerId: [trigger.triggerId],
+      },
+      workspacePath,
+    );
     // Creates a container version with the variabe, trigger, and tag.
-    const version = TagManager.Accounts.Containers.Workspaces
-        .create_version(
-            {'name': 'apps script version'}, workspacePath)
-        .containerVersion;
+    const version = TagManager.Accounts.Containers.Workspaces.create_version(
+      { name: "apps script version" },
+      workspacePath,
+    ).containerVersion;
     console.log(version);
     return version;
   } catch (e) {
     // TODO (Developer) - Handle exception
-    console.log('Failed with error: %s', e.error);
+    console.log("Failed with error: %s", e.error);
   }
 }
 // [END apps_script_tag_manager_create_version]
@@ -83,8 +89,8 @@ function createContainerVersion(accountPath) {
  * @return {string}             The container path.
  */
 function grabContainerPath(versionPath) {
-  const pathParts = versionPath.split('/');
-  return pathParts.slice(0, 4).join('/');
+  const pathParts = versionPath.split("/");
+  return pathParts.slice(0, 4).join("/");
 }
 
 /**
@@ -98,16 +104,17 @@ function publishVersionAndQuickPreviewDraft(version) {
     // Publish the input container version.
     TagManager.Accounts.Containers.Versions.publish(version.path);
     const workspace = TagManager.Accounts.Containers.Workspaces.create(
-        {'name': 'appscript workspace', 'description': 'appscript workspace'},
-        containerPath);
+      { name: "appscript workspace", description: "appscript workspace" },
+      containerPath,
+    );
     const workspaceId = workspace.path;
     // Quick previews the current container draft.
-    const quickPreview = TagManager.Accounts.Containers.Workspaces
-        .quick_preview(workspace.path);
+    const quickPreview =
+      TagManager.Accounts.Containers.Workspaces.quick_preview(workspace.path);
     console.log(quickPreview);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_tag_manager_publish_version]
@@ -119,8 +126,8 @@ function publishVersionAndQuickPreviewDraft(version) {
  * @return {string}             The container path.
  */
 function grabContainerPath(versionPath) {
-  const pathParts = versionPath.split('/');
-  return pathParts.slice(0, 4).join('/');
+  const pathParts = versionPath.split("/");
+  return pathParts.slice(0, 4).join("/");
 }
 
 /**
@@ -134,20 +141,23 @@ function createAndReauthorizeUserEnvironment(version) {
     const containerPath = grabContainerPath(version.path);
     // Creates a user environment that points to a container version.
     const environment = TagManager.Accounts.Containers.Environments.create(
-        {
-          'name': 'test_environment',
-          'type': 'user',
-          'containerVersionId': version.containerVersionId
-        },
-        containerPath);
-    console.log('Original user environment: ' + environment);
+      {
+        name: "test_environment",
+        type: "user",
+        containerVersionId: version.containerVersionId,
+      },
+      containerPath,
+    );
+    console.log("Original user environment: " + environment);
     // Reauthorizes the user environment that points to a container version.
     TagManager.Accounts.Containers.Environments.reauthorize(
-        {}, environment.path);
-    console.log('Reauthorized user environment: ' + environment);
+      {},
+      environment.path,
+    );
+    console.log("Reauthorized user environment: " + environment);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_tag_manager_create_user_environment]
@@ -163,20 +173,24 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
       TagManager.Accounts.User_permissions.list(accountPath).userPermission;
     for (let i = 0; i < userPermissions.length; i++) {
       const userPermission = userPermissions[i];
-      if ('emailAddress' in userPermission) {
+      if ("emailAddress" in userPermission) {
         const containerAccesses = userPermission.containerAccess;
         for (let j = 0; j < containerAccesses.length; j++) {
           const containerAccess = containerAccesses[j];
           console.log(
-              'emailAddress:' + userPermission.emailAddress +
-            ' containerId:' + containerAccess.containerId +
-            ' containerAccess:' + containerAccess.permission);
+            "emailAddress:" +
+              userPermission.emailAddress +
+              " containerId:" +
+              containerAccess.containerId +
+              " containerAccess:" +
+              containerAccess.permission,
+          );
         }
       }
     }
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_tag_manager_log]

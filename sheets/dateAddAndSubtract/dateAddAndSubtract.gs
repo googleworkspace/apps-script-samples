@@ -23,8 +23,16 @@
 /**
  * The list of valid unit identifiers.
  */
-var VALID_UNITS = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second',
-    'millisecond'];
+var VALID_UNITS = [
+  "year",
+  "month",
+  "week",
+  "day",
+  "hour",
+  "minute",
+  "second",
+  "millisecond",
+];
 
 /**
  * Runs when the add-on is installed.
@@ -39,9 +47,10 @@ function onInstall() {
  * current spreadsheet when a function is run.
  */
 function onOpen() {
-  SpreadsheetApp.getUi().createAddonMenu()
-      .addItem('Use in this spreadsheet', 'use')
-      .addToUi();
+  SpreadsheetApp.getUi()
+    .createAddonMenu()
+    .addItem("Use in this spreadsheet", "use")
+    .addToUi();
 }
 
 /**
@@ -49,10 +58,11 @@ function onOpen() {
  * shows a popup informing the user of the new functions that are available.
  */
 function use() {
-  var title = 'Date Custom Functions';
-  var message = 'The functions DATEADD and DATESUBTRACT are now available in ' +
-      'this spreadsheet. More information is available in the function help ' +
-      'box that appears when you start using them in a formula.';
+  var title = "Date Custom Functions";
+  var message =
+    "The functions DATEADD and DATESUBTRACT are now available in " +
+    "this spreadsheet. More information is available in the function help " +
+    "box that appears when you start using them in a formula.";
   var ui = SpreadsheetApp.getUi();
   ui.alert(title, message, ui.ButtonSet.OK);
 }
@@ -72,7 +82,7 @@ function use() {
  */
 function DATEADD(date, unit, amount) {
   var args = toArray(arguments); // eslint-disable-line prefer-rest-params
-  return multimap(args, function(date, unit, amount) {
+  return multimap(args, function (date, unit, amount) {
     validateParameters(date, unit, amount);
     return moment(date).add(unit, amount).toDate();
   });
@@ -105,7 +115,7 @@ function DATETEST(date, unit, amount) {
  */
 function DATESUBTRACT(date, unit, amount) {
   var args = toArray(arguments); // eslint-disable-line prefer-rest-params
-  return multimap(args, function(date, unit, amount) {
+  return multimap(args, function (date, unit, amount) {
     validateParameters(date, unit, amount);
     return moment(date).subtract(unit, amount).toDate();
   });
@@ -119,17 +129,26 @@ function DATESUBTRACT(date, unit, amount) {
  * @param {number} amount The amount of the specified unit to add/subtract.
  */
 function validateParameters(date, unit, amount) {
-  if (date == undefined || typeof date == 'number' || !moment(date).isValid()) {
-    throw Utilities.formatString('Parameter 1 expects a date value, but "%s" ' +
-        'cannot be coerced to a date.', date);
+  if (date == undefined || typeof date == "number" || !moment(date).isValid()) {
+    throw Utilities.formatString(
+      'Parameter 1 expects a date value, but "%s" ' +
+        "cannot be coerced to a date.",
+      date,
+    );
   }
   if (VALID_UNITS.indexOf(moment.normalizeUnits(unit)) < 0) {
-    throw Utilities.formatString('Parameter 2 expects a unit identifier, but ' +
-        '"%s" is not a valid identifier.', unit);
+    throw Utilities.formatString(
+      "Parameter 2 expects a unit identifier, but " +
+        '"%s" is not a valid identifier.',
+      unit,
+    );
   }
   if (isNaN(Number(amount))) {
-    throw Utilities.formatString('Parameter 3 expects a number value, but ' +
-        '"%s" cannot be coerced to a number.', amount);
+    throw Utilities.formatString(
+      "Parameter 3 expects a number value, but " +
+        '"%s" cannot be coerced to a number.',
+      amount,
+    );
   }
 }
 
@@ -143,7 +162,7 @@ function validateParameters(date, unit, amount) {
  */
 function multimap(args, func) {
   // Determine the length of the arrays.
-  var lengths = args.map(function(arg) {
+  var lengths = args.map(function (arg) {
     if (arg instanceof Array) {
       return arg.length;
     } else {
@@ -160,16 +179,16 @@ function multimap(args, func) {
   // Ensure all the arrays are the same length.
   // Arrays of length 1 are exempted, since they are assumed to be rows/columns
   // that should apply to each row/column in the other sets.
-  lengths.forEach(function(length) {
+  lengths.forEach(function (length) {
     if (length != max && length > 1) {
-      throw new Error('All input ranges must be the same size: ' + max);
+      throw new Error("All input ranges must be the same size: " + max);
     }
   });
 
   // Recursively apply the map function to each element in the arrays.
   var result = [];
   for (var i = 0; i < max; i++) {
-    var params = args.map(function(arg) {
+    var params = args.map(function (arg) {
       if (arg instanceof Array) {
         return arg.length == 1 ? arg[0] : arg[i];
       } else {

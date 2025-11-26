@@ -18,8 +18,8 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current form.
  */
 
-var DIALOG_TITLE = 'Example Dialog';
-var SIDEBAR_TITLE = 'Example Sidebar';
+var DIALOG_TITLE = "Example Dialog";
+var SIDEBAR_TITLE = "Example Sidebar";
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -28,10 +28,10 @@ var SIDEBAR_TITLE = 'Example Sidebar';
  */
 function onOpen(e) {
   FormApp.getUi()
-      .createAddonMenu()
-      .addItem('Show sidebar', 'showSidebar')
-      .addItem('Show dialog', 'showDialog')
-      .addToUi();
+    .createAddonMenu()
+    .addItem("Show sidebar", "showSidebar")
+    .addItem("Show dialog", "showDialog")
+    .addToUi();
 }
 
 /**
@@ -49,9 +49,9 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile('Sidebar')
-      .evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  var ui = HtmlService.createTemplateFromFile("Sidebar")
+    .evaluate()
+    .setTitle(SIDEBAR_TITLE);
   FormApp.getUi().showSidebar(ui);
 }
 
@@ -60,10 +60,10 @@ function showSidebar() {
  * project file.
  */
 function showDialog() {
-  var ui = HtmlService.createTemplateFromFile('Dialog')
-      .evaluate()
-      .setWidth(350)
-      .setHeight(180);
+  var ui = HtmlService.createTemplateFromFile("Dialog")
+    .evaluate()
+    .setWidth(350)
+    .setHeight(180);
   FormApp.getUi().showModalDialog(ui, DIALOG_TITLE);
 }
 
@@ -77,13 +77,13 @@ function addFormItem(itemData) {
   // Use data collected from sidebar to manipulate the form.
   var form = FormApp.getActiveForm();
   switch (itemData.type) {
-    case 'Date':
+    case "Date":
       form.addDateItem().setTitle(itemData.name);
       break;
-    case 'Scale':
+    case "Scale":
       form.addScaleItem().setTitle(itemData.name);
       break;
-    case 'Text':
+    case "Text":
       form.addTextItem().setTitle(itemData.name);
       break;
   }
@@ -99,7 +99,7 @@ function addFormItem(itemData) {
 function getTriggerState() {
   // Retrieve and return the information requested by the dialog.
   var properties = PropertiesService.getDocumentProperties();
-  return properties.getProperty('triggerId') != null;
+  return properties.getProperty("triggerId") != null;
 }
 
 /**
@@ -114,7 +114,7 @@ function adjustFormSubmitTrigger(enableTrigger) {
   // Determine existing state of trigger on the server.
   var form = FormApp.getActiveForm();
   var properties = PropertiesService.getDocumentProperties();
-  var triggerId = properties.getProperty('triggerId');
+  var triggerId = properties.getProperty("triggerId");
 
   if (!enableTrigger && triggerId != null) {
     // Delete the existing trigger.
@@ -125,14 +125,14 @@ function adjustFormSubmitTrigger(enableTrigger) {
         break;
       }
     }
-    properties.deleteProperty('triggerId');
+    properties.deleteProperty("triggerId");
   } else if (enableTrigger && triggerId == null) {
     // Create a new trigger.
-    var trigger = ScriptApp.newTrigger('respondToFormSubmit')
-        .forForm(form)
-        .onFormSubmit()
-        .create();
-    properties.setProperty('triggerId', trigger.getUniqueId());
+    var trigger = ScriptApp.newTrigger("respondToFormSubmit")
+      .forForm(form)
+      .onFormSubmit()
+      .create();
+    properties.setProperty("triggerId", trigger.getUniqueId());
   }
 }
 
@@ -147,18 +147,21 @@ function adjustFormSubmitTrigger(enableTrigger) {
 function respondToFormSubmit(e) {
   if (MailApp.getRemainingDailyQuota() > 0) {
     var form = FormApp.getActiveForm();
-    var message = 'There have been ' + form.getResponses().length +
-        ' response(s) so far. Latest Response:\n';
+    var message =
+      "There have been " +
+      form.getResponses().length +
+      " response(s) so far. Latest Response:\n";
     var itemResponses = e.response.getItemResponses();
     for (var i = 0; i < itemResponses.length; i++) {
       var itemTitle = itemResponses[i].getItem().getTitle();
       var itemResponse = JSON.stringify(itemResponses[i].getResponse());
-      message += itemTitle + ': ' + itemResponse + '\n';
+      message += itemTitle + ": " + itemResponse + "\n";
     }
     MailApp.sendEmail(
-        Session.getEffectiveUser().getEmail(),
-        'Form response received for form ' + form.getTitle(),
-        message,
-        {name: 'Forms Add-on Template'});
+      Session.getEffectiveUser().getEmail(),
+      "Form response received for form " + form.getTitle(),
+      message,
+      { name: "Forms Add-on Template" },
+    );
   }
 }

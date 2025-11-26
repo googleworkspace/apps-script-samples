@@ -18,8 +18,8 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current spreadsheet.
  */
 
-var DIALOG_TITLE = 'Example Dialog';
-var SIDEBAR_TITLE = 'Example Sidebar';
+var DIALOG_TITLE = "Example Dialog";
+var SIDEBAR_TITLE = "Example Sidebar";
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -28,10 +28,10 @@ var SIDEBAR_TITLE = 'Example Sidebar';
  */
 function onOpen(e) {
   SpreadsheetApp.getUi()
-      .createAddonMenu()
-      .addItem('Show sidebar', 'showSidebar')
-      .addItem('Show dialog', 'showDialog')
-      .addToUi();
+    .createAddonMenu()
+    .addItem("Show sidebar", "showSidebar")
+    .addItem("Show dialog", "showDialog")
+    .addToUi();
 }
 
 /**
@@ -49,9 +49,9 @@ function onInstall(e) {
  * project file.
  */
 function showSidebar() {
-  var ui = HtmlService.createTemplateFromFile('Sidebar')
-      .evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  var ui = HtmlService.createTemplateFromFile("Sidebar")
+    .evaluate()
+    .setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(ui);
 }
 
@@ -60,10 +60,10 @@ function showSidebar() {
  * project file.
  */
 function showDialog() {
-  var ui = HtmlService.createTemplateFromFile('Dialog')
-      .evaluate()
-      .setWidth(400)
-      .setHeight(190);
+  var ui = HtmlService.createTemplateFromFile("Dialog")
+    .evaluate()
+    .setWidth(400)
+    .setHeight(190);
   SpreadsheetApp.getUi().showModalDialog(ui, DIALOG_TITLE);
 }
 
@@ -99,11 +99,11 @@ function modifySheets(action) {
   // Use data collected from dialog to manipulate the spreadsheet.
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var currentSheet = ss.getActiveSheet();
-  if (action == 'create') {
+  if (action == "create") {
     ss.insertSheet();
-  } else if (action == 'copy') {
+  } else if (action == "copy") {
     currentSheet.copyTo(ss);
-  } else if (action == 'clear') {
+  } else if (action == "clear") {
     currentSheet.clear();
   }
 }

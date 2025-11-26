@@ -16,19 +16,19 @@
 
 const classificationLabels = {
   "action-required": {
-    "name": "🚨 Action Required",
-    "textColor": '#ffffff',
-    "backgroundColor": "#1c4587"
+    name: "🚨 Action Required",
+    textColor: "#ffffff",
+    backgroundColor: "#1c4587",
   },
   "needs-response": {
-    "name": "↪️ Needs Response",
-    "textColor": '#ffffff',
-    "backgroundColor": "#16a765"
+    name: "↪️ Needs Response",
+    textColor: "#ffffff",
+    backgroundColor: "#16a765",
   },
   "for-your-info": {
-    "name": "ℹ️ For Your Info",
-    "textColor": '#000000',
-    "backgroundColor": "#fad165"
+    name: "ℹ️ For Your Info",
+    textColor: "#000000",
+    backgroundColor: "#fad165",
   },
 };
 
@@ -46,19 +46,23 @@ function createLabels() {
 
     if (!gmailLabel) {
       gmailLabel = GmailApp.createLabel(name);
-      Gmail.Users.Labels.update({
-        name: name,
-        color: {
-          textColor: textColor,
-          backgroundColor: backgroundColor
-        }
-      }, 'me', fetchLabelId(name));
+      Gmail.Users.Labels.update(
+        {
+          name: name,
+          color: {
+            textColor: textColor,
+            backgroundColor: backgroundColor,
+          },
+        },
+        "me",
+        fetchLabelId(name),
+      );
     }
 
     classificationLabel.gmailLabel = gmailLabel;
   }
 
-  console.log('Labels created.');
+  console.log("Labels created.");
   return buildHomepageCard();
 }
 
@@ -85,7 +89,7 @@ function labelsCreated() {
  * @returns {string} The ID of the label.
  */
 function fetchLabelId(name) {
-  return Gmail.Users.Labels.list('me').labels.find(_ => _.name === name).id;
+  return Gmail.Users.Labels.list("me").labels.find((_) => _.name === name).id;
 }
 
 /**
@@ -103,6 +107,6 @@ function removeLabels() {
       delete classificationLabel.gmailLabel;
     }
   }
-  console.log('Labels removed.');
+  console.log("Labels removed.");
   return buildHomepageCard();
 }

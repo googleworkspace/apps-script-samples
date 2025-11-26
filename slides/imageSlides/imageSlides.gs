@@ -15,7 +15,7 @@
  */
 
 // [START apps_script_slides_image_create]
-const NAME = 'My favorite images';
+const NAME = "My favorite images";
 const deck = SlidesApp.create(NAME);
 // [END apps_script_slides_image_create]
 
@@ -25,10 +25,10 @@ const deck = SlidesApp.create(NAME);
  * @param {string} imageUrl The image URL
  * @param {number} index The slide index to add the image to
  */
- function addImageSlide(imageUrl, index) {
+function addImageSlide(imageUrl, index) {
   const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   const image = slide.insertImage(imageUrl);
- }
+}
 // [END apps_script_slides_image_add_image]
 
 // [START apps_script_slides_image_main]
@@ -37,15 +37,18 @@ const deck = SlidesApp.create(NAME);
  */
 function main() {
   const images = [
-    'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-    'http://www.google.com/services/images/phone-animation-results_2x.png',
-    'http://www.google.com/services/images/section-work-card-img_2x.jpg',
-    'http://gsuite.google.com/img/icons/product-lockup.png',
-    'http://gsuite.google.com/img/home-hero_2x.jpg'
+    "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+    "http://www.google.com/services/images/phone-animation-results_2x.png",
+    "http://www.google.com/services/images/section-work-card-img_2x.jpg",
+    "http://gsuite.google.com/img/icons/product-lockup.png",
+    "http://gsuite.google.com/img/home-hero_2x.jpg",
   ];
   const [title, subtitle] = deck.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);
-  subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
+  subtitle
+    .asShape()
+    .getText()
+    .setText("Google Apps Script\nSlides Service demo");
   images.forEach(addImageSlide);
 }
 // [END apps_script_slides_image_main]
@@ -58,21 +61,20 @@ function main() {
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
-    const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
-    const image = slide.insertImage(imageUrl);
-    const imgWidth = image.getWidth();
-    const imgHeight = image.getHeight();
-    const pageWidth = deck.getPageWidth();
-    const pageHeight = deck.getPageHeight();
-    const newX = pageWidth/2. - imgWidth/2.;
-    const newY = pageHeight/2. - imgHeight/2.;
-    image.setLeft(newX).setTop(newY);
+  const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+  const image = slide.insertImage(imageUrl);
+  const imgWidth = image.getWidth();
+  const imgHeight = image.getHeight();
+  const pageWidth = deck.getPageWidth();
+  const pageHeight = deck.getPageHeight();
+  const newX = pageWidth / 2 - imgWidth / 2;
+  const newY = pageHeight / 2 - imgHeight / 2;
+  image.setLeft(newX).setTop(newY);
 }
 // [END apps_script_slides_image_add_image_slide]
 
-
 // [START apps_script_slides_image_full_script]
-const NAME = 'My favorite images';
+const NAME = "My favorite images";
 const presentation = SlidesApp.create(NAME);
 
 /**
@@ -82,15 +84,15 @@ const presentation = SlidesApp.create(NAME);
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
 function addImageSlide(imageUrl, index) {
-    const slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
-    const image = slide.insertImage(imageUrl);
-    const imgWidth = image.getWidth();
-    const imgHeight = image.getHeight();
-    const pageWidth = presentation.getPageWidth();
-    const pageHeight = presentation.getPageHeight();
-    const newX = pageWidth/2. - imgWidth/2.;
-    const newY = pageHeight/2. - imgHeight/2.;
-    image.setLeft(newX).setTop(newY);
+  const slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+  const image = slide.insertImage(imageUrl);
+  const imgWidth = image.getWidth();
+  const imgHeight = image.getHeight();
+  const pageWidth = presentation.getPageWidth();
+  const pageHeight = presentation.getPageHeight();
+  const newX = pageWidth / 2 - imgWidth / 2;
+  const newY = pageHeight / 2 - imgHeight / 2;
+  image.setLeft(newX).setTop(newY);
 }
 
 /**
@@ -99,15 +101,18 @@ function addImageSlide(imageUrl, index) {
  */
 function main() {
   const images = [
-    'http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-    'http://www.google.com/services/images/phone-animation-results_2x.png',
-    'http://www.google.com/services/images/section-work-card-img_2x.jpg',
-    'http://gsuite.google.com/img/icons/product-lockup.png',
-    'http://gsuite.google.com/img/home-hero_2x.jpg'
+    "http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+    "http://www.google.com/services/images/phone-animation-results_2x.png",
+    "http://www.google.com/services/images/section-work-card-img_2x.jpg",
+    "http://gsuite.google.com/img/icons/product-lockup.png",
+    "http://gsuite.google.com/img/home-hero_2x.jpg",
   ];
   const [title, subtitle] = presentation.getSlides()[0].getPageElements();
   title.asShape().getText().setText(NAME);
-  subtitle.asShape().getText().setText('Google Apps Script\nSlides Service demo');
+  subtitle
+    .asShape()
+    .getText()
+    .setText("Google Apps Script\nSlides Service demo");
   images.forEach(addImageSlide);
 }
 // [END apps_script_slides_image_full_script]

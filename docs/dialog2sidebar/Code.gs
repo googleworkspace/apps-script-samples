@@ -18,18 +18,19 @@
  * Runs when the document opens, populating the menu.
  */
 function onOpen() {
-  DocumentApp.getUi().createMenu('Sidebar')
-      .addItem('Show', 'showSidebar')
-      .addToUi();
+  DocumentApp.getUi()
+    .createMenu("Sidebar")
+    .addItem("Show", "showSidebar")
+    .addToUi();
 }
 
 /**
  * Shows the sidebar in the document.
  */
 function showSidebar() {
-  var page = HtmlService.createTemplateFromFile('Sidebar')
-      .evaluate()
-      .setTitle('Sidebar');
+  var page = HtmlService.createTemplateFromFile("Sidebar")
+    .evaluate()
+    .setTitle("Sidebar");
   DocumentApp.getUi().showSidebar(page);
 }
 
@@ -39,10 +40,9 @@ function showSidebar() {
  */
 function openDialog() {
   var dialogId = Utilities.base64Encode(Math.random());
-  var template = HtmlService.createTemplateFromFile('Dialog');
+  var template = HtmlService.createTemplateFromFile("Dialog");
   template.dialogId = dialogId;
-  var page = template.evaluate()
-      .setTitle('Dialog');
+  var page = template.evaluate().setTitle("Dialog");
   DocumentApp.getUi().showDialog(page);
   return dialogId;
 }

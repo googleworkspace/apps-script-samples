@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 /**
  * Generates invoices based on the selected rows in the spreadsheet. Assumes
  * that the Salesforce accountId is in the first selected column and the
@@ -30,8 +29,9 @@ function generateInvoices() {
     var accountId = row[0];
     var amount = row[3];
     var invoiceUrl = generateInvoice(accountId, amount);
-    sheet.getRange(range.getRow() + i, range.getLastColumn() + 1)
-        .setValue(invoiceUrl);
+    sheet
+      .getRange(range.getRow() + i, range.getLastColumn() + 1)
+      .setValue(invoiceUrl);
   }
 }
 
@@ -45,21 +45,27 @@ function generateInvoices() {
  */
 function generateInvoice(accountId, amount) {
   var folder = DriveApp.getFolderById(INVOICES_FOLDER);
-  var copied = DriveApp.getFileById(INVOICE_TEMPLATE)
-      .makeCopy('Invoice for ' + accountId, folder);
+  var copied = DriveApp.getFileById(INVOICE_TEMPLATE).makeCopy(
+    "Invoice for " + accountId,
+    folder,
+  );
   var invoice = DocumentApp.openById(copied.getId());
   var results = fetchSoqlResults(
-      'select Name, BillingAddress from Account where Id = \'' +
-      accountId + '\'');
-  var account = results['records'][0];
+    "select Name, BillingAddress from Account where Id = '" + accountId + "'",
+  );
+  var account = results["records"][0];
 
-  invoice.getBody().replaceText(
-      '{{account name}}', account['Name']);
-  invoice.getBody().replaceText(
-      '{{account address}}', account['BillingAddress']['street']);
-  invoice.getBody().replaceText(
-      '{{date}}', Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd'));
-  invoice.getBody().replaceText('{{amount}}', amount);
+  invoice.getBody().replaceText("{{account name}}", account["Name"]);
+  invoice
+    .getBody()
+    .replaceText("{{account address}}", account["BillingAddress"]["street"]);
+  invoice
+    .getBody()
+    .replaceText(
+      "{{date}}",
+      Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd"),
+    );
+  invoice.getBody().replaceText("{{amount}}", amount);
   invoice.saveAndClose();
   return invoice.getUrl();
 }
@@ -69,17 +75,18 @@ function generateInvoice(accountId, amount) {
  */
 function generateReport() {
   var sheet = SpreadsheetApp.getActiveSheet();
-  var chart = sheet.newChart()
+  var chart = sheet
+    .newChart()
     .asColumnChart()
-    .addRange(sheet.getRange('A:A'))
-    .addRange(sheet.getRange('C:D'))
+    .addRange(sheet.getRange("A:A"))
+    .addRange(sheet.getRange("C:D"))
     .setNumHeaders(1)
     .setMergeStrategy(Charts.ChartMergeStrategy.MERGE_COLUMNS)
-    .setOption('useFirstColumnAsDomain', true)
-    .setOption('isStacked', 'absolute')
-    .setOption('title', 'Expected Payments')
-    .setOption('treatLabelsAsText', false)
-    .setXAxisTitle('AccountId')
+    .setOption("useFirstColumnAsDomain", true)
+    .setOption("isStacked", "absolute")
+    .setOption("title", "Expected Payments")
+    .setOption("treatLabelsAsText", false)
+    .setXAxisTitle("AccountId")
     .setPosition(3, 1, 114, 138)
     .build();
 
@@ -88,15 +95,16 @@ function generateReport() {
   // Force the chart to be created before adding it to the presentation
   SpreadsheetApp.flush();
 
-  var preso = SlidesApp.create('Invoicing Report');
+  var preso = SlidesApp.create("Invoicing Report");
   var titleSlide = preso.getSlides()[0];
 
-  var titleShape = titleSlide.getPlaceholder(
-      SlidesApp.PlaceholderType.CENTERED_TITLE).asShape();
-  titleShape.getText().setText('Invoicing Report');
+  var titleShape = titleSlide
+    .getPlaceholder(SlidesApp.PlaceholderType.CENTERED_TITLE)
+    .asShape();
+  titleShape.getText().setText("Invoicing Report");
 
   var newSlide = preso.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   newSlide.insertSheetsChart(chart);
 
-  showLinkDialog(preso.getUrl(), 'Open report', 'Report created');
+  showLinkDialog(preso.getUrl(), "Open report", "Report created");
 }

@@ -11,14 +11,13 @@ function onAddToSpace(event) {
   var message = "";
 
   if (event.space.type === "DM") {
-    message = "Thank you for adding me to a DM, " +
-      event.user.displayName + "!";
+    message =
+      "Thank you for adding me to a DM, " + event.user.displayName + "!";
   } else {
-    message = "Thank you for adding me to " +
-      event.space.displayName;
+    message = "Thank you for adding me to " + event.space.displayName;
   }
 
-  return { "text": message };
+  return { text: message };
 }
 
 /**
@@ -40,13 +39,16 @@ function onRemoveFromSpace(event) {
  */
 function createCardResponse(widgets) {
   return {
-    "cards": [
+    cards: [
       header,
       {
-        "sections": [{
-          "widgets": widgets
-        }]
-    }]
+        sections: [
+          {
+            widgets: widgets,
+          },
+        ],
+      },
+    ],
   };
 }
 
@@ -59,11 +61,13 @@ function createCardResponse(widgets) {
 function onMessage(event) {
   var userMessage = event.message.text;
 
-  var widgets = [{
-    "textParagraph": {
-      "text": "You said: " + userMessage
-    }
-  }];
+  var widgets = [
+    {
+      textParagraph: {
+        text: "You said: " + userMessage,
+      },
+    },
+  ];
 
   return createCardResponse(widgets);
 }

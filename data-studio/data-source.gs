@@ -17,39 +17,39 @@
 // [START apps_script_data_studio_params]
 var configParams = [
   {
-    type: 'TEXTINPUT',
-    name: 'ZipCode',
-    displayName: 'ZIP Code',
+    type: "TEXTINPUT",
+    name: "ZipCode",
+    displayName: "ZIP Code",
     parameterControl: {
-      allowOverride: true
-    }
+      allowOverride: true,
+    },
   },
   {
-    type: 'SELECT_SINGLE',
-    name: 'units',
-    displayName: 'Units',
+    type: "SELECT_SINGLE",
+    name: "units",
+    displayName: "Units",
     parameterControl: {
-      allowOverride: true
+      allowOverride: true,
     },
     options: [
       {
-        label: 'Metric',
-        value: 'metric'
+        label: "Metric",
+        value: "metric",
       },
       {
-        label: 'Imperial',
-        value: 'imperial'
+        label: "Imperial",
+        value: "imperial",
       },
       {
-        label: 'Kelvin',
-        value: 'kelvin'
-      }
-    ]
+        label: "Kelvin",
+        value: "kelvin",
+      },
+    ],
   },
   {
-    type: 'TEXTINPUT',
-    name: 'Days',
-    displayName: 'Days to forecast'
-  }
+    type: "TEXTINPUT",
+    name: "Days",
+    displayName: "Days to forecast",
+  },
 ];
 // [END apps_script_data_studio_params]

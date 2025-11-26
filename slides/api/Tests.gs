@@ -17,11 +17,11 @@ const helpers = new Helpers();
 
 // Constants
 const IMAGE_URL =
-    'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png';
-const TEMPLATE_PRESENTATION_ID = '1iwq83aR9SIQbqVY-3ozLkJjKhdXErfS_m3zD8VZhtFA';
-const DATA_SPREADSHEET_ID = '1Y3GVGdJHDzlyMB9aLDWV2o_e2RstzUHK1iLDaBgbMwc';
+  "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";
+const TEMPLATE_PRESENTATION_ID = "1iwq83aR9SIQbqVY-3ozLkJjKhdXErfS_m3zD8VZhtFA";
+const DATA_SPREADSHEET_ID = "1Y3GVGdJHDzlyMB9aLDWV2o_e2RstzUHK1iLDaBgbMwc";
 const CHART_ID = 1107320627;
-const CUSTOMER_NAME = 'Fake Customer';
+const CUSTOMER_NAME = "Fake Customer";
 
 /**
  * A simple existance assertion. Logs if the value is falsy.
@@ -29,7 +29,7 @@ const CUSTOMER_NAME = 'Fake Customer';
  */
 function expectToExist(value) {
   if (!value) {
-    console.log('DNE');
+    console.log("DNE");
   }
 }
 
@@ -40,7 +40,7 @@ function expectToExist(value) {
  */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
-    console.log('actual: %s expected: %s', actual, expected);
+    console.log("actual: %s expected: %s", actual, expected);
   }
 }
 
@@ -66,7 +66,7 @@ function RUN_ALL_TESTS() {
  * Creates a presentation.
  */
 function itShouldCreateAPresentation() {
-  console.log('> itShouldCreateAPresentation');
+  console.log("> itShouldCreateAPresentation");
   const presentation = createPresentation();
   expectToExist(presentation.presentationId);
   helpers.deleteFileOnCleanup(presentation.presentationId);
@@ -76,9 +76,9 @@ function itShouldCreateAPresentation() {
  * Copies a presentation.
  */
 function itShouldCopyAPresentation() {
-  console.log('> itShouldCopyAPresentation');
+  console.log("> itShouldCopyAPresentation");
   const presentationId = helpers.createTestPresentation();
-  const copyId = copyPresentation(presentationId, 'My Duplicate, Presentation');
+  const copyId = copyPresentation(presentationId, "My Duplicate, Presentation");
   expectToExist(copyId);
   helpers.deleteFileOnCleanup(copyId);
 }
@@ -87,10 +87,10 @@ function itShouldCopyAPresentation() {
  * Creates a new slide.
  */
 function itShouldCreateASlide() {
-  console.log('> itShouldCreateASlide');
+  console.log("> itShouldCreateASlide");
   const presentationId = helpers.createTestPresentation();
-  helpers.addSlides(presentationId, 3, 'TITLE_AND_TWO_COLUMNS');
-  const pageId = 'my_page_id';
+  helpers.addSlides(presentationId, 3, "TITLE_AND_TWO_COLUMNS");
+  const pageId = "my_page_id";
   const response = createSlide(presentationId, pageId);
   expectToExist(response.replies[0].createSlide.objectId);
 }
@@ -99,9 +99,9 @@ function itShouldCreateASlide() {
  * Creates a slide with text.
  */
 function itShouldCreateATextboxWithText() {
-  console.log('> itShouldCreateATextboxWithText');
+  console.log("> itShouldCreateATextboxWithText");
   const presentationId = helpers.createTestPresentation();
-  const ids = helpers.addSlides(presentationId, 3, 'TITLE_AND_TWO_COLUMNS');
+  const ids = helpers.addSlides(presentationId, 3, "TITLE_AND_TWO_COLUMNS");
   const pageId = ids[0];
   const response = createTextboxWithText(presentationId, pageId);
   expectToEqual(2, response.replies.length);
@@ -113,9 +113,9 @@ function itShouldCreateATextboxWithText() {
  * Adds an image to a slide.
  */
 function itShouldCreateAnImage() {
-  console.log('> itShouldCreateAnImage');
+  console.log("> itShouldCreateAnImage");
   const presentationId = helpers.createTestPresentation();
-  const ids = helpers.addSlides(presentationId, 1, 'BLANK');
+  const ids = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = ids[0];
   const response = createImage(presentationId, pageId);
   expectToEqual(1, response.length);
@@ -127,12 +127,12 @@ function itShouldCreateAnImage() {
  * Merges presentation text from a spreadsheet.
  */
 function itShouldMergeText() {
-  console.log('> itShouldMergeText');
+  console.log("> itShouldMergeText");
   let responses = textMerging(TEMPLATE_PRESENTATION_ID, DATA_SPREADSHEET_ID);
   expectToEqual(5, responses.length);
-  responses.forEach(function(response) {
+  responses.forEach(function (response) {
     let numReplacements = 0;
-    response.forEach(function(res) {
+    response.forEach(function (res) {
       numReplacements += res.replaceAllText.occurrencesChanged;
     });
     expectToEqual(4, numReplacements);
@@ -143,11 +143,15 @@ function itShouldMergeText() {
  * Merges images into a spreadsheet.
  */
 function itShouldImageMerge() {
-  console.log('> itShouldImageMerge');
-  let response = imageMerging(TEMPLATE_PRESENTATION_ID, IMAGE_URL, CUSTOMER_NAME);
+  console.log("> itShouldImageMerge");
+  let response = imageMerging(
+    TEMPLATE_PRESENTATION_ID,
+    IMAGE_URL,
+    CUSTOMER_NAME,
+  );
   expectToEqual(2, response.replies.length);
   let numReplacements = 0;
-  response.replies.forEach(function(reply) {
+  response.replies.forEach(function (reply) {
     numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
   });
   expectToEqual(2, numReplacements);
@@ -157,12 +161,12 @@ function itShouldImageMerge() {
  * Replaces a text box with some text.
  */
 function itShouldSimpleTextReplace() {
-  console.log('> itShouldSimpleTextReplace');
+  console.log("> itShouldSimpleTextReplace");
   const presentationId = helpers.createTestPresentation();
-  const pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
+  const pageIds = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = pageIds[0];
   const boxId = helpers.createTestTextbox(presentationId, pageId);
-  const response = simpleTextReplace(presentationId, boxId, 'MY NEW TEXT');
+  const response = simpleTextReplace(presentationId, boxId, "MY NEW TEXT");
   expectToEqual(2, response.replies.length);
 }
 
@@ -170,9 +174,9 @@ function itShouldSimpleTextReplace() {
  * Updates style for text.
  */
 function itShouldTextStyleUpdate() {
-  console.log('> itShouldTextStyleUpdate');
+  console.log("> itShouldTextStyleUpdate");
   const presentationId = helpers.createTestPresentation();
-  const pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
+  const pageIds = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = pageIds[0];
   const boxId = helpers.createTestTextbox(presentationId, pageId);
   const response = textStyleUpdate(presentationId, boxId);
@@ -183,9 +187,9 @@ function itShouldTextStyleUpdate() {
  * Creates bulleted text.
  */
 function itShouldCreateBulletedText() {
-  console.log('> itShouldCreateBulletedText');
+  console.log("> itShouldCreateBulletedText");
   const presentationId = helpers.createTestPresentation();
-  const pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
+  const pageIds = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = pageIds[0];
   const boxId = helpers.createTestTextbox(presentationId, pageId);
   const response = createBulletedText(presentationId, boxId);
@@ -196,11 +200,16 @@ function itShouldCreateBulletedText() {
  * Adds a sheets chart in a presentation.
  */
 function itShouldCreateSheetsChart() {
-  console.log('> itShouldCreateSheetsChart');
+  console.log("> itShouldCreateSheetsChart");
   const presentationId = helpers.createTestPresentation();
-  const pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
+  const pageIds = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = pageIds[0];
-  const response = createSheetsChart(presentationId, pageId, DATA_SPREADSHEET_ID, CHART_ID);
+  const response = createSheetsChart(
+    presentationId,
+    pageId,
+    DATA_SPREADSHEET_ID,
+    CHART_ID,
+  );
   expectToEqual(1, response.replies.length);
   const chartId = response.replies[0].createSheetsChart.objectId;
   expectToExist(chartId);
@@ -210,12 +219,16 @@ function itShouldCreateSheetsChart() {
  * Refreshes a sheets chart in a presentation.
  */
 function itShouldRefreshSheetsChart() {
-  console.log('> itShouldRefreshSheetsChart');
+  console.log("> itShouldRefreshSheetsChart");
   const presentationId = helpers.createTestPresentation();
-  const pageIds = helpers.addSlides(presentationId, 1, 'BLANK');
+  const pageIds = helpers.addSlides(presentationId, 1, "BLANK");
   const pageId = pageIds[0];
-  const sheetChartId = helpers.createTestSheetsChart(presentationId, pageId, DATA_SPREADSHEET_ID,
-      CHART_ID);
+  const sheetChartId = helpers.createTestSheetsChart(
+    presentationId,
+    pageId,
+    DATA_SPREADSHEET_ID,
+    CHART_ID,
+  );
   const response = refreshSheetsChart(presentationId, sheetChartId);
   expectToEqual(1, response.replies.length);
 }

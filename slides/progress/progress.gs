@@ -17,7 +17,7 @@
 /**
  * @OnlyCurrentDoc Adds progress bars to a presentation.
  */
-const BAR_ID = 'PROGRESS_BAR_ID';
+const BAR_ID = "PROGRESS_BAR_ID";
 const BAR_HEIGHT = 10; // px
 
 /**
@@ -37,10 +37,11 @@ function onInstall(e) {
  * @param {object} e The onOpen event.
  */
 function onOpen(e) {
-  SlidesApp.getUi().createAddonMenu()
-      .addItem('Show progress bar', 'createBars')
-      .addItem('Hide progress bar', 'deleteBars')
-      .addToUi();
+  SlidesApp.getUi()
+    .createAddonMenu()
+    .addItem("Show progress bar", "createBars")
+    .addItem("Hide progress bar", "deleteBars")
+    .addToUi();
 }
 
 /**
@@ -51,13 +52,18 @@ function createBars() {
   const presentation = SlidesApp.getActivePresentation();
   const slides = presentation.getSlides();
   for (let i = 0; i < slides.length; ++i) {
-    const ratioComplete = (i / (slides.length - 1));
+    const ratioComplete = i / (slides.length - 1);
     const x = 0;
     const y = presentation.getPageHeight() - BAR_HEIGHT;
     const barWidth = presentation.getPageWidth() * ratioComplete;
     if (barWidth > 0) {
-      const bar = slides[i].insertShape(SlidesApp.ShapeType.RECTANGLE, x, y,
-          barWidth, BAR_HEIGHT);
+      const bar = slides[i].insertShape(
+        SlidesApp.ShapeType.RECTANGLE,
+        x,
+        y,
+        barWidth,
+        BAR_HEIGHT,
+      );
       bar.getBorder().setTransparent();
       bar.setLinkUrl(BAR_ID);
     }
@@ -73,9 +79,11 @@ function deleteBars() {
   for (let i = 0; i < slides.length; ++i) {
     const elements = slides[i].getPageElements();
     for (const el of elements) {
-      if (el.getPageElementType() === SlidesApp.PageElementType.SHAPE &&
+      if (
+        el.getPageElementType() === SlidesApp.PageElementType.SHAPE &&
         el.asShape().getLink() &&
-        el.asShape().getLink().getUrl() === BAR_ID) {
+        el.asShape().getLink().getUrl() === BAR_ID
+      ) {
         el.remove();
       }
     }

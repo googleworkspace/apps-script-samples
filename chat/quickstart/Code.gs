@@ -33,7 +33,7 @@ function listSpaces() {
     // Request response pages
     responsePage = Chat.Spaces.list({
       filter: filter,
-      pageToken: pageToken
+      pageToken: pageToken,
     });
     // Handle response pages
     if (responsePage.spaces) {

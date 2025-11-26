@@ -24,9 +24,9 @@ var _ = Underscore.load();
  * TODO: Replace the following with the name of the service you are importing
  * from and the name of the add-on you are building, respectively.
  */
-var DATA_ALIAS = 'MyDataSource';
-var ADDON_NAME = 'YOUR_ADDON_NAME_HERE';
-var SIDEBAR_TITLE = 'Import Control Center';
+var DATA_ALIAS = "MyDataSource";
+var ADDON_NAME = "YOUR_ADDON_NAME_HERE";
+var SIDEBAR_TITLE = "Import Control Center";
 var MAX_SCHEDULED_REPORTS = 24;
 var IMPORT_PAGE_SIZE = 30;
 
@@ -37,7 +37,7 @@ var ERROR_CODES = {
   AUTO_UPDATE_LIMIT: 1,
   ILLEGAL_EDIT: 2,
   ILLEGAL_DELETE: 3,
-  IMPORT_FAILED: 4
+  IMPORT_FAILED: 4,
 };
 
 /**
@@ -46,9 +46,9 @@ var ERROR_CODES = {
  */
 function onOpen(e) {
   SpreadsheetApp.getUi()
-      .createAddonMenu()
-      .addItem('Import control center', 'showSidebar')
-      .addToUi();
+    .createAddonMenu()
+    .addItem("Import control center", "showSidebar")
+    .addToUi();
 }
 
 /**
@@ -66,7 +66,7 @@ function onInstall(e) {
  */
 function showSidebar() {
   var service = getService();
-  var template = HtmlService.createTemplateFromFile('Sidebar');
+  var template = HtmlService.createTemplateFromFile("Sidebar");
   template.user = Session.getEffectiveUser().getEmail();
   template.dataSource = DATA_ALIAS;
   template.isAuthorized = service.hasAccess();
@@ -74,8 +74,7 @@ function showSidebar() {
   if (!template.isAuthorized) {
     template.authorizationUrl = service.getAuthorizationUrl();
   }
-  var page = template.evaluate()
-      .setTitle(SIDEBAR_TITLE);
+  var page = template.evaluate().setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(page);
 }
 
@@ -88,19 +87,19 @@ function showSidebar() {
 function getInitialDataForSidebar() {
   var reportSet = getAllReports();
   var reportList = [];
-  _.each(reportSet, function(val, key) {
-    reportList.push({'name': val, 'reportId': key});
+  _.each(reportSet, function (val, key) {
+    reportList.push({ name: val, reportId: key });
   });
-  reportList.sort(function(a, b) {
+  reportList.sort(function (a, b) {
     if (a.name > b.name) {
- return 1;
-}
+      return 1;
+    }
     if (a.name < b.name) {
- return -1;
-}
+      return -1;
+    }
     return 0;
   });
-  return {reports: reportList, columns: getColumnOptions()};
+  return { reports: reportList, columns: getColumnOptions() };
 }
 
 /**
@@ -142,7 +141,9 @@ function runImport(reportId) {
     do {
       page = getDataPage(columnIds, pageNumber, IMPORT_PAGE_SIZE, config);
       if (page) {
-        sheet.getRange(firstRow, 1, page.length, page[0].length).setValues(page);
+        sheet
+          .getRange(firstRow, 1, page.length, page[0].length)
+          .setValues(page);
         firstRow += page.length;
         pageNumber++;
         SpreadsheetApp.flush();
@@ -156,7 +157,7 @@ function runImport(reportId) {
   for (var i = 1; i <= sheet.getLastColumn(); i++) {
     sheet.autoResizeColumn(i);
   }
-  ss.toast('Report ' + config.name + ' updated.');
+  ss.toast("Report " + config.name + " updated.");
   return config;
 }
 
@@ -218,16 +219,17 @@ function activateReportSheet(config) {
   }
   sheet.activate();
 
-  var headers = _.map(config.columns, function(col) {
+  var headers = _.map(config.columns, function (col) {
     return col.label;
   });
   sheet.clear();
   sheet.clearNotes();
   sheet.setFrozenRows(1);
-  sheet.getRange('1:1')
-    .setFontWeight('bold')
-    .setBackground('#000000')
-    .setFontColor('#ffffff');
+  sheet
+    .getRange("1:1")
+    .setFontWeight("bold")
+    .setBackground("#000000")
+    .setFontColor("#ffffff");
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   return sheet;
 }
@@ -244,8 +246,9 @@ function respondToHourlyTrigger() {
   // been supplied yet -- if so, warn the active user via email (if possible).
   // This check is required when using triggers with add-ons to maintain
   // functional triggers.
-  if (authInfo.getAuthorizationStatus() ==
-      ScriptApp.AuthorizationStatus.REQUIRED) {
+  if (
+    authInfo.getAuthorizationStatus() == ScriptApp.AuthorizationStatus.REQUIRED
+  ) {
     // Re-authorization is required. In this case, the user needs to be alerted
     // that they need to reauthorize; the normal trigger action is not
     // conducted, since it authorization needs to be provided first. Send at
@@ -256,7 +259,7 @@ function respondToHourlyTrigger() {
     var potentials = getScheduledReports(Session.getEffectiveUser().getEmail());
     for (var i = 0; i < potentials.length; i++) {
       var lastRun = potentials[i].lastRun;
-      if (!lastRun || isOlderThanADay(lastRun) ) {
+      if (!lastRun || isOlderThanADay(lastRun)) {
         runImport(potentials[i].reportId);
         return;
       }
@@ -273,22 +276,24 @@ function respondToHourlyTrigger() {
 function sendReauthorizationRequest() {
   var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
   var properties = PropertiesService.getUserProperties();
-  var LAST_AUTH_EMAIL_KEY = 'Import.reauth.lastAuthEmailDate';
+  var LAST_AUTH_EMAIL_KEY = "Import.reauth.lastAuthEmailDate";
   var lastAuthEmailDate = properties.getProperty(LAST_AUTH_EMAIL_KEY);
   var today = new Date().toDateString();
   if (lastAuthEmailDate != today) {
     if (MailApp.getRemainingDailyQuota() > 0) {
-      var template =
-          HtmlService.createTemplateFromFile('AuthorizationEmail');
+      var template = HtmlService.createTemplateFromFile("AuthorizationEmail");
       template.url = authInfo.getAuthorizationUrl();
       template.addonName = ADDON_NAME;
       var message = template.evaluate();
-      MailApp.sendEmail(Session.getEffectiveUser().getEmail(),
-        'Add-on Authorization Required',
-        message.getContent(), {
+      MailApp.sendEmail(
+        Session.getEffectiveUser().getEmail(),
+        "Add-on Authorization Required",
+        message.getContent(),
+        {
           name: ADDON_NAME,
-          htmlBody: message.getContent()
-      });
+          htmlBody: message.getContent(),
+        },
+      );
     }
     properties.setProperty(LAST_AUTH_EMAIL_KEY, today);
   }
@@ -306,15 +311,16 @@ function adjustScheduleTrigger() {
   // Create a new trigger if required; delete existing trigger
   // if it is not needed.
   if (triggerNeeded && existingTriggerId == null) {
-    var trigger = ScriptApp.newTrigger('respondToHourlyTrigger')
-        .timeBased()
-        .everyHours(1)
-        .create();
+    var trigger = ScriptApp.newTrigger("respondToHourlyTrigger")
+      .timeBased()
+      .everyHours(1)
+      .create();
     saveTriggerId(trigger);
   } else if (!triggerNeeded && existingTriggerId != null) {
     var existingTrigger = getUserTriggerById(
-        SpreadsheetApp.getActiveSpreadsheet(),
-        existingTriggerId);
+      SpreadsheetApp.getActiveSpreadsheet(),
+      existingTriggerId,
+    );
     if (existingTrigger != null) {
       ScriptApp.deleteTrigger(existingTrigger);
     }

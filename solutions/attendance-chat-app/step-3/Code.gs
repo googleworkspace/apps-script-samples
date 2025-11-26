@@ -11,14 +11,13 @@ function onAddToSpace(event) {
   var message = "";
 
   if (event.space.type === "DM") {
-    message = "Thank you for adding me to a DM, " +
-      event.user.displayName + "!";
+    message =
+      "Thank you for adding me to a DM, " + event.user.displayName + "!";
   } else {
-    message = "Thank you for adding me to " +
-      event.space.displayName;
+    message = "Thank you for adding me to " + event.space.displayName;
   }
 
-  return { "text": message };
+  return { text: message };
 }
 
 /**

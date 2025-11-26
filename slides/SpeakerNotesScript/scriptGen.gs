@@ -32,9 +32,10 @@ function onInstall(e) {
  * @param {object} e The onOpen event.
  */
 function onOpen(e) {
-  SlidesApp.getUi().createAddonMenu()
-      .addItem('Generate Script Document', 'generateSlidesScript')
-      .addToUi();
+  SlidesApp.getUi()
+    .createAddonMenu()
+    .addItem("Generate Script Document", "generateSlidesScript")
+    .addToUi();
 }
 
 /**
@@ -43,12 +44,12 @@ function onOpen(e) {
  */
 function generateSlidesScript() {
   const presentation = SlidesApp.getActivePresentation();
-  const docTitle = presentation.getName() + ' Script';
+  const docTitle = presentation.getName() + " Script";
   const slides = presentation.getSlides();
 
   // Creates a document in the user's home Drive directory.
   const speakerNotesDoc = DocumentApp.create(docTitle);
-  console.log('Created document with id %s', speakerNotesDoc.getId());
+  console.log("Created document with id %s", speakerNotesDoc.getId());
 
   const docBody = speakerNotesDoc.getBody();
   const header = docBody.appendParagraph(docTitle);
@@ -57,14 +58,20 @@ function generateSlidesScript() {
   // Iterate through each slide and extract the speaker notes
   // into the document body.
   for (let i = 0; i < slides.length; i++) {
-    const section = docBody.appendParagraph('Slide ' + (i + 1))
-        .setHeading(DocumentApp.ParagraphHeading.HEADING2);
+    const section = docBody
+      .appendParagraph("Slide " + (i + 1))
+      .setHeading(DocumentApp.ParagraphHeading.HEADING2);
 
-    const notes = slides[i].getNotesPage().getSpeakerNotesShape().getText().asString();
-    docBody.appendParagraph(notes)
-        .appendHorizontalRule();
+    const notes = slides[i]
+      .getNotesPage()
+      .getSpeakerNotesShape()
+      .getText()
+      .asString();
+    docBody.appendParagraph(notes).appendHorizontalRule();
   }
 
-  SlidesApp.getUi().alert(speakerNotesDoc.getName() + ' has been created in your Drive files.');
+  SlidesApp.getUi().alert(
+    speakerNotesDoc.getName() + " has been created in your Drive files.",
+  );
 }
 // [END apps_script_slides_speaker_notes_script]

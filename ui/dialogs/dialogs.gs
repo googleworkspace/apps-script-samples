@@ -20,8 +20,8 @@
  */
 function onOpen() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-    .createMenu('Custom Menu')
-    .addItem('Show alert', 'showAlert')
+    .createMenu("Custom Menu")
+    .addItem("Show alert", "showAlert")
     .addToUi();
 }
 
@@ -32,17 +32,18 @@ function showAlert() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var result = ui.alert(
-    'Please confirm',
-    'Are you sure you want to continue?',
-    ui.ButtonSet.YES_NO);
+    "Please confirm",
+    "Are you sure you want to continue?",
+    ui.ButtonSet.YES_NO,
+  );
 
   // Process the user's response.
   if (result === ui.Button.YES) {
     // User clicked "Yes".
-    ui.alert('Confirmation received.');
+    ui.alert("Confirmation received.");
   } else {
     // User clicked "No" or X in the title bar.
-    ui.alert('Permission denied.');
+    ui.alert("Permission denied.");
   }
 }
 // [END apps_script_alert_dialogs]
@@ -53,8 +54,8 @@ function showAlert() {
  */
 function onOpen() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-    .createMenu('Custom Menu')
-    .addItem('Show prompt', 'showPrompt')
+    .createMenu("Custom Menu")
+    .addItem("Show prompt", "showPrompt")
     .addToUi();
 }
 
@@ -65,22 +66,23 @@ function showPrompt() {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var result = ui.prompt(
-    'Let\'s get to know each other!',
-    'Please enter your name:',
-    ui.ButtonSet.OK_CANCEL);
+    "Let's get to know each other!",
+    "Please enter your name:",
+    ui.ButtonSet.OK_CANCEL,
+  );
 
   // Process the user's response.
   var button = result.getSelectedButton();
   var text = result.getResponseText();
   if (button === ui.Button.OK) {
     // User clicked "OK".
-    ui.alert('Your name is ' + text + '.');
+    ui.alert("Your name is " + text + ".");
   } else if (button === ui.Button.CANCEL) {
     // User clicked "Cancel".
-    ui.alert('I didn\'t get your name.');
+    ui.alert("I didn't get your name.");
   } else if (button === ui.Button.CLOSE) {
     // User clicked X in the title bar.
-    ui.alert('You closed the dialog.');
+    ui.alert("You closed the dialog.");
   }
 }
 // [END apps_script_prompt_dialog]
@@ -91,8 +93,8 @@ function showPrompt() {
  */
 function onOpen() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-    .createMenu('Custom Menu')
-    .addItem('Show dialog', 'showDialog')
+    .createMenu("Custom Menu")
+    .addItem("Show dialog", "showDialog")
     .addToUi();
 }
 
@@ -100,11 +102,11 @@ function onOpen() {
  * Shows a custom dialog.
  */
 function showDialog() {
-  var html = HtmlService.createHtmlOutputFromFile('Page')
+  var html = HtmlService.createHtmlOutputFromFile("Page")
     .setWidth(400)
     .setHeight(300);
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-    .showModalDialog(html, 'My custom dialog');
+    .showModalDialog(html, "My custom dialog");
 }
 // [END apps_script_custom_dialog]
 
@@ -114,8 +116,8 @@ function showDialog() {
  */
 function onOpen() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-    .createMenu('Custom Menu')
-    .addItem('Show sidebar', 'showSidebar')
+    .createMenu("Custom Menu")
+    .addItem("Show sidebar", "showSidebar")
     .addToUi();
 }
 
@@ -123,8 +125,8 @@ function onOpen() {
  * Shows a custom sidebar.
  */
 function showSidebar() {
-  var html = HtmlService.createHtmlOutputFromFile('Page')
-    .setTitle('My custom sidebar')
+  var html = HtmlService.createHtmlOutputFromFile("Page")
+    .setTitle("My custom sidebar")
     .setWidth(300);
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
     .showSidebar(html);

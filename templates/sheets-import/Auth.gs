@@ -24,13 +24,13 @@
  */
 function getService() {
   /* TODO: Fill in the following required parameters for your data source. */
-  var service = OAuth2.createService('ENTER_SERVICE_NAME_HERE')
-      .setAuthorizationBaseUrl('ENTER_BASE_URL_HERE')
-      .setTokenUrl('ENTER_TOKEN_URL_HERE')
-      .setClientId('ENTER_CLIENT_ID_HERE')
-      .setClientSecret('ENTER_CLIENT_SECRET_HERE')
-      .setCallbackFunction('authCallback')
-      .setPropertyStore(PropertiesService.getUserProperties());
+  var service = OAuth2.createService("ENTER_SERVICE_NAME_HERE")
+    .setAuthorizationBaseUrl("ENTER_BASE_URL_HERE")
+    .setTokenUrl("ENTER_TOKEN_URL_HERE")
+    .setClientId("ENTER_CLIENT_ID_HERE")
+    .setClientSecret("ENTER_CLIENT_SECRET_HERE")
+    .setCallbackFunction("authCallback")
+    .setPropertyStore(PropertiesService.getUserProperties());
 
   /* TODO: Do any app-specific OAuth property setting here.
    * For details, see:
@@ -50,7 +50,7 @@ function getService() {
  * @return {HTML} A auth callback HTML page.
  */
 function authCallback(request) {
-  var template = HtmlService.createTemplateFromFile('AuthCallbackView');
+  var template = HtmlService.createTemplateFromFile("AuthCallbackView");
   template.user = Session.getEffectiveUser().getEmail();
   template.isAuthorized = false;
   template.error = null;
@@ -59,14 +59,13 @@ function authCallback(request) {
     var service = getService();
     var authorized = service.handleCallback(request);
     template.isAuthorized = authorized;
-    title = authorized ? 'Access Granted' : 'Access Denied';
+    title = authorized ? "Access Granted" : "Access Denied";
   } catch (e) {
     template.error = e;
-    title = 'Access Error';
+    title = "Access Error";
   }
   template.title = title;
-  return template.evaluate()
-      .setTitle(title);
+  return template.evaluate().setTitle(title);
 }
 
 /**

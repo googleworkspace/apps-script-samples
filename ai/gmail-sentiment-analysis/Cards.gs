@@ -14,30 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 /**
  * Builds the card for to display in the sidepanel of gmail.
  * @return {CardService.Card} The card to show to the user.
  */
 
-function buildCard_GmailHome(notifyOk=false){
-  const imageUrl ='https://icons.iconarchive.com/icons/roundicons/100-free-solid/48/spy-icon.png'; 
-  const image = CardService.newImage()
-    .setImageUrl(imageUrl);
+function buildCard_GmailHome(notifyOk = false) {
+  const imageUrl =
+    "https://icons.iconarchive.com/icons/roundicons/100-free-solid/48/spy-icon.png";
+  const image = CardService.newImage().setImageUrl(imageUrl);
 
   const cardHeader = CardService.newCardHeader()
     .setImageUrl(imageUrl)
     .setImageStyle(CardService.ImageStyle.CIRCLE)
     .setTitle("Analyze your GMail");
-  
-  const action = CardService.newAction()
-    .setFunctionName('analyzeSentiment');
+
+  const action = CardService.newAction().setFunctionName("analyzeSentiment");
   const button = CardService.newTextButton()
-    .setText('Identify angry customers')
+    .setText("Identify angry customers")
     .setOnClickAction(action)
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED);
-  const buttonSet = CardService.newButtonSet()
-    .addButton(button);
+  const buttonSet = CardService.newButtonSet().addButton(button);
 
   const section = CardService.newCardSection()
     .setHeader("Emails sentiment analysis")
@@ -47,21 +44,20 @@ function buildCard_GmailHome(notifyOk=false){
     .setHeader(cardHeader)
     .addSection(section);
 
-/**
- * This builds the card that contains the footer that informs
- * the user about the successful execution of the Add-on.
- */
+  /**
+   * This builds the card that contains the footer that informs
+   * the user about the successful execution of the Add-on.
+   */
 
-if(notifyOk==true){
-  let fixedFooter = CardService.newFixedFooter()
-    .setPrimaryButton(
+  if (notifyOk == true) {
+    let fixedFooter = CardService.newFixedFooter().setPrimaryButton(
       CardService.newTextButton()
         .setText("Analysis complete")
         .setOnClickAction(
-          CardService.newAction()
-            .setFunctionName(
-              "buildCard_GmailHome")));
-    card.setFixedFooter(fixedFooter);  
-}
+          CardService.newAction().setFunctionName("buildCard_GmailHome"),
+        ),
+    );
+    card.setFixedFooter(fixedFooter);
+  }
   return card.build();
 }

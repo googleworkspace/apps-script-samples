@@ -23,23 +23,23 @@ function listCourses() {
   const pageToken = null;
   const optionalArgs = {
     pageToken: pageToken,
-    pageSize: 100
+    pageSize: 100,
   };
   try {
     const response = Classroom.Courses.list(optionalArgs);
     courses = response.courses;
     if (courses.length === 0) {
-      console.log('No courses found.');
+      console.log("No courses found.");
       return;
     }
     // Print the courses available in classroom
-    console.log('Courses:');
-    for ( const course in courses) {
-      console.log('%s (%s)', courses[course].name, courses[course].id);
+    console.log("Courses:");
+    for (const course in courses) {
+      console.log("%s (%s)", courses[course].name, courses[course].id);
     }
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END classroom_list_courses]

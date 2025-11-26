@@ -23,12 +23,12 @@
 function createDocument() {
   try {
     // Create document with title
-    const document = Docs.Documents.create({'title': 'My New Document'});
-    console.log('Created document with ID: ' + document.documentId);
+    const document = Docs.Documents.create({ title: "My New Document" });
+    console.log("Created document with ID: " + document.documentId);
     return document.documentId;
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END docs_create_document]
@@ -50,37 +50,45 @@ function findAndReplace(documentId, findTextToReplacementMap) {
       replaceAllText: {
         containsText: {
           text: findText,
-          matchCase: true
+          matchCase: true,
         },
         replaceText: replaceText,
         tabsCriteria: {
           tabIds: [TAB_ID_1, TAB_ID_2, TAB_ID_3],
-        }
-      }
+        },
+      },
     };
     // Another option is to omit TabsCriteria if you are replacing across all tabs.
     const request = {
       replaceAllText: {
         containsText: {
           text: findText,
-          matchCase: true
+          matchCase: true,
         },
-        replaceText: replaceText
-      }
+        replaceText: replaceText,
+      },
     };
     requests.push(request);
   }
   try {
-    const response = Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    const response = Docs.Documents.batchUpdate(
+      { requests: requests },
+      documentId,
+    );
     const replies = response.replies;
     for (const [index] of replies.entries()) {
-      const numReplacements = replies[index].replaceAllText.occurrencesChanged || 0;
-      console.log('Request %s performed %s replacements.', index, numReplacements);
+      const numReplacements =
+        replies[index].replaceAllText.occurrencesChanged || 0;
+      console.log(
+        "Request %s performed %s replacements.",
+        index,
+        numReplacements,
+      );
     }
     return replies;
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error : %s', e.message);
+    console.log("Failed with error : %s", e.message);
   }
 }
 // [END docs_find_and_replace_text]
@@ -95,41 +103,46 @@ function findAndReplace(documentId, findTextToReplacementMap) {
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/batchUpdate
  */
 function insertAndStyleText(documentId, text) {
-  const requests = [{
-    insertText: {
-      location: {
-        index: 1,
-        // A tab can be specified using its ID. When omitted, the request is
-        // applied to the first tab.
-        // tabId: TAB_ID
-      },
-      text: text
-    }
-  },
-  {
-    updateTextStyle: {
-      range: {
-        startIndex: 1,
-        endIndex: text.length + 1
-      },
-      textStyle: {
-        fontSize: {
-          magnitude: 12,
-          unit: 'PT'
+  const requests = [
+    {
+      insertText: {
+        location: {
+          index: 1,
+          // A tab can be specified using its ID. When omitted, the request is
+          // applied to the first tab.
+          // tabId: TAB_ID
         },
-        weightedFontFamily: {
-          fontFamily: 'Calibri'
-        }
+        text: text,
       },
-      fields: 'weightedFontFamily, fontSize'
-    }
-  }];
+    },
+    {
+      updateTextStyle: {
+        range: {
+          startIndex: 1,
+          endIndex: text.length + 1,
+        },
+        textStyle: {
+          fontSize: {
+            magnitude: 12,
+            unit: "PT",
+          },
+          weightedFontFamily: {
+            fontFamily: "Calibri",
+          },
+        },
+        fields: "weightedFontFamily, fontSize",
+      },
+    },
+  ];
   try {
-    const response =Docs.Documents.batchUpdate({'requests': requests}, documentId);
+    const response = Docs.Documents.batchUpdate(
+      { requests: requests },
+      documentId,
+    );
     return response.replies;
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed with an error %s', e.message);
+    console.log("Failed with an error %s", e.message);
   }
 }
 // [END docs_insert_and_style_text]
@@ -144,7 +157,9 @@ function insertAndStyleText(documentId, text) {
 function readFirstParagraph(documentId) {
   try {
     // Get the document using document ID
-    const document = Docs.Documents.get(documentId, {'includeTabsContent': true});
+    const document = Docs.Documents.get(documentId, {
+      includeTabsContent: true,
+    });
     const firstTab = document.tabs[0];
     const bodyElements = firstTab.documentTab.body.content;
     for (let i = 0; i < bodyElements.length; i++) {
@@ -152,7 +167,7 @@ function readFirstParagraph(documentId) {
       // Print the first paragraph text present in document
       if (structuralElement.paragraph) {
         const paragraphElements = structuralElement.paragraph.elements;
-        let paragraphText = '';
+        let paragraphText = "";
 
         for (let j = 0; j < paragraphElements.length; j++) {
           const paragraphElement = paragraphElements[j];
@@ -166,7 +181,7 @@ function readFirstParagraph(documentId) {
     }
   } catch (e) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', e.message);
+    console.log("Failed with error %s", e.message);
   }
 }
 // [END docs_read_first_paragraph]

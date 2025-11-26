@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-var REPORT_SET_KEY = 'Import.ReportSet';
-var SCHEDULE_TRIGGER_ID = 'Import.scheduled.triggerId';
+var REPORT_SET_KEY = "Import.ReportSet";
+var SCHEDULE_TRIGGER_ID = "Import.scheduled.triggerId";
 
 /**
  * Update type enum used when adding or deleting a report.
  */
 var UPDATE_TYPE = {
   ADD: 1,
-  REMOVE: 2
+  REMOVE: 2,
 };
 
 /**
@@ -53,7 +53,7 @@ function getReportConfig(reportId) {
  */
 function saveReportConfig(config) {
   var previous = getReportConfig(config.reportId);
-  if (config.reportId === 'new-report') {
+  if (config.reportId === "new-report") {
     config.reportId = newReportId();
     config.lastRun = null;
     config.owner = Session.getEffectiveUser().getEmail();
@@ -85,8 +85,10 @@ function canEditReport(config) {
   if (!config) {
     return false;
   }
-  return config.scheduled == false ||
-    Session.getEffectiveUser().getEmail() == config.owner;
+  return (
+    config.scheduled == false ||
+    Session.getEffectiveUser().getEmail() == config.owner
+  );
 }
 
 /**
@@ -101,8 +103,11 @@ function isOverScheduleLimit(config) {
   var currentUser = Session.getEffectiveUser().getEmail();
   var isScheduled = config == null ? false : config.scheduled;
   var wasScheduled = previous == null ? false : previous.scheduled;
-  return (isScheduled && wasScheduled != true &&
-    getScheduledReports(currentUser).length >= MAX_SCHEDULED_REPORTS);
+  return (
+    isScheduled &&
+    wasScheduled != true &&
+    getScheduledReports(currentUser).length >= MAX_SCHEDULED_REPORTS
+  );
 }
 
 /**
@@ -125,10 +130,9 @@ function getAllReports() {
  */
 function getScheduledReports(opt_user) {
   var scheduledReports = [];
-  _.keys(getAllReports()).forEach(function(reportId) {
+  _.keys(getAllReports()).forEach(function (reportId) {
     var config = getReportConfig(reportId);
-    if (config && config.scheduled &&
-      (!opt_user || opt_user == config.owner)) {
+    if (config && config.scheduled && (!opt_user || opt_user == config.owner)) {
       scheduledReports.push(config);
     }
   });
@@ -173,7 +177,7 @@ function updateReportSet(updateType, reportId, reportName) {
 function updateOnImport(config, sheet, lastRun) {
   var update = {
     sheetId: sheet.getSheetId().toString(),
-    lastRun: lastRun
+    lastRun: lastRun,
   };
   saveObjectToProperties(config.reportId, update);
   update.sheetName = sheet.getName();
@@ -187,7 +191,7 @@ function updateOnImport(config, sheet, lastRun) {
  * @return {Array} column ID strings.
  */
 function getColumnIds(config) {
-  return _.map(config.columns, function(col) {
+  return _.map(config.columns, function (col) {
     return col.column;
   });
 }

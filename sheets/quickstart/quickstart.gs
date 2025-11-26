@@ -21,20 +21,23 @@
  * @see https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
  */
 function logNamesAndMajors() {
-  const spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
-  const rangeName = 'Class Data!A2:E';
+  const spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
+  const rangeName = "Class Data!A2:E";
   try {
     // Get the values from the spreadsheet using spreadsheetId and range.
-    const values = Sheets.Spreadsheets.Values.get(spreadsheetId, rangeName).values;
+    const values = Sheets.Spreadsheets.Values.get(
+      spreadsheetId,
+      rangeName,
+    ).values;
     //  Print the values from spreadsheet if values are available.
     if (!values) {
-      console.log('No data found.');
+      console.log("No data found.");
       return;
     }
-    console.log('Name, Major:');
+    console.log("Name, Major:");
     for (const row in values) {
       // Print columns A and E, which correspond to indices 0 and 4.
-      console.log(' - %s, %s', values[row][0], values[row][4]);
+      console.log(" - %s, %s", values[row][0], values[row][4]);
     }
   } catch (err) {
     // TODO (developer) - Handle Values.get() exception from Sheet API

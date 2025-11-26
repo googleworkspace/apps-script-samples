@@ -21,35 +21,37 @@ function productInsert() {
   const merchantId = 123456; // Replace this with your Merchant Center ID.
   // Create a product resource and insert it
   const productResource = {
-    'offerId': 'book123',
-    'title': 'A Tale of Two Cities',
-    'description': 'A classic novel about the French Revolution',
-    'link': 'http://my-book-shop.com/tale-of-two-cities.html',
-    'imageLink': 'http://my-book-shop.com/tale-of-two-cities.jpg',
-    'contentLanguage': 'en',
-    'targetCountry': 'US',
-    'channel': 'online',
-    'availability': 'in stock',
-    'condition': 'new',
-    'googleProductCategory': 'Media > Books',
-    'productType': 'Media > Books',
-    'gtin': '9780007350896',
-    'price': {
-      'value': '2.50',
-      'currency': 'USD'
+    offerId: "book123",
+    title: "A Tale of Two Cities",
+    description: "A classic novel about the French Revolution",
+    link: "http://my-book-shop.com/tale-of-two-cities.html",
+    imageLink: "http://my-book-shop.com/tale-of-two-cities.jpg",
+    contentLanguage: "en",
+    targetCountry: "US",
+    channel: "online",
+    availability: "in stock",
+    condition: "new",
+    googleProductCategory: "Media > Books",
+    productType: "Media > Books",
+    gtin: "9780007350896",
+    price: {
+      value: "2.50",
+      currency: "USD",
     },
-    'shipping': [{
-      'country': 'US',
-      'service': 'Standard shipping',
-      'price': {
-        'value': '0.99',
-        'currency': 'USD'
-      }
-    }],
-    'shippingWeight': {
-      'value': '2',
-      'unit': 'pounds'
-    }
+    shipping: [
+      {
+        country: "US",
+        service: "Standard shipping",
+        price: {
+          value: "0.99",
+          currency: "USD",
+        },
+      },
+    ],
+    shippingWeight: {
+      value: "2",
+      unit: "pounds",
+    },
   };
 
   try {
@@ -58,7 +60,7 @@ function productInsert() {
     console.log(response);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_shopping_product_insert]
@@ -76,22 +78,22 @@ function productList() {
     do {
       const products = ShoppingContent.Products.list(merchantId, {
         pageToken: pageToken,
-        maxResults: maxResults
+        maxResults: maxResults,
       });
-      console.log('Page ' + pageNum);
+      console.log("Page " + pageNum);
       if (products.resources) {
         for (let i = 0; i < products.resources.length; i++) {
-          console.log('Item [' + i + '] ==> ' + products.resources[i]);
+          console.log("Item [" + i + "] ==> " + products.resources[i]);
         }
       } else {
-        console.log('No more products in account ' + merchantId);
+        console.log("No more products in account " + merchantId);
       }
       pageToken = products.nextPageToken;
       pageNum++;
     } while (pageToken);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_shopping_product_list]
@@ -106,36 +108,36 @@ function productList() {
 function custombatch(productResource1, productResource2, productResource3) {
   const merchantId = 123456; // Replace this with your Merchant Center ID.
   custombatchResource = {
-    'entries': [
+    entries: [
       {
-        'batchId': 1,
-        'merchantId': merchantId,
-        'method': 'insert',
-        'productId': 'book124',
-        'product': productResource1
+        batchId: 1,
+        merchantId: merchantId,
+        method: "insert",
+        productId: "book124",
+        product: productResource1,
       },
       {
-        'batchId': 2,
-        'merchantId': merchantId,
-        'method': 'insert',
-        'productId': 'book125',
-        'product': productResource2
+        batchId: 2,
+        merchantId: merchantId,
+        method: "insert",
+        productId: "book125",
+        product: productResource2,
       },
       {
-        'batchId': 3,
-        'merchantId': merchantId,
-        'method': 'insert',
-        'productId': 'book126',
-        'product': productResource3
-      }
-    ]
+        batchId: 3,
+        merchantId: merchantId,
+        method: "insert",
+        productId: "book126",
+        product: productResource3,
+      },
+    ],
   };
   try {
     const response = ShoppingContent.Products.custombatch(custombatchResource);
     console.log(response);
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_shopping_product_batch_insert]
@@ -160,30 +162,31 @@ function updateAccountTax() {
       accountId: accountId,
       rules: [
         {
-          'useGlobalRate': true,
-          'locationId': 21135,
-          'shippingTaxed': true,
-          'country': 'US'
+          useGlobalRate: true,
+          locationId: 21135,
+          shippingTaxed: true,
+          country: "US",
         },
         {
-          'ratePercent': 3,
-          'locationId': 21136,
-          'country': 'US'
+          ratePercent: 3,
+          locationId: 21136,
+          country: "US",
         },
         {
-          'ratePercent': 2,
-          'locationId': 21160,
-          'shippingTaxed': true,
-          'country': 'US'
-        }
-      ]
+          ratePercent: 2,
+          locationId: 21160,
+          shippingTaxed: true,
+          country: "US",
+        },
+      ],
     };
 
-    console.log(ShoppingContent.Accounttax
-        .update(taxInfo, merchantId, accountId));
+    console.log(
+      ShoppingContent.Accounttax.update(taxInfo, merchantId, accountId),
+    );
   } catch (e) {
     // TODO (Developer) - Handle exceptions
-    console.log('Failed with error: $s', e.error);
+    console.log("Failed with error: $s", e.error);
   }
 }
 // [END apps_script_shopping_account_info]

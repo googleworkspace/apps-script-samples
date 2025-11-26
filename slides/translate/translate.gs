@@ -23,9 +23,10 @@
  * @param {Event} event The open event.
  */
 function onOpen(event) {
-  SlidesApp.getUi().createAddonMenu()
-      .addItem('Open Translate', 'showSidebar')
-      .addToUi();
+  SlidesApp.getUi()
+    .createAddonMenu()
+    .addItem("Open Translate", "showSidebar")
+    .addToUi();
 }
 
 /**
@@ -40,9 +41,8 @@ function onInstall(event) {
  * Opens a sidebar in the document containing the add-on's user interface.
  */
 function showSidebar() {
-  const ui = HtmlService
-      .createHtmlOutputFromFile('sidebar')
-      .setTitle('Translate');
+  const ui =
+    HtmlService.createHtmlOutputFromFile("sidebar").setTitle("Translate");
   SlidesApp.getUi().showSidebar(ui);
 }
 
@@ -53,12 +53,15 @@ function showSidebar() {
  */
 function getElementTexts(elements) {
   let texts = [];
-  elements.forEach((element)=> {
+  elements.forEach((element) => {
     switch (element.getPageElementType()) {
       case SlidesApp.PageElementType.GROUP:
-        element.asGroup().getChildren().forEach((child)=> {
-          texts = texts.concat(getElementTexts(child));
-        });
+        element
+          .asGroup()
+          .getChildren()
+          .forEach((child) => {
+            texts = texts.concat(getElementTexts(child));
+          });
         break;
       case SlidesApp.PageElementType.TABLE:
         const table = element.asTable();
@@ -89,29 +92,40 @@ function translateSelectedElements(targetLanguage) {
   let texts = [];
   switch (selectionType) {
     case SlidesApp.SelectionType.PAGE:
-      selection.getPageRange().getPages().forEach((page)=> {
-        texts = texts.concat(getElementTexts(page.getPageElements()));
-      });
+      selection
+        .getPageRange()
+        .getPages()
+        .forEach((page) => {
+          texts = texts.concat(getElementTexts(page.getPageElements()));
+        });
       break;
     case SlidesApp.SelectionType.PAGE_ELEMENT:
       const pageElements = selection.getPageElementRange().getPageElements();
       texts = texts.concat(getElementTexts(pageElements));
       break;
     case SlidesApp.SelectionType.TABLE_CELL:
-      selection.getTableCellRange().getTableCells().forEach((cell)=> {
-        texts.push(cell.getText());
-      });
+      selection
+        .getTableCellRange()
+        .getTableCells()
+        .forEach((cell) => {
+          texts.push(cell.getText());
+        });
       break;
     case SlidesApp.SelectionType.TEXT:
-      selection.getPageElementRange().getPageElements().forEach((element) =>{
-        texts.push(element.asShape().getText());
-      });
+      selection
+        .getPageElementRange()
+        .getPageElements()
+        .forEach((element) => {
+          texts.push(element.asShape().getText());
+        });
       break;
   }
 
   // Translate all elements in-place.
-  texts.forEach((text)=> {
-    text.setText(LanguageApp.translate(text.asRenderedString(), '', targetLanguage));
+  texts.forEach((text) => {
+    text.setText(
+      LanguageApp.translate(text.asRenderedString(), "", targetLanguage),
+    );
   });
 
   return texts.length;

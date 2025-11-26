@@ -21,19 +21,23 @@
  */
 function coursePatch(courseId) {
   let course = {
-    'section': 'Period 3',
-    'room': '302'
+    section: "Period 3",
+    room: "302",
   };
   const mask = {
-    updateMask: 'section,room'
+    updateMask: "section,room",
   };
   try {
     // Update section and room in course.
-    course = Classroom.Courses.patch(body=course, id=courseId, updateMask=mask);
+    course = Classroom.Courses.patch(
+      (body = course),
+      (id = courseId),
+      (updateMask = mask),
+    );
     console.log('Course "%s" updated.', course.name);
   } catch (err) {
     // TODO (developer) - Handle Courses.patch() exception
-    console.log('Failed to update the course. Error message: %s', err.message);
+    console.log("Failed to update the course. Error message: %s", err.message);
   }
 }
 // [END classroom_patch_course]

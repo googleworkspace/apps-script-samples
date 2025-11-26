@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-const PROJECT_ID = '';
-const LOCATION = 'us-central1';
+const PROJECT_ID = "";
+const LOCATION = "us-central1";
 const API_ENDPOINT = `${LOCATION}-aiplatform.googleapis.com`;
-const MODEL = 'gemini-2.5-pro-preview-05-06';
-const GENERATE_CONTENT_API = 'generateContent';
+const MODEL = "gemini-2.5-pro-preview-05-06";
+const GENERATE_CONTENT_API = "generateContent";
 const API_URL = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/${MODEL}:${GENERATE_CONTENT_API}`;
-const ME = '';
+const ME = "";

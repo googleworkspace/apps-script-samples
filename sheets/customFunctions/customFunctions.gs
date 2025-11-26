@@ -26,13 +26,13 @@ function onOpen() {
   try {
     const spreadsheet = SpreadsheetApp.getActive();
     const menuItems = [
-      {name: 'Prepare sheet...', functionName: 'prepareSheet_'},
-      {name: 'Generate step-by-step...', functionName: 'generateStepByStep_'}
+      { name: "Prepare sheet...", functionName: "prepareSheet_" },
+      { name: "Generate step-by-step...", functionName: "generateStepByStep_" },
     ];
-    spreadsheet.addMenu('Directions', menuItems);
+    spreadsheet.addMenu("Directions", menuItems);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -43,10 +43,10 @@ function onOpen() {
  * @return {Number} The distance in miles.
  */
 function metersToMiles(meters) {
-  if (typeof meters !== 'number') {
+  if (typeof meters !== "number") {
     return null;
   }
-  return meters / 1000 * 0.621371;
+  return (meters / 1000) * 0.621371;
 }
 
 /**
@@ -66,22 +66,24 @@ function drivingDistance(origin, destination) {
  */
 function prepareSheet_() {
   try {
-    const sheet = SpreadsheetApp.getActiveSheet().setName('Settings');
+    const sheet = SpreadsheetApp.getActiveSheet().setName("Settings");
     const headers = [
-      'Start Address',
-      'End Address',
-      'Driving Distance (meters)',
-      'Driving Distance (miles)'];
+      "Start Address",
+      "End Address",
+      "Driving Distance (meters)",
+      "Driving Distance (miles)",
+    ];
     const initialData = [
-      '350 5th Ave, New York, NY 10118',
-      '405 Lexington Ave, New York, NY 10174'];
-    sheet.getRange('A1:D1').setValues([headers]).setFontWeight('bold');
-    sheet.getRange('A2:B2').setValues([initialData]);
+      "350 5th Ave, New York, NY 10118",
+      "405 Lexington Ave, New York, NY 10174",
+    ];
+    sheet.getRange("A1:D1").setValues([headers]).setFontWeight("bold");
+    sheet.getRange("A2:B2").setValues([initialData]);
     sheet.setFrozenRows(1);
     sheet.autoResizeColumns(1, 4);
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -92,26 +94,34 @@ function prepareSheet_() {
 function generateStepByStep_() {
   try {
     const spreadsheet = SpreadsheetApp.getActive();
-    const settingsSheet = spreadsheet.getSheetByName('Settings');
+    const settingsSheet = spreadsheet.getSheetByName("Settings");
     settingsSheet.activate();
 
     // Prompt the user for a row number.
-    const selectedRow = Browser
-        .inputBox('Generate step-by-step', 'Please enter the row number of' +
-        ' the' + ' addresses to use' + ' (for example, "2"):',
-        Browser.Buttons.OK_CANCEL);
-    if (selectedRow === 'cancel') {
+    const selectedRow = Browser.inputBox(
+      "Generate step-by-step",
+      "Please enter the row number of" +
+        " the" +
+        " addresses to use" +
+        ' (for example, "2"):',
+      Browser.Buttons.OK_CANCEL,
+    );
+    if (selectedRow === "cancel") {
       return;
     }
     const rowNumber = Number(selectedRow);
-    if (isNaN(rowNumber) || rowNumber < 2 ||
-      rowNumber > settingsSheet.getLastRow()) {
-      Browser.msgBox('Error',
-          Utilities.formatString('Row "%s" is not valid.', selectedRow),
-          Browser.Buttons.OK);
+    if (
+      isNaN(rowNumber) ||
+      rowNumber < 2 ||
+      rowNumber > settingsSheet.getLastRow()
+    ) {
+      Browser.msgBox(
+        "Error",
+        Utilities.formatString('Row "%s" is not valid.', selectedRow),
+        Browser.Buttons.OK,
+      );
       return;
     }
-
 
     // Retrieve the addresses in that row.
     const row = settingsSheet.getRange(rowNumber, 1, 1, 2);
@@ -119,8 +129,11 @@ function generateStepByStep_() {
     const origin = rowValues[0][0];
     const destination = rowValues[0][1];
     if (!origin || !destination) {
-      Browser.msgBox('Error', 'Row does not contain two addresses.',
-          Browser.Buttons.OK);
+      Browser.msgBox(
+        "Error",
+        "Row does not contain two addresses.",
+        Browser.Buttons.OK,
+      );
       return;
     }
 
@@ -128,51 +141,57 @@ function generateStepByStep_() {
     const directions = getDirections_(origin, destination);
 
     // Create a new sheet and append the steps in the directions.
-    const sheetName = 'Driving Directions for Row ' + rowNumber;
+    const sheetName = "Driving Directions for Row " + rowNumber;
     let directionsSheet = spreadsheet.getSheetByName(sheetName);
     if (directionsSheet) {
       directionsSheet.clear();
       directionsSheet.activate();
     } else {
-      directionsSheet =
-        spreadsheet.insertSheet(sheetName, spreadsheet.getNumSheets());
+      directionsSheet = spreadsheet.insertSheet(
+        sheetName,
+        spreadsheet.getNumSheets(),
+      );
     }
-    const sheetTitle = Utilities
-        .formatString('Driving Directions from %s to %s', origin, destination);
+    const sheetTitle = Utilities.formatString(
+      "Driving Directions from %s to %s",
+      origin,
+      destination,
+    );
     const headers = [
-      [sheetTitle, '', ''],
-      ['Step', 'Distance (Meters)', 'Distance (Miles)']
+      [sheetTitle, "", ""],
+      ["Step", "Distance (Meters)", "Distance (Miles)"],
     ];
     const newRows = [];
     for (const step of directions.routes[0].legs[0].steps) {
       // Remove HTML tags from the instructions.
       const instructions = step.html_instructions
-          .replace(/<br>|<div.*?>/g, '\n').replace(/<.*?>/g, '');
-      newRows.push([
-        instructions,
-        step.distance.value
-      ]);
+        .replace(/<br>|<div.*?>/g, "\n")
+        .replace(/<.*?>/g, "");
+      newRows.push([instructions, step.distance.value]);
     }
     directionsSheet.getRange(1, 1, headers.length, 3).setValues(headers);
-    directionsSheet.getRange(headers.length + 1, 1, newRows.length, 2)
-        .setValues(newRows);
-    directionsSheet.getRange(headers.length + 1, 3, newRows.length, 1)
-        .setFormulaR1C1('=METERSTOMILES(R[0]C[-1])');
+    directionsSheet
+      .getRange(headers.length + 1, 1, newRows.length, 2)
+      .setValues(newRows);
+    directionsSheet
+      .getRange(headers.length + 1, 3, newRows.length, 1)
+      .setFormulaR1C1("=METERSTOMILES(R[0]C[-1])");
 
     // Format the new sheet.
-    directionsSheet.getRange('A1:C1').merge().setBackground('#ddddee');
-    directionsSheet.getRange('A1:2').setFontWeight('bold');
+    directionsSheet.getRange("A1:C1").merge().setBackground("#ddddee");
+    directionsSheet.getRange("A1:2").setFontWeight("bold");
     directionsSheet.setColumnWidth(1, 500);
-    directionsSheet.getRange('B2:C').setVerticalAlignment('top');
-    directionsSheet.getRange('C2:C').setNumberFormat('0.00');
-    const stepsRange = directionsSheet.getDataRange()
-        .offset(2, 0, directionsSheet.getLastRow() - 2);
-    setAlternatingRowBackgroundColors_(stepsRange, '#ffffff', '#eeeeee');
+    directionsSheet.getRange("B2:C").setVerticalAlignment("top");
+    directionsSheet.getRange("C2:C").setNumberFormat("0.00");
+    const stepsRange = directionsSheet
+      .getDataRange()
+      .offset(2, 0, directionsSheet.getLastRow() - 2);
+    setAlternatingRowBackgroundColors_(stepsRange, "#ffffff", "#eeeeee");
     directionsSheet.setFrozenRows(2);
     SpreadsheetApp.flush();
   } catch (e) {
     // TODO (Developer) - Handle Exception
-    console.log('Failed with error: %s' + e.error);
+    console.log("Failed with error: %s" + e.error);
   }
 }
 
@@ -213,10 +232,9 @@ function getDirections_(origin, destination) {
   directionFinder.setOrigin(origin);
   directionFinder.setDestination(destination);
   const directions = directionFinder.getDirections();
-  if (directions.status !== 'OK') {
+  if (directions.status !== "OK") {
     throw directions.error_message;
   }
   return directions;
 }
 // [END apps_script_sheets_custom_functions_quickstart]
-

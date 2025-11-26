@@ -16,8 +16,9 @@
  * Runs when the document is opened.
  */
 function onOpen() {
-  DocumentApp.getUi().createMenu('Inspector')
-    .addItem('Show sidebar', 'showSidebar')
+  DocumentApp.getUi()
+    .createMenu("Inspector")
+    .addItem("Show sidebar", "showSidebar")
     .addToUi();
 }
 
@@ -26,9 +27,11 @@ function onOpen() {
  */
 function showSidebar() {
   DocumentApp.getUi().showSidebar(
-    HtmlService.createTemplateFromFile('Sidebar').evaluate()
-      .setTitle('Cursor Inspector')
-      .setWidth(350));
+    HtmlService.createTemplateFromFile("Sidebar")
+      .evaluate()
+      .setTitle("Cursor Inspector")
+      .setWidth(350),
+  );
 }
 
 /**
@@ -54,19 +57,21 @@ function getDocumentInfo() {
       element: getElementInfo(cursor.getElement()),
       offset: cursor.getOffset(),
       surroundingText: cursor.getSurroundingText().getText(),
-      surroundingTextOffset: cursor.getSurroundingTextOffset()
+      surroundingTextOffset: cursor.getSurroundingTextOffset(),
     };
   }
   if (selection) {
     result.selection = {
-      selectedElements: selection.getSelectedElements().map(function(selectedElement) {
-        return {
-          element: getElementInfo(selectedElement.getElement()),
-          partial: selectedElement.isPartial(),
-          startOffset: selectedElement.getStartOffset(),
-          endOffsetInclusive: selectedElement.getEndOffsetInclusive()
-        };
-      })
+      selectedElements: selection
+        .getSelectedElements()
+        .map(function (selectedElement) {
+          return {
+            element: getElementInfo(selectedElement.getElement()),
+            partial: selectedElement.isPartial(),
+            startOffset: selectedElement.getStartOffset(),
+            endOffsetInclusive: selectedElement.getEndOffsetInclusive(),
+          };
+        }),
     };
   }
   return result;
@@ -79,6 +84,6 @@ function getDocumentInfo() {
  */
 function getElementInfo(element) {
   return {
-    type: String(element.getType())
+    type: String(element.getType()),
   };
 }

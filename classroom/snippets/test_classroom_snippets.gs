@@ -19,7 +19,7 @@
  * @return {string} courseId course id of created course
  */
 function itShouldCreateCourse() {
-  console.log('> itShouldCreateCourse');
+  console.log("> itShouldCreateCourse");
   const courseId = createCourse();
   return courseId;
 }
@@ -29,7 +29,7 @@ function itShouldCreateCourse() {
  * @param {string} courseId course id
  */
 function itShouldGetCourse(courseId) {
-  console.log('> itShouldGetCourse');
+  console.log("> itShouldGetCourse");
   getCourse(courseId);
 }
 
@@ -37,7 +37,7 @@ function itShouldGetCourse(courseId) {
  * Tests createAlias function of createAlias.gs
  */
 function itShouldCreateAlias() {
-  console.log('> itShouldCreateAlias');
+  console.log("> itShouldCreateAlias");
   createAlias();
 }
 
@@ -46,7 +46,7 @@ function itShouldCreateAlias() {
  * @param {string} courseId course id
  */
 function itShouldAddAlias(courseId) {
-  console.log('> itShouldAddAlias');
+  console.log("> itShouldAddAlias");
   addAlias(courseId);
 }
 
@@ -55,7 +55,7 @@ function itShouldAddAlias(courseId) {
  * @param {string} courseId course id
  */
 function itShouldUpdateCourse(courseId) {
-  console.log('> itShouldUpdateCourse');
+  console.log("> itShouldUpdateCourse");
   courseUpdate(courseId);
 }
 
@@ -64,7 +64,7 @@ function itShouldUpdateCourse(courseId) {
  * @param {string} courseId course id
  */
 function itShouldPatchCourse(courseId) {
-  console.log('> itShouldPatchCourse');
+  console.log("> itShouldPatchCourse");
   coursePatch(courseId);
 }
 
@@ -72,7 +72,7 @@ function itShouldPatchCourse(courseId) {
  * Tests listCourses function of listCourses.gs
  */
 function itShouldListCourses() {
-  console.log('> itShouldListCourses');
+  console.log("> itShouldListCourses");
   listCourses();
 }
 

@@ -22,20 +22,20 @@
 function listLabels() {
   try {
     // Gmail.Users.Labels.list() API returns the list of all Labels in user's mailbox
-    const response = Gmail.Users.Labels.list('me');
+    const response = Gmail.Users.Labels.list("me");
     if (!response || response.labels.length === 0) {
       // TODO (developer) - No labels are returned from the response
-      console.log('No labels found.');
+      console.log("No labels found.");
       return;
     }
     // Print the Labels that are available.
-    console.log('Labels:');
-    for (const label of response.labels ) {
-      console.log('- %s', label.name);
+    console.log("Labels:");
+    for (const label of response.labels) {
+      console.log("- %s", label.name);
     }
   } catch (err) {
     // TODO (developer) - Handle exception on Labels.list() API
-    console.log('Labels.list() API failed with error %s', err.toString());
+    console.log("Labels.list() API failed with error %s", err.toString());
   }
 }
 // [END gmail_quickstart]

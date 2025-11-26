@@ -13,5 +13,5 @@
 // limitations under the License.
 
 function doGet() {
-  return HtmlService.createTemplateFromFile('Main').evaluate();
+  return HtmlService.createTemplateFromFile("Main").evaluate();
 }

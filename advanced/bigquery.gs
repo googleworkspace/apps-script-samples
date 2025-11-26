@@ -20,17 +20,18 @@
 function runQuery() {
   // Replace this value with the project ID listed in the Google
   // Cloud Platform project.
-  const projectId = 'XXXXXXXX';
+  const projectId = "XXXXXXXX";
 
   const request = {
     // TODO (developer) - Replace query with yours
-    query: 'SELECT refresh_date AS Day, term AS Top_Term, rank ' +
-      'FROM `bigquery-public-data.google_trends.top_terms` ' +
-      'WHERE rank = 1 ' +
-      'AND refresh_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK) ' +
-      'GROUP BY Day, Top_Term, rank ' +
-      'ORDER BY Day DESC;',
-    useLegacySql: false
+    query:
+      "SELECT refresh_date AS Day, term AS Top_Term, rank " +
+      "FROM `bigquery-public-data.google_trends.top_terms` " +
+      "WHERE rank = 1 " +
+      "AND refresh_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK) " +
+      "GROUP BY Day, Top_Term, rank " +
+      "ORDER BY Day DESC;",
+    useLegacySql: false,
   };
   let queryResults = BigQuery.Jobs.query(request, projectId);
   const jobId = queryResults.jobReference.jobId;
@@ -47,20 +48,20 @@ function runQuery() {
   let rows = queryResults.rows;
   while (queryResults.pageToken) {
     queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId, {
-      pageToken: queryResults.pageToken
+      pageToken: queryResults.pageToken,
     });
     rows = rows.concat(queryResults.rows);
   }
 
   if (!rows) {
-    console.log('No rows returned.');
+    console.log("No rows returned.");
     return;
   }
-  const spreadsheet = SpreadsheetApp.create('BigQuery Results');
+  const spreadsheet = SpreadsheetApp.create("BigQuery Results");
   const sheet = spreadsheet.getActiveSheet();
 
   // Append the headers.
-  const headers = queryResults.schema.fields.map(function(field) {
+  const headers = queryResults.schema.fields.map(function (field) {
     return field.name;
   });
   sheet.appendRow(headers);
@@ -76,7 +77,7 @@ function runQuery() {
   }
   sheet.getRange(2, 1, rows.length, headers.length).setValues(data);
 
-  console.log('Results spreadsheet created: %s', spreadsheet.getUrl());
+  console.log("Results spreadsheet created: %s", spreadsheet.getUrl());
 }
 // [END apps_script_bigquery_run_query]
 
@@ -87,40 +88,40 @@ function runQuery() {
 function loadCsv() {
   // Replace this value with the project ID listed in the Google
   // Cloud Platform project.
-  const projectId = 'XXXXXXXX';
+  const projectId = "XXXXXXXX";
   // Create a dataset in the BigQuery UI (https://bigquery.cloud.google.com)
   // and enter its ID below.
-  const datasetId = 'YYYYYYYY';
+  const datasetId = "YYYYYYYY";
   // Sample CSV file of Google Trends data conforming to the schema below.
   // https://docs.google.com/file/d/0BwzA1Orbvy5WMXFLaTR1Z1p2UDg/edit
-  const csvFileId = '0BwzA1Orbvy5WMXFLaTR1Z1p2UDg';
+  const csvFileId = "0BwzA1Orbvy5WMXFLaTR1Z1p2UDg";
 
   // Create the table.
-  const tableId = 'pets_' + new Date().getTime();
+  const tableId = "pets_" + new Date().getTime();
   let table = {
     tableReference: {
       projectId: projectId,
       datasetId: datasetId,
-      tableId: tableId
+      tableId: tableId,
     },
     schema: {
       fields: [
-        {name: 'week', type: 'STRING'},
-        {name: 'cat', type: 'INTEGER'},
-        {name: 'dog', type: 'INTEGER'},
-        {name: 'bird', type: 'INTEGER'}
-      ]
-    }
+        { name: "week", type: "STRING" },
+        { name: "cat", type: "INTEGER" },
+        { name: "dog", type: "INTEGER" },
+        { name: "bird", type: "INTEGER" },
+      ],
+    },
   };
   try {
     table = BigQuery.Tables.insert(table, projectId, datasetId);
-    console.log('Table created: %s', table.id);
+    console.log("Table created: %s", table.id);
   } catch (err) {
-    console.log('unable to create table');
+    console.log("unable to create table");
   }
   // Load CSV data from Drive and convert to the correct format for upload.
   const file = DriveApp.getFileById(csvFileId);
-  const data = file.getBlob().setContentType('application/octet-stream');
+  const data = file.getBlob().setContentType("application/octet-stream");
 
   // Create the data upload job.
   const job = {
@@ -129,17 +130,17 @@ function loadCsv() {
         destinationTable: {
           projectId: projectId,
           datasetId: datasetId,
-          tableId: tableId
+          tableId: tableId,
         },
-        skipLeadingRows: 1
-      }
-    }
+        skipLeadingRows: 1,
+      },
+    },
   };
   try {
     const jobResult = BigQuery.Jobs.insert(job, projectId, data);
     console.log(`Load job started. Status: ${jobResult.status.state}`);
   } catch (err) {
-    console.log('unable to insert job');
+    console.log("unable to insert job");
   }
 }
 // [END apps_script_bigquery_load_csv]

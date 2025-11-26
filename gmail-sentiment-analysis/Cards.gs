@@ -25,7 +25,9 @@ function buildHomepageCard() {
 
   // Create a card header
   const cardHeader = CardService.newCardHeader();
-  cardHeader.setImageUrl('https://fonts.gstatic.com/s/i/googlematerialicons/mail/v6/black-24dp/1x/gm_mail_black_24dp.png');
+  cardHeader.setImageUrl(
+    "https://fonts.gstatic.com/s/i/googlematerialicons/mail/v6/black-24dp/1x/gm_mail_black_24dp.png",
+  );
   cardHeader.setImageStyle(CardService.ImageStyle.CIRCLE);
   cardHeader.setTitle("Analyze your Gmail");
 
@@ -39,11 +41,19 @@ function buildHomepageCard() {
   const buttonSet = CardService.newButtonSet();
 
   // Create "Generate sample emails" button
-  const generateButton = createFilledButton('Generate sample emails', 'generateSampleEmails', '#34A853');
+  const generateButton = createFilledButton(
+    "Generate sample emails",
+    "generateSampleEmails",
+    "#34A853",
+  );
   buttonSet.addButton(generateButton);
 
   // Create "Analyze emails" button
-  const analyzeButton = createFilledButton('Analyze emails', 'analyzeSentiment', '#FF0000');
+  const analyzeButton = createFilledButton(
+    "Analyze emails",
+    "analyzeSentiment",
+    "#FF0000",
+  );
   buttonSet.addButton(analyzeButton);
 
   // Add the button set to the section

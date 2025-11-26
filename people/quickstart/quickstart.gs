@@ -50,21 +50,25 @@ function listConnectionNames() {
   // Use the People API to list the connections of the logged in user.
   // See: https://developers.google.com/people/api/rest/v1/people.connections/list
   if (!People || !People.People || !People.People.Connections) {
-    throw new Error('People service not enabled.');
+    throw new Error("People service not enabled.");
   }
-  const connections = People.People.Connections.list('people/me', {
+  const connections = People.People.Connections.list("people/me", {
     pageSize: 10,
-    personFields: 'names,emailAddresses',
+    personFields: "names,emailAddresses",
   });
   if (!connections.connections) {
-    console.log('No connections found.');
+    console.log("No connections found.");
     return;
   }
   connections.connections.forEach((person) => {
-    if (person.names && person.names.length > 0 && person.names[0].displayName) {
+    if (
+      person.names &&
+      person.names.length > 0 &&
+      person.names[0].displayName
+    ) {
       console.log(person.names[0].displayName);
     } else {
-      console.log('No display name found for connection.');
+      console.log("No display name found for connection.");
     }
   });
 }

@@ -20,10 +20,12 @@
 function createAndSendDocument() {
   try {
     // Create a new Google Doc named 'Hello, world!'
-    const doc = DocumentApp.create('Hello, world!');
+    const doc = DocumentApp.create("Hello, world!");
 
     // Access the body of the document, then add a paragraph.
-    doc.getBody().appendParagraph('This document was created by Google Apps Script.');
+    doc
+      .getBody()
+      .appendParagraph("This document was created by Google Apps Script.");
 
     // Get the URL of the document.
     const url = doc.getUrl();
@@ -35,13 +37,13 @@ function createAndSendDocument() {
     const subject = doc.getName();
 
     // Append a new string to the "url" variable to use as an email body.
-    const body = 'Link to your doc: ' + url;
+    const body = "Link to your doc: " + url;
 
     // Send yourself an email with a link to the document.
     GmailApp.sendEmail(email, subject, body);
   } catch (err) {
     // TODO (developer) - Handle exception
-    console.log('Failed with error %s', err.message);
+    console.log("Failed with error %s", err.message);
   }
 }
 // [END apps_script_hello_world]

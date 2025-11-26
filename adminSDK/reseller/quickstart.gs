@@ -20,25 +20,29 @@
  */
 function listSubscriptions() {
   const optionalArgs = {
-    maxResults: 10
+    maxResults: 10,
   };
   if (!AdminReseller || !AdminReseller.Subscriptions) {
-    throw new Error('Enable the AdminReseller Advanced Service.');
+    throw new Error("Enable the AdminReseller Advanced Service.");
   }
   const response = AdminReseller.Subscriptions.list(optionalArgs);
   const subscriptions = response.subscriptions;
   if (!subscriptions || subscriptions.length === 0) {
-    console.log('No subscriptions found.');
+    console.log("No subscriptions found.");
     return;
   }
-  console.log('Subscriptions:');
+  console.log("Subscriptions:");
   for (const subscription of subscriptions) {
     if (subscription.customerId && subscription.skuId) {
       if (subscription.plan?.planName) {
-        console.log('%s (%s, %s)', subscription.customerId, subscription.skuId,
-            subscription.plan.planName);
+        console.log(
+          "%s (%s, %s)",
+          subscription.customerId,
+          subscription.skuId,
+          subscription.plan.planName,
+        );
       } else {
-        console.log('%s (%s)', subscription.customerId, subscription.skuId);
+        console.log("%s (%s)", subscription.customerId, subscription.skuId);
       }
     }
   }

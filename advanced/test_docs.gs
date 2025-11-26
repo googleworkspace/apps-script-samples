@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 // TODO (developer) - Replace with your documentId
-const documentId='1EaLpBfuo3bMUeP6_P34auuQroh3bCWi6hLDppY6J6us';
+const documentId = "1EaLpBfuo3bMUeP6_P34auuQroh3bCWi6hLDppY6J6us";
 /**
  * A simple exists assertion check. Expects a value to exist. Errors if DNE.
  * @param {any} value A value that is expected to exist.
  */
 function expectToExist(value) {
   if (!value) {
-    console.log('DNE');
+    console.log("DNE");
     return;
   }
-  console.log('TEST: Exists');
+  console.log("TEST: Exists");
 }
 
 /**
@@ -35,12 +35,11 @@ function expectToExist(value) {
  */
 function expectToEqual(expected, actual) {
   if (actual !== expected) {
-    console.log('TEST: actual: %s = expected: %s', actual, expected);
+    console.log("TEST: actual: %s = expected: %s", actual, expected);
     return;
   }
-  console.log('TEST: actual: %s = expected: %s', actual, expected);
+  console.log("TEST: actual: %s = expected: %s", actual, expected);
 }
-
 
 /**
  * Runs all tests.
@@ -61,15 +60,14 @@ function itShouldCreateDocument() {
   deleteFileOnCleanup(documentId);
 }
 
-
 /**
  * Insert text with style.
  */
 function itShouldInsertTextWithStyle() {
   const documentId = createDocument();
   expectToExist(documentId);
-  const text='This is the sample document';
-  const replies=insertAndStyleText(documentId, text);
+  const text = "This is the sample document";
+  const replies = insertAndStyleText(documentId, text);
   expectToEqual(2, replies.length);
   deleteFileOnCleanup(documentId);
 }
@@ -80,11 +78,11 @@ function itShouldInsertTextWithStyle() {
 function itShouldReplaceText() {
   const documentId = createDocument();
   expectToExist(documentId);
-  const text='This is the sample document';
-  const response=insertAndStyleText(documentId, text);
+  const text = "This is the sample document";
+  const response = insertAndStyleText(documentId, text);
   expectToEqual(2, response.replies.length);
-  const findTextToReplacementMap={'sample': 'test', 'document': 'Doc'};
-  const replies=findAndReplace(documentId, findTextToReplacementMap);
+  const findTextToReplacementMap = { sample: "test", document: "Doc" };
+  const replies = findAndReplace(documentId, findTextToReplacementMap);
   expectToEqual(2, replies.length);
   deleteFileOnCleanup(documentId);
 }
@@ -93,7 +91,7 @@ function itShouldReplaceText() {
  * Read first paragraph
  */
 function itShouldReadFirstParagraph() {
-  const paragraphText=readFirstParagraph(documentId);
+  const paragraphText = readFirstParagraph(documentId);
   expectToExist(paragraphText);
   expectToEqual(89, paragraphText.length);
 }

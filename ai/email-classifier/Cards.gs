@@ -35,7 +35,9 @@ function buildHomepageCard() {
 
   // Create a card header
   const cardHeader = CardService.newCardHeader();
-  cardHeader.setImageUrl('https://fonts.gstatic.com/s/i/googlematerialicons/label_important/v20/googblue-24dp/1x/gm_label_important_googblue_24dp.png');
+  cardHeader.setImageUrl(
+    "https://fonts.gstatic.com/s/i/googlematerialicons/label_important/v20/googblue-24dp/1x/gm_label_important_googblue_24dp.png",
+  );
   cardHeader.setImageStyle(CardService.ImageStyle.CIRCLE);
   cardHeader.setTitle("Email Classifier");
 
@@ -50,27 +52,27 @@ function buildHomepageCard() {
 
   // Create "Classify emails" button
   const classifyButton = createFilledButton({
-    text: 'Classify emails',
-    functionName: 'main',
-    color: '#007bff',
-    icon: 'new_label'
+    text: "Classify emails",
+    functionName: "main",
+    color: "#007bff",
+    icon: "new_label",
   });
   buttonSet.addButton(classifyButton);
 
   // Create "Create Labels" button
   const createLabelsButtton = createFilledButton({
-    text: 'Create labels',
-    functionName: 'createLabels',
-    color: '#34A853',
-    icon: 'add'
+    text: "Create labels",
+    functionName: "createLabels",
+    color: "#34A853",
+    icon: "add",
   });
 
   // Create "Remove Labels" button
   const removeLabelsButtton = createFilledButton({
-    text: 'Remove labels',
-    functionName: 'removeLabels',
-    color: '#FF0000',
-    icon: 'delete'
+    text: "Remove labels",
+    functionName: "removeLabels",
+    color: "#FF0000",
+    icon: "delete",
   });
 
   if (labelsCreated()) {
@@ -99,7 +101,7 @@ function buildHomepageCard() {
  *   - icon: The material icon to display on the button.
  * @returns {!TextButton} - The created text button.
  */
-function createFilledButton({text, functionName, color, icon}) {
+function createFilledButton({ text, functionName, color, icon }) {
   // Create a new text button
   const textButton = CardService.newTextButton();
 
@@ -153,28 +155,34 @@ function buildNotificationResponse(notificationText) {
 function showSpreadsheetLink(spreadsheetUrl) {
   const updatedCardBuilder = CardService.newCardBuilder();
 
-  updatedCardBuilder.setHeader(CardService.newCardHeader().setTitle('Sheet generated!'));
+  updatedCardBuilder.setHeader(
+    CardService.newCardHeader().setTitle("Sheet generated!"),
+  );
 
   const updatedSection = CardService.newCardSection()
-    .addWidget(CardService.newTextParagraph()
-      .setText('Click to open the sheet:')
+    .addWidget(
+      CardService.newTextParagraph().setText("Click to open the sheet:"),
     )
-    .addWidget(CardService.newTextButton()
-      .setText('Open Sheet')
-      .setOpenLink(CardService.newOpenLink()
-        .setUrl(spreadsheetUrl)
-        .setOpenAs(CardService.OpenAs.FULL_SCREEN) // Opens in a new browser tab/window
-        .setOnClose(CardService.OnClose.NOTHING) // Does nothing when the tab is closed
-      )
+    .addWidget(
+      CardService.newTextButton().setText("Open Sheet").setOpenLink(
+        CardService.newOpenLink()
+          .setUrl(spreadsheetUrl)
+          .setOpenAs(CardService.OpenAs.FULL_SCREEN) // Opens in a new browser tab/window
+          .setOnClose(CardService.OnClose.NOTHING), // Does nothing when the tab is closed
+      ),
     )
-    .addWidget(CardService.newTextButton() // Optional: Add a button to go back or refresh
-      .setText('Go Back')
-      .setOnClickAction(CardService.newAction()
-        .setFunctionName('onHomepageTrigger')) // Go back to the initial state
+    .addWidget(
+      CardService.newTextButton() // Optional: Add a button to go back or refresh
+        .setText("Go Back")
+        .setOnClickAction(
+          CardService.newAction().setFunctionName("onHomepageTrigger"),
+        ), // Go back to the initial state
     );
 
   updatedCardBuilder.addSection(updatedSection);
-  const newNavigation = CardService.newNavigation().updateCard(updatedCardBuilder.build());
+  const newNavigation = CardService.newNavigation().updateCard(
+    updatedCardBuilder.build(),
+  );
 
   return CardService.newActionResponseBuilder()
     .setNavigation(newNavigation) // This updates the current card in the UI

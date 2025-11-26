@@ -19,8 +19,9 @@
  * @return {HtmlOutput} The HTML page to be served.
  */
 function doGet() {
-  return HtmlService.createTemplateFromFile('page').evaluate()
-      .setTitle('Simple Tasks');
+  return HtmlService.createTemplateFromFile("page")
+    .evaluate()
+    .setTitle("Simple Tasks");
 }
 
 /**
@@ -32,10 +33,10 @@ function getTaskLists() {
   if (!taskLists) {
     return [];
   }
-  return taskLists.map(function(taskList) {
+  return taskLists.map(function (taskList) {
     return {
       id: taskList.getId(),
-      name: taskList.getTitle()
+      name: taskList.getTitle(),
     };
   });
 }
@@ -50,16 +51,18 @@ function getTasks(taskListId) {
   if (!tasks) {
     return [];
   }
-  return tasks.map(function(task) {
-    return {
-      id: task.getId(),
-      title: task.getTitle(),
-      notes: task.getNotes(),
-      completed: Boolean(task.getCompleted())
-    };
-  }).filter(function(task) {
-    return task.title;
-  });
+  return tasks
+    .map(function (task) {
+      return {
+        id: task.getId(),
+        title: task.getTitle(),
+        notes: task.getNotes(),
+        completed: Boolean(task.getCompleted()),
+      };
+    })
+    .filter(function (task) {
+      return task.title;
+    });
 }
 
 /**
@@ -71,9 +74,9 @@ function getTasks(taskListId) {
 function setCompleted(taskListId, taskId, completed) {
   var task = Tasks.newTask();
   if (completed) {
-    task.setStatus('completed');
+    task.setStatus("completed");
   } else {
-    task.setStatus('needsAction');
+    task.setStatus("needsAction");
     task.setCompleted(null);
   }
   Tasks.Tasks.patch(task, taskListId, taskId);

@@ -24,16 +24,18 @@ function getConfig() {
   const cc = DataStudioApp.createCommunityConnector();
   const config = cc.getConfig();
 
-  config.newInfo()
-      .setId('instructions')
-      .setText('Enter npm package names to fetch their download count.');
+  config
+    .newInfo()
+    .setId("instructions")
+    .setText("Enter npm package names to fetch their download count.");
 
-  config.newTextInput()
-      .setId('package')
-      .setName('Enter a single package name.')
-      .setHelpText('for example, googleapis or lighthouse')
-      .setPlaceholder('googleapis')
-      .setAllowOverride(true);
+  config
+    .newTextInput()
+    .setId("package")
+    .setName("Enter a single package name.")
+    .setHelpText("for example, googleapis or lighthouse")
+    .setPlaceholder("googleapis")
+    .setAllowOverride(true);
 
   config.setDateRangeRequired(true);
 
@@ -53,21 +55,24 @@ function getFields() {
   const types = cc.FieldType;
   const aggregations = cc.AggregationType;
 
-  fields.newDimension()
-      .setId('packageName')
-      .setName('Package Name')
-      .setType(types.TEXT);
+  fields
+    .newDimension()
+    .setId("packageName")
+    .setName("Package Name")
+    .setType(types.TEXT);
 
-  fields.newDimension()
-      .setId('day')
-      .setName('Day')
-      .setType(types.YEAR_MONTH_DAY);
+  fields
+    .newDimension()
+    .setId("day")
+    .setName("Day")
+    .setType(types.YEAR_MONTH_DAY);
 
-  fields.newMetric()
-      .setId('downloads')
-      .setName('Downloads')
-      .setType(types.NUMBER)
-      .setAggregation(aggregations.SUM);
+  fields
+    .newMetric()
+    .setId("downloads")
+    .setName("Downloads")
+    .setType(types.NUMBER)
+    .setAggregation(aggregations.SUM);
 
   return fields;
 }
@@ -79,7 +84,7 @@ function getFields() {
  */
 function getSchema(request) {
   const fields = getFields().build();
-  return {'schema': fields};
+  return { schema: fields };
 }
 // [END apps_script_data_studio_build_get_fields]
 
@@ -93,21 +98,21 @@ function getSchema(request) {
  */
 function responseToRows(requestedFields, response, packageName) {
   // Transform parsed data and filter for requested fields
-  return response.map(function(dailyDownload) {
+  return response.map(function (dailyDownload) {
     let row = [];
-    requestedFields.asArray().forEach(function(field) {
+    requestedFields.asArray().forEach(function (field) {
       switch (field.getId()) {
-        case 'day':
-          return row.push(dailyDownload.day.replace(/-/g, ''));
-        case 'downloads':
+        case "day":
+          return row.push(dailyDownload.day.replace(/-/g, ""));
+        case "downloads":
           return row.push(dailyDownload.downloads);
-        case 'packageName':
+        case "packageName":
           return row.push(packageName);
         default:
-          return row.push('');
+          return row.push("");
       }
     });
-    return {values: row};
+    return { values: row };
   });
 }
 
@@ -117,27 +122,31 @@ function responseToRows(requestedFields, response, packageName) {
  * @return {object} The data.
  */
 function getData(request) {
-  const requestedFieldIds = request.fields.map(function(field) {
+  const requestedFieldIds = request.fields.map(function (field) {
     return field.name;
   });
   const requestedFields = getFields().forIds(requestedFieldIds);
 
   // Fetch and parse data from API
   const url = [
-    'https://api.npmjs.org/downloads/range/',
+    "https://api.npmjs.org/downloads/range/",
     request.dateRange.startDate,
-    ':',
+    ":",
     request.dateRange.endDate,
-    '/',
-    request.configParams.package
+    "/",
+    request.configParams.package,
   ];
-  const response = UrlFetchApp.fetch(url.join(''));
+  const response = UrlFetchApp.fetch(url.join(""));
   const parsedResponse = JSON.parse(response).downloads;
-  const rows = responseToRows(requestedFields, parsedResponse, request.configParams.package);
+  const rows = responseToRows(
+    requestedFields,
+    parsedResponse,
+    request.configParams.package,
+  );
 
   return {
     schema: requestedFields.build(),
-    rows: rows
+    rows: rows,
   };
 }
 // [END apps_script_data_studio_build_get_data]
@@ -149,8 +158,6 @@ function getData(request) {
  */
 function getAuthType() {
   const cc = DataStudioApp.createCommunityConnector();
-  return cc.newAuthTypeResponse()
-      .setAuthType(cc.AuthType.NONE)
-      .build();
+  return cc.newAuthTypeResponse().setAuthType(cc.AuthType.NONE).build();
 }
 // [END apps_script_data_studio_build_get_auth_type]

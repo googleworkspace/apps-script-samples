@@ -20,8 +20,7 @@
  */
 function listLabelInfo() {
   try {
-    const response =
-      Gmail.Users.Labels.list('me');
+    const response = Gmail.Users.Labels.list("me");
     for (let i = 0; i < response.labels.length; i++) {
       const label = response.labels[i];
       console.log(JSON.stringify(label));
@@ -41,13 +40,13 @@ function listInboxSnippets() {
   try {
     let pageToken;
     do {
-      const threadList = Gmail.Users.Threads.list('me', {
-        q: 'label:inbox',
-        pageToken: pageToken
+      const threadList = Gmail.Users.Threads.list("me", {
+        q: "label:inbox",
+        pageToken: pageToken,
       });
       if (threadList.threads && threadList.threads.length > 0) {
         threadList.threads.forEach(function (thread) {
-          console.log('Snippet: %s', thread.snippet);
+          console.log("Snippet: %s", thread.snippet);
         });
       }
       pageToken = threadList.nextPageToken;
@@ -57,7 +56,6 @@ function listInboxSnippets() {
   }
 }
 // [END gmail_inbox_snippets]
-
 
 // [START gmail_history]
 /**
@@ -69,12 +67,12 @@ function logRecentHistory() {
   try {
     // Get the history ID associated with the most recent
     // sent message.
-    const sent = Gmail.Users.Threads.list('me', {
-      q: 'label:sent',
-      maxResults: 1
+    const sent = Gmail.Users.Threads.list("me", {
+      q: "label:sent",
+      maxResults: 1,
     });
     if (!sent.threads || !sent.threads[0]) {
-      console.log('No sent threads found.');
+      console.log("No sent threads found.");
       return;
     }
     const historyId = sent.threads[0].historyId;
@@ -84,9 +82,9 @@ function logRecentHistory() {
     let pageToken;
     const changed = [];
     do {
-      const recordList = Gmail.Users.History.list('me', {
+      const recordList = Gmail.Users.History.list("me", {
         startHistoryId: historyId,
-        pageToken: pageToken
+        pageToken: pageToken,
       });
       const history = recordList.history;
       if (history && history.length > 0) {
@@ -102,7 +100,7 @@ function logRecentHistory() {
     } while (pageToken);
 
     changed.forEach(function (id) {
-      console.log('Message Changed: %s', id);
+      console.log("Message Changed: %s", id);
     });
   } catch (err) {
     console.log(err);
@@ -116,10 +114,10 @@ function logRecentHistory() {
  */
 function getRawMessage() {
   try {
-    const messageId = Gmail.Users.Messages.list('me').messages[0].id;
+    const messageId = Gmail.Users.Messages.list("me").messages[0].id;
     console.log(messageId);
-    const message = Gmail.Users.Messages.get('me', messageId, {
-      'format': 'raw'
+    const message = Gmail.Users.Messages.get("me", messageId, {
+      format: "raw",
     });
 
     // Get raw content as base64url encoded string.
@@ -137,19 +135,19 @@ function getRawMessage() {
  */
 function listMessages() {
   // The special value 'me' indicates the authenticated user.
-  const userId = 'me';
+  const userId = "me";
 
   // Define optional parameters for the request.
   const options = {
     maxResults: 10, // Limit the number of messages returned.
-    q: 'is:unread', // Search for unread messages.
+    q: "is:unread", // Search for unread messages.
   };
 
   try {
     // Call the Gmail.Users.Messages.list method.
     const response = Gmail.Users.Messages.list(userId, options);
     const messages = response.messages;
-    console.log('Unread Messages:');
+    console.log("Unread Messages:");
 
     for (const message of messages) {
       console.log(`- Message ID: ${message.id}`);
