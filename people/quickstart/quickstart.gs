@@ -60,7 +60,7 @@ function listConnectionNames() {
     console.log("No connections found.");
     return;
   }
-  connections.connections.forEach((person) => {
+  for (const person of connections.connections) {
     if (
       person.names &&
       person.names.length > 0 &&
@@ -70,6 +70,6 @@ function listConnectionNames() {
     } else {
       console.log("No display name found for connection.");
     }
-  });
+  }
 }
 // [END people_quickstart]

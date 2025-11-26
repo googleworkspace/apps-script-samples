@@ -183,7 +183,7 @@ function fetchSoqlResults(query) {
 function getFields(record) {
   const fields = [];
   for (const field in record) {
-    if (record.hasOwnProperty(field) && field !== "attributes") {
+    if (Object.hasOwn(record, field) && field !== "attributes") {
       fields.push(field);
     }
   }

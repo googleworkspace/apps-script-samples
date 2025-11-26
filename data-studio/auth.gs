@@ -19,7 +19,7 @@
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeOAuth2() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse().setAuthType(cc.AuthType.OAUTH2).build();
 }
@@ -30,7 +30,7 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypePathUserPass() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc
     .newAuthTypeResponse()
@@ -45,7 +45,7 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeUserPass() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc
     .newAuthTypeResponse()
@@ -60,7 +60,7 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeUserToken() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc
     .newAuthTypeResponse()
@@ -75,7 +75,7 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeKey() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc
     .newAuthTypeResponse()
@@ -90,7 +90,7 @@ function getAuthType() {
  * Returns the Auth Type of this connector.
  * @return {object} The Auth type.
  */
-function getAuthType() {
+function getAuthTypeNone() {
   const cc = DataStudioApp.createCommunityConnector();
   return cc.newAuthTypeResponse().setAuthType(cc.AuthType.NONE).build();
 }
@@ -100,7 +100,7 @@ function getAuthType() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthOAuth2() {
   getOAuthService().reset();
 }
 // [END apps_script_data_studio_auth_reset_oauth2]
@@ -109,7 +109,7 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthPathUser() {
   const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty("dscc.path");
   userProperties.deleteProperty("dscc.username");
@@ -121,7 +121,7 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthUser() {
   const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty("dscc.username");
   userProperties.deleteProperty("dscc.password");
@@ -132,7 +132,7 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthUserToken() {
   const userTokenProperties = PropertiesService.getUserProperties();
   userTokenProperties.deleteProperty("dscc.username");
   userTokenProperties.deleteProperty("dscc.password");
@@ -143,7 +143,7 @@ function resetAuth() {
 /**
  * Resets the auth service.
  */
-function resetAuth() {
+function resetAuthKey() {
   const userProperties = PropertiesService.getUserProperties();
   userProperties.deleteProperty("dscc.key");
 }
@@ -154,7 +154,7 @@ function resetAuth() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidOAuth2() {
   return getOAuthService().hasAccess();
 }
 // [END apps_script_data_studio_auth_valid_oauth2]
@@ -164,7 +164,7 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidPathUserPass() {
   const userProperties = PropertiesService.getUserProperties();
   const path = userProperties.getProperty("dscc.path");
   const userName = userProperties.getProperty("dscc.username");
@@ -180,7 +180,7 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidUserPass() {
   const userProperties = PropertiesService.getUserProperties();
   const userName = userProperties.getProperty("dscc.username");
   const password = userProperties.getProperty("dscc.password");
@@ -195,7 +195,7 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidUserToken() {
   const userProperties = PropertiesService.getUserProperties();
   const userName = userProperties.getProperty("dscc.username");
   const token = userProperties.getProperty("dscc.token");
@@ -210,7 +210,7 @@ function isAuthValid() {
  * Returns true if the auth service has access.
  * @return {boolean} True if the auth service has access.
  */
-function isAuthValid() {
+function isAuthValidKey() {
   const userProperties = PropertiesService.getUserProperties();
   const key = userProperties.getProperty("dscc.key");
   // This assumes you have a validateKey function that can validate
@@ -268,7 +268,7 @@ function get3PAuthorizationUrls() {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsPathUserPass(request) {
   const creds = request.userPass;
   const path = creds.path;
   const username = creds.username;
@@ -300,7 +300,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsUserPass(request) {
   const creds = request.userPass;
   const username = creds.username;
   const password = creds.password;
@@ -330,7 +330,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsUserToken(request) {
   const creds = request.userToken;
   const username = creds.username;
   const token = creds.token;
@@ -360,7 +360,7 @@ function setCredentials(request) {
  * @param {Request} request The set credentials request.
  * @return {object} An object with an errorCode.
  */
-function setCredentials(request) {
+function setCredentialsKey(request) {
   const key = request.key;
 
   // Optional

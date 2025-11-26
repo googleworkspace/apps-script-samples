@@ -15,18 +15,23 @@
  */
 
 // [START apps_script_data_studio_error_ds_user]
-// Admin and non-admin users will see the following error.
-try {
-  // Code that might fail.
-} catch (e) {
-  throw new Error("DS_USER:This will be shown to admin & non-admin.");
+function showErrorToAllUsers() {
+  try {
+    // Code that might fail.
+    throw new Error("Something went wrong");
+  } catch (e) {
+    throw new Error("DS_USER:This will be shown to admin & non-admin.");
+  }
 }
 
-// Only admin users will see the following error.
-try {
-  // Code that might fail.
-} catch (e) {
-  throw new Error("This message will only be shown to admin users");
+function showErrorToAdminUsers() {
+  // Only admin users will see the following error.
+  try {
+    // Code that might fail.
+    throw new Error("Something went wrong");
+  } catch (e) {
+    throw new Error("This message will only be shown to admin users");
+  }
 }
 // [END apps_script_data_studio_error_ds_user]
 
@@ -39,15 +44,16 @@ try {
  *     otherwise. false by default.
  */
 function throwConnectorError(message, userSafe) {
-  userSafe =
+  let safeMessage = message;
+  const isUserSafe =
     typeof userSafe !== "undefined" && typeof userSafe === "boolean"
       ? userSafe
       : false;
-  if (userSafe) {
-    message = `DS_USER:${message}`;
+  if (isUserSafe) {
+    safeMessage = `DS_USER:${message}`;
   }
 
-  throw new Error(message);
+  throw new Error(safeMessage);
 }
 // [END apps_script_data_studio_error_helper]
 
@@ -71,14 +77,17 @@ function logConnectorError(originalError, message) {
 // [END apps_script_data_studio_error_logging]
 
 // [START apps_script_data_studio_error_error]
-// Error message that will be shown to a non-admin users.
-try {
-  // Code that might fail.
-} catch (e) {
-  logConnectorError(e, "quota_hour_exceeded"); // Log to Stackdriver.
-  throwConnectorError(
-    "You've exceeded the hourly quota. Try again later.",
-    true,
-  );
+function showErrorToNonAdminUsers() {
+  // Error message that will be shown to a non-admin users.
+  try {
+    // Code that might fail.
+    throw new Error("Something went wrong");
+  } catch (e) {
+    logConnectorError(e, "quota_hour_exceeded"); // Log to Stackdriver.
+    throwConnectorError(
+      "You've exceeded the hourly quota. Try again later.",
+      true,
+    );
+  }
 }
 // [END apps_script_data_studio_error_error]

@@ -96,10 +96,10 @@ function setUpCalendar_(values, range) {
  * @return {Date} A Date object representing the combined date and time.
  */
 function joinDateAndTime_(date, time) {
-  date = new Date(date);
-  date.setHours(time.getHours());
-  date.setMinutes(time.getMinutes());
-  return date;
+  const newDate = new Date(date);
+  newDate.setHours(time.getHours());
+  newDate.setMinutes(time.getMinutes());
+  return newDate;
 }
 
 /**

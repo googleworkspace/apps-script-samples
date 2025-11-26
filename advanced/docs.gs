@@ -21,15 +21,10 @@
  * @return {string} documentId
  */
 function createDocument() {
-  try {
-    // Create document with title
-    const document = Docs.Documents.create({ title: "My New Document" });
-    console.log(`Created document with ID: ${document.documentId}`);
-    return document.documentId;
-  } catch (e) {
-    // TODO (developer) - Handle exception
-    console.log("Failed with error %s", e.message);
-  }
+  // Create document with title
+  const document = Docs.Documents.create({ title: "My New Document" });
+  console.log(`Created document with ID: ${document.documentId}`);
+  return document.documentId;
 }
 // [END docs_create_document]
 
@@ -45,51 +40,44 @@ function findAndReplace(documentId, findTextToReplacementMap) {
   const requests = [];
   for (const findText in findTextToReplacementMap) {
     const replaceText = findTextToReplacementMap[findText];
-    // One option for replacing all text is to specify all tab IDs.
-    const request = {
+
+    // Replace all text across all tabs.
+    const replaceAllTextRequest = {
       replaceAllText: {
         containsText: {
           text: findText,
           matchCase: true,
         },
         replaceText: replaceText,
+      },
+    };
+
+    // Replace all text across specific tabs.
+    const _replaceAllTextWithTabsCriteria = {
+      replaceAllText: {
+        ...replaceAllTextRequest.replaceAllText,
         tabsCriteria: {
           tabIds: [TAB_ID_1, TAB_ID_2, TAB_ID_3],
         },
       },
     };
-    // Another option is to omit TabsCriteria if you are replacing across all tabs.
-    const request = {
-      replaceAllText: {
-        containsText: {
-          text: findText,
-          matchCase: true,
-        },
-        replaceText: replaceText,
-      },
-    };
-    requests.push(request);
+    requests.push(replaceAllTextRequest);
   }
-  try {
-    const response = Docs.Documents.batchUpdate(
-      { requests: requests },
-      documentId,
+  const response = Docs.Documents.batchUpdate(
+    { requests: requests },
+    documentId,
+  );
+  const replies = response.replies;
+  for (const [index] of replies.entries()) {
+    const numReplacements =
+      replies[index].replaceAllText.occurrencesChanged || 0;
+    console.log(
+      "Request %s performed %s replacements.",
+      index,
+      numReplacements,
     );
-    const replies = response.replies;
-    for (const [index] of replies.entries()) {
-      const numReplacements =
-        replies[index].replaceAllText.occurrencesChanged || 0;
-      console.log(
-        "Request %s performed %s replacements.",
-        index,
-        numReplacements,
-      );
-    }
-    return replies;
-  } catch (e) {
-    // TODO (developer) - Handle exception
-    console.log("Failed with error : %s", e.message);
   }
+  return replies;
 }
 // [END docs_find_and_replace_text]
 
@@ -134,16 +122,11 @@ function insertAndStyleText(documentId, text) {
       },
     },
   ];
-  try {
-    const response = Docs.Documents.batchUpdate(
-      { requests: requests },
-      documentId,
-    );
-    return response.replies;
-  } catch (e) {
-    // TODO (developer) - Handle exception
-    console.log("Failed with an error %s", e.message);
-  }
+  const response = Docs.Documents.batchUpdate(
+    { requests: requests },
+    documentId,
+  );
+  return response.replies;
 }
 // [END docs_insert_and_style_text]
 
@@ -155,33 +138,28 @@ function insertAndStyleText(documentId, text) {
  * @see https://developers.google.com/docs/api/reference/rest/v1/documents/get
  */
 function readFirstParagraph(documentId) {
-  try {
-    // Get the document using document ID
-    const document = Docs.Documents.get(documentId, {
-      includeTabsContent: true,
-    });
-    const firstTab = document.tabs[0];
-    const bodyElements = firstTab.documentTab.body.content;
-    for (let i = 0; i < bodyElements.length; i++) {
-      const structuralElement = bodyElements[i];
-      // Print the first paragraph text present in document
-      if (structuralElement.paragraph) {
-        const paragraphElements = structuralElement.paragraph.elements;
-        let paragraphText = "";
+  // Get the document using document ID
+  const document = Docs.Documents.get(documentId, {
+    includeTabsContent: true,
+  });
+  const firstTab = document.tabs[0];
+  const bodyElements = firstTab.documentTab.body.content;
+  for (let i = 0; i < bodyElements.length; i++) {
+    const structuralElement = bodyElements[i];
+    // Print the first paragraph text present in document
+    if (structuralElement.paragraph) {
+      const paragraphElements = structuralElement.paragraph.elements;
+      let paragraphText = "";
 
-        for (let j = 0; j < paragraphElements.length; j++) {
-          const paragraphElement = paragraphElements[j];
-          if (paragraphElement.textRun !== null) {
-            paragraphText += paragraphElement.textRun.content;
-          }
+      for (let j = 0; j < paragraphElements.length; j++) {
+        const paragraphElement = paragraphElements[j];
+        if (paragraphElement.textRun !== null) {
+          paragraphText += paragraphElement.textRun.content;
         }
-        console.log(paragraphText);
-        return paragraphText;
       }
+      console.log(paragraphText);
+      return paragraphText;
     }
-  } catch (e) {
-    // TODO (developer) - Handle exception
-    console.log("Failed with error %s", e.message);
   }
 }
 // [END docs_read_first_paragraph]

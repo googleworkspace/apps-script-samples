@@ -15,8 +15,8 @@
  */
 
 // [START apps_script_slides_image_create]
-const NAME = "My favorite images";
-const deck = SlidesApp.create(NAME);
+const NAME_1 = "My favorite images";
+const deck_1 = SlidesApp.create(NAME_1);
 // [END apps_script_slides_image_create]
 
 // [START apps_script_slides_image_add_image]
@@ -25,8 +25,8 @@ const deck = SlidesApp.create(NAME);
  * @param {string} imageUrl The image URL
  * @param {number} index The slide index to add the image to
  */
-function addImageSlide(imageUrl, index) {
-  const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+function addImageSlide_1(imageUrl, index) {
+  const slide = deck_1.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   const image = slide.insertImage(imageUrl);
 }
 // [END apps_script_slides_image_add_image]
@@ -43,13 +43,15 @@ function main() {
     "http://gsuite.google.com/img/icons/product-lockup.png",
     "http://gsuite.google.com/img/home-hero_2x.jpg",
   ];
-  const [title, subtitle] = deck.getSlides()[0].getPageElements();
-  title.asShape().getText().setText(NAME);
+  const [title, subtitle] = deck_1.getSlides()[0].getPageElements();
+  title.asShape().getText().setText(NAME_1);
   subtitle
     .asShape()
     .getText()
     .setText("Google Apps Script\nSlides Service demo");
-  images.forEach(addImageSlide);
+  for (const imageUrl of images) {
+    addImageSlide_3(imageUrl);
+  }
 }
 // [END apps_script_slides_image_main]
 
@@ -60,7 +62,7 @@ function main() {
  * @param {string} imageUrl A String object representing an image URL
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
-function addImageSlide(imageUrl, index) {
+function addImageSlide_2(imageUrl, index) {
   const slide = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   const image = slide.insertImage(imageUrl);
   const imgWidth = image.getWidth();
@@ -74,8 +76,8 @@ function addImageSlide(imageUrl, index) {
 // [END apps_script_slides_image_add_image_slide]
 
 // [START apps_script_slides_image_full_script]
-const NAME = "My favorite images";
-const presentation = SlidesApp.create(NAME);
+const NAME_2 = "My favorite images";
+const presentation_2 = SlidesApp.create(NAME_2);
 
 /**
  * Creates a single slide using the image from the given link;
@@ -83,13 +85,13 @@ const presentation = SlidesApp.create(NAME);
  * @param {string} imageUrl A String object representing an image URL
  * @param {number} index The index into the array; unused (req'd by forEach)
  */
-function addImageSlide(imageUrl, index) {
-  const slide = presentation.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+function addImageSlide_3(imageUrl, index) {
+  const slide = presentation_2.appendSlide(SlidesApp.PredefinedLayout.BLANK);
   const image = slide.insertImage(imageUrl);
   const imgWidth = image.getWidth();
   const imgHeight = image.getHeight();
-  const pageWidth = presentation.getPageWidth();
-  const pageHeight = presentation.getPageHeight();
+  const pageWidth = presentation_2.getPageWidth();
+  const pageHeight = presentation_2.getPageHeight();
   const newX = pageWidth / 2 - imgWidth / 2;
   const newY = pageHeight / 2 - imgHeight / 2;
   image.setLeft(newX).setTop(newY);
@@ -99,7 +101,7 @@ function addImageSlide(imageUrl, index) {
  * The driver application features an array of image URLs, setting of the
  * main title & subtitle, and creation of individual slides for each image.
  */
-function main() {
+function main_2() {
   const images = [
     "http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
     "http://www.google.com/services/images/phone-animation-results_2x.png",
@@ -107,12 +109,14 @@ function main() {
     "http://gsuite.google.com/img/icons/product-lockup.png",
     "http://gsuite.google.com/img/home-hero_2x.jpg",
   ];
-  const [title, subtitle] = presentation.getSlides()[0].getPageElements();
-  title.asShape().getText().setText(NAME);
+  const [title, subtitle] = presentation_2.getSlides()[0].getPageElements();
+  title.asShape().getText().setText(NAME_2);
   subtitle
     .asShape()
     .getText()
     .setText("Google Apps Script\nSlides Service demo");
-  images.forEach(addImageSlide);
+  for (const imageUrl of images) {
+    addImageSlide_3(imageUrl);
+  }
 }
 // [END apps_script_slides_image_full_script]

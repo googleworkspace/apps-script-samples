@@ -83,15 +83,6 @@ function createContainerVersion(accountPath) {
 // [END apps_script_tag_manager_create_version]
 
 // [START apps_script_tag_manager_publish_version]
-/**
- * Retrieves the container path from a container version path.
- * @param  {string} versionPath The version path.
- * @return {string}             The container path.
- */
-function grabContainerPath(versionPath) {
-  const pathParts = versionPath.split("/");
-  return pathParts.slice(0, 4).join("/");
-}
 
 /**
  * Publishes a container version publically to the world and creates a quick
@@ -100,7 +91,8 @@ function grabContainerPath(versionPath) {
  */
 function publishVersionAndQuickPreviewDraft(version) {
   try {
-    const containerPath = grabContainerPath(version.path);
+    const pathParts = version.path.split("/");
+    const containerPath = pathParts.slice(0, 4).join("/");
     // Publish the input container version.
     TagManager.Accounts.Containers.Versions.publish(version.path);
     const workspace = TagManager.Accounts.Containers.Workspaces.create(
@@ -121,16 +113,6 @@ function publishVersionAndQuickPreviewDraft(version) {
 
 // [START apps_script_tag_manager_create_user_environment]
 /**
- * Retrieves the container path from a container version path.
- * @param  {string} versionPath The version path.
- * @return {string}             The container path.
- */
-function grabContainerPath(versionPath) {
-  const pathParts = versionPath.split("/");
-  return pathParts.slice(0, 4).join("/");
-}
-
-/**
  * Creates and reauthorizes a user environment in a container that points
  * to a container version passed in as an argument.
  * @param {object} version The container version object.
@@ -138,7 +120,8 @@ function grabContainerPath(versionPath) {
 function createAndReauthorizeUserEnvironment(version) {
   try {
     // Creates a container version.
-    const containerPath = grabContainerPath(version.path);
+    const pathParts = version.path.split("/");
+    const containerPath = pathParts.slice(0, 4).join("/");
     // Creates a user environment that points to a container version.
     const environment = TagManager.Accounts.Containers.Environments.create(
       {

@@ -63,7 +63,10 @@ function saveReportConfig(config) {
   if (previous == null) {
     return config;
   }
-  return _.extend(previous, config);
+  return {
+    ...previous,
+    ...config,
+  };
 }
 
 /**
@@ -130,12 +133,12 @@ function getAllReports() {
  */
 function getScheduledReports(opt_user) {
   const scheduledReports = [];
-  _.keys(getAllReports()).forEach((reportId) => {
+  for (const reportId of Object.keys(getAllReports())) {
     const config = getReportConfig(reportId);
     if (config?.scheduled && (!opt_user || opt_user === config.owner)) {
       scheduledReports.push(config);
     }
-  });
+  }
   return scheduledReports;
 }
 
@@ -181,7 +184,10 @@ function updateOnImport(config, sheet, lastRun) {
   };
   saveObjectToProperties(config.reportId, update);
   update.sheetName = sheet.getName();
-  return _.extend(config, update);
+  return {
+    ...config,
+    ...update,
+  };
 }
 
 /**
@@ -191,7 +197,7 @@ function updateOnImport(config, sheet, lastRun) {
  * @return {Array} column ID strings.
  */
 function getColumnIds(config) {
-  return _.map(config.columns, (col) => col.column);
+  return config.columns.map((col) => col.column);
 }
 
 /**

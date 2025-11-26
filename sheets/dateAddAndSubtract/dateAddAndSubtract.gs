@@ -81,7 +81,7 @@ function use() {
  * @customFunction
  */
 function DATEADD(date, unit, amount) {
-  const args = toArray(arguments); // eslint-disable-line prefer-rest-params
+  const args = [date, unit, amount];
   return multimap(args, (date, unit, amount) => {
     validateParameters(date, unit, amount);
     return moment(date).add(unit, amount).toDate();
@@ -114,7 +114,7 @@ function DATETEST(date, unit, amount) {
  * @customFunction
  */
 function DATESUBTRACT(date, unit, amount) {
-  const args = toArray(arguments); // eslint-disable-line prefer-rest-params
+  const args = [date, unit, amount];
   return multimap(args, (date, unit, amount) => {
     validateParameters(date, unit, amount);
     return moment(date).subtract(unit, amount).toDate();
@@ -182,11 +182,11 @@ function multimap(args, func) {
   // Ensure all the arrays are the same length.
   // Arrays of length 1 are exempted, since they are assumed to be rows/columns
   // that should apply to each row/column in the other sets.
-  lengths.forEach((length) => {
+  for (const length of lengths) {
     if (length !== max && length > 1) {
       throw new Error(`All input ranges must be the same size: ${max}`);
     }
-  });
+  }
 
   // Recursively apply the map function to each element in the arrays.
   const result = [];

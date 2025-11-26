@@ -15,7 +15,7 @@ function createDocsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a document for each row.
-  data.forEach((row) => {
+  for (const row of data) {
     const title = row[0];
     const content = row[1];
     const emailsStr = row[2];
@@ -27,5 +27,5 @@ function createDocsFromSpreadsheet() {
     const doc = DocumentApp.create(title);
     doc.getBody().appendParagraph(content);
     doc.addEditors(emails);
-  });
+  }
 }

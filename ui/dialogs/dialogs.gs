@@ -52,7 +52,7 @@ function showAlert() {
 /**
  * Creates a custom menu when a user opens a Spreadsheet.
  */
-function onOpen() {
+function onOpen_2() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
     .createMenu("Custom Menu")
     .addItem("Show prompt", "showPrompt")
@@ -91,7 +91,7 @@ function showPrompt() {
 /**
  * Creates a custom menu when a user opens a Spreadsheet.
  */
-function onOpen() {
+function onOpen_3() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
     .createMenu("Custom Menu")
     .addItem("Show dialog", "showDialog")
@@ -114,7 +114,7 @@ function showDialog() {
 /**
  * Creates a custom sidebar when a user opens a Spreadsheet.
  */
-function onOpen() {
+function onOpen_4() {
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
     .createMenu("Custom Menu")
     .addItem("Show sidebar", "showSidebar")

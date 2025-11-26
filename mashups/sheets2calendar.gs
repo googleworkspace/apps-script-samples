@@ -15,7 +15,7 @@ function createEventsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create an event for each row.
-  data.forEach((row) => {
+  for (const row of data) {
     const title = row[0];
     const description = row[1];
     const emailsStr = row[2];
@@ -38,12 +38,12 @@ function createEventsFromSpreadsheet() {
     const event = CalendarApp.createEvent(title, start, end).setDescription(
       description,
     );
-    emails.forEach((email) => {
+    for (const email of emails) {
       event.addGuest(email);
-    });
+    }
 
     // Add yourself as a guest and mark yourself as attending.
     event.addGuest(Session.getActiveUser().getEmail());
     event.setMyStatus(CalendarApp.GuestStatus.YES);
-  });
+  }
 }

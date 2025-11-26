@@ -24,10 +24,7 @@ function addAlias(course_id) {
     alias: "p:bio_101",
   };
   try {
-    const course_alias = Classroom.Courses.Aliases.create(
-      (resource = alias),
-      (courseId = course_id),
-    );
+    const course_alias = Classroom.Courses.Aliases.create(alias, course_id);
     console.log("%s successfully added as an alias!", course_alias.alias);
   } catch (err) {
     // TODO (developer) - Handle exception

@@ -305,9 +305,9 @@ function textMerging(templatePresentationId, dataSpreadsheetId) {
       );
       // Count the total number of replacements made.
       let numReplacements = 0;
-      result.replies.forEach((reply) => {
+      for (const reply of result.replies) {
         numReplacements += reply.replaceAllText.occurrencesChanged;
-      });
+      }
       console.log(
         "Created presentation for %s with ID: %s",
         customerName,
@@ -383,9 +383,9 @@ function imageMerging(templatePresentationId, imageUrl, customerName) {
       presentationCopyId,
     );
     let numReplacements = 0;
-    batchUpdateResponse.replies.forEach((reply) => {
+    for (const reply of batchUpdateResponse.replies) {
       numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
-    });
+    }
     console.log("Created merged presentation with ID: %s", presentationCopyId);
     console.log("Replaced %s shapes with images.", numReplacements);
 

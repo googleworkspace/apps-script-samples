@@ -130,13 +130,13 @@ function itShouldMergeText() {
   console.log("> itShouldMergeText");
   const responses = textMerging(TEMPLATE_PRESENTATION_ID, DATA_SPREADSHEET_ID);
   expectToEqual(5, responses.length);
-  responses.forEach((response) => {
+  for (const response of responses) {
     let numReplacements = 0;
-    response.forEach((res) => {
+    for (const res of response) {
       numReplacements += res.replaceAllText.occurrencesChanged;
-    });
+    }
     expectToEqual(4, numReplacements);
-  });
+  }
 }
 
 /**
@@ -151,9 +151,9 @@ function itShouldImageMerge() {
   );
   expectToEqual(2, response.replies.length);
   let numReplacements = 0;
-  response.replies.forEach((reply) => {
+  for (const reply of response.replies) {
     numReplacements += reply.replaceAllShapesWithImage.occurrencesChanged;
-  });
+  }
   expectToEqual(2, numReplacements);
 }
 

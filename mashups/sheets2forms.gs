@@ -15,7 +15,7 @@ function createFormsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a form for each row.
-  data.forEach((row) => {
+  for (const row of data) {
     const title = row[0];
     const question = row[1];
     const emailsStr = row[2];
@@ -27,5 +27,5 @@ function createFormsFromSpreadsheet() {
     const form = FormApp.create(title);
     form.addTextItem().setTitle(question);
     form.addEditors(emails);
-  });
+  }
 }

@@ -620,7 +620,9 @@ function listMembershipsAppCred() {
     );
     // Handle response pages
     if (responsePage.memberships) {
-      responsePage.memberships.forEach((membership) => console.log(membership));
+      for (const membership of responsePage.memberships) {
+        console.log(membership);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;
@@ -655,7 +657,9 @@ function listMembershipsUserCred() {
     });
     // Handle response pages
     if (responsePage.memberships) {
-      responsePage.memberships.forEach((membership) => console.log(membership));
+      for (const membership of responsePage.memberships) {
+        console.log(membership);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;
@@ -686,7 +690,9 @@ function listMessagesUserCred() {
     });
     // Handle response pages
     if (responsePage.messages) {
-      responsePage.messages.forEach((message) => console.log(message));
+      for (const message of responsePage.messages) {
+        console.log(message);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;
@@ -721,7 +727,9 @@ function listSpacesAppCred() {
     );
     // Handle response pages
     if (responsePage.spaces) {
-      responsePage.spaces.forEach((space) => console.log(space));
+      for (const space of responsePage.spaces) {
+        console.log(space);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;
@@ -753,7 +761,9 @@ function listSpacesUserCred() {
     });
     // Handle response pages
     if (responsePage.spaces) {
-      responsePage.spaces.forEach((space) => console.log(space));
+      for (const space of responsePage.spaces) {
+        console.log(space);
+      }
     }
     // Update the page token to the next one
     pageToken = responsePage.nextPageToken;

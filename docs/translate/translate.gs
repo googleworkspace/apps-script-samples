@@ -219,17 +219,20 @@ function insertText(newText) {
     // If the cursor follows or preceds a non-space character, insert a space
     // between the character and the translation. Otherwise, just insert the
     // translation.
-    if (surroundingTextOffset > 0) {
-      if (surroundingText.charAt(surroundingTextOffset - 1) !== " ") {
-        newText = ` ${newText}`;
+    let textToInsert = newText;
+    if (surroundingText) {
+      if (surroundingTextOffset > 0) {
+        if (surroundingText.charAt(surroundingTextOffset - 1) !== " ") {
+          textToInsert = ` ${textToInsert}`;
+        }
+      }
+      if (surroundingTextOffset < surroundingText.length) {
+        if (surroundingText.charAt(surroundingTextOffset) !== " ") {
+          textToInsert += " ";
+        }
       }
     }
-    if (surroundingTextOffset < surroundingText.length) {
-      if (surroundingText.charAt(surroundingTextOffset) !== " ") {
-        newText += " ";
-      }
-    }
-    cursor.insertText(newText);
+    cursor.insertText(textToInsert);
   }
 }
 

@@ -15,7 +15,7 @@ function createDriveFilesFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a PDF in Google Drive for each row.
-  data.forEach((row) => {
+  for (const row of data) {
     const fileName = row[0];
     const htmlContent = row[1];
     const emailsStr = row[2];
@@ -30,5 +30,5 @@ function createDriveFilesFromSpreadsheet() {
     // Create the Drive file and share it out.
     const file = DriveApp.createFile(pdf).setName(fileName);
     file.addEditors(emails);
-  });
+  }
 }

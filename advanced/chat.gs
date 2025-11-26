@@ -105,13 +105,13 @@ function listMemberships(spaceName) {
         pageToken = response.nextPageToken;
         continue;
       }
-      response.memberships.forEach((membership) =>
+      for (const membership of response.memberships) {
         console.log(
-          "Member resource name: %s (type: %s)",
-          membership.name,
-          membership.member.type,
-        ),
-      );
+          "Member: %s, Role: %s",
+          membership.member.displayName,
+          membership.role,
+        );
+      }
       pageToken = response.nextPageToken;
     } while (pageToken);
   } catch (err) {

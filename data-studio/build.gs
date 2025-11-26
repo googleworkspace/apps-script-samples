@@ -100,18 +100,21 @@ function responseToRows(requestedFields, response, packageName) {
   // Transform parsed data and filter for requested fields
   return response.map((dailyDownload) => {
     const row = [];
-    requestedFields.asArray().forEach((field) => {
+    for (const field of requestedFields.asArray()) {
       switch (field.getId()) {
         case "day":
-          return row.push(dailyDownload.day.replace(/-/g, ""));
+          row.push(dailyDownload.day.replace(/-/g, ""));
+          break;
         case "downloads":
-          return row.push(dailyDownload.downloads);
+          row.push(dailyDownload.downloads);
+          break;
         case "packageName":
-          return row.push(packageName);
+          row.push(packageName);
+          break;
         default:
-          return row.push("");
+          row.push("");
       }
-    });
+    }
     return { values: row };
   });
 }

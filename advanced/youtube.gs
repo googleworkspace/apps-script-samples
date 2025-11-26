@@ -30,9 +30,9 @@ function searchByKeyword() {
       console.log("Unable to search videos");
       return;
     }
-    results.items.forEach((item) => {
+    for (const item of results.items) {
       console.log("[%s] Title: %s", item.id.videoId, item.snippet.title);
-    });
+    }
   } catch (err) {
     // TODO (developer) - Handle exceptions from Youtube API
     console.log("Failed with an error %s", err.message);
@@ -179,7 +179,7 @@ function createSlides() {
       return;
     }
     // Add slides with videos and log the presentation URL to the user.
-    youTubeVideos.forEach((video) => {
+    for (const video of youTubeVideos) {
       const slide = presentation.appendSlide();
       slide.insertVideo(
         video.url,
@@ -188,7 +188,7 @@ function createSlides() {
         presentation.getPageWidth(),
         presentation.getPageHeight(),
       );
-    });
+    }
     console.log(presentation.getUrl());
   } catch (err) {
     // TODO (developer) - Handle exception

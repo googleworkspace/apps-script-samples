@@ -78,7 +78,7 @@ function listLabelsOnDriveItem(fileId) {
       appliedLabels.labels.length,
     );
 
-    appliedLabels.labels.forEach((appliedLabel) => {
+    for (const appliedLabel of appliedLabels.labels) {
       // Resource name of the label at the applied revision.
       const labelName = `labels/${appliedLabel.id}@${appliedLabel.revisionId}`;
 
@@ -89,7 +89,7 @@ function listLabelsOnDriveItem(fileId) {
 
       console.log("Label Title: %s", label.properties.title);
 
-      Object.keys(appliedLabel.fields).forEach((fieldId) => {
+      for (const fieldId of Object.keys(appliedLabel.fields)) {
         const fieldValue = appliedLabel.fields[fieldId];
         const field = label.fields.find((f) => f.id === fieldId);
 
@@ -133,8 +133,8 @@ function listLabelsOnDriveItem(fileId) {
             console.log("Unknown: %s", fieldValue.valueType);
             console.log(fieldValue.value);
         }
-      });
-    });
+      }
+    }
   } catch (err) {
     // TODO (developer) - Handle exception
     console.log("Failed with error %s", err.message);

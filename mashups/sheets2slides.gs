@@ -15,7 +15,7 @@ function createPresentationsFromSpreadsheet() {
   data.splice(sheet.getFrozenRows());
 
   // Create a presentation for each row.
-  data.forEach((row) => {
+  for (const row of data) {
     const title = row[0];
     const content = row[1];
     const emailsStr = row[2];
@@ -33,5 +33,5 @@ function createPresentationsFromSpreadsheet() {
     const textBox = slide.getShapes()[0];
     textBox.getText().appendParagraph(content);
     presentation.addEditors(emails);
-  });
+  }
 }
