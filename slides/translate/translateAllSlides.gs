@@ -71,9 +71,21 @@ function getElementTexts(elements) {
         }
         break;
       }
-      case SlidesApp.PageElementType.SHAPE:
-        texts.push(element.asShape().getText());
+      case SlidesApp.PageElementType.SHAPE: {
+        const shape = element.asShape();
+        // Only process shapes that have text
+        if (shape.getText) {
+          try {
+            const text = shape.getText();
+            if (text.asRenderedString().trim().length > 0) {
+              texts.push(text);
+            }
+          } catch (e) {
+            // Skip shapes that don't support text (images, etc.)
+          }
+        }
         break;
+      }
     }
   }
   return texts;
