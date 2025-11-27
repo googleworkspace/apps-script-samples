@@ -82,10 +82,11 @@ function getElementTexts(elements) {
 /**
  * Translates selected slide elements to the target language using Apps Script's Language service.
  *
+ * @param {string} sourceLanguage The two-letter short form for the source language. (ISO 639-1)
  * @param {string} targetLanguage The two-letter short form for the target language. (ISO 639-1)
  * @return {number} The number of elements translated.
  */
-function translateSelectedElements(targetLanguage) {
+function translateSelectedElements(sourceLanguage, targetLanguage) {
   // Get selected elements.
   const selection = SlidesApp.getActivePresentation().getSelection();
   const selectionType = selection.getSelectionType();
@@ -109,7 +110,9 @@ function translateSelectedElements(targetLanguage) {
       break;
     case SlidesApp.SelectionType.TEXT:
       for (const element of selection.getPageElementRange().getPageElements()) {
-        texts.push(element.asShape().getText());
+        if (element.getPageElementType() === SlidesApp.PageElementType.SHAPE) {
+          texts.push(element.asShape().getText());
+        }
       }
       break;
   }
@@ -117,7 +120,11 @@ function translateSelectedElements(targetLanguage) {
   // Translate all elements in-place.
   for (const text of texts) {
     text.setText(
-      LanguageApp.translate(text.asRenderedString(), "", targetLanguage),
+      LanguageApp.translate(
+        text.asRenderedString(),
+        sourceLanguage,
+        targetLanguage,
+      ),
     );
   }
 

@@ -43,12 +43,11 @@ limitations under the License.
   <span class="gray branding-text">Translate sample by Google</span>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
   $(function() {
-    // Expanded list of languages with auto-detect option for source
+    // Expanded list of languages for translation
     const languages = {
-      '': 'Auto-detect',
       ar: 'Arabic',
       bg: 'Bulgarian',
       zh: 'Chinese (Simplified)',
@@ -82,7 +81,7 @@ limitations under the License.
       vi: 'Vietnamese'
     };
 
-    // Create radio buttons for source languages (including auto-detect)
+    // Create radio buttons for source languages
     const sourceLanguageList = Object.keys(languages).map((id) => {
       return $('<li>').html([
         $('<input>')
@@ -90,15 +89,15 @@ limitations under the License.
                 .attr('name', 'source')
                 .attr('id', 'radio-source-' + id)
                 .attr('value', id)
-                .prop('checked', id === ''), // Auto-detect selected by default
+                .prop('checked', id === 'ja'), // Japanese selected by default
         $('<label>')
                 .attr('for', 'radio-source-' + id)
                 .html(languages[id])
       ]);
     });
 
-    // Create radio buttons for target languages (excluding auto-detect)
-    const targetLanguageList = Object.keys(languages).filter(id => id !== '').map((id) => {
+    // Create radio buttons for target languages
+    const targetLanguageList = Object.keys(languages).map((id) => {
       return $('<li>').html([
         $('<input>')
                 .attr('type', 'radio')
@@ -125,6 +124,8 @@ limitations under the License.
     this.disabled = true;
     $('#error').text('');
     $('#success').text('');
+    const sourceLanguage = $('input[name=source]:checked').val();
+    const targetLanguage = $('input[name=dest]:checked').val();
     google.script.run
             .withSuccessHandler((numTranslatedElements, element) =>{
               element.disabled = false;
@@ -144,7 +145,7 @@ limitations under the License.
               return false;
             })
             .withUserObject(this)
-            .translateSelectedElements($('input[name=dest]:checked').val());
+            .translateSelectedElements(sourceLanguage, targetLanguage);
   }
 
   /**
