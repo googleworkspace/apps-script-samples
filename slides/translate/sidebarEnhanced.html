@@ -1,0 +1,180 @@
+<!--
+Copyright 2018 Google LLC
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    https://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <style>
+    .logo { vertical-align: middle; }
+    ul { list-style-type: none; padding: 0; }
+    h4 { margin: 10px 0 5px 0; }
+    .error { color: #d32f2f; }
+    .success { color: #388e3c; }
+    #button-bar button { margin: 5px 0; width: 100%; }
+  </style>
+</head>
+<body>
+<form class="sidebar branding-below">
+  <h4>Source language:</h4>
+  <ul id="source-languages"></ul>
+  
+  <h4>Target language:</h4>
+  <ul id="target-languages"></ul>
+  
+  <div class="block" id="button-bar">
+    <button class="blue" id="run-translation">Translate Selected</button>
+    <button class="blue" id="run-all-translation">Translate All Slides</button>
+  </div>
+  <h5 class="error" id="error"></h5>
+  <h5 class="success" id="success"></h5>
+</form>
+<div class="sidebar bottom">
+  <img alt="Add-on logo" class="logo"
+       src="https://www.gstatic.com/images/branding/product/1x/translate_48dp.png" width="27" height="27">
+  <span class="gray branding-text">Translate sample by Google</span>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  $(function() {
+    // Expanded list of languages with auto-detect option for source
+    const languages = {
+      '': 'Auto-detect',
+      ar: 'Arabic',
+      bg: 'Bulgarian',
+      zh: 'Chinese (Simplified)',
+      'zh-TW': 'Chinese (Traditional)',
+      hr: 'Croatian',
+      cs: 'Czech',
+      da: 'Danish',
+      nl: 'Dutch',
+      en: 'English',
+      fi: 'Finnish',
+      fr: 'French',
+      de: 'German',
+      el: 'Greek',
+      he: 'Hebrew',
+      hi: 'Hindi',
+      hu: 'Hungarian',
+      id: 'Indonesian',
+      it: 'Italian',
+      ja: 'Japanese',
+      ko: 'Korean',
+      no: 'Norwegian',
+      pl: 'Polish',
+      pt: 'Portuguese',
+      ro: 'Romanian',
+      ru: 'Russian',
+      es: 'Spanish',
+      sv: 'Swedish',
+      th: 'Thai',
+      tr: 'Turkish',
+      uk: 'Ukrainian',
+      vi: 'Vietnamese'
+    };
+
+    // Create radio buttons for source languages (including auto-detect)
+    const sourceLanguageList = Object.keys(languages).map((id) => {
+      return $('<li>').html([
+        $('<input>')
+                .attr('type', 'radio')
+                .attr('name', 'source')
+                .attr('id', 'radio-source-' + id)
+                .attr('value', id)
+                .prop('checked', id === ''), // Auto-detect selected by default
+        $('<label>')
+                .attr('for', 'radio-source-' + id)
+                .html(languages[id])
+      ]);
+    });
+
+    // Create radio buttons for target languages (excluding auto-detect)
+    const targetLanguageList = Object.keys(languages).filter(id => id !== '').map((id) => {
+      return $('<li>').html([
+        $('<input>')
+                .attr('type', 'radio')
+                .attr('name', 'dest')
+                .attr('id', 'radio-dest-' + id)
+                .attr('value', id)
+                .prop('checked', id === 'en'), // English selected by default
+        $('<label>')
+                .attr('for', 'radio-dest-' + id)
+                .html(languages[id])
+      ]);
+    });
+
+    $('#run-translation').click(runTranslation);
+    $('#run-all-translation').click(runAllTranslation);
+    $('#source-languages').html(sourceLanguageList);
+    $('#target-languages').html(targetLanguageList);
+  });
+
+  /**
+   * Runs a server-side function to translate the text on selected slides/elements.
+   */
+  function runTranslation() {
+    this.disabled = true;
+    $('#error').text('');
+    $('#success').text('');
+    google.script.run
+            .withSuccessHandler((numTranslatedElements, element) =>{
+              element.disabled = false;
+              if (numTranslatedElements === 0) {
+                $('#error').empty()
+                        .append('Did you select elements to translate?')
+                        .append('<br/>')
+                        .append('Please select slides or individual elements.');
+              } else {
+                $('#success').text('Successfully translated ' + numTranslatedElements + ' element(s)!');
+              }
+              return false;
+            })
+            .withFailureHandler((msg, element)=> {
+              element.disabled = false;
+              $('#error').text('Something went wrong. Please check the add-on logs.');
+              return false;
+            })
+            .withUserObject(this)
+            .translateSelectedElements($('input[name=dest]:checked').val());
+  }
+
+  /**
+   * Runs a server-side function to translate all text on all slides.
+   */
+  function runAllTranslation() {
+    this.disabled = true;
+    $('#error').text('');
+    $('#success').text('');
+    const sourceLanguage = $('input[name=source]:checked').val();
+    const targetLanguage = $('input[name=dest]:checked').val();
+    
+    google.script.run
+            .withSuccessHandler((numTranslatedElements, element) => {
+              element.disabled = false;
+              if (numTranslatedElements === 0) {
+                $('#error').text('No text elements found to translate.');
+              } else {
+                $('#success').text('Successfully translated ' + numTranslatedElements + ' element(s) across all slides!');
+              }
+              return false;
+            })
+            .withFailureHandler((msg, element) => {
+              element.disabled = false;
+              $('#error').text('Something went wrong: ' + msg);
+              return false;
+            })
+            .withUserObject(this)
+            .translateAllSlides(sourceLanguage, targetLanguage);
+  }
+</script>
+</body>
+</html>
