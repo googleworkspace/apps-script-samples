@@ -22,7 +22,7 @@ limitations under the License.
 const TEAM_CALENDAR_ID = "ENTER_TEAM_CALENDAR_ID_HERE";
 // Set the email address of the Google Group that contains everyone in the team.
 // Ensure the group has less than 500 members to avoid timeouts.
-// Change to an array in order to add indirect members frrm multiple groups, for example:
+// Change to an array in order to add indirect members from multiple groups, for example:
 // let GROUP_EMAIL = ['ENTER_GOOGLE_GROUP_EMAIL_HERE', 'ENTER_ANOTHER_GOOGLE_GROUP_EMAIL_HERE'];
 const GROUP_EMAIL = "ENTER_GOOGLE_GROUP_EMAIL_HERE";
 
