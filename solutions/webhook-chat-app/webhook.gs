@@ -17,11 +17,13 @@
 
 // [START chat_webhook]
 function webhook() {
-  const url = "https://chat.googleapis.com/v1/spaces/SPACE_ID/messages"
+  const url = "https://chat.googleapis.com/v1/spaces/SPACE_ID/messages?key=KEY&token=TOKEN"
   const options = {
     "method": "post",
     "headers": {"Content-Type": "application/json; charset=UTF-8"},
-    "payload": JSON.stringify({"text": "Hello from Apps Script!"})
+    "payload": JSON.stringify({
+      "text": "Hello from Apps Script!"
+    })
   };
   const response = UrlFetchApp.fetch(url, options);
   console.log(response);

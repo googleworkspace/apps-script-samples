@@ -23,7 +23,9 @@ function webhook() {
     "headers": {"Content-Type": "application/json; charset=UTF-8"},
     "payload": JSON.stringify({
       "text": "Hello from Apps Script!",
-      "thread": {"threadKey": "THREAD_KEY_VALUE"}
+      "thread": {
+        "threadKey": "THREAD_KEY_VALUE"
+      }
     })
   };
   const response = UrlFetchApp.fetch(url, options);
