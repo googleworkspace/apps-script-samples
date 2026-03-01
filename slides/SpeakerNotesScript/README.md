@@ -3,7 +3,7 @@
 This add-on will extract all your Speaker Notes and creates a Google Doc with your 'formatted' script.
 To run this add-on, first go to your Google slides with Speaker Notes.
 
-![scriptscreenshot](https://user-images.githubusercontent.com/380123/45267455-878bf780-b43a-11e8-9aeb-9c909feb9613.jpg)
+![Speaker Notes](https://user-images.githubusercontent.com/380123/45716492-10a2dd00-bb65-11e8-8c7d-ff04fb7c0f30.jpg)
 
 ## Set Up
 
