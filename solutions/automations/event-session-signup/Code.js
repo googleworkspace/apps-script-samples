@@ -163,7 +163,7 @@ function onFormSubmit(e) {
 
     // For every selection in the response, find the matching timeslot and title
     // in the spreadsheet and add the session data to the response array.
-    if (e.namedValues[timeslot] && e.namedValues[timeslot] === title) {
+    if (e.namedValues[timeslot] && e.namedValues[timeslot] == title) { //FIXED
       response.push(session);
     }
   }
@@ -177,7 +177,7 @@ function onFormSubmit(e) {
  * @param {Array<String[]>} response An array of data for the user's session choices.
  */
 function sendInvites_(user, response) {
-  const id = ScriptProperties.getProperty("calId");
+  const id = PropertiesService.getScriptProperties().getProperty("calId"); //FIXED
   const cal = CalendarApp.getCalendarById(id);
   for (let i = 0; i < response.length; i++) {
     cal.getEventSeriesById(response[i][5]).addGuest(user.email);
