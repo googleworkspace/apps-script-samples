@@ -120,3 +120,45 @@ function listMemberships(spaceName) {
   }
 }
 // [END chat_list_memberships]
+
+// [START chat_search_messages]
+/**
+ * Searches for unread messages for the caller user in all Chat spaces.
+ */
+function searchMessages() {
+  let response;
+  let pageToken = null;
+  try {
+    do {
+      response = Chat.Spaces.Messages.search(
+        {
+          filter: 'is_unread()'
+        },
+        'spaces/-',
+        {
+          pageSize: 10,
+          pageToken: pageToken,
+        }
+      );
+      if (!response.results || response.results.length === 0) {
+        pageToken = response.nextPageToken;
+        continue;
+      }
+      for (const result of response.results) {
+        const message = result.message;
+        console.log(
+          "**%s at %s in %s:**\n%s",
+          message.sender.name,
+          message.createTime,
+          message.space.name,
+          message.text,
+        );
+      }
+      pageToken = response.nextPageToken;
+    } while (pageToken);
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    console.log("Failed with error %s", err.message);
+  }
+}
+// [END chat_search_messages]

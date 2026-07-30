@@ -771,6 +771,46 @@ function listSpacesUserCred() {
 }
 // [END chat_list_spaces_user_cred]
 
+// [START chat_search_messages_user_cred]
+/**
+ * This sample shows how to search messages with user credential
+ *
+ * It relies on the OAuth2 scope 'https://www.googleapis.com/auth/chat.messages.readonly'
+ * referenced in the manifest file (appsscript.json).
+ */
+function searchMessagesUserCred() {
+  // Initialize request argument(s)
+  // TODO(developer): Replace FILTER here with an actual filter query
+  const filter = "FILTER";
+  const parent = "spaces/-";
+
+  // Iterate through the response pages using page tokens
+  let responsePage;
+  let pageToken = null;
+  do {
+    // Request response pages
+    responsePage = Chat.Spaces.Messages.search(
+      {
+        filter: filter,
+      },
+      parent,
+      {
+        pageSize: 10,
+        pageToken: pageToken,
+      }
+    );
+    // Handle response pages
+    if (responsePage.results) {
+      for (const result of responsePage.results) {
+        console.log(result);
+      }
+    }
+    // Update the page token to the next one
+    pageToken = responsePage.nextPageToken;
+  } while (pageToken);
+}
+// [END chat_search_messages_user_cred]
+
 // [START chat_set_up_space_user_cred]
 /**
  * This sample shows how to set up a named space with one initial member with
