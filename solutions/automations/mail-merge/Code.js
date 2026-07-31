@@ -102,8 +102,8 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
           htmlBody: msgObj.html,
           // bcc: 'a.bcc@email.com',
           // cc: 'a.cc@email.com',
-          // from: 'an.alias@email.com',
-          // name: 'name of the sender',
+           from: 'an.alias@email.com',
+           name: 'name of the sender',
           // replyTo: 'a.reply@email.com',
           // noReply: true, // if the email should be sent from a generic no-reply email address (not available to gmail.com users)
           attachments: emailTemplate.attachments,
