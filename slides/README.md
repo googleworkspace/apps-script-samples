@@ -6,6 +6,14 @@ Sample Google Apps Script add-ons for Google Slides.
 
 This add-on translates selected text from one language to another.
 
+### Enhanced Version Available
+
+An enhanced version is also available (`translateAllSlides.gs` and `sidebarEnhanced.html`) with additional features:
+- Translate entire presentations with one click
+- Source language selection with auto-detect option
+- Expanded support for 30+ languages
+- Two translation modes: selected elements or all slides
+
 ![Translate](https://user-images.githubusercontent.com/380123/45050204-9f383a00-b04e-11e8-9dc8-30fcc5e9fdd7.png)
 
 ## [Progress Bars](https://developers.google.com/apps-script/guides/slides/samples/progress-bar)
