@@ -101,7 +101,7 @@ function sendEmails(subjectLine, sheet = SpreadsheetApp.getActiveSheet()) {
         GmailApp.sendEmail(row[RECIPIENT_COL], msgObj.subject, msgObj.text, {
           htmlBody: msgObj.html,
           // bcc: 'a.bcc@email.com',
-          // cc: 'a.cc@email.com',
+           cc: 'a.cc@email.com',
           // from: 'an.alias@email.com',
           // name: 'name of the sender',
           // replyTo: 'a.reply@email.com',
