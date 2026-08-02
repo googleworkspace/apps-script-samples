@@ -22,7 +22,7 @@ limitations under the License.
 const TEAM_CALENDAR_ID = "ENTER_TEAM_CALENDAR_ID_HERE";
 // Set the email address of the Google Group that contains everyone in the team.
 // Ensure the group has less than 500 members to avoid timeouts.
-// Change to an array in order to add indirect members frrm multiple groups, for example:
+// Change to an array in order to add indirect members from multiple groups, for example:
 // let GROUP_EMAIL = ['ENTER_GOOGLE_GROUP_EMAIL_HERE', 'ENTER_ANOTHER_GOOGLE_GROUP_EMAIL_HERE'];
 const GROUP_EMAIL = "ENTER_GOOGLE_GROUP_EMAIL_HERE";
 
@@ -54,17 +54,12 @@ function sync() {
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + MONTHS_IN_ADVANCE);
 
-  // Determines the time the the script was last run.
+  // Determines the time the script was last run.
   let lastRun = PropertiesService.getScriptProperties().getProperty("lastRun");
   lastRun = lastRun ? new Date(lastRun) : null;
 
   // Gets the list of users in the Google Group.
-  let users = getAllMembers(GROUP_EMAIL);
-  if (ONLY_DIRECT_MEMBERS) {
-    users = GroupsApp.getGroupByEmail(GROUP_EMAIL).getUsers();
-  } else if (Array.isArray(GROUP_EMAIL)) {
-    users = getUsersFromGroups(GROUP_EMAIL);
-  }
+  let users = getUsersFromGroups(GROUP_EMAIL);
 
   // For each user, finds events having one or more of the keywords in the event
   // summary in the specified date range. Imports each of those to the team
@@ -174,43 +169,49 @@ function formatDateAsRFC3339(date) {
 /**
  * Get both direct and indirect members (and delete duplicates).
  * @param {string} the e-mail address of the group.
+ * @param {array} the list of already added users.
+ * @param {array} the list of already added addresses.
  * @return {object} direct and indirect members.
  */
-function getAllMembers(groupEmail) {
+function getAllMembers(groupEmail, userEntities, addresses) {
   const group = GroupsApp.getGroupByEmail(groupEmail);
   let users = group.getUsers();
-  const childGroups = group.getGroups();
-  for (let i = 0; i < childGroups.length; i++) {
-    const childGroup = childGroups[i];
-    users = users.concat(getAllMembers(childGroup.getEmail()));
-  }
-  // Remove duplicate members
-  const uniqueUsers = [];
-  const userEmails = {};
-  for (let i = 0; i < users.length; i++) {
-    const user = users[i];
-    if (!userEmails[user.getEmail()]) {
-      uniqueUsers.push(user);
-      userEmails[user.getEmail()] = true;
+  if (!ONLY_DIRECT_MEMBERS) {
+    try {
+      const childGroups = group.getGroups();
+      for (let i = 0; i < childGroups.length; i++) {
+        const childGroup = childGroups[i];
+        [userEntities, addresses] = getAllMembers(childGroup.getEmail(), userEntities, addresses);
+      }
+    } catch (e) {
+        console.error('Error attempting to pull groups due to %s. Skipping.',
+        e.toString());
     }
   }
-  return uniqueUsers;
+  // Remove duplicate members
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    if (!addresses.includes(user.getEmail())) {
+      userEntities.push(user);
+      addresses.push(user.getEmail());
+    }
+  }
+  return [userEntities, addresses];
 }
 
 /**
  * Get indirect members from multiple groups (and delete duplicates).
  * @param {array} the e-mail addresses of multiple groups.
+ * @param {string or array} the e-mail addresses of multiple groups.
  * @return {object} indirect members of multiple groups.
  */
 function getUsersFromGroups(groupEmails) {
-  const users = [];
+  const users = [],  addresses = [];
+  if (!Array.isArray(groupEmails)) {
+    groupEmails = [groupEmails];
+  }
   for (const groupEmail of groupEmails) {
-    const groupUsers = GroupsApp.getGroupByEmail(groupEmail).getUsers();
-    for (const user of groupUsers) {
-      if (!users.some((u) => u.getEmail() === user.getEmail())) {
-        users.push(user);
-      }
-    }
+    [users, addresses] = getAllMembers(groupEmail, users, addresses);
   }
   return users;
 }
