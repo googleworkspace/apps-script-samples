@@ -172,3 +172,5 @@ function logAllAccountUserPermissionsWithContainerAccess(accountPath) {
   }
 }
 // [END apps_script_tag_manager_log]
+
+adb patch to device and all apps
